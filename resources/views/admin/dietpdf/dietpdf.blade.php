@@ -65,7 +65,6 @@
       </div>
       <div style="float: left;margin-left: 8px;"> <b><font size="3">Fitness 5</font></b>
         <br> <font size="2">
-                 Fitness-5 <br/>  
 				 GSTIN:  24BDLTG2978J1Z7 <br/>
 				"Kruna Nidhan" <br/>
 				Kotecha Chowk, <br/>
@@ -81,6 +80,7 @@
    
   
     <div>
+      <br>
      <table style=" margin-top:70px; margin-bottom: 50px !important;" width=100% cellpadding="5px" cellspacing="0px" >
 
                 <thead>
@@ -88,7 +88,7 @@
     </th>
     </tr>
     <tr>
-      <th style=" text-align:center; border-color: #CACFD2 ; border-top: thick solid;border-left: thick solid;border-right: thick solid;border-bottom:thick solid;border-color: #CACFD2 ;" colspan="6"><font size="3"> Diet : {{$data['planname']}} &nbsp; &nbsp;From {{date('j F, Y', strtotime($data['fromdate']))}} &nbsp;&nbsp;To:   {{date('j F, Y', strtotime($data['todate']))}}
+      <th style=" text-align:center; border-color: #CACFD2 ; border-top: thick solid;border-left: thick solid;border-right: thick solid;border-bottom:thick solid;border-color: #CACFD2 ;" colspan="6"><font size="3"> Diet : {{$data['planname']}} &nbsp; &nbsp;From {{ $data['fromdate'] ? date('j F, Y', strtotime($data['fromdate'])) :''}} &nbsp;&nbsp;To:   {{ $data['todate'] ? date('j F, Y', strtotime($data['todate'])) : '' }}
  </font>
       </th>
     </tr>

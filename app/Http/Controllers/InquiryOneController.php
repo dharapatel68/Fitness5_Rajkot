@@ -118,7 +118,7 @@ class InquiryOneController extends Controller
                     $inquiry->whereBetween('followup.followupdays',[$from,$to]);
        }
       
-        $members = $inquiry->paginate(8)->appends('query');
+        $members = $inquiry->orderBy('inquiriesid','desc')->paginate(8)->appends('query');
 
          $users = Inquiry::where('status','1')->get()->all();
        return view('admin.viewinquiry',compact('members','users','query'));
@@ -142,8 +142,7 @@ class InquiryOneController extends Controller
       (SELECT inquiriesid, MAX(inquiriesid) AS max_id
       FROM followupcalldetails
       GROUP BY inquiriesid ) subquery1 ON 
-      subquery1.inquiriesid = inquiries.inquiriesid where inquiries.status = 1
-     "));
+      subquery1.inquiriesid = inquiries.inquiriesid  where inquiries.status = 1 ORDER BY inquiries.inquiriesid DESC "));
      $currentPage = LengthAwarePaginator::resolveCurrentPage();
   $itemCollection = collect($members);
    $perPage = 10;

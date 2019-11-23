@@ -34,8 +34,6 @@
             <font size="2">
  <br>
   @php $total_amount_display = 0; $add_discount = 0;@endphp             
-
-Fitness-5 <br/>  
 GSTIN:  24BDLTG2978J1Z7 <br/>
 "Kruna Nidhan" <br/>
 Kotecha Chowk, <br/>

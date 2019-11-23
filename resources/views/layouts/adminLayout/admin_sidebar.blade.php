@@ -73,8 +73,7 @@
             @if(isset($permission["'add_registration'"]))
             <li>
                <a href="{{ url('registration#tologin') }}">
-               <img src="{{ asset('images/icon/regform.png') }}" style="height: 21px; width: 21px;margin-left: -3px;">&nbsp;&nbsp;
-               <span>Registration Form</span>
+               <img src="{{ asset('images/icon/regform.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp;Registration Form
                </a>
             </li>
             @endif
@@ -86,8 +85,7 @@
             </li>
             <li>
                <a href="{{url('deletedregstration')}}">
-               <img src="{{ asset('images/icon/delete.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp;
-               Deleted Registration
+               <img src="{{ asset('images/icon/delete.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp;Deleted Registration
                </a>
             </li>
             <li>
@@ -863,6 +861,12 @@
             </li>
             @endif
          </ul>
+
+
+ @if(isset($permission["'smsdashboard_all'"]) || isset($permission["'add_smstemplate'"]) || isset($permission["'edit_smstemplate'"]) || isset($permission["'view_smstemplate'"]))
+           
+
+
       <li class="treeview">
          <a href="#">
          <i class="fa fa-envelope"></i>
@@ -874,16 +878,22 @@
          </span>
          </a>
          <ul class="treeview-menu">
+             @if(isset($permission["'add_smstemplate'"]))
             <li>
                <a href="{{ url('addnewtemplate') }}">
                <i class="fa fa-chevron-right"></i>Add SMS Template
                </a>
             </li>
+            @endif
+             @if(isset($permission["'edit_smstemplate'"]))
             <li>
                <a href="{{ url('editsms') }}">
                <i class="fa fa-chevron-right"></i>Edit SMS Template
                </a>
             </li>
+             @endif
+
+               @if(isset($permission["'view_smstemplate'"]))
             <li>
                <a href="{{ url('sendsms') }}">
                <i class="fa fa-chevron-right"></i>Send SMS To Member
@@ -919,7 +929,10 @@
                <i class="fa fa-chevron-right"></i>Edit SMS/Email Settings
                </a>
             </li>
+            @endif
          </ul>
+      </li>
+      @endif
          @if(isset($permission["'add_diet_plan'"]) || isset($permission["'view_diet_plan'"]))
       <li class="treeview" >
          <a href="#">
