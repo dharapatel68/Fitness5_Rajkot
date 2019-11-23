@@ -73,8 +73,7 @@
             @if(isset($permission["'add_registration'"]))
             <li>
                <a href="{{ url('registration#tologin') }}">
-               <img src="{{ asset('images/icon/regform.png') }}" style="height: 21px; width: 21px;margin-left: -3px;">&nbsp;&nbsp;
-               <span>Registration Form</span>
+               <img src="{{ asset('images/icon/regform.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp;Registration Form
                </a>
             </li>
             @endif
@@ -86,8 +85,7 @@
             </li>
             <li>
                <a href="{{url('deletedregstration')}}">
-               <img src="{{ asset('images/icon/delete.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp;
-               Deleted Registration
+               <img src="{{ asset('images/icon/delete.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp;Deleted Registration
                </a>
             </li>
             <li>
@@ -894,7 +892,7 @@
                </a>
             </li>
              @endif
-           
+
                @if(isset($permission["'view_smstemplate'"]))
             <li>
                <a href="{{ url('sendsms') }}">

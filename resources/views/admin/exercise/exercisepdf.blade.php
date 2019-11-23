@@ -65,7 +65,7 @@
       </div>
       <div style="float: left;margin-left: 8px;"> <b><font size="3">Fitness 5</font></b>
         <br> <font size="2">
-                    Fitness-5 <br/>  
+      
 					GSTIN:  24BDLTG2978J1Z7 <br/>
 					"Kruna Nidhan" <br/>
 					Kotecha Chowk, <br/>
@@ -81,6 +81,7 @@
    
   
     <div>
+      <br>
         <table style="margin: 5px;  margin-top:70px;   " width=100% cellpadding="5px;" cellspacing="0px" >
 
                 <thead>

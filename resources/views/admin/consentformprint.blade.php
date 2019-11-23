@@ -59,7 +59,7 @@
     </div>
     <div>
         <div style="float: left; margin-top: -20px;  font-size: 11;">
-            <p><b>Fitness 5</b>
+            <p><b>Fitness 5</b><br>
 				 GSTIN:  24BDLTG2978J1Z7 <br/>
 				"Kruna Nidhan" <br/>
 				Kotecha Chowk, <br/>
