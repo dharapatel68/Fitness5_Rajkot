@@ -278,6 +278,14 @@
                         <td><input type="checkbox" class="check" name="permission['edit_measurement']" @if(isset($permission["'edit_measurement'"])) checked @endif></td>
                         <td><input type="checkbox" class="check" name="permission['delete_measurement']" @if(isset($permission["'delete_measurement'"])) checked @endif></td>
                       </tr>
+                      <tr>
+                        <th>SMS Dashboard</th>
+                        <td><input type="checkbox" class="check addall" name="permission['smsdashboard_all']"  @if(isset($permission["'smsdashboard_all'"])) checked @endif></td>
+                        <td><input type="checkbox" class="check" name="permission['add_smstemplate']" @if(isset($permission["'add_smstemplate'"])) checked @endif></td>
+                        <td><input type="checkbox" class="check" name="permission['view_smstemplate']" @if(isset($permission["'view_smstemplate'"])) checked @endif></td>
+                        <td><input type="checkbox" class="check" name="permission['edit_smstemplate']" @if(isset($permission["'edit_smstemplate'"])) checked @endif></td>
+                        <td><input type="checkbox" class="check" name="permission['delete_smstemplate']" @if(isset($permission["'delete_smstemplate'"])) checked @endif></td>
+                      </tr>
                         <tr>
                         <th>Diet Plan</th>
                         <td><input type="checkbox" class="check addall" name="permission['diet_plan_all']"  @if(isset($permission["'diet_plan_all'"])) checked @endif></td>

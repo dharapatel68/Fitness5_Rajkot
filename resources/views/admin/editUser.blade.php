@@ -74,7 +74,7 @@
           <div class="box box-primary">
 
             <div class="box-header with-border">
-              <h3 class="box-title">Edit User</h3>
+              <h3 class="box-title">Edit User </h3>
             </div>
             <!-- /.box-header -->
             <form role="form" action="{{ url('edituser/'.$user->employeeid) }}"  method="post" enctype="multipart/form-data" id="edituser">
@@ -154,9 +154,9 @@
             @if($user->files)
                @php $fls=  json_decode($user->files);
                 @endphp
-                <ul class="ul">
+               <ul class="ul">
 
-       		@if(!empty($fl))
+       		@if(!empty($fls))
           @foreach($fls as $key=>$file)
           <!-- <li><a href="#" class="files">{{$file}} </a></li> -->
  <li class="li1"><a href="\files\{{$file}}"class="files" >{{$file}} </a><span style="float:right;margin-top: -6px;"class="closebtns btn btn-new">&times;</span></li>
