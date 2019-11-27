@@ -4,20 +4,20 @@
   strong{
     color: red;
   }
-	 .error{
-    color : red;
-  }
+
 </style>
+
+ <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.css">
 @endpush
 @section('content')
 <!-- left column -->
-
   <div class="content-wrapper">
-        
+   
+     
          <section class="content-header"><h2>Add Scheme</h2></section>
           <!-- general form elements -->
            <section class="content">
-       @if ($errors->any())
+      {{--  @if ($errors->any())
             <div class="alert alert-danger">
             <button type="button" class="close" data-dismiss="alert">×</button> 
             <ul>
@@ -26,7 +26,7 @@
             @endforeach
             </ul>
             </div>
-            @endif
+            @endif --}}
           <div class="box box-primary">
 
             <div class="box-header with-border">
@@ -41,21 +41,36 @@
              <label>Select Root Scheme<span style="color: red">*</span></label>
              
                 <select name="RootSchemeId" required class="form-control"class="span11"><option disabled="" selected="">--Please choose an option--</option>@foreach($scheme as $scheme)
-              <option value="{{ $scheme->rootschemeid }}">{{ $scheme->rootschemename }}</option>@endforeach
+              <option value="{{ $scheme->rootschemeid }}" @if(old('RootSchemeId') == $scheme->rootschemeid) selected @endif>{{ $scheme->rootschemename }}</option>@endforeach
           </select>
               </div>
                 <div class="form-group">
                   <label>Scheme Name<span style="color: red">*</span></label>
-                  <input type="text" class="form-control" name="SchemeName"  id="SchemeName" required placeholder="Enter Scheme Name"><span id="error_SchemeName"></span>
+                  <input type="text" class="form-control" maxlength="191" name="SchemeName" value="{{ old('SchemeName') }}"  id="SchemeName" required placeholder="Enter Scheme Name"><span id="error_SchemeName"></span>
+                  @if($errors->has('SchemeName'))
+                  <span class="help-block">
+                    <strong>{{ $errors->first('SchemeName') }}</strong>
+                  </span>
+                  @endif
                 </div>
                 <div class="form-group">
                   <label>Number of Days<span style="color: red">*</span></label>
               
-                 <input type="number"required class="form-control number"  min='0' name="NumberOfDays" placeholder="Enter numer of days">
+                 <input type="text" class="form-control number" value="{{ old('NumberOfDays') }}"  min='0' name="NumberOfDays" required placeholder="Enter numer of days">
+                 @if($errors->has('NumberOfDays'))
+                  <span class="help-block">
+                    <strong>{{ $errors->first('NumberOfDays') }}</strong>
+                  </span>
+                  @endif
                 </div>
                 <div class="form-group">
                   <label>Base Price<span style="color: red">*</span></label>
-                  <input type="text" class="form-control number" name="BasePrice" id="BasePrice" maxlength="10" required placeholder="Base Price">
+                  <input type="text" class="form-control number" value="{{ old('BasePrice') }}" name="BasePrice" id="BasePrice" maxlength="10" required placeholder="Base Price">
+                  @if($errors->has('BasePrice'))
+                  <span class="help-block">
+                    <strong>{{ $errors->first('BasePrice') }}</strong>
+                  </span>
+                  @endif
                 </div>
                 <div class="form-group">
                   <label>Tax</label>
@@ -64,20 +79,41 @@
                 </div>
                 <div class="form-group">
                   <label>Actual Price<span style="color: red">*</span></label>
-                  <input type="text" class="form-control number" name="ActualPrice" id="ActualPrice" required placeholder="ActualPrice" maxlength="10">
+                  <input type="text" class="form-control number" value="{{ old('ActualPrice') }}" name="ActualPrice" id="ActualPrice" required placeholder="ActualPrice" maxlength="10">
+                  @if($errors->has('ActualPrice'))
+                  <span class="help-block">
+                    <strong>{{ $errors->first('ActualPrice') }}</strong>
+                  </span>
+                  @endif
                 </div>
                  <div class="form-group">
                   <label>Validity<span style="color: red">*</span></label>
-                  <input type="date" onkeypress="return false" class="form-control" name="validity" min="<?php echo date('Y-m-d');?>" required placeholder="ActualPrice">
+                  <input type="date" class="form-control" onkeypress="return false" value="{{ old('validity') }}" name="validity" id="validity" min="{{ date('Y-m-d') }}"  required placeholder="ActualPrice" >
+                  @if($errors->has('validity'))
+                  <span class="help-block">
+                    <strong>{{ $errors->first('validity') }}</strong>
+                  </span>
+                  @endif
                 </div>
                  <div class="form-group">
-              <label>From<span style="color: red">*</span></label>
-               <input type="time" name="WorkingHourFrom"class="form-control" id="from" min="06:00" max="21:00" step="600"  required> 
+           <label>From (24 hour)<span style="color: red">*</span></label>
+               <input type="" name="WorkingHourFrom" value="{{ old('WorkingHourFrom') }}" class="form-control input-a" id="from" min="06:00" max="21:00"  required="required" autocomplete="off"> 
+               @if($errors->has('WorkingHourFrom'))
+                  <span class="help-block">
+                    <strong>{{ $errors->first('WorkingHourFrom') }}</strong>
+                  </span>
+                  @endif
+                 <!--  <input id="input-a" value="" class="form-control input-a number" placeholder="Time" name="tab6time1" autocomplete="off" onkeypress="return false"> -->
               <!--  <input type="time"class="form-control"  id="from" required name="WorkingHourFrom"
                 min="5:00" max="12:00" value="06:00" /> --></div>
       
                <div class="form-group">To<span style="color: red">*</span>
-                <input type="time"  name="WorkingHourTo" class="form-control" id="to" min="06:00" max="24:00" step="600"required> 
+                <input type=""  name="WorkingHourTo" value="{{ old('WorkingHourTo') }}" class="form-control input-a" id="to" min="06:00" max="24:00" step="600"required autocomplete="off"> 
+                @if($errors->has('WorkingHourTo'))
+                  <span class="help-block">
+                    <strong>{{ $errors->first('WorkingHourTo') }}</strong>
+                  </span>
+                  @endif
               <!--  <input type="time" class="form-control" id="to" name="WorkingHourTo"
                 min="9:00" max="12:00" value="12:00"/> --></div>
                
@@ -104,8 +140,8 @@
                    <div class="form-group">
                       <div class="col-sm-offset-3">
               <div class="col-sm-8">
-                <button name="submit" type="submit" class="btn bg-blue margin" >
-                 Save</button>   <a href="{{ url('schemes') }}"class="btn btn-danger">Cancel</a></div></div>
+                     <button disabled class="btn bg-green" id="btnnew" style="display: none;">Submitting</button>
+                <button name="submit" type="submit" class="btn bg-green margin" id="save">Save</button>   <a href="{{ url('schemes') }}"class="btn btn-danger">Cancel</a></div></div>
   
               </div>
                 <!-- Select multiple-->
@@ -174,7 +210,9 @@
        else
        {
         // alert("hi1");
-        $('#error_SchemeName').html('<label class="text-danger">Scheme Already exists!, Please Enter Differant Price</label>');
+
+        $('#error_SchemeName').html('<label class="text-danger">Scheme is Already Exist! Please Enter Different Price</label>');
+
         $('#SchemeName').addClass('has-error');
         $('#firstbtn').attr('disabled', 'disabled');
        }
@@ -191,16 +229,24 @@
     // return false;
      var from= $('#from').val();
   var to=$('#to').val();
-  if(from==to){
-    alert('Please enter valid time!')
-    return false;
+  var validity=$('#validity').val();
+  if(validity.length == 0){
+    alert('Please enter validity date');
+    // $('#').();
   }
-  else if(to < from){
- alert('Please enter valid time!')
- return false;
-  }
-  else{
-    return true;
+  
+  if(from.length !=0 && to.length != 0){
+    if(from==to){
+      alert('Please enter valid time!')
+      return false;
+    }
+    else if(to < from){
+   alert('Please enter valid time!')
+   return false;
+    }
+    else{
+      return true;
+    }
   }
   }
  
@@ -211,6 +257,26 @@
 @push('script')
 <script type="text/javascript">
   $(document).ready(function(){
+     var input = $('.input-a');
+input.clockpicker({
+    autoclose: true
+});
+$('#button-a').click(function(e){
+    // Have to stop propagation here
+    e.stopPropagation();
+    input.clockpicker('show')
+            .clockpicker('toggleView', 'minutes');
+});
+$('#button-b').click(function(e){
+    // Have to stop propagation here
+    e.stopPropagation();
+    input.clockpicker('show')
+            .clockpicker('toggleView', 'hours');
+});
+   /* $('#save').click(function(){
+     $('#btnnew').show();
+     $('#save').hide();
+   });*/
     $('#scheme_form').validate({
       rules: {
         SchemeName : {
@@ -220,20 +286,11 @@
         email : {
           required : true,
           maxlength : 255
+        },
+        validity : {
+          required : true,
+          dateFormat: true
         }
-         NumberOfDays : {
-          required : true,
-       
-        },
-         RootSchemeId : {
-          required : true,
-  
-        },
-         validity : {
-          required : true,
-    
-        },
-        
       }
     });
 
@@ -245,4 +302,7 @@
     });
   });
 </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.js"></script>
+
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.js"></script>
 @endpush

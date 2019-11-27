@@ -125,6 +125,7 @@ class InquiryOneController extends Controller
       }
        $users = Inquiry::where('status','1')->get()->all();
 
+
     $followid=array();
     $members=array();
     for($i=0;$i<count($users);$i++) {

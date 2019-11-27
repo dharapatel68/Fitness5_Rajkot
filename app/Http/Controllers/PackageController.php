@@ -259,13 +259,13 @@ else{
   // $ReceiptNo = $receipt->ReceiptNo+1;
 
 }
- $ReceiptNo = (Payment::max('receiptno')+1);
-    $sgst = AdminMaster::where('title','sgst')->pluck('description')->first();
-        $cgst = AdminMaster::where('title','cgst')->pluck('description')->first();
-       
-        $sgst = (int)$sgst;
-         $cgst = (int)$cgst;
-     $tax =  $sgst + $cgst;
+      $ReceiptNo = (Payment::max('receiptno')+1);
+      $sgst = AdminMaster::where('title','sgst')->pluck('description')->first();
+      $cgst = AdminMaster::where('title','cgst')->pluck('description')->first();
+
+      $sgst = (int)$sgst;
+      $cgst = (int)$cgst;
+      $tax =  $sgst + $cgst;
 
       return view('admin.assignorrenewalpackage',compact('users','tax','RootScheme','PaymentTypes','ReceiptNo'));
     }
@@ -305,7 +305,7 @@ else{
 	//dd( $scheme_from);
 		//dd( $scheme_to);
      $member = member::where('userid', $user_id)->first();
-     dd($member );
+    
      $member_from = date('H:i', strtotime($member->workinghourfrom));
      $member_to = date('H:i', strtotime($member->workinghourto));
 	

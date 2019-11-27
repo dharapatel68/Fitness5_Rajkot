@@ -236,7 +236,7 @@ class AdminController extends Controller
         $employeeid=$admin[0]->employeeid;
 
 
-    $u=Admin::where('username', Input::get('username'))->first();
+        $u=Admin::where('username', Input::get('username'))->first();
 	
         if ($u) {
 		
@@ -244,7 +244,7 @@ class AdminController extends Controller
           if (Hash::check(Input::get('password'), $u->password)) {
 			
             $role=$u->role;
-
+           
             $permission = Role::where('employeerole', $role)->first();
 
             if(empty($permission->permission)){
