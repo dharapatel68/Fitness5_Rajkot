@@ -837,9 +837,17 @@ $(function() {
       </div>
          <!-- ********************for**************************-->
           <div  id="notesall">
+              <div class="box box-body">
+                <center>
+            <a href="{{ url('assignPackageOrRenewalPackage/'.$member->userid) }}" class="btn bg-orange" id="assignpackage">Assign Package</a>
+          </center>
+          </div>
           <div class="box box-primary">
+
+         <!--    <a href="{{ url('assignPackageOrRenewalPackage')}}"> -->
             <div class="box-body content-fit-box">
-            <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal"> + Add Notes</button>
+               
+              <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal"> + Add Notes</button>
             </div>
           </div>
            <?php 
@@ -1671,7 +1679,7 @@ for(var i=0;i <= key; i++)
 
  $('#paymenthistorytable td#joindate'+i).on('change', function () {
 
-console.log("new value : "+$(this).find('input[type=date]').val());
+//console.log("new value : "+$(this).find('input[type=date]').val());
   var newdate = $(this).find('input[type=date]').val();
     var id = "<?php echo $member->userid;?>";
     var devicemobileno = "<?php echo $member->mobileno;?>";
@@ -1904,7 +1912,7 @@ console.log("new value : "+$(this).find('input[type=date]').val());
                                    if(item['checkin'][i].date==item['checkout'][j].date)
                                    {
                                      checkout = item['checkout'][j].time;
-                                     console.log(checkout);
+                                     //console.log(checkout);
 
                                    }
 
@@ -3561,7 +3569,7 @@ textarea.input100 {
 </script>
 <script type="text/javascript">
 $( document ).ready(function() {
-    console.log( "ready!" );
+   // console.log( "ready!" );
 
   var _token = $('input[name="_token"]').val();
       var member = $('#memberidforworkout').val();
@@ -3873,7 +3881,7 @@ $(".submit").click(function(){
 </script>
 <script>
   $(function () {
-    $('#example1').DataTable()
+   // $('#example1').DataTable()
   });
 
 </script>
@@ -3881,7 +3889,7 @@ $(".submit").click(function(){
   <script>
       var  filesname=[];
       var olddata=$('#oldfiles').val();
-console.log(olddata);
+//console.log(olddata);
 if(olddata){
 
 
