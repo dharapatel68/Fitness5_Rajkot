@@ -19,19 +19,25 @@ class admin
     public function handle($request, Closure $next)
     {
         $this->auth=Session::get('role');
-        $role_data = DB::table('roles')->where('employeerole', $this->auth=Session::get('role'))->first();
-        /*dd($role_data);*/
-        if(!empty($role_data)){
-            $is_login = $role_data->portalaccess;
-            if($is_login != 1){
-                
-                return redirect('adminloginpage');
-            }else{
-                return $next($request);
-            }
+        if($this->auth){
+              $role_data = DB::table('roles')->where('employeerole', $this->auth=Session::get('role'))->first();
+         
+                if(!empty($role_data)){
+                    $is_login = $role_data->portalaccess;
+                    if($is_login != 1){
+                        return redirect('adminloginpage');
+                    }else{
+                        return $next($request);
+                    }
+                }else{
+                    return $next($request);
+                }
         }else{
-            return $next($request);
-        }
+                   return redirect('adminloginpage');
+                }
+      
+         
+            
        /* $role=['admin','receptionist','manager','trainer','employee'];
         if (!in_array($this->auth, $role)) {
             // return abort(403, "No access here, sorry!");
