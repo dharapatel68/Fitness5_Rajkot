@@ -1437,12 +1437,16 @@ $('#Discount1').keyup(function(){
 
 $('#amount_paid').on('input',function(){
   let paid_amount = $(this).val();
-
-  if(paid_amount == 0){
-    $('#otp_button').show();
-    $('#save').hide();
+  //console.log(paid_amount);
+    calculate();
+  if(paid_amount){
+        if(paid_amount == 0 || paid_amount < 0 ){
+          $('#otp_button').show();
+          $('#save').hide();
+      }
+ 
   }
-  calculate();
+
   
 });
 

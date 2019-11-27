@@ -163,7 +163,7 @@ Route::any('addExerciseLevel','ExerciseLevelController@addExerciseLevel');
 Route::any('editExerciseLevel/{id}', 'ExerciseLevelController@editExerciseLevel');
 Route::any('planExercise', 'ExercisePlanController@addplan');
 Route::any('addplan', 'ExercisePlanController@addplan');
-Route::any('assignExercise/{id?}', 'ExercisePlanController@assignExercise');
+Route::any('c/{id?}', 'ExercisePlanController@assignExercise');
 Route::any('packageload', 'ExercisePlanController@packageload')->name('packageload');
 Route::any('assignExercisetoMember', 'ExercisePlanAssignController@assignExercisetoMember')->name('assignExercisetoMember');
 Route::any('ExerciseplanView','ExercisePlanController@ExerciseplanView');
