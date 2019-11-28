@@ -1176,9 +1176,10 @@ function calculate(){
 
   //with tax start
     if(with_tax == true){
-
+    
       let discount_tax = Number(Number(baseprice/100)) * Number(tax);
       let final_amount_tax = Number(baseprice) + Number(discount_tax);
+        
       $('#FinalAmount').val(Math.round(final_amount_tax));
     //if rs checked
     if(rs == true){

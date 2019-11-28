@@ -106,6 +106,8 @@
             </div>
             @endif
             @if($msg!='')
+
+            
             @if($msg=="Incorrect OTP" || $msg=="Something Went Wrong")
             <div class="alert alert-danger">
                <button type="button" class="close" data-dismiss="alert">×</button> 
