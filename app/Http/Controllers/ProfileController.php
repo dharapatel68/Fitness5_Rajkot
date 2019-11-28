@@ -1128,7 +1128,7 @@ public function sendotp(Request $request){
       $msg= str_replace("[LastName]",ucfirst($lname),$msg);
       $msg= str_replace("[otp]",$rndno,$msg);
       $msg = urlencode($msg);
- 
+
      $otpsend = Curl::to('http://vsms.vr4creativity.com/api/mt/SendSMS?user=feetness5b&password=five@feetb&senderid=FITFIV&channel=Trans&DCS=0&flashsms=0&number='.$mobileno.'&text='.$msg.'&route=6')->get();
       
       if (strpos($otpsend, '"ErrorCode":"000"') !== false) {

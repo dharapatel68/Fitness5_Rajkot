@@ -513,7 +513,11 @@ public function ajaxgetjoindate(Request $request){
             $query=DB::table('ptmember')->where(['trainerid'=>$request->trainerid,'memberid'=>$request->memberid,'status'=>'Active'])->where('hoursfrom','!=','')->orderBy('date','ASC')->first();
 
              $ptlevel=DB::table('ptassignlevel')->where('trainerid',$request->trainerid)->get();
-
+             if(count($ptlevel) == 0){
+               $msg="Something Went Wrong";
+               
+               return redirect('claimptsession')->withErrors(['msg' => $msg]);
+             } 
              $session =  DB::table('memberpackages')->leftJoin('schemeterms','memberpackages.schemeid','=','schemeterms.schemeid')->where('memberpackages.memberpackagesid', '=', $request->packageid)->where('schemeterms.termsid','2')->get();
 
             $schemes =  DB::table('schemes')->leftJoin('memberpackages','memberpackages.schemeid','=','schemes.schemeid')->where('memberpackages.memberpackagesid', '=', $request->packageid)->get();

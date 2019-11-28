@@ -625,7 +625,7 @@ class InquiryOneController extends Controller
 
     DB::table('otpverify')->insert($otpgenerate);
 
-    $msg=   DB::table('messages')->where('messagesid','18')->get()->first();
+    $msg=   DB::table('messages')->where('messagesid','22')->get()->first();
         
    
                   $msg =$msg->message;
@@ -637,16 +637,13 @@ class InquiryOneController extends Controller
 
           $msg = urlencode($msg);
 
-           $smssetting = Smssetting::where('status',1)->where('smsonoff','Active')->first();
-
-           if ($smssetting) {
+         
             
-           
-           $u = $smssetting->url;
-           $url= str_replace('$mobileno', $mobileno, $u);
-           $url=str_replace('$msg', $msg, $url);
+        
+           $otpsend = Curl::to('http://vsms.vr4creativity.com/api/mt/SendSMS?user=feetness5b&password=five@feetb&senderid=FITFIV&channel=Trans&DCS=0&flashsms=0&number='.$mobileno.'&text='.$msg.'&route=6')->get();
+
  
-          $otpsend = Curl::to($url)->get();
+          //$otpsend = Curl::to($url)->get();
 
           $action = new Notificationmsgdetails();
           $action->user_id = session()->get('admin_id');
@@ -656,15 +653,7 @@ class InquiryOneController extends Controller
           $action->subject = 'Inquiry Otp Send';
           $action->save();
 
-        }
 
-    // $your = "Your";
-    // $is = "is:".$rndno;
-    // $fit = "FITNESS5";
-    // $otp="OTP";
-
-
-    // $otpsend = Curl::to('http://vsms.vr4creativity.com/api/mt/SendSMS?user=feetness5b&password=five@feetb&senderid=FITFIV&channel=Trans&DCS=0&flashsms=0&number='.$mobileno.'&text='.$your.'+'.$fit.'+'.$otp.'+'.$is.'&route=6')->get(); 
     echo 'yes';
   }
 

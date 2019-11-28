@@ -124,7 +124,7 @@ class NotificationController extends Controller
 
     public function editsms(Request $request){
 
-    	$msg = Message::where('editablestatus',1)->get()->all();
+    	$msg = Message::get()->all();
 
     	if ($request->isMethod('post')) {
 

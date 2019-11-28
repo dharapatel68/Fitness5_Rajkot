@@ -122,6 +122,7 @@ Mo. : 0281 2583005/2587005 <br></font>
                         <?php 
                             $discount_amount = $payment1->schemebaseprice - $discount;
                             $total_amount = $discount_amount + $payment1->taxamount;
+                            $total_amount= round($total_amount);
 
                         ?>
                         </td>

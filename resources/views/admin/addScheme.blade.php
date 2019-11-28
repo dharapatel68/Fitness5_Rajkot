@@ -164,7 +164,7 @@
      var result = parseFloat((parseInt($("#BasePrice").val()) / 100) * parseInt($("#Tax").val()));
      var sum=parseFloat(0);
       sum=parseFloat((parseInt($("#BasePrice").val()))+result);
-            $('#ActualPrice').val(Math.round(sum) || ''); //shows value in "#rate"
+            $('#ActualPrice').val((sum).toFixed(2) || ''); //shows value in "#rate"
   }
 
    });
@@ -184,7 +184,7 @@
      // var sum = parseFloat(0);
      //  sum = parseFloat((parseInt($("#ActualPrice").val()))-result);
      //        $('#BasePrice').val(sum || ''); //shows value in "#rate"
-   $('#BasePrice').val(Math.round(sum) || ''); 
+   $('#BasePrice').val((sum).toFixed(2) || ''); 
    }
    });
 </script>
