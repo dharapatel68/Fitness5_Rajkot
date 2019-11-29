@@ -1084,6 +1084,25 @@
       </li>
       </li>
       @endif
+  <!--      <li class="treeview">
+         <a href="#">
+         <i class="fa fa-dot-circle-o"></i>
+         <span>
+         <b>Trainer Module</b>
+         </span>
+         <span class="pull-right-container">
+         <i class="fa fa-angle-left pull-right"></i>
+         </span>
+         </a>
+         <ul class="treeview-menu ">
+            <li>
+               <a href="{{ url('addtrainerprofile') }}">
+                  <i class="fa fa-chevron-right"></i>Add Trainer Profile
+               </a>
+            </li>
+          
+         </ul>
+      </li> -->
      {{--  <li class="treeview">
          <a href="#">
          <img src="{{ asset('images/icon/hr.png') }}" style="height: 22px; width: 22px;margin-left: -3px;">&nbsp;&nbsp;
