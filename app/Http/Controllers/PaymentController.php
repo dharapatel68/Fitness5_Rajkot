@@ -469,10 +469,10 @@ class PaymentController extends Controller
 $gstno='';
 
 
-      if($amount_paid > $total_amount_calculation){
+     /* if($amount_paid > $total_amount_calculation){
         return redirect()->route('assignPackageOrRenewalPackage')->with('message', 'Amount to be paid is greater then total amount. please enter vaild details.');
       }
-
+*/
       //dd('sfsdfsdf');
 
       // if refersh page the redirect orderform start
