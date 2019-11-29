@@ -138,7 +138,7 @@ class UserController extends Controller
             'mobileno' => $request['mobileno'],
             'password' => $request['password'],
             'photo' => $photo,
-            'fitpin'=>rand(1000, 9999);
+            'fitpin'=>rand(1000, 9999),
             'accountno' => $request['accountNo'],
             'accountname' => $request['accountName'],
             'ifsccode' => $request['IFSCcode'],
