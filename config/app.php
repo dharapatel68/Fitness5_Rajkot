@@ -163,7 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
           //Maatwebsite\Excel\ExcelServiceProvider::class,
           //Barryvdh\DomPDF\ServiceProvider::class,
-         // Shivella\Bitly\BitlyServiceProvider::class,
+        // Shivella\Bitly\BitlyServiceProvider::class,
 
       
         /*
@@ -233,7 +233,7 @@ return [
 		'Curl' => Ixudra\Curl\Facades\Curl::class,
         // 'Excel'     => Maatwebsite\Excel\Facades\Excel::class,
         // 'PDF' => Barryvdh\DomPDF\Facade::class,
-        // 'Bitly' => Shivella\Bitly\Facade\Bitly::class,
+     //'Bitly' => Shivella\Bitly\Facade\Bitly::class,
 
     ],
 

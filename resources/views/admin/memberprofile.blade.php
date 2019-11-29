@@ -1643,7 +1643,8 @@ if(lene.length < 10){
                 @if ($package->status == 1)  
               <td  id="joindate{{$key}}"><input type="date" onkeypress="return false" name=""  value="{{$package->joindate}}" min="<?php echo date("Y-m-d");?>" disabled> </td>
        
-                 <td id="enddate{{$key}}"><input type="date" onkeypress="return false" name="" value="{{$package->expiredate}}" min="<?php echo $package->expiredate;?>" disabled> </td>
+                 <td id="enddate{{$key}}"><input type="date" onkeypress="return false" name="" value="{{$package->expiredate}}" min="<?php echo $package->expiredate;?>" {{ Session::get('role')  == 'admin' ?  '': 'disabled'}}> </td>
+           
                  @else
                 
             <td>{{date('d-m-Y', strtotime($package->joindate))  }}</td>
@@ -1749,7 +1750,7 @@ for(var i=0;i <= key; i++)
              success:function(data)
              {
               
-                location.reload();
+                //location.reload();
                  
             },
 

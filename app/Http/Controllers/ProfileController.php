@@ -811,67 +811,37 @@ public function pinchange($id,Request $request){
 
       $id = $request->get('id');
       $devicemobileno = $request->get('devicemobileno');
-      // $dedate = $request->get('dedate');
-      // $dedate = explode('-', $dedate);
-
-
-    
       $memberpackages = Memberpackages::where('userid',$id)->max('expiredate');
 
-      
-      // $newdate = $memberpackages->expiredate;
       $newdate = explode('-', $memberpackages);
-       // dd($newdate);
-       $portno_const = config('constants.port');
-     // print_r($newdate);exit;
+      // dd($newdate);
+      $portno_const = config('constants.port');
 
-      // $duser = User::where('mobileno',$devicemobileno)->get()->first();
-      // $en = Deviceuser::where('userid',$duser->userid)->get()->first();
+      $action = new Actionlog();
+      $action->user_id = session()->get('admin_id');
+      $action->ip = $request->ip();
+      $action->action_type = 'update';
+      $action->action = 'change package expiry From Member Profile';
+      $action->action_on = $id;
+      $action->save();
+      //dd($portno_const);
 
-       $action = new Actionlog();
-       $action->user_id = session()->get('admin_id');
-       $action->ip = $request->ip();
-       $action->action_type = 'update';
-       $action->action = 'change package expiry From Member Profile';
-       $action->action_on = $id;
-       $action->save();
+      $deviceinfo = DB::table('deviceinfo')
+      ->where('devicetype','independent')
+      ->where('portno', $portno_const)
+      ->first();
+      $url = 'http://'.$deviceinfo->ipaddress.'';
 
-           $deviceinfo = DB::table('deviceinfo')
-                              ->where('devicetype','independent')
-                              ->where('portno', $portno_const)
-                              ->first();
+      $username = $deviceinfo->username;
+      $password = $deviceinfo->password;
 
-
-      try {
-
-                    $url = 'http://'.$deviceinfo->ipaddress.'';
-                
-                    $username = $deviceinfo->username;
-                    $password = $deviceinfo->password;
-
-                    $api = 'http://'.$deviceinfo->ipaddress.':'.$deviceinfo->portno.'/device.cgi/users?action=set&user-id='.$id.'&ref-user-id='.$id.'&validity-enable=1&validity-date-dd='.$newdate[2].'&validity-date-mm='.$newdate[1].'&validity-date-yyyy='.$newdate[0].'';
+      $api = 'http://'.$deviceinfo->ipaddress.':'.$deviceinfo->portno.'/device.cgi/users?action=set&user-id='.$id.'&ref-user-id='.$id.'&validity-enable=1&validity-date-dd='.$newdate[2].'&validity-date-mm='.$newdate[1].'&validity-date-yyyy='.$newdate[0].'';
 
 
-                      $data = ['api' => $api, 'status'=> 0, 'apiuserid' => $id, 'apitype' => 'Extend Expiry From Member Profile', 'response_code' => 0];
-                         
-                         ApiCronJob::insert($data);
+      $data = ['api' => $api, 'status'=> 0, 'apiuserid' => $id, 'apitype' => 'Extend Expiry From Member Profile', 'response_code' => 0];
 
-                     // }
+      ApiCronJob::insert($data);
 
-                     $apitrack = new ApiTrack();
-                      $apitrack->userid = $id;
-                      $apitrack->apitype = 'Extend Expiry From Member Profile';
-                      $apitrack->api = $api;
-                      $apitrack->apiresponse = $response[1];
-                      $apitrack->save();
-
-
-         } catch (\Exception $e) {
-
-              
-                 echo "Your Device Not connected !";
-   
-        }
 
     }
 
