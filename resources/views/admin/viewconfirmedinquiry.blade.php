@@ -235,6 +235,8 @@
 
                             <a href="{{ url('convertmember/'.$inq->inquiriesid) }}" class="check" title="convert into Member"><i class="fa fa-user"></i></a>
 
+                             <!--  <a href="{{ url('sendmemberform/'.$inq->inquiriesid) }}" class="check" title="Send Member Form"><i class="fa fa-times"></i></a> -->
+
                             &nbsp;&nbsp;&nbsp;
 
                             <a href="{{ url('editinquiry/'.$inq->inquiriesid) }}"class="edit" title="Edit Confirm Inquiry"><i class="fa fa-edit"></i></a>

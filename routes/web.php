@@ -691,7 +691,7 @@ Route::any('viewsalary', 'HRController@viewsalary')->name('viewsalary');
 Route::any('viewlockedsalary', 'HRController@viewlockedsalary')->name('viewlockedsalary');
 Route::any('editsalary/{id}', 'HRController@editsalary')->name('editsalary');
 /////////////////////////////////////////////// salary end   ///////////////////////////////////////////////////////////
-
+Route::any('sendmemberform/{id}', 'SendMemberFormController@sendmemberform')->name('sendmemberform');
 
 
 
