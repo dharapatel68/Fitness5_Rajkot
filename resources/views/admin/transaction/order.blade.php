@@ -35,8 +35,8 @@
   border-radius: 50%;
 }
 
-/* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
+/* On mouse-over, add a grey backgceil color */
+.container:hover input ~ .checkmark round{
   background-color: #ccc;
 }
 
@@ -690,17 +690,17 @@ var _token = $('input[name="_token"]').val();
                 $.each(data, function(i, item) {
 
                     let baseprice = item.baseprice;
-                    baseprice_tax = parseFloat((parseInt(baseprice)) / 100) * parseInt(tax);
-                    let baseprice_final = parseFloat(parseInt(baseprice) + parseInt(baseprice_tax));
+                    baseprice_tax = parseFloat((Math.ceil(baseprice)) / 100) * parseInt(tax);
+                    let baseprice_final = parseFloat(Math.ceil(baseprice) + parseInt(baseprice_tax));
 
-                    $('#MembershipAmount').attr("value", item.schemeid).val(parseInt(item.actualprice));
+                    $('#MembershipAmount').attr("value", item.schemeid).val(Math.ceil(item.actualprice));
                     $('#BasePrice').attr("value", item.schemeid).val(parseInt(baseprice));
-                    $('#BasePrice_hidden').attr("value", item.schemeid).val(parseInt(baseprice));
-                    $('#FinalAmount').attr("value", item.schemeid).val(parseInt(baseprice_final));
-                    $('#total_amount').attr("value", item.schemeid).val(parseInt(baseprice_final));
-                    $('#total_hidden').attr("value", item.schemeid).val(parseInt(baseprice_final));
+                    $('#BasePrice_hidden').attr("value", item.schemeid).val(Math.ceil(baseprice));
+                    $('#FinalAmount').attr("value", item.schemeid).val(Math.ceil(baseprice_final));
+                    $('#total_amount').attr("value", item.schemeid).val(Math.ceil(baseprice_final));
+                    $('#total_hidden').attr("value", item.schemeid).val(Math.ceil(baseprice_final));
                     $('#amount_paid').val('');
-                    $('#remainingamount').val(parseInt(baseprice_final));
+                    $('#remainingamount').val(Math.ceil(baseprice_final));
 
                     var x = document.getElementById("startingdate").value;
 
@@ -964,14 +964,14 @@ function calculate(){
 
         if(Number(discount) <= Number(baseprice)){
           calculate_discount = baseprice - discount;
-          $('#total_amount').val(parseInt(Number(calculate_discount)));
+          $('#total_amount').val(Math.ceil(Number(calculate_discount)));
 
 
           //start of amount to be paid > 0
           let updated_total_amount = $('#total_amount').val();
           if(amount_paid > 0 && amount_paid <= updated_total_amount){
             let paid_remaining = updated_total_amount - amount_paid;
-            $('#remainingamount').val(parseInt(paid_remaining));
+            $('#remainingamount').val(Math.ceil(paid_remaining));
             let update_remainingamount = $('#remainingamount').val();
             if(update_remainingamount == 0){
               $('#save').removeAttr('disabled');
@@ -993,9 +993,9 @@ function calculate(){
           } else if(amount_paid > updated_total_amount){
             alert('Please enter valid paid amount');
             $('#amount_paid').val('');
-            $('#remainingamount').val(parseInt(Number(calculate_discount)));
+            $('#remainingamount').val(Math.ceil(Number(calculate_discount)));
           } else {
-            $('#remainingamount').val(parseInt(Number(calculate_discount)));
+            $('#remainingamount').val(Math.ceil(Number(calculate_discount)));
 
             let update_remainingamount = $('#remainingamount').val();  
             if(update_remainingamount == 0){
@@ -1028,7 +1028,7 @@ function calculate(){
         let updated_total_amount = $('#total_amount').val();
          if(amount_paid > 0 && amount_paid <= updated_total_amount){
             let paid_remaining = updated_total_amount - amount_paid;
-            $('#remainingamount').val(parseInt(paid_remaining));
+            $('#remainingamount').val(Math.ceil(paid_remaining));
             let update_remainingamount = $('#remainingamount').val();
             if(update_remainingamount == 0){
               $('#save').removeAttr('disabled');
@@ -1050,9 +1050,9 @@ function calculate(){
           } else if(amount_paid > updated_total_amount){
             alert('Please enter valid paid amount');
             $('#amount_paid').val('');
-            $('#remainingamount').val(parseInt(Number(baseprice)));
+            $('#remainingamount').val(Math.ceil(Number(baseprice)));
           } else {
-            $('#remainingamount').val(parseInt(Number(baseprice)));
+            $('#remainingamount').val(Math.ceil(Number(baseprice)));
 
             let update_remainingamount = $('#remainingamount').val();  
             if(update_remainingamount == 0){
@@ -1073,8 +1073,8 @@ function calculate(){
               }
             } 
           }
-        //$('#FinalAmount').val(Math.round(Number(baseprice)));
-        //$('#remainingamount').val(Math.round(Number(baseprice)));
+        //$('#FinalAmount').val(Math.ceil(Number(baseprice)));
+        //$('#remainingamount').val(Math.ceil(Number(baseprice)));
 
         let update_remainingamount = $('#remainingamount').val();  
         if(update_remainingamount == 0){
@@ -1103,19 +1103,19 @@ function calculate(){
       $('#FinalAmount').val(parseInt(baseprice));
       if(Number(discount) > 100){
         $('#Discount1').val('');
-        $('#remainingamount').val(parseInt(baseprice));
-        $('#total_amount').val(parseInt(baseprice));
+        $('#remainingamount').val(Math.ceil(baseprice));
+        $('#total_amount').val(Math.ceil(baseprice));
         alert('Discount should not be greater than 100');
       } else {
         let baseamount_disount_cal = Number((baseprice/100)) * Number(discount);
         let percentage_discount = baseprice - baseamount_disount_cal;
-        $('#total_amount').val(parseInt(percentage_discount));
+        $('#total_amount').val(Math.ceil(percentage_discount));
 
         let updated_total_amount = $('#total_amount').val();
 
         if(amount_paid > 0 && amount_paid <= updated_total_amount){
           let paid_remaining = updated_total_amount - amount_paid;
-          $('#remainingamount').val(parseInt(paid_remaining));
+          $('#remainingamount').val(Math.ceil(paid_remaining));
 
           let update_remainingamount = $('#remainingamount').val();  
           if(update_remainingamount == 0){
@@ -1140,10 +1140,10 @@ function calculate(){
 
           alert('Please enter valid paid amount');
           $('#amount_paid').val('');
-          $('#remainingamount').val(parseInt(Number(percentage_discount)));
+          $('#remainingamount').val(Math.ceil(Number(percentage_discount)));
 
         } else {
-          $('#remainingamount').val(parseInt(Number(percentage_discount)));
+          $('#remainingamount').val(Math.ceil(Number(percentage_discount)));
 
           let update_remainingamount = $('#remainingamount').val();
           if(update_remainingamount == 0){
@@ -1180,7 +1180,7 @@ function calculate(){
       let discount_tax = Number(Number(baseprice/100)) * Number(tax);
       let final_amount_tax = Number(baseprice) + Number(discount_tax);
       
-      $('#FinalAmount').val(parseInt(final_amount_tax));
+      $('#FinalAmount').val(Math.ceil(final_amount_tax));
     //if rs checked
     if(rs == true){
       if(discount > 0){
@@ -1190,14 +1190,14 @@ function calculate(){
           let discount_tax = Number(Number(calculate_discount/100)) * Number(tax);
           let final_amount_tax = Number(calculate_discount) + Number(discount_tax);
           console.log(final_amount_tax); 
-          $('#total_amount').val(parseInt(Number(final_amount_tax)));
+          $('#total_amount').val(Math.ceil(Number(final_amount_tax)));
 
 
           //start of amount to be paid > 0
           let updated_total_amount = $('#total_amount').val();
           if(amount_paid > 0 && amount_paid <= updated_total_amount){
             let paid_remaining = updated_total_amount - amount_paid;
-            $('#remainingamount').val(parseInt(paid_remaining));
+            $('#remainingamount').val(Math.ceil(paid_remaining));
             let update_remainingamount = $('#remainingamount').val();
             if(due_date.length > 0 || update_remainingamount == 0){
               $('#save').removeAttr('disabled');
@@ -1219,10 +1219,10 @@ function calculate(){
           } else if(amount_paid > updated_total_amount){
             alert('Please enter valid paid amount');
             $('#amount_paid').val('');
-            $('#remainingamount').val(parseInt(Number(final_amount_tax)));
+            $('#remainingamount').val(Math.ceil(Number(final_amount_tax)));
           } 
           else {
-            $('#remainingamount').val(parseInt(Number(final_amount_tax)));
+            $('#remainingamount').val(Math.ceil(Number(final_amount_tax)));
 
             let update_remainingamount = $('#remainingamount').val();  
             if(update_remainingamount == 0){
@@ -1246,19 +1246,19 @@ function calculate(){
           //end of amount to be paid > 0
         } else {
           $('#Discount1').val('');
-          $('#remainingamount').val(parseInt(finalamount));
-          $('#total_amount').val(parseInt(finalamount));
+          $('#remainingamount').val(Math.ceil(finalamount));
+          $('#total_amount').val(Math.ceil(finalamount));
           alert('Amount shoud not be greater than Base Amount');
         }// end of Number(discount) < Number(baseprice)  
       }// end of discount > 0
       else{
         discount = 0;
-        $('#total_amount').val(parseInt(final_amount_tax));
+        $('#total_amount').val(Math.ceil(final_amount_tax));
         let updated_total_amount = $('#total_amount').val();
 
         if(amount_paid > 0 && amount_paid <= updated_total_amount){
           let paid_remaining = updated_total_amount - amount_paid;
-          $('#remainingamount').val(parseInt(paid_remaining));
+          $('#remainingamount').val(Math.ceil(paid_remaining));
           let update_remainingamount = $('#remainingamount').val();
           if(update_remainingamount == 0){
             $('#save').removeAttr('disabled');
@@ -1280,11 +1280,11 @@ function calculate(){
         }else if(amount_paid > updated_total_amount){
           alert('Please enter valid paid amount');
           $('#amount_paid').val('');
-          $('#remainingamount').val(parseInt(Number(final_amount_tax)));
+          $('#remainingamount').val(Math.ceil(Number(final_amount_tax)));
         }else { 
-          $('#FinalAmount').val(parseInt(Number(final_amount_tax)));
-          $('#remainingamount').val(parseInt(Number(final_amount_tax)));
-          $('#total_amount').val(parseInt(Number(final_amount_tax)));
+          $('#FinalAmount').val(Math.ceil(Number(final_amount_tax)));
+          $('#remainingamount').val(Math.ceil(Number(final_amount_tax)));
+          $('#total_amount').val(Math.ceil(Number(final_amount_tax)));
 
           let update_remainingamount = $('#remainingamount').val();  
           if(update_remainingamount == 0){
@@ -1315,8 +1315,8 @@ function calculate(){
       if(Number(discount) > 100){
 
         $('#Discount1').val('');
-        $('#remainingamount').val(parseInt(finalamount));
-        $('#total_amount').val(parseInt(finalamount));
+        $('#remainingamount').val(Math.ceil(finalamount));
+        $('#total_amount').val(Math.ceil(finalamount));
         alert('Discount should not be greater than 100');
       } else {
         let baseamount_disount_cal = Number((baseprice/100)) * Number(discount);
@@ -1325,12 +1325,12 @@ function calculate(){
         
         let final_amount_tax = Number(percentage_discount) + Number(discount_tax); 
         
-        $('#total_amount').val(parseInt(final_amount_tax));
+        $('#total_amount').val(Math.ceil(final_amount_tax));
 
         let updated_total_amount = $('#total_amount').val();
         if(amount_paid > 0 && amount_paid <= updated_total_amount){
           let paid_remaining = updated_total_amount - amount_paid;
-          $('#remainingamount').val(parseInt(paid_remaining));
+          $('#remainingamount').val(Math.ceil(paid_remaining));
           let update_remainingamount = $('#remainingamount').val();
           if(update_remainingamount == 0){
             $('#save').removeAttr('disabled');
@@ -1354,9 +1354,9 @@ function calculate(){
         } else if(amount_paid > updated_total_amount){
           alert('Please enter valid paid amount');
           $('#amount_paid').val('');
-          $('#remainingamount').val(parseInt(Number(final_amount_tax)));
+          $('#remainingamount').val(Math.ceil(Number(final_amount_tax)));
         } else {
-          $('#remainingamount').val(parseInt(Number(final_amount_tax))); 
+          $('#remainingamount').val(Math.ceil(Number(final_amount_tax))); 
 
           let update_remainingamount = $('#remainingamount').val();  
           if(update_remainingamount == 0){

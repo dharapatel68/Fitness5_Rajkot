@@ -694,6 +694,7 @@ class InquiryOneController extends Controller
         $msg =$msg->message;
         $msg = str_replace("[FirstName]",$firstname,$msg);
         $msg= str_replace("[LastName]",$lastname,$msg);
+        $msg= str_replace("[Poc]",$request->input('poc'),$msg);
 
         // $nmd = [
         //   'mobileno' => $mobileno,
