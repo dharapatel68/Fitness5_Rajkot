@@ -3930,11 +3930,6 @@ var names = $.map(files, function(val) { return val.name; });
                   var save= JSON.stringify(filesname);
              $('#allfiles').val(save);
 
-             //    var ap=' <li class="li1"><a class="files" >'+fname+'</a><span class="closebtns">&times;</span></li>';
-             // $('.li1:last').after(ap); 
-           
-
-   
             }
         }
 

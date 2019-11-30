@@ -693,6 +693,6 @@ Route::any('editsalary/{id}', 'HRController@editsalary')->name('editsalary');
 /////////////////////////////////////////////// salary end   ///////////////////////////////////////////////////////////
 Route::any('sendmemberform/{id}', 'SendMemberFormController@sendmemberform')->name('sendmemberform');
 Route::any('addtrainerprofile', 'TrainerProfileController@addtrainerprofile')->name('addtrainerprofile');
-
+Route::any('viewtrainers', 'TrainerProfileController@viewtrainers')->name('viewtrainers');
 
 //////////////////////////////////////////// HR Module End ///////////////////////////////////////////////////////////

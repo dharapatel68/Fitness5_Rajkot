@@ -267,7 +267,7 @@ h4 b{
             <div class="col-md-6 col-md-offset-2">
              <label for="PackageInterestedIn">Assign To</label>
               <select class="form-control" name="assign">
-                  <option value="Vicky Shah">Vicky Shah</option>                      
+                  <option value="admin">admin</option>                      
               </select>
             </div>
           </div>

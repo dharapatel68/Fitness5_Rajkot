@@ -23,7 +23,7 @@
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css') }}">
  <link rel="stylesheet" href=" {{ asset('bower_components/select2/dist/css/select2.min.css') }}">
- <link rel="stylesheet" href="{{ asset('bower_components/select2/dist/css/select2.min.css') }}">
+
  
 <!-- <link rel="stylesheet" href="{{ asset('bower_components/bootstrap/dist/css/jquery.dataTables.css') }}" /> -->
 <!-- <link rel="stylesheet" href="{{ asset('bower_components/bootstrap/dist/css/dataTables.responsive.css') }}" /> -->
