@@ -640,7 +640,22 @@ Route::any('searchapi', 'DeviceController@searchapi')->name('searchapi');
 Route::any('todaymember', 'AdminController@todaymember')->name('todaymember');
 
 
+/********************Expense*************************************/
+Route::any('editExpenseitem/{id}', 'ExpenseController@editExpenseitem');
+Route::any('editExpenseitems/{id}', 'ExpenseController@editExpenseitems');
+Route::any('viewexpense', 'ExpenseController@index');
+Route::any('addbank', 'ExpenseController@addbank');
+Route::any('viewbank', 'ExpenseController@viewbank');
+Route::any('editbank/{id}', 'ExpenseController@editbank');
+Route::any('viewexpenses', 'ExpenseController@viewDietitem1');
 
+Route::any('addexpense', 'ExpenseController@addDietitem');
+
+/*******************\End *reg route *dhara*********************************/
+Route::any('addexpenses', 'ExpenseController@addDietitem1');
+Route::any('monthlyreport', 'ExpenseController@monthlyreport');
+Route::any('/expensegstreport/excel', 'ExpenseController@expensegstreport')->name('expensegstreport.excel');
+/*********************End **Expense**********************************/
 
 
 
@@ -694,5 +709,8 @@ Route::any('editsalary/{id}', 'HRController@editsalary')->name('editsalary');
 Route::any('sendmemberform/{id}', 'SendMemberFormController@sendmemberform')->name('sendmemberform');
 Route::any('addtrainerprofile', 'TrainerProfileController@addtrainerprofile')->name('addtrainerprofile');
 Route::any('viewtrainers', 'TrainerProfileController@viewtrainers')->name('viewtrainers');
+Route::any('viewtrainerprofile/{id}', 'TrainerProfileController@viewtrainerprofile')->name('viewtrainerprofile');
 
+
+Route::any('activityreport', 'ActivityReportController@activityreport')->name('activityreport');
 //////////////////////////////////////////// HR Module End ///////////////////////////////////////////////////////////

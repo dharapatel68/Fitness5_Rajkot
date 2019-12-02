@@ -691,10 +691,10 @@ var _token = $('input[name="_token"]').val();
 
                     let baseprice = item.baseprice;
                     baseprice_tax = parseFloat((Math.ceil(baseprice)) / 100) * parseInt(tax);
-                    let baseprice_final = parseFloat(Math.ceil(baseprice) + parseInt(baseprice_tax));
+                    let baseprice_final = parseFloat(Math.ceil(baseprice) + Number(baseprice_tax));
 
                     $('#MembershipAmount').attr("value", item.schemeid).val(Math.ceil(item.actualprice));
-                    $('#BasePrice').attr("value", item.schemeid).val(parseInt(baseprice));
+                    $('#BasePrice').attr("value", item.schemeid).val(Math.ceil(baseprice));
                     $('#BasePrice_hidden').attr("value", item.schemeid).val(Math.ceil(baseprice));
                     $('#FinalAmount').attr("value", item.schemeid).val(Math.ceil(baseprice_final));
                     $('#total_amount').attr("value", item.schemeid).val(Math.ceil(baseprice_final));
@@ -909,7 +909,7 @@ function changedate(){
 
 
         var x = document.getElementById("startingdate").value;
-        
+        x.innerHTML = formatDate(d, "dddd h:mmtt d MMM yyyy");
         var date = new Date(x);
 
         var days=item.numberofdays-1;
@@ -1189,7 +1189,7 @@ function calculate(){
           let calculate_discount = baseprice - discount;
           let discount_tax = Number(Number(calculate_discount/100)) * Number(tax);
           let final_amount_tax = Number(calculate_discount) + Number(discount_tax);
-          console.log(final_amount_tax); 
+         
           $('#total_amount').val(Math.ceil(Number(final_amount_tax)));
 
 
@@ -1319,12 +1319,13 @@ function calculate(){
         $('#total_amount').val(Math.ceil(finalamount));
         alert('Discount should not be greater than 100');
       } else {
+        alert('dfdvd');
         let baseamount_disount_cal = Number((baseprice/100)) * Number(discount);
         let percentage_discount = baseprice - baseamount_disount_cal;
         let discount_tax = Number(Number(percentage_discount/100)) * Number(tax);
         
         let final_amount_tax = Number(percentage_discount) + Number(discount_tax); 
-        
+        console.log('dsfsfdsf'+final_amount_tax);
         $('#total_amount').val(Math.ceil(final_amount_tax));
 
         let updated_total_amount = $('#total_amount').val();

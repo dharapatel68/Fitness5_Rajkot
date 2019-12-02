@@ -550,8 +550,11 @@ public function ajaxgetjoindate(Request $request){
         else
         {
           DB::enableQueryLog();
+
+          $employee= DB::table('employee')->where('employeeid',$request->trainerid)->get()->first();
+      
           $member=DB::table('member')->where(['memberid'=>$request->memberid])->get();
-          if($request->ptp==$member[0]->memberpin)
+          if($request->ptp==$employee->fitpin)
           {
             $query=DB::table('ptmember')->where(['trainerid'=>$request->trainerid,'memberid'=>$request->memberid,'status'=>'Active'])->where('hoursfrom','!=','')->orderBy('date','ASC')->first();
 
@@ -561,7 +564,9 @@ public function ajaxgetjoindate(Request $request){
              $session =  DB::table('memberpackages')->leftJoin('schemeterms','memberpackages.schemeid','=','schemeterms.schemeid')->where('memberpackages.memberpackagesid', '=', $request->packageid)->where('schemeterms.termsid','2')->get();
 
             $schemes =  DB::table('schemes')->leftJoin('memberpackages','memberpackages.schemeid','=','schemes.schemeid')->where('memberpackages.memberpackagesid', '=', $request->packageid)->get();
-            // 
+            //echo 
+          
+            
             if(count($ptlevel)==0 || count($session)==0 || count($schemes)==0)
             {
               // dd(count($ptlevel));

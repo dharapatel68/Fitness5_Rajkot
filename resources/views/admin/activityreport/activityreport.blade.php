@@ -7,8 +7,6 @@
 	}
 td{
 	max-width: 10%;
-   word-break: break-all  !important;
-
 }
 table td{
   width: 10% !important;
@@ -30,14 +28,14 @@ table td{
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-     	 <h1 style="text-decoration: none;">All Trainers</h1>
+     	 <h1 style="text-decoration: none;">Activity Report</h1>
      </section>
       <section class="content">
       <!-- Info boxes -->
      	 <div class="row">
      	 	<div class="col-md-12">
      	 		<div class="row">
-     	 		<!-- 	<div class="box box-info">
+     	 			<div class="box box-info">
      	 				 <div class="box-header with-border">
 			              <h3 class="box-title">Filters</h3>
 
@@ -48,8 +46,8 @@ table td{
 			              </div>
 			            </div>
 			            <!-- /.box-header -->
-			             <!-- <div class="box-body">
-			            	<form action="{{url('memberreport')}}" method="post">
+			            <div class="box-body">
+			            	<form action="{{url('activityreport')}}" method="post">
 			            		{{csrf_field()}}
 							<div class="table-responsive">
 							  <table class="table no-margin">
@@ -72,21 +70,22 @@ table td{
 					
 							<td><select name="username" class="form-control select2 span8" data-placeholder="Select a Username" >
 								<option value="" selected="" disabled="">Select a Username</option>
-						
+								@foreach($users as $user)
 
-								<option value=""  @if(isset($query['username'])) {{$query['username'] == $user->userid ? 'selected':''}} @endif>
+								<option value="{{$user->userid}}"  @if(isset($query['username'])) {{$query['username'] == $user->userid ? 'selected':''}} @endif>
 									
-							
+									{{ $user->first_name }} {{ $user->last_name }} 
+              
 							
 									 </option>
-			</select></td>
+									@endforeach</select></td>
                     <td><input type="text" name="keyword" placeholder="Search Keyword" class="form-control" value="{{$query['keyword']}}"></td>
 								
 							
 							</tr>
 							<tr>
 							
-								<td style="text-align: left" colspan="4"><button type="submit" name="search" class="btn bg-orange"><i class="fa fa-filter"></i>   Filters</button><a href="{{ url('memberreport') }}" class="btn bg-red">Clear</a></td>
+								<td style="text-align: left" colspan="4"><button type="submit" name="search" class="btn bg-orange"><i class="fa fa-filter"></i>   Filters</button><a href="{{ url('activityreport') }}" class="btn bg-red">Clear</a></td>
 								
 							</tr>
 							
@@ -97,7 +96,7 @@ table td{
 							</div>
 						</form>
 			            </div>	
-     	 			</div> -->
+     	 			</div>
      	 			<div class="box box-info">
             <div class="box-header with-border">
               <h3 class="box-title"></h3>
@@ -110,33 +109,25 @@ table td{
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <div class="table-responsive" style="word-wrap: break-word;">
+              <div class="table-responsive">
                 <table class="table no-margin">
                   <thead>
                   <tr>
-                    <th>View</th>
-                  	<th>Employee</th>
-                    <th>Level Of Trainer</th>
-                    <th>City</th>
-                    <th>Experiance</th>
-                    <th>Achievments</th>
-                    <th>Free Slots</th>
-                    <th>Photo</th>
-                    <th>Results</th>
+                  	<th>Date</th>
+                    <th>User</th>
+                    <th>Action</th>
+                    
+
                   </tr>
                   </thead>
                   <tbody>
                     @foreach($data as $data1)  
                      <tr>
-                      <td><a href="{{url('viewtrainerprofile/'.$data1->trainerprofileid)}}"><i class="fa fa-eye"></i></td>
-                        <td>{{$data1->first_name}} {{$data1->last_name}}</td>
-                        <td>{{$data1->leveloftrainer}}</td>
-                        <td>{{$data1->city}}</td>
-                        <td>{{$data1->exp }} </td>
-                        <td>{{$data1->achievments }}</td>
-                        <td>{{$data1->freeslots }}</td>
-                        <td>{{$data1->photo }}</td>
-                        <td  style="width: 10px !important ;">{{$data1->results }}</td> 
+
+                      <td>{{date('d-m-Y', strtotime($data1->created_at))}}</td>
+                       <td>{{ $user->first_name }} {{ $user->last_name }} </td>
+                        <td>{{$data1->details}}</td>
+                          
                      </tr>
      		           @endforeach
 

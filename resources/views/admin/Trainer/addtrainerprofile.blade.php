@@ -33,6 +33,13 @@ table td{
      	 <h1 style="text-decoration: none;">Trainer Profile</h1>
      </section>
       <section class="content">
+       
+            @if($errors->any())
+          <div class="alert alert-danger alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button> 
+             <strong>{{$errors->first()}}</strong>
+          </div>
+        @endif 
       <!-- Info boxes -->
       <div class="row">
         <div class="col-md-12">
@@ -112,6 +119,7 @@ table td{
                         <input type="text" name="slots" class="form-control">
                         </div>
                       </div>
+                      
                       <div class="form-group">
                         <label for="results" class="col-sm-4 control-label">Photo</label>
                         <div class="col-sm-8">
