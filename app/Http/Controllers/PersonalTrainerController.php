@@ -482,6 +482,7 @@ public function ajaxgetjoindate(Request $request){
 
     public function claimptsession(Request $request){
       $msg='';
+     
       if($request->has('tid'))
       {
         $ptmember=DB::table('ptmember')->where(['trainerid'=>$request->tid,'memberid'=>$request->memberid,'status'=>'Active'])->where('hoursfrom','!=','')->orderBy('date','ASC')->first();
@@ -491,8 +492,9 @@ public function ajaxgetjoindate(Request $request){
       if($request->has('ptid'))
       {
         $member=DB::table('ptmember')->where(['ptmemberid'=>$request->ptid])->first();
+        $trainer=DB::table('employee')->where('employeeid',$member->trainerid)->get()->first();
        $member=DB::table('member')->where(['memberid'=>$member->memberid])->get();
-        if($request->ptp==$member[0]->memberpin)
+        if($request->ptp==$trainer->fitpin)
         {
           // echo "hi";
           $update=['status'=>'Conducted'];
