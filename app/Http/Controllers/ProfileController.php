@@ -99,7 +99,7 @@ class ProfileController extends Controller
     $payment = Payment::where('memberid',$id)->where('mode','!=', 'total')->whereIn('invoicetype',['m','o'])->where('status', 1)->get()->all();
    
     
-    $packages = MemberPackages::with('Scheme')->where('userid',$member->userid)->where('status','!=',0)->get()->all();
+    $packages = MemberPackages::with('Scheme')->where('userid',$member->userid)->get()->all();
 $packages;
 
     $lastpackage = MemberPackages::with('Scheme')->where('userid',$member->userid)->where('status',1)->max('expiredate');

@@ -10,6 +10,13 @@ use DB;
 use Hash;
 use App\Employee;
 use App\Deviceuser;
+use App\Actionlog;
+use App\Smssetting;
+use Ixudra\Curl\Facades\Curl;
+use App\Notificationmsgdetails;
+use App\Emailsetting;
+use Session;
+use App\Notify;
 
 class UserController extends Controller
 {	
@@ -394,4 +401,116 @@ class UserController extends Controller
 
     }
     }
+    public function employeepinchange($id,Request $request){
+
+      $cn1 = $request->input('cn1');
+      $cn2 = $request->input('cn2');
+      $cn3 = $request->input('cn3');
+      $cn4 = $request->input('cn4');
+
+      $cns = $cn1.$cn2.$cn3.$cn4;
+
+      $change = Employee::findOrFail($id);
+      $userid= $change->userid;
+      $change->fitpin = $cns;
+      $change->save();
+
+      $email = $change->email;
+
+      /**logs for pin change **/
+     $last_id = $change->userid;
+     $action = new Actionlog();
+     $action->user_id = session()->get('admin_id');
+     $action->ip = $request->ip();
+     $action->action_type = 'update';
+     $action->action = 'Employee';
+     $action->action_on = $last_id;
+     $action->save();
+      /**End logs for pin change **/
+
+      $mobileno= $change->mobileno;
+      $fname=$change->first_name;
+      $lname=$change->last_name;
+      $fname=ucfirst($fname);
+      $lname=ucfirst($lname);
+
+        $msgformemberpin =  DB::table('messages')->where('messagesid','16')->get()->first();
+        $msgformemberpin =$msgformemberpin->message;
+        $msgformemberpin = str_replace("[firstname]",$fname,$msgformemberpin);
+        $msgformemberpin= str_replace("[lastname]",$lname,$msgformemberpin);
+        $msgformemberpin= str_replace("[pin]",$cns,$msgformemberpin);
+        $msgformemberpin2=$msgformemberpin;
+        $msgformemberpin = urlencode($msgformemberpin);
+
+         $smssetting = Smssetting::where('status',1)->where('smsonoff','Active')->first();
+
+         if ($smssetting) {
+           
+         $u = $smssetting->url;
+         $url= str_replace('$mobileno', $mobileno, $u);
+         $url=str_replace('$msg', $msgformemberpin, $url);
+
+        $otpsend = Curl::to($url)->get();
+        
+        $action = new Notificationmsgdetails();
+        $action->user_id = session()->get('admin_id');
+        $action->mobileno = $mobileno;
+        $action->smsmsg = $msgformemberpin2;
+        $action->smsrequestid = $otpsend;
+        $action->subject = 'Member FitPin Change';
+        $action->save();
+
+       }
+
+        $emailsetting =  Emailsetting::where('status',1)->first();
+
+        if ($emailsetting) {
+
+        $data = [
+                             //'data' => 'Rohit',
+               'msg' => $msgformemberpin2,
+               'mail'=> $email,
+               'subject' => $emailsetting->hearder,
+               'senderemail'=> $emailsetting->senderemailid,
+            ];
+
+
+        Mail::send('admin.name', ["data1"=>$data], function($message) use ($data){
+
+                $message->from($data['senderemail'], 'Member Pin Change');
+                $message->to($data['mail']);
+                $message->subject($data['subject']);
+
+          });
+
+          $action = new Emailnotificationdetails();
+          $action->user_id = session()->get('admin_id');
+          $action->mobileno = $mobileno;
+          $action->message = $msgformemberpin2;
+          $action->emailform = $data['senderemail'];
+          $action->emailto = $data['mail'];
+          $action->subject = $data['subject'];
+          $action->messagefor = 'Member Pin Change';
+          $action->save();
+
+        }
+
+
+        // $msgformemberpinsend = Curl::to('http://vsms.vr4creativity.com/api/mt/SendSMS?user=feetness5b&password=five@feetb&senderid=FITFIV&channel=Trans&DCS=0&flashsms=0&number='.$mobileno.'&text='.$msgformemberpin.'&route=6')->get(); 
+
+        // $nmdformemberpin = [
+
+        // 'mobileno' => $mobileno,
+        // 'smsmsg' => $msgformemberpin2,
+        // 'mailmsg' => '0',
+        // 'callnotes' => '0',
+        // ];
+        // DB::table('notoficationmsgdetails')->insert($nmdformemberpin);
+         $loginusername= Session::get('username');
+          $notify=Notify::create([
+     'userid'=> $userid,
+     'details'=> ''.$loginusername. ' changed Fit PIN',
+   ]); 
+          return redirect()->back()->with('successmsg','PIN changed Successfully');
+  }
 }

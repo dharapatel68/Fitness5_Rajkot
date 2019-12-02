@@ -1639,7 +1639,7 @@ if(lene.length < 10){
                 @foreach($packages as $key => $package)
               <tr> <td id="packagid"> {{ $package->memberpackagesid }}</td>
                 <td>{{$package->Scheme->schemename}} </td>
-                    <td>@if ($package->status == 1) {{ 'active'}} @endif  @if($package->status == 0) {{'inactive' }} @endif  @if($package->status == 3) {{ 'Tranfered'}} @endif  </td>
+                    <td>@if ($package->status == 1) {{ 'active'}} @endif  @if($package->status == 0) {{'Inactive' }} @endif  @if($package->status == 3) {{ 'Tranfered'}} @endif  </td>
                 @if ($package->status == 1)  
               <td  id="joindate{{$key}}"><input type="date" onkeypress="return false" name=""  value="{{$package->joindate}}" min="<?php echo date("Y-m-d");?>" disabled> </td>
        
@@ -2732,8 +2732,7 @@ for(var i=0;i <= key; i++)
                               </div>
                               <div class="modal-footer">
                                    
-                                    <!-- <button type="button" class="btn bg-orange" id="savenotes">Save</button>
-                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
+                                 
                                   </div>
                              </div>
                             <!-- /.modal-content -->

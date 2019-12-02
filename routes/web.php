@@ -431,6 +431,7 @@ Route::post('/UserController/check', 'UserController@check')->name('UserControll
 Route::get('getnotification',['middleware' => 'admin','as'=>'getnotification','uses'=>'FollowupController@ajaxgetnotification']);
 
 // ------------ Device -------------
+Route::group(['middleware' => ['admin']], function() {
 
 Route::any('adddevice', 'SettingController@adddevice');
 Route::post('setuser','ProfileController@setuser');
@@ -712,5 +713,8 @@ Route::any('viewtrainers', 'TrainerProfileController@viewtrainers')->name('viewt
 Route::any('viewtrainerprofile/{id}', 'TrainerProfileController@viewtrainerprofile')->name('viewtrainerprofile');
 
 
+
 Route::any('activityreport', 'ActivityReportController@activityreport')->name('activityreport');
+});
 //////////////////////////////////////////// HR Module End ///////////////////////////////////////////////////////////
+Route::any('employeepinchange/{id}', 'UserController@employeepinchange')->name('employeepinchange'); 
