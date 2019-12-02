@@ -110,10 +110,10 @@
       <!-- /.box-body -->
     </div>
   </section>
-</div>undefined</div>undefined</div>
+</div></div></div>
 @endsection
 @push('script')
-undefined<script type="text/javascript">
+<script type="text/javascript">
   $(document).ready(function(){
     $('#dietitemform').validate({
     
