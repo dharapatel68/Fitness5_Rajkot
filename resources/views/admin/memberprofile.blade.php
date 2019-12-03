@@ -837,9 +837,17 @@ $(function() {
       </div>
          <!-- ********************for**************************-->
           <div  id="notesall">
+              <div class="box box-body">
+                <center>
+            <a href="{{ url('assignPackageOrRenewalPackage/'.$member->userid) }}" class="btn bg-orange" id="assignpackage">Assign Package</a>
+          </center>
+          </div>
           <div class="box box-primary">
+
+         <!--    <a href="{{ url('assignPackageOrRenewalPackage')}}"> -->
             <div class="box-body content-fit-box">
-            <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal"> + Add Notes</button>
+               
+              <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal"> + Add Notes</button>
             </div>
           </div>
            <?php 
@@ -1635,7 +1643,8 @@ if(lene.length < 10){
                 @if ($package->status == 1)  
               <td  id="joindate{{$key}}"><input type="date" onkeypress="return false" name=""  value="{{$package->joindate}}" min="<?php echo date("Y-m-d");?>" disabled> </td>
        
-                 <td id="enddate{{$key}}"><input type="date" onkeypress="return false" name="" value="{{$package->expiredate}}" min="<?php echo $package->expiredate;?>" disabled> </td>
+                 <td id="enddate{{$key}}"><input type="date" onkeypress="return false" name="" value="{{$package->expiredate}}" min="<?php echo $package->expiredate;?>" {{ Session::get('role')  == 'admin' ?  '': 'disabled'}}> </td>
+           
                  @else
                 
             <td>{{date('d-m-Y', strtotime($package->joindate))  }}</td>
@@ -1671,7 +1680,7 @@ for(var i=0;i <= key; i++)
 
  $('#paymenthistorytable td#joindate'+i).on('change', function () {
 
-console.log("new value : "+$(this).find('input[type=date]').val());
+//console.log("new value : "+$(this).find('input[type=date]').val());
   var newdate = $(this).find('input[type=date]').val();
     var id = "<?php echo $member->userid;?>";
     var devicemobileno = "<?php echo $member->mobileno;?>";
@@ -1741,7 +1750,7 @@ console.log("new value : "+$(this).find('input[type=date]').val());
              success:function(data)
              {
               
-                location.reload();
+                //location.reload();
                  
             },
 
@@ -1904,7 +1913,7 @@ console.log("new value : "+$(this).find('input[type=date]').val());
                                    if(item['checkin'][i].date==item['checkout'][j].date)
                                    {
                                      checkout = item['checkout'][j].time;
-                                     console.log(checkout);
+                                     //console.log(checkout);
 
                                    }
 
@@ -3561,7 +3570,7 @@ textarea.input100 {
 </script>
 <script type="text/javascript">
 $( document ).ready(function() {
-    console.log( "ready!" );
+   // console.log( "ready!" );
 
   var _token = $('input[name="_token"]').val();
       var member = $('#memberidforworkout').val();
@@ -3873,7 +3882,7 @@ $(".submit").click(function(){
 </script>
 <script>
   $(function () {
-    $('#example1').DataTable()
+   // $('#example1').DataTable()
   });
 
 </script>
@@ -3881,7 +3890,7 @@ $(".submit").click(function(){
   <script>
       var  filesname=[];
       var olddata=$('#oldfiles').val();
-console.log(olddata);
+//console.log(olddata);
 if(olddata){
 
 
@@ -3921,11 +3930,6 @@ var names = $.map(files, function(val) { return val.name; });
                   var save= JSON.stringify(filesname);
              $('#allfiles').val(save);
 
-             //    var ap=' <li class="li1"><a class="files" >'+fname+'</a><span class="closebtns">&times;</span></li>';
-             // $('.li1:last').after(ap); 
-           
-
-   
             }
         }
 

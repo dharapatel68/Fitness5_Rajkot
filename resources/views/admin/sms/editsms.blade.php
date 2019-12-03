@@ -175,7 +175,7 @@ li {
                                 
                                 <div class="col-md-8 col-md-offset-1">
                                   <span id="rchars">250</span> Character(s) Remaining
-                                  <textarea class="form-control" rows="5" id="textareasms" required name="textareasms" maxlength="250"></textarea>
+                                  <textarea class="form-control" rows="5" id="textareasms" required name="textareasms" maxlength="250" ></textarea>
                                 </div>
 
                                 
@@ -297,8 +297,11 @@ li {
         typle: 'get',
         data : {_token:'{{ csrf_token() }}',msgid:$('#messagestemplatename').val()},
         success : function(data){
-          // alert(data.message);
+          
           $('#textareasms').val(data.message);
+          if(data.editablestatus != 1){
+              $('#textareasms').attr('readonly',true);
+          }
           $('#csms').prop('checked',data.sms);
           $('#cemail').prop('checked',data.email);
           $('#textareasms').trigger('keyup');

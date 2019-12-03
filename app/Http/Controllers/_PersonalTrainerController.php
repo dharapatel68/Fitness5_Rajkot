@@ -464,7 +464,7 @@ public function ajaxgetjoindate(Request $request){
           {      
              $demo =  DB::table('member')->select('userid')->where('memberid', '=', $member)->get();
              
-             $package = DB::select( DB::raw("SELECT memberpackages.*,schemes.schemeid,schemes.schemename from memberpackages left Join schemes on memberpackages.schemeid=schemes.schemeid where memberpackages.userid='".$demo[0]->userid."' AND memberpackages.status='1' AND schemes.rootschemeid='2'"));
+             $package = DB::select( DB::raw("SELECT memberpackages.*,schemes.schemeid,schemes.schemename from memberpackages left Join schemes on memberpackages.schemeid=schemes.schemeid left Join schemeterms on schemeterms.schemeid=schemes.schemeid where memberpackages.userid='".$demo[0]->userid."' AND memberpackages.status='1' AND schemeterms.value != 0"));
 
              echo json_encode($package);
           }
@@ -513,7 +513,11 @@ public function ajaxgetjoindate(Request $request){
             $query=DB::table('ptmember')->where(['trainerid'=>$request->trainerid,'memberid'=>$request->memberid,'status'=>'Active'])->where('hoursfrom','!=','')->orderBy('date','ASC')->first();
 
              $ptlevel=DB::table('ptassignlevel')->where('trainerid',$request->trainerid)->get();
-
+             if(count($ptlevel) == 0){
+               $msg="Something Went Wrong";
+               
+               return redirect('claimptsession')->withErrors(['msg' => $msg]);
+             } 
              $session =  DB::table('memberpackages')->leftJoin('schemeterms','memberpackages.schemeid','=','schemeterms.schemeid')->where('memberpackages.memberpackagesid', '=', $request->packageid)->where('schemeterms.termsid','2')->get();
 
             $schemes =  DB::table('schemes')->leftJoin('memberpackages','memberpackages.schemeid','=','schemes.schemeid')->where('memberpackages.memberpackagesid', '=', $request->packageid)->get();
@@ -546,8 +550,11 @@ public function ajaxgetjoindate(Request $request){
         else
         {
           DB::enableQueryLog();
+
+          $employee= DB::table('employee')->where('employeeid',$request->trainerid)->get()->first();
+      
           $member=DB::table('member')->where(['memberid'=>$request->memberid])->get();
-          if($request->ptp==$member[0]->memberpin)
+          if($request->ptp==$employee->fitpin)
           {
             $query=DB::table('ptmember')->where(['trainerid'=>$request->trainerid,'memberid'=>$request->memberid,'status'=>'Active'])->where('hoursfrom','!=','')->orderBy('date','ASC')->first();
 
@@ -557,7 +564,9 @@ public function ajaxgetjoindate(Request $request){
              $session =  DB::table('memberpackages')->leftJoin('schemeterms','memberpackages.schemeid','=','schemeterms.schemeid')->where('memberpackages.memberpackagesid', '=', $request->packageid)->where('schemeterms.termsid','2')->get();
 
             $schemes =  DB::table('schemes')->leftJoin('memberpackages','memberpackages.schemeid','=','schemes.schemeid')->where('memberpackages.memberpackagesid', '=', $request->packageid)->get();
-            // 
+            //echo 
+          
+            
             if(count($ptlevel)==0 || count($session)==0 || count($schemes)==0)
             {
               // dd(count($ptlevel));
@@ -1093,7 +1102,7 @@ public function ajaxgetjoindate(Request $request){
              $demo =  DB::table('member')->where('member.status',1)->where('memberid', '=', $member)->get();
         
           $mobileno=$demo[0]->mobileno;
-             $package = DB::select( DB::raw("SELECT memberpackages.*,schemes.schemeid,schemes.schemename from memberpackages left Join schemes on memberpackages.schemeid=schemes.schemeid where memberpackages.userid='".$demo[0]->userid."' AND memberpackages.status='1' AND schemes.rootschemeid='2'"));
+             $package = DB::select( DB::raw("SELECT memberpackages.*,schemes.schemeid,schemes.schemename from memberpackages left Join schemes on memberpackages.schemeid=schemes.schemeid left Join schemeterms on schemeterms.schemeid=schemes.schemeid where memberpackages.userid='".$demo[0]->userid."' AND memberpackages.status='1' AND schemeterms.value != 0"));
              if($package){
                foreach ($package as $key => $value) {
                    $value->mobileno = $mobileno;

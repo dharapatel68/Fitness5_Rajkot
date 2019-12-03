@@ -23,7 +23,7 @@
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css') }}">
  <link rel="stylesheet" href=" {{ asset('bower_components/select2/dist/css/select2.min.css') }}">
- <link rel="stylesheet" href="{{ asset('bower_components/select2/dist/css/select2.min.css') }}">
+
  
 <!-- <link rel="stylesheet" href="{{ asset('bower_components/bootstrap/dist/css/jquery.dataTables.css') }}" /> -->
 <!-- <link rel="stylesheet" href="{{ asset('bower_components/bootstrap/dist/css/dataTables.responsive.css') }}" /> -->
@@ -379,9 +379,9 @@ ul {
 <!-- ChartJS -->
 <script src="{{ asset('bower_components/chart.js/Chart.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{ asset('dist/js/pages/dashboard2.js') }}"></script>
+<!-- <script src="{{ asset('dist/js/pages/dashboard2.js') }}"></script> -->
 <!-- AdminLTE for demo purposes -->
-<script src="{{ asset('dist/js/demo.js') }}"></script>
+<!-- <script src="{{ asset('dist/js/demo.js') }}"></script> -->
 
 
 @include('layouts.adminLayout.admin_header')

@@ -108,44 +108,43 @@ class UserController extends Controller
            return redirect('addUser')->withErrors('User Already Exists');
         }
     
-         if($usr){
-         return redirect()->back()->withErrors('User Already exists');
-         }
-               $role =lcfirst(Role::find($request['Role_id'])->employeerole);
- $password= Hash::make($request['password']);
+        if($usr){
+          return redirect()->back()->withErrors('User Already exists');
+        }
+        $role =lcfirst(Role::find($request['Role_id'])->employeerole);
+        $password= Hash::make($request['password']);
 
-  DB::beginTransaction();
-            try { 
+        DB::beginTransaction();
+          try { 
 
-        $employee=  Employee::create([
+          $employee=  Employee::create([
             'username' => $request['username'],
-               'first_name' => $request['first_name'],
+            'first_name' => $request['first_name'],
             'last_name' => $request['last_name'],
-               'roleid' => $request['Role_id'],
-             'email' => $request['email'],
-             'address'=>$request['add'],
-             'role'=>$role,
-             'city'=>$request['city'],
-             'department'=>$request['department'],
-             'salary'=>$request['salary'],
-      'workinghourfrom1'=>$request['working_hour_from_1'],
-      'workinghourto1'=>$request['working_hour_to_1'],
-      'workinghourfrom2'=>$request['working_hour_from_2'],
-      'workinghourto2'=>$request['working_hour_to_2'],
-      'workinghour'=>$request['workinghour'],
-        
-        'dob'=> $request['dob'],
-             'gender' => $request['gender'],
-             'mobileno' => $request['mobileno'],
-              'password' => $request['password'],
-              'photo' => $photo,
-           
-           'accountno' => $request['accountNo'],
-           'accountname' => $request['accountName'],
-           'ifsccode' => $request['IFSCcode'],
-           'bankname' => $request['BankName'],
-           'branchname' => $request['BranchName'],
-           'branchcode' => $request['BranchCode'],
+            'roleid' => $request['Role_id'],
+            'email' => $request['email'],
+            'address'=>$request['add'],
+            'role'=>$role,
+            'city'=>$request['city'],
+            'department'=>$request['department'],
+            'salary'=>$request['salary'],
+            'workinghourfrom1'=>$request['working_hour_from_1'],
+            'workinghourto1'=>$request['working_hour_to_1'],
+            'workinghourfrom2'=>$request['working_hour_from_2'],
+            'workinghourto2'=>$request['working_hour_to_2'],
+            'workinghour'=>$request['workinghour'],
+            'dob'=> $request['dob'],
+            'gender' => $request['gender'],
+            'mobileno' => $request['mobileno'],
+            'password' => $request['password'],
+            'photo' => $photo,
+            'fitpin'=>rand(1000, 9999),
+            'accountno' => $request['accountNo'],
+            'accountname' => $request['accountName'],
+            'ifsccode' => $request['IFSCcode'],
+            'bankname' => $request['BankName'],
+            'branchname' => $request['BranchName'],
+            'branchcode' => $request['BranchCode'],
               ]);
 
             if($check)

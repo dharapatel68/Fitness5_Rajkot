@@ -365,6 +365,11 @@
                <i class="fa fa-chevron-right"></i> Member Report
                </a>
             </li>
+            <li>
+               <a  href="{{ url('activityreport') }}">
+               <i class="fa fa-chevron-right"></i> Activity Report
+               </a>
+            </li>
             </li>
             @endif
          </ul>
@@ -1084,6 +1089,132 @@
       </li>
       </li>
       @endif
+       <li i class="treeview">
+         <a href="#">
+         <i class="fa fa-dot-circle-o"></i>
+         <span>
+         <b>Trainer Module</b>
+         </span>
+         <span class="pull-right-container">
+         <i class="fa fa-angle-left pull-right"></i>
+         </span>
+         </a>
+         <ul class="treeview-menu ">
+            <li>
+               <a href="{{ url('addtrainerprofile') }}">
+                  <i class="fa fa-chevron-right"></i>Add Trainer Profile
+               </a>
+            </li>
+              <li>
+               <a href="{{ url('viewtrainers') }}">
+                  <i class="fa fa-chevron-right"></i>View Trainer Profile
+               </a>
+            </li>
+          
+         </ul>
+      </li>
+        <li class="treeview">
+               <a href="#">
+                    <i class="fa fa-inr"></i>
+                    <span>
+                      <b>Expense Management</b>
+                    </span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+              <ul class="treeview-menu">
+                <li class="treeview">
+                  <a href="#">
+                     <i class="fa fa-bank"></i>&nbsp;&nbsp;
+                    <span>
+                      <b>Bank Details</b>
+                    </span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu ">
+                    
+                 <li>
+                     <a href="{{ url('addbank') }}">
+                        <i class="fa fa-plus"></i>Add Bank Details
+                      </a>
+                    </li>
+                   
+                    
+                   <li>
+                     <a href="{{ url('viewbank') }}">
+                        <i class="fa fa-eye"></i>View Bank Details
+                      </a>
+                    </li>
+                   
+                  </ul>
+                </li>
+              
+                <li class="treeview">
+                  <a href="#">
+                     <i class="fa fa-list"></i>&nbsp;&nbsp;
+                    <span>
+                      <b>Expense Categories</b>
+                    </span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu ">
+                    
+                 <li>
+                     <a href="{{ url('addexpense') }}">
+                        <i class="fa fa-plus"></i>Add Categories
+                      </a>
+                    </li>
+                   
+                    
+                   <li>
+                     <a href="{{ url('viewexpense') }}">
+                        <i class="fa fa-eye"></i>View Categories
+                      </a>
+                    </li>
+                   
+                  </ul>
+                </li>
+                  <li class="treeview">
+                  <a href="#">
+                   <i class=" fa fa-usd"></i>&nbsp;&nbsp;
+                   <span>
+                      <b>Expenses</b>
+                    </span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu ">
+                    
+                   <li>
+                      <a href="{{ url('addexpenses') }}">
+                        <i class="fa fa-plus"></i>Add Expense
+                      </a>
+                    </li>
+                   
+
+                    <li>
+                      <a href="{{ url('viewexpenses') }}">
+                        <i class="fa fa-eye"></i>View Expense
+                      </a>
+                    </li>
+
+
+                    <li>
+                      <a href="{{ url('monthlyreport') }}">
+                        <i class="fa fa-line-chart"></i>Monthly Report
+                      </a>
+                    </li>
+                 </ul>
+              </li>
+           </ul>
+        </li>
+ 
      {{--  <li class="treeview">
          <a href="#">
          <img src="{{ asset('images/icon/hr.png') }}" style="height: 22px; width: 22px;margin-left: -3px;">&nbsp;&nbsp;

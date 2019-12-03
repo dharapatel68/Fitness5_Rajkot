@@ -363,7 +363,7 @@ class PaymentController extends Controller
     }
 
     public function placeorder(Request $request){
-      
+ 
       $RootSchemeId = !empty($request->RootSchemeId) ? $request->RootSchemeId : 0;
       $schemeid = !empty($request->SchemeID) ? $request->SchemeID : 0;
       $userid = !empty($request->userid) ? $request->userid : 0;
@@ -469,10 +469,10 @@ class PaymentController extends Controller
 $gstno='';
 
 
-      if($amount_paid > $total_amount_calculation){
+     /* if($amount_paid > $total_amount_calculation){
         return redirect()->route('assignPackageOrRenewalPackage')->with('message', 'Amount to be paid is greater then total amount. please enter vaild details.');
       }
-
+*/
       //dd('sfsdfsdf');
 
       // if refersh page the redirect orderform start
@@ -649,6 +649,10 @@ $gstno='';
       if($amount_paid == 0){
 
         $memberData = Member::where('userid', $userid)->first();
+
+         $admin_no = Employee::where('employeeid', $request->admin)->select('mobileno')->first();
+          
+        DB::table('otpverify')->where('mobileno', $admin_no->mobileno)->orderBy('otpverifyid', 'desc')->update(['isexpired' => 1]);
 
          DB::table('otpverify')->where('mobileno', $memberData->mobileno)->orderBy('otpverifyid', 'desc')->update(['isexpired' => 1]);
 

@@ -277,7 +277,7 @@ public function check(Request $request)
 public function checkmobile(Request $request)
 {
   $usermobile=$request->get('usermobile');
-  $row=DB::table('users')->select('mobileno')->where('mobileno','=',$usermobile)->get();
+  $row=DB::table('users')->select('usermobileno')->where('usermobileno','=',$usermobile)->get();
 
   if(count($row)<=0)
   {
