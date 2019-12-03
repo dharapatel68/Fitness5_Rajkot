@@ -30,7 +30,7 @@
   background-color: #f7e5c8;
 }
 
-.close {
+.close1 {
   cursor: pointer;
   position: absolute;
   top: 50%;
@@ -39,7 +39,7 @@
   transform: translate(0%, -50%);
 }
 
-.close:hover {background: #bbb;}
+.close1:hover {background: #bbb;}
 .btn-new:hover{background-color: #ef5a5a;}
 .btn-new{
    background-color: #EEEEEE;
@@ -151,16 +151,12 @@
               
               </div>
               <div class="form-group">
-                <label>Branch Code</label>
-                <input type="text" name="BranchCode" class="form-control"placeholder="branch code"  class="span11" value="{{$user->branchcode}}" />
-                 @if($errors->has('BranchCode'))
-                  
-                <span class="help-block">
-                  <strong>{{ $errors->first('BranchCode') }}</strong>
-                </span>
-                @endif
+               Change PIN:            
+                         <button class="btn bg-orange" type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-new">Edit</button>
+                      </div>
+             
               
-              </div>
+       
               <div class="form-group">
                 <label>Documents Upload</label>
                 <input type="file" name="docs[]"  id="docs" multiple="" class="form-control">
@@ -431,13 +427,70 @@
                             </div>
                             <!-- /.box-body -->
                           </div>
+
                         </section>
                       </div>
                     </div>
                   </div>
+
+<div class="modal fade in" id="modal-new" >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">Edit Member Pin</h4>
+              </div>
+               <div class="modal-body">
+                 <form method="post" action="{{ url('employeepinchange/'.$user->employeeid) }}">
+                                  <div class="form-group ">
+                                    <div class="col-md-10">
+                                      
+                                    <?php
+                                       $p= str_split($user->fitpin);
+                                       $c = ($p>0) ? count($p) : 0 ;
+
+                                        ?>
+
+                                    <div class="row">
+                                     
+
+                                       {{ csrf_field() }}
+                                    <div class="col-md-2">
+                                      <input type="text" class="number form-control" required  maxlength="1" name="cn1" value="{{ !empty($p[0]) ? $p[0] : '0'}}">
+                                    </div>
+                                    <div class="col-md-2">
+                                      
+                                      <input type="text" class="number form-control" required  maxlength="1" name="cn2" value="{{!empty($p[1]) ? $p[1] : '0'}}">
+                                    </div>
+                                    <div class="col-md-2 ">
+                                      <input type="text" class="number form-control" required  maxlength="1" name="cn3" value="{{ !empty($p[2]) ? $p[2] : '0'}}">
+                                    </div>
+                                    <div class="col-md-2 ">
+                                      <input type="text" class="number form-control"  required maxlength="1" name="cn4" value="{{ !empty($p[3]) ? $p[3] : '0'}}">
+                                    </div>
+                                    <div class="col-md-2 ">
+                                                            
+                                    </div>
+                                  </div>
+                              </div><br/>
+                              </div>
+                             <!-- <button type="submit" class="btn bg-orange">Edit</button> -->
+                             </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                <button type="submit" id="employeepinchange" class="btn btn-primary">Save changes</button>
+              </form>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+               
                   <script>
     var  filesname=[];
-var closebtns = document.getElementsByClassName("close");
+var closebtns = document.getElementsByClassName("close1");
 var i;
 
 var olddata=$('#olddocs').val();

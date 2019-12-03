@@ -175,17 +175,21 @@ class TransferMembershipController extends Controller
 
     
 /*********************for timeline entry in notify*****************************************/
-   
+    
+          $actionbyid=Session::get('employeeid');
+    
 
-			  $notify=Notify::create([
+			    $notify=Notify::create([
 	              
 	              'userid'=> $fromuserid,
 	             'details'=>  ''.$loginuser.' had Transfer "' . $value->schemename.'" Package to '.$tousername,
+               'actionby' =>$actionbyid,
 	            ]); 
 			    $notify=Notify::create([
 	              
 	              'userid'=> $touserid,
 	             'details'=>  ''.$loginuser.' had Transfer "' . $value->schemename.'" Package from '.$fromusername,
+               'actionby' =>$actionbyid,
 	            ]); 	 
    		 	}
 

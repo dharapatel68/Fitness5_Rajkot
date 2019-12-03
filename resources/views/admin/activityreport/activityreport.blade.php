@@ -125,7 +125,7 @@ table td{
                      <tr>
 
                       <td>{{date('d-m-Y', strtotime($data1->created_at))}}</td>
-                       <td>{{ $user->first_name }} {{ $user->last_name }} </td>
+                       <td>{{ $data1->first_name }} {{ $data1->last_name }} </td>
                         <td>{{$data1->details}}</td>
                           
                      </tr>

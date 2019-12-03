@@ -20,7 +20,9 @@
     line-height: 1.5em;
     text-transform: uppercase;
 }
-
+.col-md-6{
+    float:inherit !important;
+}
 .name h6 {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -58,7 +60,9 @@
 }
 
 .main-raised {
-    margin: -200px 60px 0;
+    margin-top: -15%;
+    margin-right: 5%;
+    margin-left:5%;
     border-radius: 6px;
     box-shadow: 0 16px 24px 2px rgba(0,0,0,.14), 0 6px 30px 5px rgba(0,0,0,.12), 0 8px 10px -5px rgba(0,0,0,.2);
 }
@@ -371,9 +375,9 @@ footer p a:hover {
                             <!-- <h4 class="text-center text-capitalize">Web Designer & Developer, UX/UI Expert</h4> -->
 
                             <div class="profile-page">
-                                <center>
+                          
                                     <div class="page-header" data-parallax="true" style="background-image: url('/images/fitness5back.jpg');"></div>
-                                </center>
+                               
                                 <div class="main main-raised">
                                     <div class="profile-content">
                                         <div class="container">
@@ -393,7 +397,8 @@ footer p a:hover {
                                                 </div>
                                             </center>
                                             <div class="row">
-                                                <div class="col-md-9 col-sm-10">
+                                                <center>
+                                                <div class="col-xs-12 col-sm-8 col-lg-10 col-10 col-md-8 col-md-offset-1 col-md-offset-0 col-xl-offset-1 ">
                                                     <div class="nav-tabs-custom">
                                                         <center>
                                                             <ul class="nav nav-tabs nav-justified">
@@ -473,8 +478,10 @@ footer p a:hover {
                                                         </div>
                                                         <!-- /.tab-content -->
                                                     </div>
+
                                                     <!-- /.nav-tabs-custom -->
                                                 </div>
+
                           
                                             </div>
 

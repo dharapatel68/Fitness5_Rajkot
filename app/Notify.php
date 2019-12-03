@@ -10,5 +10,5 @@ class Notify extends Model
 	 protected $primaryKey = 'notifyid';
    
    protected $fillable = [
-        'notifyid','userid','details',];
+        'notifyid','userid','details','actionby'];
 }

@@ -744,9 +744,11 @@ $gstno='';
           $scheme_name = $scheme->schemename;
         }
         $loginuser = session()->get('username');
+        $actionbyid=session()->get('employeeid');
           $notify=Notify::create([
            'userid'=> $userid,
            'details'=> ''.$loginuser.' assign package '.$scheme_name,
+           'actionby'=>$actionbyid,
          ]);
 
         if(empty($amount_paid)){
@@ -1066,9 +1068,11 @@ $gstno='';
         $lname = ucfirst($user->lastname);
       }
       $loginuser = session()->get('username');
-      $notify=Notify::create([
+       $actionbyid=session()->get('employeeid');
+       $notify=Notify::create([
        'userid'=> $userid,
        'details'=> ''.$loginuser.' assign package '.$scheme_name,
+        'actionby'=>$actionbyid,
      ]);
 
       //maxexpirydate find start
@@ -1403,9 +1407,12 @@ $gstno='';
 
    
       $loginuser = session()->get('username');
+       $actionbyid=session()->get('employeeid');
+
       $notify=Notify::create([
         'userid'=> $userid,
         'details'=> ''.$loginuser.' take payment of user '.$amount_paid,
+        'actionby'=>$actionbyid,
       ]);
 
       //sms end
@@ -1639,12 +1646,15 @@ $gstno='';
             $check_transaction->transactionstatus = 1;
             $check_transaction->save();
           }
-
+          $actionbyid=session()->get('employeeid');
           $notify=Notify::create([
 
             'userid'=> $userid,
             'details'=> 'User has made Payment 0',
+              'actionby'=>$actionbyid,
           ]);  
+        
+
       // sms end
           $transaction_amount = 0;
           $transactionduedate = '';
@@ -1939,11 +1949,13 @@ $gstno='';
 
       // $otpsend = Curl::to('http://sms.weybee.in/api/sendapi.php?auth_key=2169KrEMnx2ZgAqSfavSSC&mobiles='.$mobileno.'&message='.$msg.'&sender=senderid&route=4')->get(); 
 
-      
+      $actionbyid=session()->get('employeeid');
+        
       $notify=Notify::create([
 
         'userid'=> $userid,
         'details'=> 'User has made Payment '.$transaction_amount,
+        'actionby'=>$actionbyid,
       ]);  
       // sms end
 

@@ -327,10 +327,13 @@ class FreezemembershipController extends Controller
             }
 
             $loginuser = session()->get('username');
+             $actionbyid=Session::get('employeeid');
+
             $notify=Notify::create([
 
                 'userid'=> $userid,
                 'details'=> $loginuser.' freeze membership from '. date('d-m-Y', strtotime($freezedate)),
+                 'actionby' =>$actionbyid,
 
             ]);
 
@@ -536,10 +539,13 @@ class FreezemembershipController extends Controller
 	        }
 
 	        $loginuser = session()->get('username');
+              $actionbyid=Session::get('employeeid');
+
 	        $notify=Notify::create([
 
 	        	'userid'=> $userid,
 	        	'details'=> $loginuser.' freeze membership from '. date('d-m-Y', strtotime($freezedate)),
+                 'actionby' =>$actionbyid,
 
 	        ]);
 
@@ -1026,9 +1032,11 @@ class FreezemembershipController extends Controller
 
 
         $loginuser = session()->get('username');
+        $actionbyid=Session::get('employeeid');
         Notify::create([
             'userid' => $userid,
-            'details' => 'unfreeze by '.$loginuser
+            'details' => 'unfreeze by '.$loginuser,
+             'actionby' =>$actionbyid,
                     ]);
 
         // $deviceip = config('constants.localip');

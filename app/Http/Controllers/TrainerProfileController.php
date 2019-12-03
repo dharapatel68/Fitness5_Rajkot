@@ -11,12 +11,13 @@ class TrainerProfileController extends Controller
 {
     public function addtrainerprofile(Request $request){
     	 if ($request->isMethod('post')){
+
     	 	$messages = [
           'unique' => 'This Trainer already have profile'];
 		  	 $request->validate([
               	'trainerid' => 'required|unique:trainerprofile,employeeid',
-              	'photo' => 'mimes:jpeg,bmp,png|max:2000',
-    			'results.*' => 'mimes:jpeg,bmp,png|max:2000',
+              	'photo' => 'mimes:jpeg,bmp,png|max:4000',
+    			'results.*' => 'mimes:jpeg,bmp,png|max:4000',
             ],$messages);
 
     	 	$trainerprofile=TrainerProfile::create([

@@ -257,6 +257,7 @@ class AdminController extends Controller
             session(['role' =>  $role]);
             session(['employeeid' =>  $employeeid]);
             session(['admin_id' => $u->adminid]);
+            session(['employeeid' => $u->employeeid]);
             session(['permission' =>  $permission]);
           // dd(session());
             return redirect('dashboard');  

@@ -2348,10 +2348,11 @@ class DeviceController extends Controller
      }
 
       $admin = session()->get('username');
-
+      $actionbyid =  session()->get('employeeid');
       Notify::create([
         'userid' =>  $userid,
-        'details' => 'Card assign by '.$admin
+        'details' => 'Card assign by '.$admin,
+        'actionby'=>$actionbyid,
       ]);
 
 

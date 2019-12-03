@@ -22,6 +22,8 @@ class ExercisePlanAssignController extends Controller
               if ($request->isMethod('post')){
              
                   $loginusername= Session::get('username');
+                   $actionbyid=Session::get('employeeid');
+
 
                  
                         $exe= MemberExercise::where('memberid',$request['member'])->get()->all();
@@ -84,6 +86,8 @@ class ExercisePlanAssignController extends Controller
                         Notify::create([
                           'userid'=> $userid,
                            'details'=> ''.$loginusername.' has assign a workout '.$wo->workoutname,
+                            'actionby' =>$actionbyid,
+
          ]);  
 return redirect('assignExercise')->withSuccess('Succesfully added');
               }

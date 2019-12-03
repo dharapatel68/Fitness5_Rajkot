@@ -61,11 +61,14 @@ class PackageController extends Controller
       $edit->expiredate= $enddate;
       $newenddatefornotify=\Carbon\Carbon::parse($edit->expiredate)->format('d-m-Y');
       $edit->save();
+          $actionbyid=Session::get('employeeid');
 
          $notify=Notify::create([
                   
                   'userid'=> $id,
                  'details'=> ''.$loginuser.' changed joindate from '.$olddatefornotify.' to '.$newdatefornotify. ' and  expiredate from '.$oldenddatefornotify.' to '.$newenddatefornotify,
+                 'actionby' =>$actionbyid,
+
                 ]); 
        
 
@@ -86,11 +89,13 @@ class PackageController extends Controller
  $olddatefornotify=\Carbon\Carbon::parse($edit->expiredate)->format('d-m-Y');
       $edit->expiredate = $newdate;
       $edit->save();
+      $actionbyid=Session::get('employeeid');
 
        $notify=Notify::create([
                   
                   'userid'=> $id,
                  'details'=> ''.$loginuser.' changed expiredate from '.$olddatefornotify.' to '.$newdatefornotify,
+                 'actionby' =>$actionbyid,
                 ]); 
 
       echo $edit;
