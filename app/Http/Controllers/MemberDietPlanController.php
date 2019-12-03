@@ -198,9 +198,12 @@ MemberDietPlan::create([
                        $wo= DietPlanname::where('dietplannameid',$request['dietplanname'])->get()->first();
                        $member=Member::where('memberid',$request['member'])->get()->first();
                        $userid=$member->userid;
+                       $actionbyid=Session::get('employeeid');
+
                         Notify::create([
                           'userid'=> $userid,
                            'details'=> ''.$loginusername.' has assign a Diet Plan '.$wo->dietplanname,
+                            'actionby' =>$actionbyid,
          ]);  
 return redirect('assigndiettomember')->withSuccess('Succesfully added');
   }

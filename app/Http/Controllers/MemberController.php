@@ -672,9 +672,13 @@ public function otpverify(Request $request){
       $ep->save();
     }
 
+    $actionbyid=Session::get('employeeid');
+
+
     $notify=Notify::create([
       'userid'=>  $userid,
       'details'=> 'User has taken Membership',
+       'actionby' =>$actionbyid,
     ]);
 
     /**logs for pin change **/

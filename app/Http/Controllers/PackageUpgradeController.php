@@ -636,10 +636,12 @@ class PackageUpgradeController extends Controller
          }
 
           $loginuser = session()->get('username');
-
+           $actionbyid=Session::get('employeeid');
+  
           $notify=Notify::create([
             'userid'=> $userid,
             'details'=> ''.$loginuser.' upgrade package '.$schemename,
+            'actionby' =>$actionbyid,
           ]);
 
           // DB::commit();
@@ -885,15 +887,17 @@ class PackageUpgradeController extends Controller
         }
 
         $loginuser = session()->get('username');
-
+        $actionbyid=Session::get('employeeid');
         $notify=Notify::create([
           'userid'=> $userid,
           'details'=> ''.$loginuser.' upgrade package '.$schemename,
+          'actionby' =>$actionbyid,
         ]);
 
         $notify=Notify::create([
           'userid'=> $userid,
           'details'=> ''.$loginuser.' take payment of user '.$transactionamount,
+           'actionby' =>$actionbyid,
         ]);
 
         DB::commit();

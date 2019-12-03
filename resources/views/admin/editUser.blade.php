@@ -151,7 +151,7 @@
               
               </div>
               <div class="form-group">
-        Change PIN:            
+               Change PIN:            
                          <button class="btn bg-orange" type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-new">Edit</button>
                       </div>
              

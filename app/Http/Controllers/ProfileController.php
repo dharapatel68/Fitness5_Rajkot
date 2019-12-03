@@ -300,9 +300,12 @@ public function pinchange($id,Request $request){
         // ];
         // DB::table('notoficationmsgdetails')->insert($nmdformemberpin);
          $loginusername= Session::get('username');
+          $actionbyid=Session::get('employeeid');
           $notify=Notify::create([
      'userid'=> $userid,
      'details'=> ''.$loginusername. ' changed Fit PIN',
+     'actionby' =>$actionbyid,
+
    ]); 
           return redirect()->back()->with('successmsg','PIN changed Successfully');
   }
@@ -890,10 +893,13 @@ public function pinchange($id,Request $request){
            $cronjob->save();
 
            $admin = session()->get('username');
-
+            $actionbyid=Session::get('employeeid');
            Notify::create([
             'userid' =>  $duser->userid,
-            'details' => 'Deactivated by '.$admin
+            'details' => 'Deactivated by '.$admin,
+               'actionby' =>$actionbyid,
+
+
            ]);
 
            $status = Deviceuser::where('userid',$en->userid)->update(['status' => 0,]);
@@ -954,10 +960,11 @@ public function pinchange($id,Request $request){
                    $cronjob->save();
 
                    $admin = session()->get('username');
-
+                   $actionbyid = session()->get('employeeid');
                   Notify::create([
                     'userid' =>  $duser->userid,
-                    'details' => 'Activated by '.$admin
+                    'details' => 'Activated by '.$admin,
+                       'actionby' =>$actionbyid,
                   ]);
 
            

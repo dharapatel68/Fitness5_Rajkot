@@ -507,9 +507,13 @@ class UserController extends Controller
         // ];
         // DB::table('notoficationmsgdetails')->insert($nmdformemberpin);
          $loginusername= Session::get('username');
+            $actionbyid=Session::get('employeeid');
+
           $notify=Notify::create([
      'userid'=> $userid,
      'details'=> ''.$loginusername. ' changed Fit PIN',
+     'actionby'=>$actionbyid,     
+                 
    ]); 
           return redirect()->back()->with('successmsg','PIN changed Successfully');
   }
