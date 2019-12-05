@@ -129,6 +129,7 @@ table td{
                     @foreach($data as $data1)  
                      <tr>
                       <td><a href="{{url('viewtrainerprofile/'.$data1->trainerprofileid)}}"><i class="fa fa-eye"></i></td>
+
                         <td>{{$data1->first_name}} {{$data1->last_name}}</td>
                         <td>{{$data1->leveloftrainer}}</td>
                         <td>{{$data1->city}}</td>

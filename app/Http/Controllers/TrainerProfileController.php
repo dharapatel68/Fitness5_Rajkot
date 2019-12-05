@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Employee;
 use App\TrainerProfile;
 use App\Notify;
+use App\Ptlevel;
 
 class TrainerProfileController extends Controller
 {
@@ -61,7 +62,9 @@ class TrainerProfileController extends Controller
     	 }
     	 else{
     	 	$trainer=Employee::where('roleid',4)->get()->all();
-    		return view('admin.Trainer.addtrainerprofile',compact('trainer'));
+    	 	$levels=Ptlevel::get()->all();
+
+    		return view('admin.Trainer.addtrainerprofile',compact('trainer','levels'));
     	 }
     	
 
@@ -79,7 +82,7 @@ class TrainerProfileController extends Controller
 		$query['tdate']=$tdate;
 		$query['username']=$username;
 		$query['keyword']= $keyword;  
-		$data= TrainerProfile::leftjoin('employee','employee.employeeid','trainerprofile.employeeid')->paginate(8);  	
+		$data= TrainerProfile::select('trainerprofile.photo as trainerphoto','trainerprofile.*','employee.first_name','employee.last_name')->leftjoin('employee','employee.employeeid','trainerprofile.employeeid')->paginate(8);  	
     	return view('admin.Trainer.viewtrainers',compact('query','data'));
     }
     public function viewtrainerprofile(Request $request,$id){
@@ -88,5 +91,10 @@ class TrainerProfileController extends Controller
     	$timeline=Notify::where('userid',$trainerprofile)->get()->all();
     
     	return view('admin.Trainer.viewtrainerprofile',compact('trainerprofile','timeline'));
+    }
+    public function gettrainerdetail(Request $request){
+    	$trainerdetail=Employee::leftjoin('Ptassignlevel','ptassignlevel.trainerid','employee.employeeid')->where('employeeid',$request->trainerid)->get()->first();
+
+    	return $trainerdetail;
     }
 }

@@ -711,6 +711,7 @@ Route::any('sendmemberform/{id}', 'SendMemberFormController@sendmemberform')->na
 Route::any('addtrainerprofile', 'TrainerProfileController@addtrainerprofile')->name('addtrainerprofile');
 Route::any('viewtrainers', 'TrainerProfileController@viewtrainers')->name('viewtrainers');
 Route::any('viewtrainerprofile/{id}', 'TrainerProfileController@viewtrainerprofile')->name('viewtrainerprofile');
+Route::any('gettrainerdetail', 'TrainerProfileController@gettrainerdetail')->name('gettrainerdetail');
 
 
 

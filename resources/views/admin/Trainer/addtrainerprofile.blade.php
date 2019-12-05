@@ -16,6 +16,45 @@ table td{
 	width: 100% !important;
 	
 }
+
+.badgebox
+{
+    opacity: 0;
+}
+
+.badgebox + .badge
+{
+    /* Move the check mark away when unchecked */
+    text-indent: -999999px;
+    /* Makes the badge's width stay the same checked and unchecked */
+  width: 27px;
+
+
+}
+.wrapper {
+  margin-right: auto; /* 1 */
+  margin-left:  auto; /* 1 */
+
+  max-width: 960px; /* 2 */
+
+  padding-right: 10px; /* 3 */
+  padding-left:  10px; /* 3 */
+}
+.badgebox:focus + .badge
+{
+    /* Set something to make the badge looks focused */
+    /* This really depends on the application, in my case it was: */
+    
+    /* Adding a light border */
+    box-shadow: inset 0px 0px 5px;
+     Taking the difference out of the padding 
+}
+
+.badgebox:checked + .badge
+{
+    /* Move the check mark back when checked */
+  text-indent: 0;
+}
 .select2-container--default .select2-selection--single{
 	border-radius: 2px !important;
 	max-height: 100% !important;
@@ -88,14 +127,21 @@ table td{
                       <div class="form-group">
                         <label for="city" class="col-sm-4 control-label">City</label>
                         <div class="col-sm-8">
-                        <input type="text" name="city" class="form-control">
+                        <input type="text" name="city" class="form-control" id="city" readonly="">
                        
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="level" class="col-sm-4 control-label">Level Of Trainer</label>
                         <div class="col-sm-8">
-                        <input type="text" name="level" class="form-control">
+                          <select name="level" class="form-control">
+                            <option value="">--Please Select--</option>
+                          @foreach($levels as $lvl)
+                             <option value="{{$lvl->id}}">{{$lvl->level}}</option>
+                          @endforeach
+                          </select>
+
+                        <!-- <input type="text" name="level" class="form-control" id="leveloftrainer" readonly=""> -->
                        
                         </div>
                       </div>
@@ -114,10 +160,27 @@ table td{
                         </div>
                       </div>
                        <div class="form-group">
-                        <label for="productgroupid" class="col-sm-4 control-label">Free Slots</label>
-                        <div class="col-sm-8">
+                        <label for="AvailableSlot" class="col-sm-4 control-label">Available Slots</label>
+                   <div class="col-sm-8">
                         <input type="text" name="slots" class="form-control">
-                        </div>
+                      
+
+                       <label class="btn btn-default margin">05:00 AM To 06:AM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="1"><span class="badge bg-orange">&check;</span></label>
+                           <label class="btn btn-default margin">05:00 AM To 06:AM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="1"><span class="badge bg-orange">&check;</span></label>
+
+                           <label class="btn btn-default margin">05:00 AM To 06:AM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="1"><span class="badge bg-orange">&check;</span></label>
+                           <label class="btn btn-default margin">05:00 AM To 06:AM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="1"><span class="badge bg-orange">&check;</span></label>
+                           <label class="btn btn-default margin">05:00 AM To 06:AM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="1"><span class="badge bg-orange">&check;</span></label>
+                           <label class="btn btn-default margin">05:00 AM To 06:AM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="1"><span class="badge bg-orange">&check;</span></label>
+                           <label class="btn btn-default margin">05:00 AM To 06:AM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="1"><span class="badge bg-orange">&check;</span></label>
+                            </div>
                       </div>
                       
                       <div class="form-group">
@@ -125,13 +188,16 @@ table td{
                         <div class="col-sm-8">
                       
                         <input type="file" name="photo" id="photo" class="form-control"  accept="image/jpg, image/jpeg, image/png" onchange="loadImageFile()">
+                        <span id="img_error"></span>
                         <img src="" id="img" height="100px">
+
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="results" class="col-sm-4 control-label">Results</label>
                         <div class="col-sm-8">
-                              <input id="file-input" type="file" multiple name="results[]" class="form-control">
+                              <input id="file-input" type="file" multiple name="results[]" class="form-control error">
+                              <span id="file_error"></span>
                           <div id="preview"></div>
                              
                         </div>
@@ -211,8 +277,9 @@ var loadImageFile = function () {
 
                    var input = this;
                    var url = $(this).val();
+                   // alert( input.files[0].size);
                    var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-                  if (input.files && input.files[0]&& (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) 
+                  if (input.files && input.files[0]&& (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg") && input.files[0].size < 2097152) 
                    {
                      var reader = new FileReader();
    
@@ -223,7 +290,10 @@ var loadImageFile = function () {
                   }
                   else
                   {
-                   $('#img').attr('src', '/assets/no_preview.png');
+                    $("#img_error").css('color','#FF0000');
+                    $("#img_error").html("Please Select Valid Image");
+                     $("#photo").val('');
+                   // $('#img_error').attr('src', '/assets/no_preview.png');
                  }
                });
 
@@ -324,5 +394,60 @@ $('#file-input').on("change", previewImages);
 	$("#mode").select2({
     placeholder: "Select a Mode"
 });
+</script>
+<script type="text/javascript">
+  $('#trainerid').on('change',function(){
+    var trainerid=$('#trainerid').val();
+    var _token = $('input[name="_token"]').val();
+        $.ajax({
+          type : 'POST',
+          url : '{{ url('gettrainerdetail') }}',
+          data : {trainerid:trainerid, _token:'{{ csrf_token() }}'},
+          success : function(data){
+            if(data){
+              $('#city').val(data.city);
+              $('#leveloftrainer').val(data.employeeid);
+            }else{
+       
+            }
+          }
+        });
+  })
+</script>
+<script type="text/javascript">
+     $('input#file-input').change(function(){
+  var imageSizeArr = 0;
+  var imageArr = document.getElementById('file-input');
+  var imageCount = imageArr.files.length;
+  var imageToBig = false;
+  for (var i = 0; i < imageArr.files.length; i++){
+     var imageSize = imageArr.files[i].size;
+     var imageName = imageArr.files[i].name;
+     if (imageSize > 2097152){
+         var imageSizeArr = 1;
+     }
+     if (imageSizeArr == 1){
+
+         // console.log(imageName+imageSize+ ': file too big\n');
+         imageToBig = true;
+     }
+     else if (imageSizeArr == 0){
+         // console.log(imageName+': file ok\n');
+     }
+  }
+  if(imageToBig){
+    $("#file_error").css('color','#FF0000');
+    $("#file_error").html("File size is greater than 2MB");
+    $(".error").css("border-color","#FF0000");
+    //give an alert that at least one image is to big
+    // window.alert("At least one of your images is too large to process, see the console for exact file details.");
+    $('#add').attr('disabled',true);
+    }
+    else{
+        $('#add').attr('disabled',false); 
+         $("#file_error").html('');
+          $(".error").css("border-color","#d2d6de");
+    }
+});  
 </script>
 @endsection
