@@ -328,7 +328,7 @@
                     <div class="form-group">
                      <label>Join Date</label>
 
-                     <input placeholder="Joining date" onchange="changedate()" type="date" onkeypress="return false" id="startingdate"  value="<?php echo date('Y-m-d'); ?>"class="form-control" name="Join_date" class="span11">
+                     <input placeholder="Joining date" onchange="changedate()" type="date" id="startingdate"  value="<?php echo date('Y-m-d'); ?>"class="form-control" name="Join_date" class="span11">
 
                    </div>
                    <div class="form-group">
