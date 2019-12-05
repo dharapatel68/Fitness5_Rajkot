@@ -354,7 +354,7 @@ public function schemeforpayment(Request $request)
                     
                    // ->join('memberpackages', 'member.userid', 'memberpackages.userid')
                    // ->join('schemes', 'memberpackages.schemeid', 'schemes.schemeid')
-                   ->where('member.status', 1)->where('payments.mode', 'total')->where('payments.invoicetype', 'm')->where('payments.status', 1)->where('member.userid', $userid)->get()->all();
+                   ->where('member.status', 1)->whereIn('payments.mode', ['total','no mode'])->where('payments.invoicetype', 'm')->where('payments.status', 1)->where('member.userid', $userid)->get()->all();
                     // dd($member_data);
       if(!empty($member_data)){
         $member_package = '<table class="table">';
@@ -371,6 +371,7 @@ public function schemeforpayment(Request $request)
           $schemename=Scheme::where('schemeid',$member->schemeid)->get()->first();
           $member->schemename = $schemename->schemename;
           $memberpackage_data=MemberPackages::where('userid',$userid)->where('memberpackagesid',$member->invoiceno)->get()->first();
+              if($memberpackage_data) {
         $member_package .= '<tr>';
           $member_package .= '<td>'.ucfirst($member->schemename).'</td>';
            $member_package .= '<td>'.$member->discountamount.'</td>';
@@ -379,6 +380,7 @@ public function schemeforpayment(Request $request)
           $member_package .= '<td>'.date('d-m-Y', strtotime($memberpackage_data->joindate)).'</td>';
           $member_package .= '<td>'.date('d-m-Y', strtotime($memberpackage_data->expiredate)).'</td>';
         $member_package .= '</tr>';
+      }
         }
         $member_package .= '</table>';
       }else{  
