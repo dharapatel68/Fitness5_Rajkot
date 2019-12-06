@@ -615,6 +615,10 @@ Route::get("tests4", function() {
    return view('script_emplog');
 });
 
+Route::get("demo", function() {
+   return view('demo');
+});
+
 Route::get("script_fetchlog_userlogtable", function() {
    return view('script_fetchlog_userlogtable');
 });

@@ -148,14 +148,16 @@ table td{
                      <div class="form-group">
                         <label for="Exp" class="col-sm-4 control-label">Exp.</label>
                         <div class="col-sm-8">
-                        <input type="text" name="exp" class="form-control">
+                          <textarea name="achievments"class="form-control" name="exp"></textarea>
+                        <!-- <input type="text" name="exp" class="form-control"> -->
                        
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="Achievments" class="col-sm-4 control-label">Achievments</label>
                         <div class="col-sm-8">
-                        <input type="text" name="achievments" class="form-control">
+                          <textarea name="achievments"class="form-control"></textarea>
+                        <!-- <input type="text" name="achievments" class="form-control"> -->
                        
                         </div>
                       </div>
