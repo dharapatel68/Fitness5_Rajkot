@@ -10,9 +10,9 @@ define ('SITE_URL', 'http://fitness5mumbai.in/Backend/index.php');
 
 $database = array(
 'host' => "127.0.0.1",
-'db' => "admin_fitness5mumbai",
-'user' => "admin_fitness5mumbai",
-'pass' => "fitness5mumbai@123"
+'db' => "admin_fitness5",
+'user' => "admin_fitness5",
+'pass' => "fitness5@123"
 );
 
 $email_config = array(

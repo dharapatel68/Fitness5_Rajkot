@@ -74,8 +74,7 @@ table td{
 
 								<option value="{{$user->userid}}"  @if(isset($query['username'])) {{$query['username'] == $user->userid ? 'selected':''}} @endif>
 									
-									{{ $user->firstname }} {{ $user->lastname }} 
-              
+									{{ $user->username }} 
 							
 									 </option>
 									@endforeach</select></td>

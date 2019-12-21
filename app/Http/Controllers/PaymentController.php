@@ -1111,67 +1111,6 @@ $gstno='';
       //update user end
 
       //memberdata for message start
-      $member_message = Member::where('userid', $userid)->first();
-      if(!empty($member_message)){
-        $mobileno = $member_message->mobileno;
-        $member_id = $member_message->memberid;
-        $email = $member_message->email;
-      }
-
-      //memberdata for message end
-
-      //sms start
-
-      $msg=   DB::table('messages')->where('messagesid','13')->get()->first();
-
-      $msg =$msg->message;
-      $msg = str_replace("[Name of Member]",$fullname,$msg);
-      $msg= str_replace("[ID]",$member_id,$msg);
-      $msg= str_replace("[Name of Packge]",$scheme_name,$msg);
-      $msg= str_replace("[Fully/Partially]",$transaction_type,$msg);
-      $msg= str_replace("100",$amount_paid,$msg);
-      $msg= str_replace("[join date]",$join_date,$msg);
-      $msg= str_replace("[End Date]", $end_date,$msg);
-      $msg= str_replace("[InvoiceID]",$invoice_no,$msg); 
-
-      $due='';
-      if($transaction_type == 'Partially'){
-        $due="Due Amount:[Due Amount] Next Due Date: [Due Date]";
-        $due= str_replace("[Due Amount]",$remainingamount,$due);
-        $due= str_replace("[Due Date]", $due_date,$due);
-        
-        $msg=''.$msg.''.$due.'';
-      }
-
-      // $nmd = [
-
-      //   'mobileno' => $mobileno,
-      //   'smsmsg' => $msg,
-      //   'mailmsg' => '0',
-      //   'callnotes' => '0',
-      // ];
-      $msg2 = $msg;
-      $msg = urlencode($msg);
-
-      $smssetting = Smssetting::where('status',1)->where('smsonoff','Active')->first();
-
-      if($smssetting) {
-         
-       $u = $smssetting->url;
-       $url= str_replace('$mobileno', $mobileno, $u);
-       $url=str_replace('$msg', $msg, $url);
-
-       $otpsend = Curl::to($url)->get();
-
-       $action = new Notificationmsgdetails();
-       $action->user_id = session()->get('admin_id');
-       $action->mobileno = $mobileno;
-       $action->smsmsg = $msg2;
-       $action->smsrequestid = $otpsend;
-       $action->subject = 'Payment Successfully';
-       $action->save();
-
-       }
 
       
 
@@ -1358,17 +1297,70 @@ $gstno='';
 
       /*dd($payment[0]);*/
       $filename = time().'invoice.pdf';
+      $link_send = url('/').'/transactionpaymentreceipt/'.$invoice_no;
+      $pdflink = app('bitly')->getUrl($link_send);
      
-      // $otpsend = Curl::to('http://sms.weybee.in/api/sendapi.php?auth_key=2169KrEMnx2ZgAqSfavSSC&mobiles='.$mobileno.'&message='.$url.'&sender=PYOFIT&route=4')->get();
+    $member_message = Member::where('userid', $userid)->first();
+      if(!empty($member_message)){
+        $mobileno = $member_message->mobileno;
+        $member_id = $member_message->memberid;
+        $email = $member_message->email;
+      }
 
-        //Mail::raw('http://localhost/pf_old/public/download.pdf', function ($message) {
-        //  $message->to('parth@yopmail.com');
-        //  
-        //});
+      //memberdata for message end
+
+      //sms start
+
+      $msg=   DB::table('messages')->where('messagesid','13')->get()->first();
+
+      $msg =$msg->message;
+      $msg = str_replace("[Name of Member]",$fullname,$msg);
+      $msg= str_replace("[ID]",$member_id,$msg);
+      $msg= str_replace("[Name of Packge]",$scheme_name,$msg);
+      $msg= str_replace("[Fully/Partially]",$transaction_type,$msg);
+      $msg= str_replace("100",$amount_paid,$msg);
+      $msg= str_replace("[join date]",$join_date,$msg);
+      $msg= str_replace("[End Date]", $end_date,$msg);
+      $msg= str_replace("[InvoiceID]",$invoice_no,$msg); 
+      $msg= str_replace("[url]", $pdflink,$msg); 
+      
+
+      $due='';
+      if($transaction_type == 'Partially'){
+        $due="Due Amount:[Due Amount] Next Due Date: [Due Date]";
+        $due= str_replace("[Due Amount]",$remainingamount,$due);
+        $due= str_replace("[Due Date]", $due_date,$due);
+        
+        $msg=''.$msg.''.$due.'';
+      }
+
+     
+      $msg2 = $msg;
+      $msg = urlencode($msg);
+
+      $smssetting = Smssetting::where('status',1)->where('smsonoff','Active')->first();
+
+      if($smssetting) {
+         
+       $u = $smssetting->url;
+       $url= str_replace('$mobileno', $mobileno, $u);
+       $url=str_replace('$msg', $msg, $url);
+
+       $otpsend = Curl::to($url)->get();
+
+       $action = new Notificationmsgdetails();
+       $action->user_id = session()->get('admin_id');
+       $action->mobileno = $mobileno;
+       $action->smsmsg = $msg2;
+       $action->smsrequestid = $otpsend;
+       $action->subject = 'Payment Successfully';
+       $action->save();
+
+       }
 
       $tax = $payment_tax;
-       //  $pdf = PDF::loadView('admin.paymenttransactionreceipt', compact('member','totalpay','request','payment','phoneno','scheme','memberpackage','word','companyName','Gstno','duedate','takenby','discount','tax', 'total_payment', 'oldpayment_data','payment1'));
-       // $pdf->save(public_path('mailpdf/'.$filename));
+        $pdf = PDF::loadView('admin.paymenttransactionreceipt', compact('member','totalpay','request','payment','phoneno','scheme','memberpackage','word','companyName','Gstno','duedate','takenby','discount','tax', 'total_payment', 'oldpayment_data','payment1'));
+       $pdf->save(public_path('mailpdf/'.$filename));
 
        $emailsetting =  Emailsetting::where('status',1)->first();
 
@@ -1387,7 +1379,7 @@ $gstno='';
                 $message->from($data['senderemail'], 'Payment Message');
                 $message->to($data['mail']);
                 $message->subject($data['subject']);
-              //  $message->attach(public_path().'/mailpdf/'.$filename.'');
+               $message->attach(public_path().'/mailpdf/'.$filename.'');
 
           });
 

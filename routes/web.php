@@ -711,6 +711,14 @@ Route::any('viewsalary', 'HRController@viewsalary')->name('viewsalary');
 Route::any('viewlockedsalary', 'HRController@viewlockedsalary')->name('viewlockedsalary');
 Route::any('editsalary/{id}', 'HRController@editsalary')->name('editsalary');
 /////////////////////////////////////////////// salary end   ///////////////////////////////////////////////////////////
+
+/************************************start dashboard route****************************/
+
+Route::any('loaduserbytype','AdminController@loaduserbytype')->name('loaduserbytype');
+Route::any('loaduserprofile','AdminController@loaduserprofile')->name('loaduserprofile');
+
+/************************************end dashboard route****************************/
+
 Route::any('sendmemberform/{id}', 'SendMemberFormController@sendmemberform')->name('sendmemberform');
 Route::any('addtrainerprofile', 'TrainerProfileController@addtrainerprofile')->name('addtrainerprofile');
 Route::any('viewtrainers', 'TrainerProfileController@viewtrainers')->name('viewtrainers');

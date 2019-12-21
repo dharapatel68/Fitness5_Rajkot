@@ -329,7 +329,10 @@ class PersonalTrainerController extends Controller
    }
   
   public function addassignptlevel(Request $request){
-
+    $request->validate([
+        'employee' => 'unique:ptassignlevel,trainerid',
+        'level' => 'unique:ptassignlevel,levelid',
+      ]);
      $employee= $request->post('employee');
      $mobile_no= $request->post('mobile_no');
      $level= $request->post('level');

@@ -19,6 +19,16 @@ use App\Scheme;
 use App\User_log;
 use App\User;
 use App\DeviceFetchlogs;
+use Illuminate\Pagination\LengthAwarePaginator;
+use DateTime;
+use App\Inquiry;
+use App\Followup;
+use Mail;
+use App\Registration;
+use App\ApiTrack;
+use PHPMailerAutoload;
+use Curl;
+
 
 
 class AdminController extends Controller
@@ -46,51 +56,130 @@ class AdminController extends Controller
 
     
     public function dashboard(Request $request){
+ 
+
       $today = Carbon::today();
       $today= $today->format('Y-m-d');
       $numberofinquiry =0;
       $numberofinquirytoday=0;
+      $numberofinquirythismonth='';
       $data=[];
       $inq= DB::table('inquiries')->where('createddate',$today)->get()->all();
-    if($inq){
-      $numberofinquirytoday = count($inq);
-    }
-    $inquirytotal = DB::table('inquiries')->get()->all();
-    $numberofinquirytotal = count($inquirytotal);
-    $data['numberofinquirytoday'] =$numberofinquirytoday;
-    $data['numberofinquirytotal'] =$numberofinquirytotal;
+      if($inq){
+        $numberofinquirytoday = count($inq);
+      }
+
+      $inquirytotal = DB::table('inquiries')->get()->all();
+      $numberofinquirytotal = count($inquirytotal);
+      $data['numberofinquirytoday'] =$numberofinquirytoday;
+      $month= date('m');
+      $data['numberofinquirythismonth'] = DB::table('inquiries')->whereMonth('created_at', '=', $month)->get()->count();
+
+      $data['numberofinquirytotal'] =$numberofinquirytotal;
+      
+      $numberofmembertoday =0;
+      $member= DB::table('member')->where('createddate',$today)->get()->all();
+
+      if($member){
+        $numberofmembertoday = count($member);
+      }
+      $membertotal = DB::table('member')->get()->all();
+      $numberofmembertotal = count($membertotal);
+      $data['numberofmembertotal'] =$numberofmembertotal;
+      $data['numberofmembertoday'] =$numberofmembertoday;
+      $data['numberofmemberthismonth'] = DB::table('inquiries')->whereMonth('created_at',$month)->get()->count();
+
+
+      $followup=Inquiry::leftjoin('followup','followup.inquiryid','inquiries.inquiriesid')->where('followup.followupdays',date('Y-m-d'))->where('followup.status',"1")->paginate(5);
+      $users=User::get()->all();
+      $regs=Registration::get()->all();
+      $regstoday=Registration::whereDate('created_at',$today)->get()->all();
+      $registrationtoday=count($regstoday);
+      $registrationtotal=count($regs);
+      $data['registrationtoday'] =$registrationtoday;
+      $data['registrationtotal'] =$registrationtotal;
+
+      $data['reregistration']=Registration::select('phone_no')
+                              ->selectRaw('count(`phone_no`) as `occurences`')
+                              ->groupBy('phone_no')
+                              ->having('occurences', '>', 1)
+                              ->get()->count();
+      $paymenttoday =0;
+
+      $payment= DB::table('payments')->where('date','=',$today)->whereIn('mode',['no mode','total'])->get()->all();
+      if($payment){
+        $paymenttoday = count($payment);
+      }
+      $paymenttotal = DB::table('payments')->where('mode','no mode')->orwhere('mode','total')->get()->all();
+      $paymenttotal = count($paymenttotal);
+      $data['paymenttotal'] =$paymenttotal;
+      $data['paymenttoday'] =$paymenttoday;
+
+
+      // $payment = Payment::select(['payments.memberid as mid','payments.*'])->with('Scheme.RootScheme')->leftJoin('member','member.memberid','=','payments.memberid')->where('mode','!=','total')->paginate(10);
+// DB::enableQueryLog();
+
+     
+      // $filterquery =  DB::select("SELECT tmp2.rootschemeid, rootschemes.rootschemename,tmp2.date, SUM(tmp2.Total)  from rootschemes JOIN (SELECT tmp1.rootschemeid, rootschemes.rootschemename, tmp1.schemeid, tmp1.date, tmp1.Total from rootschemes join (select schemes.rootschemeid,  temp.schemeid, temp.date, temp.Total from schemes JOIN (SELECT payments.schemeid, DATE_FORMAT(payments.date, '%d-%m-%Y') date, SUM(payments.amount) Total FROM `payments` left join schemes on schemes.schemeid = payments.schemeid GROUP by payments.schemeid, DATE_FORMAT(payments.date,  '%d-%m-%Y') ) temp on schemes.schemeid = temp.schemeid) tmp1 on rootschemes.rootschemeid = tmp1.rootschemeid ORDER BY tmp1.date) tmp2 on rootschemes.rootschemeid = tmp2.rootschemeid 
+      //    GROUP by tmp2.date, tmp2.rootschemeid, rootschemes.rootschemename");
+      // // dd($filterquery);
+      // $rootschemes= RootScheme::get()->all();
+//       foreach($rootschemes as $paymentcollection){
+
+//         $filterquery1 =  DB::select("SELECT tmp2.rootschemeid, rootschemes.rootschemename,tmp2.date, SUM(tmp2.Total)  from rootschemes JOIN (SELECT tmp1.rootschemeid, rootschemes.rootschemename, tmp1.schemeid, tmp1.date, tmp1.Total from rootschemes join (select schemes.rootschemeid,  temp.schemeid, temp.date, temp.Total from schemes JOIN (SELECT payments.schemeid, DATE_FORMAT(payments.date, '%d-%m-%Y') date, SUM(payments.amount) Total FROM `payments` left join schemes on schemes.schemeid = payments.schemeid GROUP by payments.schemeid, DATE_FORMAT(payments.date,  '%d-%m-%Y') ) temp on schemes.schemeid = temp.schemeid) tmp1 on rootschemes.rootschemeid = tmp1.rootschemeid ORDER BY tmp1.date) tmp2 on rootschemes.rootschemeid = tmp2.rootschemeid   WHERE MONTH(tmp2.date) = 12  GROUP by tmp2.date, tmp2.rootschemeid, rootschemes.rootschemename");
+// // dd($filterquery1);
+//         $paymentcollection['total']=$paymentcollection['total']+$filterquery1->total;
+//       }
+
+   // dd(DB::getQueryLog());
+      $today_date = date('Y-m-d');
+      $finalarray = [];
+
+      if(!empty($filterquery)){
+
+        foreach ($filterquery as $key => $query) {
+          //dd($payment_today);
+          $year = date('Y');
+          $query->schemeid;
+           $payment_year = Payment::where('schemeid',$query->schemeid)->sum('payments.amount');
    
-   $numberofmembertoday =0;
-    $member= DB::table('member')->where('createddate',$today)->get()->all();
+           
+          $payment_month = Payment::leftjoin('schemes', 'payments.schemeid', 'schemes.schemeid')->leftjoin('rootschemes', 'schemes.schemeid', 'rootschemes.rootschemeid')->select(DB::raw("SUM(payments.amount) as monthamount"))->where('payments.mode', 'total')->groupBy('rootschemes.rootschemeid')->where('schemes.schemeid', $query->schemeid)->whereMonth('payments.paymentdate', $month)->first();
+  // dd($payment_month);
 
-    if($member){
-      $numberofmembertoday = count($member);
-    }
-    $membertotal = DB::table('member')->get()->all();
-    $numberofmembertotal = count($membertotal);
-    $data['numberofmembertotal'] =$numberofmembertotal;
-    $data['numberofmembertoday'] =$numberofmembertoday;
+          if(!empty($payment_month)){
+             $payment_year['month_payment'] = $payment_month['monthamount'];
 
-    $paymenttoday =0;
+          }
+          $payment_today = Payment::leftjoin('schemes', 'payments.schemeid', 'schemes.schemeid')->leftjoin('rootschemes', 'schemes.schemeid', 'rootschemes.rootschemeid')->select(DB::raw("SUM(payments.amount) as todayamount"))->whereDate('paymentdate', $today_date)->where('schemes.schemeid', $query->schemeid)->where('mode', 'total')->groupBy('rootschemes.rootschemeid')->first();
+          // dd($payment_today);
+         if(!empty($payment_today)){
 
-    $payment= DB::table('payments')->where('date','=',$today)->whereIn('mode',['no mode','total'])->get()->all();
-    if($payment){
-      $paymenttoday = count($payment);
-    }
-
-    $paymenttotal = DB::table('payments')->where('mode','no mode')->orwhere('mode','total')->get()->all();
-    $paymenttotal = count($paymenttotal);
-    $data['paymenttotal'] =$paymenttotal;
-    $data['paymenttoday'] =$paymenttoday;
+          $payment_year['day_payment'] = $payment_today['todayamount'];
+          }
 
 
-    $payment = Payment::with('Scheme.RootScheme')->leftJoin('member','member.memberid','=','payments.memberid')->where('mode','!=','total')->where('type','credit')->get()->all();
+          array_push($finalarray, $payment_year);
 
 
-    $duepayment = Payment::leftJoin('member','member.memberid','=','payments.memberid')->whereRaw('paymentid IN (select MAX(paymentid) FROM payments GROUP BY memberid)')->get()->toArray();
-    $packageexpirenearlydate=date('Y-m-d');
-   
-    $packageexpirenearly=[];
+        }
+  
+ 
+          $currentPage = LengthAwarePaginator::resolveCurrentPage();
+          $collection = collect($finalarray);
+          $perPage = 10;
+          $currentPageItems = $collection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+          $paginatedItems= new LengthAwarePaginator($currentPageItems , count($collection), $perPage);
+          $paginatedItems->setPath($request->url());
+          $collection=$paginatedItems;
+
+      }
+$duepayment = Payment::leftJoin('member','member.memberid','=','payments.memberid')->whereRaw('paymentid IN (select MAX(paymentid) FROM payments GROUP BY memberid)')->where('payments.remainingamount', '>',0)->paginate(5);
+ // dd($duepayment);
+
+$packageexpirenearlydate=date('Y-m-d');
+// dd($packageexpirenearly);
+ $packageexpirenearly=[];
 
   
     $now =  date('Y-m-d', strtotime(' + 15 days'));
@@ -140,25 +229,51 @@ class AdminController extends Controller
     }
     
     }
-    $today=date('Y-m-d');
+
+    $currentPage = LengthAwarePaginator::resolveCurrentPage();
+          $packageexpirenearly = collect($packageexpirenearly);
+          $perPage = 10;
+          $currentPageItems = $packageexpirenearly->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+          $paginatedItems= new LengthAwarePaginator($currentPageItems , count($packageexpirenearly), $perPage);
+          $paginatedItems->setPath($request->url());
+          $packageexpirenearly=$paginatedItems;
+    
+$today=date('Y-m-d 00:00:00');
 
     $membercounttoday='';
        $membercounttotal='';
-       DB::enableQueryLog();
-
-           $membercounttoday= DeviceFetchlogs::leftjoin('users','users.userid','devicefetchlogs.detail1')->where('devicefetchlogs.date',$today)->where('devicefetchlogs.detail1','!=',0)->whereIn('users.userstatus',['reg','mem'])->get()->all();
-   /* dd(DB::getQueryLog());*/
+     $membercounttoday= User_log::leftjoin('users','users.userid','user_log.UserId')->where('user_log.PunchDateTime', 'LIKE', $today)->where('user_log.UserId','!=',0)->whereIn('users.userstatus',['reg','mem'])->get()->all();
+     // dd($today);
+    // dd($membercounttoday);
      $membercounttoday=count($membercounttoday);
  
 
     
-    $membercounttotal=DeviceFetchlogs::leftjoin('users','users.userid','devicefetchlogs.detail1')->where('devicefetchlogs.detail1','!=',0)->whereIn('users.userstatus',['reg','mem'])->get()->all();
+    $membercounttotal=User_log::leftjoin('users','users.userid','user_log.UserId')->where('user_log.UserId','!=',0)->whereIn('users.userstatus',['reg','mem'])->get()->all();
      $membercounttotal=count($membercounttotal);
      // dd($membercounttoday);
       $data['membercounttotal'] =$membercounttotal;
       $data['membercounttoday'] =$membercounttoday;
-    
+    //dd($packageexpirenearly);
 
+    $followup=Inquiry::leftjoin('followup','followup.inquiryid','inquiries.inquiriesid')->where('followup.followupdays',date('Y-m-d'))->where('followup.status',"1")->paginate(5);
+    $users=User::get()->all();
+    $regs=Registration::get()->all();
+    $regstoday=Registration::whereDate('created_at','LIKE',$today)->get()->all();
+    $registrationtoday=count($regstoday);
+    $registrationtotal=count($regs);
+    $data['registrationtoday'] =$registrationtoday;
+    $data['registrationtotal'] =$registrationtotal;
+
+    $data['reregistration']=Registration::select('phone_no')
+              ->selectRaw('count(`phone_no`) as `occurences`')
+              ->groupBy('phone_no')
+              ->having('occurences', '>', 1)
+              ->get()->count();
+     
+      $data['footsteptoday'] =User_log::whereDate('created_at',$today)->count();  
+      $data['footsteptotal'] =User_log::count(); 
+      $data['footstepthismonth'] =User_log::whereMonth('created_at', '=', $month)->get()->count();
 // dd($packageexpirenearly);
 
    /* $packages =  DB::select( DB::raw('SELECT * FROM `memberpackages` JOIN member on member.userid = memberpackages.userid JOIN schemes on schemes.schemeid = memberpackages.schemeid where memberpackages.expiredate = (SELECT MAX(memberpackages.expiredate) FROM memberpackages where member.userid = memberpackages.userid)')); 
@@ -217,18 +332,38 @@ class AdminController extends Controller
     }
 
    dd($packageexpirenearly);*/
-  
+  $collection='';
 
-      return view('admin.dashboard',compact('data','payment','duepayment','packageexpirenearly'));
+      return view('admin.dashboard',compact('data','collection','payment','duepayment','packageexpirenearly','followup'));
      }
+     public function loaduserbytype(Request $request){
+ ;
+   $users=User::where('username','LIKE','%'.$request->typehead)->orwhere('username','LIKE',$request->typehead.'%')->where('empid',0)->join('member','member.userid','users.userid')->get()->all();
+
+
+   return $users;
+
+}
+public function loaduserprofile(Request $request){
+ ;
+   $userpro=User::where('users.userid',$request->userid)->leftjoin('member','member.userid','users.userid')->get()->first();
+   $userpropackges=array();
+   $packages = MemberPackages::where('memberpackages.userid',$request->userid)->leftjoin('schemes','schemes.schemeid','memberpackages.schemeid')->get()->all();
+   $month=date('m');
+
+    $logs= User_log::where('UserId',$request->userid)->whereMonth('PunchDateTime',$month)->get()->all();
+
+   $userpro['packages']=$packages;
+
+   $userpro['logs']=$logs;
+   return $userpro;
+}
   public function check(Request $request){
 
 
        if($request->isMethod('post'))
       {
-
-	
-            $admin[0]='';
+        $admin[0]='';
         $admin = DB::table('admin')->where(['username'=>$request->username])->get();
 
         $usernamedata=$request->username;
@@ -236,15 +371,14 @@ class AdminController extends Controller
         $employeeid=$admin[0]->employeeid;
 
 
-        $u=Admin::where('username', Input::get('username'))->first();
-	
+    $u=Admin::where('username', Input::get('username'))->first();
+
         if ($u) {
-		
-		
+
           if (Hash::check(Input::get('password'), $u->password)) {
-			
+
             $role=$u->role;
-           
+
             $permission = Role::where('employeerole', $role)->first();
 
             if(empty($permission->permission)){
@@ -257,7 +391,6 @@ class AdminController extends Controller
             session(['role' =>  $role]);
             session(['employeeid' =>  $employeeid]);
             session(['admin_id' => $u->adminid]);
-            session(['employeeid' => $u->employeeid]);
             session(['permission' =>  $permission]);
           // dd(session());
             return redirect('dashboard');  
@@ -331,6 +464,29 @@ class AdminController extends Controller
 
 
       return view('admin.todaymember')->with(compact('memberdata'));
+
+
+     }
+
+
+     public function testapi(){
+      
+        $api = ApiTrack::where('api', 'like', '%165.22.250.103:8443%' )->get()->all();
+        
+        foreach($api as $apidata){
+          $apicontent = str_replace('165.22.250.103:8443', '165.22.250.103:8080', $apidata->api);
+
+          $apiupdate = ApiTrack::where('apitrackid', $apidata->apitrackid)->first();
+          if(!empty($apiupdate)){
+            $apiupdate->api = $apicontent;
+            $apiupdate->save();
+          }
+
+         /* $packageexpiry = Curl::to($apicontent)->get();
+          echo "<pre>";print_r($packageexpiry);*/
+
+        }
+
 
 
      }

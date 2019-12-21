@@ -329,12 +329,15 @@ class PersonalTrainerController extends Controller
    }
 	
   public function addassignptlevel(Request $request){
-
-     $employee= $request->post('employee');
-     $mobile_no= $request->post('mobile_no');
-     $level= $request->post('level');
-     $percentage= $request->post('percentage');
-     $query =  DB::table('ptassignlevel')->insert(
+      $request->validate([
+        'employee' => 'unique:ptassignlevel,trainerid',
+        'level' => 'unique:ptassignlevel,levelid',
+      ]);
+      $employee= $request->post('employee');
+      $mobile_no= $request->post('mobile_no');
+      $level= $request->post('level');
+      $percentage= $request->post('percentage');
+      $query =  DB::table('ptassignlevel')->insert(
                     ['trainerid' => $employee, 'levelid' => $level,'percentage'=>$percentage,'created_at'=>date('y-m-d'),'updated_at'=>date('y-m-d')]
                 );
       $employee = DB::table('employee')->where('roleid','4')->get();
@@ -1071,7 +1074,8 @@ public function ajaxgetjoindate(Request $request){
       
  
             $grid=array();
-         $grid = DB::select( DB::raw("select `ptmember`.*,claimptsession.*,ptmember.memberid AS 'pmemberid',ptmember.trainerid AS 'ptrainerid',ptmember.packageid AS 'ppackageid',ptmember.status AS 'ptmemberstatus', `employee`.`username`, `employee`.`employeeid` from `ptmember` left join `employee` on `employee`.`employeeid` = `ptmember`.`trainerid` left join claimptsession on ptmember.trainerid=claimptsession.trainerid AND ptmember.memberid=claimptsession.memberid AND ptmember.date=claimptsession.scheduledate  where `ptmember`.`memberid` = '".$memberidgen."' and `ptmember`.`packageid` = '".$packageid."' and `ptmember`.`trainerid` = '".$traineridgen."' and (`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending' or `ptmember`.`status` = 'Conducted')"));
+            $grid = DB::select( DB::raw("select `ptmember`.*,claimptsession.*,ptmember.memberid AS 'pmemberid',ptmember.trainerid AS 'ptrainerid',ptmember.packageid AS 'ppackageid',ptmember.status AS 'ptmemberstatus', `employee`.`username`, `employee`.`employeeid` from `ptmember` left join `employee` on `employee`.`employeeid` = `ptmember`.`trainerid` right join claimptsession on ptmember.trainerid=claimptsession.trainerid AND ptmember.memberid=claimptsession.memberid AND ptmember.date=claimptsession.scheduledate  where `ptmember`.`memberid` = '".$memberidgen."' and `ptmember`.`packageid` = '".$packageid."' and `ptmember`.`trainerid` = '".$traineridgen."' and (`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending' or `ptmember`.`status` = 'Conducted')"));
+         // $grid = DB::select( DB::raw("select `ptmember`.*,claimptsession.*,ptmember.memberid AS 'pmemberid',ptmember.trainerid AS 'ptrainerid',ptmember.packageid AS 'ppackageid',ptmember.status AS 'ptmemberstatus', `employee`.`username`, `employee`.`employeeid` from `ptmember` left join `employee` on `employee`.`employeeid` = `ptmember`.`trainerid` left join claimptsession on ptmember.trainerid=claimptsession.trainerid AND ptmember.memberid=claimptsession.memberid AND ptmember.date=claimptsession.scheduledate  where `ptmember`.`memberid` = '".$memberidgen."' and `ptmember`.`packageid` = '".$packageid."' and `ptmember`.`trainerid` = '".$traineridgen."' and (`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending' or `ptmember`.`status` = 'Conducted')"));
 
          $trainerid=$traineridgen;
         return view('admin.sessionreport',compact('members','employees','grid','trainerid'));

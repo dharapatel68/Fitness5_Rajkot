@@ -152,7 +152,7 @@ border-left:15px solid white;
                            <select class="select2 form-control" data-placeholder="Select a User"id="userid" required="" name="userid">
                               <option value="" selected="" disabled="">Select a User</option>
                             @foreach($users as $user)
-                            <option value="{{$user->userid}}">{{$user->firstname}} {{$user->lastname}}</option>
+                            <option value="{{$user->userid}}">{{$user->username}} </option>
                             @endforeach
                            </select>
                          </div>
