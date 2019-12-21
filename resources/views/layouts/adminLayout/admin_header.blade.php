@@ -274,27 +274,56 @@
 
                 <p>
 
+   @php $us = session('username');
+    $photo ='';
+    $user =   DB::table('employee')->where('username',$us)->get()->first();
+    if(!empty($user)){
+
+      if($user->photo){
+        $photo = $user->photo;
+    }else{
+      $photo =  'default.png';
+    }
+  } else {
+
+    $photo =  'default.png';
+  }
+
+  
+    
+          
+     @endphp  
+
+
+
+ @php $us = session('username');
+    $role ='';
+
+    $user1 =   DB::table('employee')->where('username',$us)->get()->first();
+    if(!empty($user1)){
+if($user1->role){
+        $role = $user1->role;
+    }else{
+      $role =  'Gym Owner';
+    }
+  } else {
+
+    $role =  'Gym Owner';
+  }
+
+  
+  
+    
+          
+     @endphp  
+
+
 
                   <b>{{session('username')}}</b>
-                  <small>Gym Owner  </small>
+                  <small>{{$role}}</small>
                 </p>
               </li>
-              <!-- Menu Body -->
-           <!--    <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
-                  </div>
-                </div>-->
-                <!-- /.row -->
-              <!-- </li>  -->
-              <!-- Menu Footer-->
+            
               <li class="user-footer">
                 <div class="pull-left">
                   <a href="#" class="btn btn-default btn-flat">Profile</a>

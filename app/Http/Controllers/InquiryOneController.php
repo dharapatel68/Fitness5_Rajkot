@@ -704,7 +704,7 @@ class InquiryOneController extends Controller
         // ];
         $msg2 = $msg;
         $msg = urlencode($msg);
-
+         $otpsend='';
         $smssetting = Smssetting::where('status',1)->where('smsonoff','Active')->first();
         
         if ($smssetting) {

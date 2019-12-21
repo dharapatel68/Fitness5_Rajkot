@@ -69,14 +69,17 @@ td{
 									{{$mode->paymenttype}}
 									 </option>
 									@endforeach</select></td>
+
+
+
+
 							<td><select name="username" class="form-control select2 span8" data-placeholder="Select a Username" >
 								<option value="" selected="" disabled="">Select a Username</option>
 								@foreach($users as $user)
 
 								<option value="{{$user->userid}}"  @if(isset($query['username'])) {{$query['username'] == $user->userid ? 'selected':''}} @endif>
 									
-									{{ $user->firstname }} {{ $user->lastname }} 
-              
+{{ $user->username }}              
 							
 									 </option>
 									@endforeach</select></td>

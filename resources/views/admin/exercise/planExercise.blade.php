@@ -24,7 +24,7 @@
          <section class="content-header"><h2></h2></section>
           <!-- general form elements -->
            <section class="content">
-        
+        <div class="row">
 
           <div class="box box-primary">
    @if ($errors->any())
@@ -81,9 +81,8 @@
 
                 </div>
               
-                
-             
-              <br>
+
+              <br> <br>
             <div class="col-md-12" style="overflow: auto;"> 
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs" id="tabs">
@@ -117,7 +116,7 @@
                   <td>
                 <div class="form-group">
                   
-                  <select class="form-control selectpicker"data-live-search="true" data-selected-text-format="count"  data-actions-box="true" data-count-selected-text="{0} Exercise Selected" data-header="Select Exercise"  name="tab1exercisename1"  >
+                  <select class="form-control select2" width="100%" data-live-search="true" data-selected-text-format="count"  data-actions-box="true" data-count-selected-text="{0} Exercise Selected" data-header="Select Exercise"  name="tab1exercisename1"  >
                     <option value="" disabled="" selected="">--Please select--</option>
                   @foreach($exercise as $exercise1) 
                   <option value="{{$exercise1->exerciseid}}" {{$exercise1->exerciseid == 1 ?'selected':'' }} >{{$exercise1->exercisename}}</option>
@@ -213,7 +212,7 @@
                   <td>
                 <div class="form-group">
                   
-                  <select class="form-control selectpicker"data-live-search="true" data-selected-text-format="count"  data-actions-box="true" data-count-selected-text="{0} Exercise Selected" data-header="Select Exercise"  name="tab2exercisename1" >
+                  <select class="form-control select2"width="100%" data-header="Select Exercise"  name="tab2exercisename1" >
                     <option value="" disabled="" selected="">--Please select--</option>
                   @foreach($exercise as $exercise1)
                   <option value="{{$exercise1->exerciseid}}" {{$exercise1->exerciseid == 1 ?'selected':'' }} >{{$exercise1->exercisename}}</option>
@@ -306,7 +305,7 @@
                   <td>
                 <div class="form-group">
                   
-                  <select class="form-control selectpicker"data-live-search="true" data-selected-text-format="count"  data-actions-box="true" data-count-selected-text="{0} Exercise Selected" data-header="Select Exercise" name="tab3exercisename1" >
+                  <select class="form-control select2"data-live-search="true" data-selected-text-format="count"  data-actions-box="true" data-count-selected-text="{0} Exercise Selected" data-header="Select Exercise" name="tab3exercisename1" >
                     <option value="" disabled="" selected="">--Please select--</option>
                   @foreach($exercise as $exercise1)
                   <option value="{{$exercise1->exerciseid}}"{{$exercise1->exerciseid == 1 ?'selected':'' }}>{{$exercise1->exercisename}}</option>
@@ -400,7 +399,7 @@
                   <td>
                 <div class="form-group">
                   
-                  <select class="form-control selectpicker"data-live-search="true" data-selected-text-format="count"  data-actions-box="true" data-count-selected-text="{0} Exercise Selected" data-header="Select Exercise" name="tab4exercisename1">
+                  <select class="form-control select2"data-live-search="true" data-selected-text-format="count"  data-actions-box="true" data-count-selected-text="{0} Exercise Selected" data-header="Select Exercise" name="tab4exercisename1">
                     <option value="" disabled="" selected="">--Please select--</option>
                   @foreach($exercise as $exercise1)
                   <option value="{{$exercise1->exerciseid}}" {{$exercise1->exerciseid == 1 ?'selected':'' }}>{{$exercise1->exercisename}}</option>
@@ -480,7 +479,7 @@
                   <td>
                 <div class="form-group">
                   
-                  <select class="form-control selectpicker"data-live-search="true" data-selected-text-format="count"  data-actions-box="true" data-count-selected-text="{0} Exercise Selected" data-header="Select Exercise" name="tab5exercisename1" >
+                  <select class="form-control select2"data-live-search="true" data-selected-text-format="count"  data-actions-box="true" data-count-selected-text="{0} Exercise Selected" data-header="Select Exercise" name="tab5exercisename1" >
                     <option value="" disabled="" selected="">--Please select--</option>
                   @foreach($exercise as $exercise1)
                   <option value="{{$exercise1->exerciseid}}" {{$exercise1->exerciseid == 1 ?'selected':'' }}>{{$exercise1->exercisename}}</option>
@@ -559,7 +558,7 @@
                   <td>
                 <div class="form-group">
                   
-                  <select class="form-control selectpicker"data-live-search="true" data-selected-text-format="count"  data-actions-box="true" data-count-selected-text="{0} Exercise Selected" data-header="Select Exercise"  name="tab6exercisename1" >
+                  <select class="form-control select2"data-live-search="true" data-selected-text-format="count"  data-actions-box="true" data-count-selected-text="{0} Exercise Selected" data-header="Select Exercise"  name="tab6exercisename1" >
                     <option value="" disabled="" selected="">--Please select--</option>
                   @foreach($exercise as $exercise1)
                   <option value="{{$exercise1->exerciseid}}"{{$exercise1->exerciseid == 1 ?'selected':'' }}>{{$exercise1->exercisename}}</option>
@@ -637,7 +636,7 @@
                   <td>
                 <div class="form-group">
                   
-                  <select class="form-control selectpicker"data-live-search="true" data-selected-text-format="count"  data-actions-box="true" data-count-selected-text="{0} Exercise Selected" data-header="Select Exercise"  name="tab7exercisename1" >
+                  <select class="form-control select2"data-live-search="true" data-selected-text-format="count"  data-actions-box="true" data-count-selected-text="{0} Exercise Selected" data-header="Select Exercise"  name="tab7exercisename1" >
                     <option value="" disabled="" selected="">--Please select--</option>
                   @foreach($exercise as $exercise1)
                   <option value="{{$exercise1->exerciseid}}" {{$exercise1->exerciseid == 1 ?'selected':'' }}>{{$exercise1->exercisename}}</option>

@@ -909,7 +909,7 @@ function changedate(){
 
 
         var x = document.getElementById("startingdate").value;
-        x.innerHTML = formatDate(d, "dddd h:mmtt d MMM yyyy");
+        
         var date = new Date(x);
 
         var days=item.numberofdays-1;

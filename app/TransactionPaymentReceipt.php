@@ -72,7 +72,7 @@ class TransactionPaymentReceipt
       $scheme=Scheme::where('schemeid',$payment1->schemeid)->get()->first();
       //echo $id;
      
-      $memberpackage = MemberPackages::where('userid',$id)->where('schemeid',$payment1->schemeid)->get()->first();
+      $memberpackage = MemberPackages::where('userid',$id)->where('schemeid',$payment1->schemeid)->where('memberpackagesid', $request)->get()->first();
       
       if(!empty($memberpackage)){
         $upgradepackageid = $memberpackage->upgradeid;

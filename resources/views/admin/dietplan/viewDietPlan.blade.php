@@ -1307,36 +1307,36 @@ $('#dietplan').trigger('change');
      // alert(exerciseplan);
 
 
-     $.ajax({
-                                   url:"{{ url('dietload') }}",
-                                   method:"GET",
-                                       data:{dietplanname:dietplanname, _token:_token},
-                                 
-                                  success:function(data) {
+            $.ajax({
+                     url:"{{ url('dietload') }}",
+                     method:"GET",
+                         data:{dietplanname:dietplanname, _token:_token},
+                   
+                    success:function(data) {
 
-                                     // alert(data);
+                       // alert(data);
 
-                                    if(data){
-                                      $('.exercise').css('display','block');
-                         
-                                    }
+                      if(data){
+                        $('.exercise').css('display','block');
+           
+                      }
 
-                                        count=1;
+                          count=1;
 
-                                      $.each(data, function(i, item){
-                                      
-                                      	// alert(data);
-                                              var counttabedit=count;
-                                              var ap='<tr id="tab'+item.dietday+'firsttr'+counttabedit+'" class="tab'+item.dietday+'item"><td style="width: 25%!important"><div class="form-group"><select class="form-control" name="tab'+item.dietday+'mealname'+counttabedit+'"required><option value="" disabled="" selected="">--Please select--</option>';
-                                  <?php foreach($meals as $meal){ ?>
+                        $.each(data, function(i, item){
+                        
+                        	// alert(data);
+                                var counttabedit=count;
+                                var ap='<tr id="tab'+item.dietday+'firsttr'+counttabedit+'" class="tab'+item.dietday+'item"><td style="width: 25%!important"><div class="form-group"><select class="form-control" name="tab'+item.dietday+'mealname'+counttabedit+'"required><option value="" disabled="" selected="">--Please select--</option>';
+                    <?php foreach($meals as $meal){ ?>
 
-                                    ap += '<option';
-                                    if(item.mealid == "<?php echo $meal->mealmasterid ?>")
-                                    {
-                                      ap+=' selected';
-                                    } 
-                                    ap+=' value="<?php echo $meal->mealmasterid ?>"><?php echo $meal->mealname ?></option> '; 
-                                    <?php } ?> 
+                      ap += '<option';
+                      if(item.mealid == "<?php echo $meal->mealmasterid ?>")
+                      {
+                        ap+=' selected';
+                      } 
+                      ap+=' value="<?php echo $meal->mealmasterid ?>"><?php echo $meal->mealname ?></option> '; 
+                      <?php } ?> 
 
                     ap+=' </select></div></td><td><div class="form-group"> <label class="switch" style="margin-bottom: 0px !important;"><input type="checkbox" name="tab'+item.dietday+'iscompulsary'+counttabedit+'" value="1" ';
                  

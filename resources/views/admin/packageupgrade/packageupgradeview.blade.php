@@ -56,7 +56,7 @@
                         @if(!empty($users))
                         <option selected value="">--Please choose an option--</option>
                         @foreach($users as $user)
-                        <option value="{{ $user->userid }}">{{ ucfirst($user->firstname) }} {{ ucfirst($user->lastname) }}</option>
+                        <option value="{{ $user->userid }}">{{ ucfirst($user->username) }}</option>
                         @endforeach
                         @else
                         <option value="">--No Member Available --</option>

@@ -74,7 +74,7 @@ td{
                 <option value="" selected="" disabled="">Select a User</option>
 
                 @foreach($users as $user)
-                  <option value="{{$user->userid}}"  @if(isset($query['username'])) {{$query['username'] == $user->userid ? 'selected':''}} @endif>{{ $user->firstname }} {{ $user->lastname }} 
+                  <option value="{{$user->userid}}"  @if(isset($query['username'])) {{$query['username'] == $user->userid ? 'selected':''}} @endif>{{ $user->username }}
                     @endforeach
 
                 </select></td>
