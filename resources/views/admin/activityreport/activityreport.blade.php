@@ -74,7 +74,7 @@ table td{
 
 								<option value="{{$user->userid}}"  @if(isset($query['username'])) {{$query['username'] == $user->userid ? 'selected':''}} @endif>
 									
-									{{ $user->first_name }} {{ $user->last_name }} 
+                  {{ $user->username }} 
               
 							
 									 </option>
@@ -125,7 +125,7 @@ table td{
                      <tr>
 
                       <td>{{date('d-m-Y', strtotime($data1->created_at))}}</td>
-                       <td>{{ $data1->first_name }} {{ $data1->last_name }} </td>
+                       <td>{{ucwords( $data1->first_name) }} {{ ucwords($data1->last_name) }} </td>
                         <td>{{$data1->details}}</td>
                           
                      </tr>

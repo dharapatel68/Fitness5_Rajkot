@@ -104,6 +104,7 @@
          </ul>
       </li>
       @endif
+       <li><a href="{{ url('sendformtonumber') }}"><i class="fa fa-chevron-right"></i>Send Form</a></li>
       @if(isset($permission["'add_device_all'"]))
       <!-- ============================= Device ============================== -->
       <li class="treeview">

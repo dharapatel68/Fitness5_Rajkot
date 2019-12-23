@@ -234,7 +234,7 @@
                         @endif
                       </td>
                   
-                        <td>{{$member->firstname}} {{ $member->lastname }} </td>
+                        <td>{{ucwords($member->firstname)}} {{ ucwords($member->lastname) }} </td>
                         <td> {{ $member->username }}</td>
                         <td> {{ $member->email }}</td>
                         <td> {{ $member->mobileno }}</td>

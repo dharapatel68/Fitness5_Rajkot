@@ -206,8 +206,7 @@
                 <th>Member</th>
                 <th>Day</th>
                 <th>Date</th>
-                <th>Fromdate</th>
-                <th>Todate</th>
+               
                 <th>Hoursfrom</th>
                 <th>Hoursto</th>
                 <th>Actualdate</th>
@@ -219,8 +218,7 @@
                 <th>Persessioncommision</th>
                 <th>Persessionamount</th>
                 <th>Paymentstatus</th>
-                <th>Conducteddate</th>
-                <th>Conductedtime</th>
+                
                  <th>Action</th>
                 </tr>
                 </thead>
@@ -229,15 +227,13 @@
                 <tr>
     
                 <td>{{$employeename !== '' ?$employeename: $g->ptrainerid}}</td>
-                <td>{{$membername !== '' ? $membername : $g->pmemberid}}</td>
+                <td>{{ucwords($membername !== '' ? $membername : $g->pmemberid)}} </td>
                 <td>{{$g->day}} </td>
-                <td>{{$g->date}}</td>
-                <td>{{$g->fromdate}} </td>
-                <td>{{$g->todate}}</td>
+                <td>{{date('d-m-Y',strtotime($g->date))}}</td>
                 <td>{{$g->hoursfrom}} </td>
                 <td>{{$g->hoursto}} </td>
-                <td>{{$g->actualdate}} </td>
-                <td>{{$g->actualtime}}</td>
+                <td>{{date('d-m-Y',strtotime($g->actualdate))}}</td>
+               <td>{{$g->actualtime}}</td>
 
 
                 <td>{{$g->ptmemberstatus}} </td>
@@ -250,8 +246,7 @@
                 <td>{{$g->persessioncommision}}</td>
                 <td> {{$g->persessionamount}}</td>
                 <td>{{$g->paymentstatus}} </td>
-                <td>{{$g->conducteddate}}</td>
-                <td> {{$g->conductedtime}}</td>
+              
                 <td><a href="{{ url('editMeasurement/') }}"class="edit" title="Edit"><i class="fa fa-edit"></i></a>  </td>           
                 </tr>
                  @endforeach

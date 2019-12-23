@@ -15,11 +15,11 @@ class TrainerProfileController extends Controller
 
     	 	$messages = [
           'unique' => 'This Trainer already have profile'];
-		  	 $request->validate([
-              	'trainerid' => 'required|unique:trainerprofile,employeeid',
-              	'photo' => 'mimes:jpeg,bmp,png|max:4000',
-    			'results.*' => 'mimes:jpeg,bmp,png|max:4000',
-            ],$messages);
+		  	 // $request->validate([
+      //         	'trainerid' => 'required|unique:trainerprofile,employeeid',
+      //         	'photo' => 'mimes:jpeg,bmp,png|max:4000',
+    		// 	'results.*' => 'mimes:jpeg,bmp,png|max:4000',
+      //       ],$messages);
 
     	 	$trainerprofile=TrainerProfile::create([
 
@@ -28,9 +28,10 @@ class TrainerProfileController extends Controller
 	            'city' => $request['city'],
 	            'exp' => $request['exp'],
 	            'achievments' => $request['achievments'],
-	            'freeslots'=> $request['slots'],
+        'freeslots' => implode(',', (array) $request->get('slots')),
+
 	            'photo' => $request['photo'],
-	            
+
 	     
     	 	]);
     	 	 if($request->hasfile('results'))

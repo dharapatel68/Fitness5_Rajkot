@@ -42,6 +42,7 @@ use App\Notificationmsgdetails;
 use App\Emailnotificationdetails;
 use App\Smssetting;
 use App\Emailsetting;
+use App\MemberData;
  use Illuminate\Support\Facades\Mail;
  use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -903,9 +904,14 @@ public function otpverify(Request $request){
     $exerciseprogram = DB::getSchemaBuilder()->getColumnListing('exerciseprogram');
     $RootScheme = RootScheme::get()->all();
      $users= DB::table('member')->join('users', 'member.userid', '=', 'users.userid')->where('member.status',1)->get()->all();
+     $memberdata='';
     $PaymentTypes = PaymentType::get()->all();
     $company = Company::get()->all();
-    return view('admin.addMember',compact('exerciseprogram','RootScheme','users','PaymentTypes','company'));
+    if($request->route('id')){
+      $id=$request->route('id');
+      $memberdata=MemberData::where('memberid',$id)->get()->first();
+    }
+    return view('admin.addMember',compact('exerciseprogram','RootScheme','users','PaymentTypes','company','memberdata'));
 }
 
 

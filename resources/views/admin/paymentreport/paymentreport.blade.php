@@ -134,11 +134,11 @@ td{
 
                   	@foreach($paymentdata as $paymentreport)
                   	<tr>
-                  		<td>{{date('d-m-Y', strtotime($paymentreport->date)) }}</td>
+                  		<td>{{date('d-m-Y',strtotime($paymentreport->date))}}</td>
                   		<td>{{$paymentreport->invoiceno}}</td>
 						<td>
-							@if($paymentreport->firstname) {{ $paymentreport->firstname }} {{$paymentreport->lastname}}
-@else {{ $paymentreport->rfirstname }} {{$paymentreport->rlastname}} @endif </td>
+							@if($paymentreport->firstname) {{ucwords( $paymentreport->firstname )}} {{ucwords($paymentreport->lastname)}}
+@else {{ ucwords( $paymentreport->rfirstname )}} {{ucwords($paymentreport->rlastname)}} @endif </td>
                   		<td>{{$paymentreport->mode}}</td>
                   		<td>{{$paymentreport->pamount}}</td>
                   		<td>{{$paymentreport->name}}</td>

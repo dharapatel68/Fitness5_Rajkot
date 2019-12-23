@@ -287,7 +287,7 @@
                     <tr>
                         <td style="display: none;">{{$member->inquiriesid}}</td>
                         <td><span class='hide'>{{$member->createddate}}</span>{{ date('d-m-Y', strtotime($member->createddate))}}</td>
-                        <td>{{$member->firstname}} &nbsp; {{ $member->lastname }} 
+                        <td>{{ucwords($member->firstname)}} &nbsp; {{ucwords( $member->lastname )}} 
                           <span class="pull-right">
                                 @if($member->gender == 'male')
                                   <i class="fa fa-male text-info" style="font-size: 18px;"></i>

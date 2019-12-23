@@ -153,9 +153,11 @@
 </style>
 <div class="content-wrapper">
 <section class="content-header">
-   <h2>Membership Form</h2>
+   <h2>Membership Form <a href="{{url('viewrequests')}}" class="btn bg-orange"> View All Form</a></h2>
+
 </section>
 <!-- general form elements -->
+
 <div class="content">
 @if ($errors->any())
 <div class="alert alert-danger">
@@ -190,6 +192,7 @@
          });
 </script>
 <section id="content">
+
    <form action="{{ url('verify') }}" method="post" enctype="multipart/form-data" enctype="multipart/formdata" id="member_form" onsubmit = "return ValidateForm();">
       {{ csrf_field() }}
       <div id="accordion" class="accordion-container">
@@ -227,6 +230,7 @@
          </div>
          /.accordion-content-->
       <!--         </article> -->
+
       <article class="content-entry open">
          <h4 class="article-title"><i></i>Registration Details</h4>
          <div class="accordion-content" style="display:block;">
@@ -235,60 +239,61 @@
             <div class="form-group">
                <label>First Name<span style="color: red">*</span>
                </label>
-               <input type="text" name="firstname" id="firstname" class="form-control" placeholder="Firstname" class="span11" required="" maxlength="60" value="{{ old('firstname') }}" />
+               <input type="text" name="firstname" id="firstname" class="form-control" placeholder="Firstname" class="span11" required="" maxlength="60" value="{{ old('firstname') }} @if(!empty($memberdata->firstname)){{ $memberdata->firstname }} @endif" />
             </div>
             <div class="form-group">
                <label>LastName<span style="color: red">*</span>
                </label>
-               <input type="text" name="lastname" id="lastname" class="form-control inline-block" placeholder="LastName" class="span11" maxlength="60" value="{{ old('lastname') }}" required="" />
+               <input type="text" name="lastname" id="lastname" class="form-control inline-block" placeholder="LastName" class="span11" maxlength="60" value="{{ old('lastname') }}@if(!empty($memberdata->lastname)){{ $memberdata->lastname }} @endif" required="" />
             </div>
             <div class="form-group">
                <label>User Name</label>
-               <input type="text" name="username" id="username" class="form-control" placeholder="User Name" class="span11" required="" maxlength="60" value="{{ old('username') }}" /><span id="error_username"></span>
+               <input type="text" name="username" id="username" class="form-control" placeholder="User Name" class="span11" required="" maxlength="60" value="@if(!empty($memberdata->username)){{ $memberdata->username }} @endif" /><span id="error_username"></span>
             </div>
             <div class="form-group">
                <label>Gender<span style="color: red">*</span>
                </label>
                <label>
-               <input type="radio" name="gender" value="Female" required>Female</label>
+               <input type="radio" name="gender" value="Female" required   @if(!empty($memberdata->gender)){{ $memberdata->gender  == 'Female' ? 'checked' : ''}} @endif >Female</label>
                <label>
-               <input type="radio" name="gender" value="Male">Male</label>
+               <input type="radio" name="gender" value="Male"  @if(!empty($memberdata->gender)){{ $memberdata->gender  == 'Male' ? 'checked' : ''}} @endif>Male</label>
             </div>
             <div class="form-group">
                <label>Email<span style="color: red">*</span>
                </label>
-               <input type="email" maxlength="60" value="{{ old('email') }}" id="email" name="email" class="form-control" placeholder="Email Id" class="span11" required />
+               <input type="email" maxlength="60" value="{{ old('email') }} @if(!empty($memberdata->email)){{ $memberdata->email }} @endif" id="email" name="email" class="form-control" placeholder="Email Id" class="span11" required />
             </div>
             <div class="form-group">
                <label>Cell Phone Number<span style="color: red">*</span>
                </label>
-               <input type="text" name="CellPhoneNumber" value="{{ old('CellPhoneNumber') }}" id="MobileNo" minlength="10" maxlength="10" class="form-control number" placeholder="Cell Phone Number" required="" class="span11" /><span id="error_usermobile"></span>
+               <input type="text" name="CellPhoneNumber" value="{{ old('mobileno') }} @if(!empty($memberdata->CellPhoneNumber)){{ $memberdata->mobileno }} @endif" id="MobileNo" minlength="10" maxlength="10" class="form-control number" placeholder="Cell Phone Number" required="" class="span11" /><span id="error_usermobile"></span>
             </div>
             <div class="form-group">
                <label>Preferred Timing</label>
                <br> <span><label>From</label></span>
+             
                <select type="time" class="form-control" name="working_hour_from_1" id="fromtime" required="">
-               <option value="06:00" @if(old( 'working_hour_from_1')=='06:00' ) selected @endif>06:00 AM</option>
-               <option value="07:00" @if(old( 'working_hour_from_1')=='07:00' ) selected @endif>07:00 AM</option>
-               <option value="08:00" @if(old( 'working_hour_from_1')=='08:00' ) selected @endif>08:00 AM</option>
+                <option value="06:00" @if(old( 'working_hour_from_1')=='06:00' ) selected @endif >06:00 AM</option>
+               <option value="07:00" @if(old( 'working_hour_from_1')=='07:00' ) selected @endif >07:00 AM</option>
+               <option value="08:00" @if(old( 'working_hour_from_1')=='08:00' ) selected @endif >08:00 AM</option>
                <option value="09:00" @if(old( 'working_hour_from_1')=='09:00' ) selected @endif>09:00 AM</option>
-               <option value="10:00" @if(old( 'working_hour_from_1')=='10:00' ) selected @endif>10:00 AM</option>
-               <option value="11:00" @if(old( 'working_hour_from_1')=='11:00' ) selected @endif>11:00 AM</option>
-               <option value="12:00" @if(old( 'working_hour_from_1')=='12:00' ) selected @endif>12:00 PM</option>
-               <option value="13:00" @if(old( 'working_hour_from_1')=='13:00' ) selected @endif>01:00 PM</option>
-               <option value="14:00" @if(old( 'working_hour_from_1')=='14:00' ) selected @endif>02:00 PM</option>
+               <option value="10:00" @if(old( 'working_hour_from_1')=='10:00' ) selected @endif >10:00 AM</option>
+               <option value="11:00" @if(old( 'working_hour_from_1')=='11:00' ) selected @endif >11:00 AM</option>
+               <option value="12:00"  >12:00 PM</option>
+               <option value="13:00"  >01:00 PM</option>
+               <option value="14:00"  >02:00 PM</option>
                <option value="15:00" @if(old( 'working_hour_from_1')=='15:00' ) selected @endif>03:00 PM</option>
                <option value="16:00" @if(old( 'working_hour_from_1')=='16:00' ) selected @endif>04:00 PM</option>
                <option value="17:00" @if(old( 'working_hour_from_1')=='17:00' ) selected @endif>05:00 PM</option>
                <option value="18:00" @if(old( 'working_hour_from_1')=='18:00' ) selected @endif>06:00 PM</option>
-               <option value="19:00" @if(old( 'working_hour_from_1')=='19:00' ) selected @endif>07:00 PM</option>
-               <option value="20:00" @if(old( 'working_hour_from_1')=='20:00' ) selected @endif>08:00 PM</option>
-               <option value="21:00" @if(old( 'working_hour_from_1')=='21:00' ) selected @endif>09:00 PM</option>
-               <option value="22:00" @if(old( 'working_hour_from_1')=='22:00' ) selected @endif>10:00 PM</option>
+               <option value="19:00" @if(old( 'working_hour_from_1')=='19:00' ) selected @endif >07:00 PM</option>
+               <option value="20:00" @if(old( 'working_hour_from_1')=='20:00' ) selected @endif >08:00 PM</option>
+               <option value="21:00" @if(old('working_hour_from_1')=='21:00' ) selected @endif >09:00 PM</option>
+               <option value="22:00" @if(old( 'working_hour_from_1')=='22:00' ) selected @endif >10:00 PM</option>
                </select>
                <label>To</label>
                <select type="time" class="form-control" id="totime" name="working_hour_to_1" required="">
-               <option value="07:00" @if(old( 'working_hour_to_1')=='07:00' ) selected @endif>07:00 AM</option>
+               <option value="07:00" @if(old( 'working_hour_to_1')=='07:00' ) selected @endif  >07:00 AM</option>
                <option value="08:00" @if(old( 'working_hour_to_1')=='08:00' ) selected @endif>08:00 AM</option>
                <option value="09:00" @if(old( 'working_hour_to_1')=='09:00' ) selected @endif>09:00 AM</option>
                <option value="10:00" @if(old( 'working_hour_to_1')=='10:00' ) selected @endif>10:00 AM</option>
