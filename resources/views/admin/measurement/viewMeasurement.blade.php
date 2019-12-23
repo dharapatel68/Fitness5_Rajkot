@@ -152,7 +152,7 @@
                 @foreach($measurement as $mm)
           
                 <tr>
-                <td> {{ $mm->Member->firstname }} {{ $mm->Member->lastname }}</td>
+                <td>{{ ucwords( $mm->Member->firstname) }} {{ ucwords($mm->Member->lastname) }}</td>
           <td> {{ date('d-m-Y', strtotime($mm->todaydate)) }}</td>
                 <td> {{ $mm->weight }}</td>
                 <td> {{ $mm->height }}</td>

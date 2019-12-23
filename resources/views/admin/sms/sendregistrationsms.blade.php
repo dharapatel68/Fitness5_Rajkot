@@ -280,8 +280,8 @@ table, th, td {
                                             @foreach($query1 as $q)
                                             <tr>
                                               <!-- <td><input type="checkbox" name="checkval[]" checked="" value="{{ $q->inquiriesid }}"></td> -->
-                                              <td>{{ $q->firstname }}</td>
-                                              <td>{{ $q->lastname }}</td>
+                                              <td>{{ucwords( $q->firstname) }}</td>
+                                              <td>{{ ucwords($q->lastname) }}</td>
                                               <td>{{ $q->phone_no }}</td>
                                             </tr>
                                            @endforeach

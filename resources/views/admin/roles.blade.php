@@ -50,7 +50,7 @@
               </thead>
               <tbody>@foreach($roles as $role)
               <tr>
-                <td> {{ $role->employeerole }}</td>
+                <td> {{ucwords( $role->employeerole )}}</td>
                 <td> {{ $role->description }}</td>
                <!--  <td>information</td> -->
               <td><a href="{{ url('editrole/'.$role->roleid) }}"class="edit" title="Edit"><i class="fa fa-edit"></i></a>

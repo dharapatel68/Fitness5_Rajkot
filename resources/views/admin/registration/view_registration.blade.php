@@ -59,7 +59,7 @@
                   @if($registrationfield)
                    @foreach($registrationfield as $registrationfields) 
                 <tr>
-                  <td>{{$registrationfields->firstname}} &nbsp; {{$registrationfields->lastname}}</td>
+                  <td>{{ucwords($registrationfields->firstname)}} &nbsp; {{ucwords($registrationfields->lastname)}}</td>
                   <td>{{$registrationfields->phone_no}}</td>
                   <td>{{ date('d-m-Y', strtotime($registrationfields->starting_date))}}</td>
                   <td>{{$registrationfields->schemename}}</td>

@@ -349,9 +349,9 @@
                        <td>{{date('d-m-Y',strtotime($data->date))}}</td>
                       <td id="2td{{$i}}"> {{$data->hoursfrom}} </td>
                       
-                      <!-- <td>{{$data->day}}</td> -->
-                      <td>{{$claimptsession[0]->actualdate}}</td>
-                      <td>{{$claimptsession[0]->actualtime}}</td>
+                    <!-- <td>{{$data->day}}</td> -->
+                      <td>{{date('d-m-Y',strtotime($claimptsession[0]->actualdate))}}</td>
+                    <td>{{$claimptsession[0]->actualtime}}</td>
                       <td id="3td{{$i}}"> {{$data->username}}</td>
                       <td>
                         <input type="hidden" name="mid{{$i}}" id="mid{{$i}}" value="{{$data->ptmemberid}}">
@@ -369,7 +369,7 @@
                       <td>{{date('d-m-Y',strtotime($data->date))}}</td>
                       <td id="2td{{$i}}"> {{$data->hoursfrom}} </td>
                       <!-- <td>{{$data->day}}</td> -->
-                      <td>{{$claimptsession[0]->actualdate}}</td>
+                      <td>{{date('d-m-Y',strtotime($claimptsession[0]->actualdate))}}</td>
                       <td>{{$claimptsession[0]->actualtime}}</td>
                       <td id="3td{{$i}}"> {{$data->username}}</td>
                       <td>

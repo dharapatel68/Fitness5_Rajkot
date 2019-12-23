@@ -285,8 +285,8 @@ table, th, td {
                                             <tr>
                                                <!-- <input type="hidden" name="q1data" id="q1data" value="{{$q->inquiriesid}}"> -->
                                               <!-- <td><input type="checkbox" name="checkval[]" checked="" value="{{ $q->inquiriesid }}"></td> -->
-                                              <td>{{ $q->firstname }}</td>
-                                              <td>{{ $q->lastname }}</td>
+                                              <td>{{ ucwords($q->firstname) }}</td>
+                                              <td>{{ ucwords($q->lastname) }}</td>
                                               <td>{{ $q->mobileno }}</td>
                                             </tr>
                                            @endforeach

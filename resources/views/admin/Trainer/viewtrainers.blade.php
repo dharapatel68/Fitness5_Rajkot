@@ -118,9 +118,8 @@ table td{
                   	<th>Employee</th>
                     <th>Level Of Trainer</th>
                     <th>City</th>
-                    <th>Experiance</th>
+                    <th>Experience</th>
                     <th>Achievments</th>
-                    <th>Free Slots</th>
                     <th>Photo</th>
                     <th>Results</th>
                   </tr>
@@ -130,14 +129,13 @@ table td{
                      <tr>
                       <td><a href="{{url('viewtrainerprofile/'.$data1->trainerprofileid)}}"><i class="fa fa-eye"></i></td>
 
-                        <td>{{$data1->first_name}} {{$data1->last_name}}</td>
+                        <td>{{ucwords($data1->first_name)}} {{ucwords($data1->last_name)}}</td>
                         <td>{{$data1->leveloftrainer}}</td>
                         <td>{{$data1->city}}</td>
                         <td>{{$data1->exp }} </td>
                         <td>{{$data1->achievments }}</td>
-                        <td>{{$data1->freeslots }}</td>
                         <td>{{$data1->photo }}</td>
-                        <td  style="width: 10px !important ;">{{$data1->results }}</td> 
+                        <td  style="width: 10px !important ;">{{$data1->results}}</td> 
                      </tr>
      		           @endforeach
 

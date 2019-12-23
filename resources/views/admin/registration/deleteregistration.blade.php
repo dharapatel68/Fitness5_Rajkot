@@ -44,7 +44,7 @@
                 <tbody >
                    @foreach($registration as $registration) 
                 <tr>
-                  <td>{{$registration->firstname}} &nbsp; {{$registration->lastname}}</td>
+                  <td>{{ucwords($registration->firstname)}} &nbsp; {{ucwords($registration->lastname)}}</td>
                   <td>{{$registration->phone_no}}</td>
                   <td>{{ date('d-m-Y', strtotime($registration->starting_date))}}</td>
                   <td>{{ date('d-m-Y', strtotime($registration->ending_date))}}</td>

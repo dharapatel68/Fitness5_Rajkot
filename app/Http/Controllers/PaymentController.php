@@ -32,7 +32,7 @@ use App\Emailsetting;
 use Illuminate\Support\Facades\Mail;
 use App\Emailnotificationdetails;
 use App\Admin;
-//use PDF;
+use PDF;
 
 
 class PaymentController extends Controller
@@ -1167,7 +1167,7 @@ $gstno='';
         $scheme=Scheme::where('schemeid',$payment1->schemeid)->get()->first();
           //echo $id;
 
-        $memberpackage = MemberPackages::where('userid',$id)->where('schemeid',$payment1->schemeid)->where('status',1)->get()->first();
+        // $memberpackage = MemberPackages::where('userid',$id)->where('schemeid',$payment1->schemeid)->where('status',1)->where('memberpackagesid', $request)->get()->first();
 
         if(!empty($memberpackage)){
           $upgradepackageid = $memberpackage->upgradeid;
@@ -1298,7 +1298,7 @@ $gstno='';
       /*dd($payment[0]);*/
       $filename = time().'invoice.pdf';
       $link_send = url('/').'/transactionpaymentreceipt/'.$invoice_no;
-      $pdflink = app('bitly')->getUrl($link_send);
+      // $pdflink = app('bitly')->getUrl($link_send);
      
     $member_message = Member::where('userid', $userid)->first();
       if(!empty($member_message)){
@@ -1322,7 +1322,7 @@ $gstno='';
       $msg= str_replace("[join date]",$join_date,$msg);
       $msg= str_replace("[End Date]", $end_date,$msg);
       $msg= str_replace("[InvoiceID]",$invoice_no,$msg); 
-      $msg= str_replace("[url]", $pdflink,$msg); 
+      // $msg= str_replace("[url]", $pdflink,$msg); 
       
 
       $due='';
@@ -1374,7 +1374,7 @@ $gstno='';
                'senderemail'=> $emailsetting->senderemailid,
             ];
 
-      //dd($data);
+      
        $tt= Mail::send('admin.name', ["data1"=>$data], function($message) use ($data, $filename){
                 $message->from($data['senderemail'], 'Payment Message');
                 $message->to($data['mail']);
@@ -1863,6 +1863,9 @@ $gstno='';
       }
 
       // sms start
+      $link_send = url('/').'/transactionpaymentreceipt/'.$invoiceno;
+      $pdflink = app('bitly')->getUrl($link_send);
+
       $today_date = date('d-m-Y');
       $msg= DB::table('messages')->where('messagesid','14')->get()->first();
       $msg =$msg->message;
@@ -1874,6 +1877,8 @@ $gstno='';
       $msg= str_replace("[Amount]",$transaction_amount,$msg);
       $msg= str_replace("[InvoiceID]",$invoiceno,$msg); 
       $msg= str_replace("[Date]",$today_date,$msg); 
+      $msg= str_replace("[url]", $pdflink,$msg);
+
 
       $due='';
       if($transactiontype == 'Partially'){

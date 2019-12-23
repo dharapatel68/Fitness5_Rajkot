@@ -19,6 +19,10 @@ class admin
     public function handle($request, Closure $next)
     {
         $this->auth=Session::get('role');
+        $addmember_form = Session::get('addmember_form');
+        if(!empty($addmember_form)){
+            return redirect('notaccess');
+        }
         if($this->auth){
               $role_data = DB::table('roles')->where('employeerole', $this->auth=Session::get('role'))->first();
          

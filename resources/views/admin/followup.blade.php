@@ -107,10 +107,10 @@
               <tr>
                 
                 @if($followup->followuptakendate != null)  
-                <td><span class='hide'>{{$followup->followuptakendate}}</span>{{ date('j F, Y', strtotime($followup->followuptakendate))}}</td>
+                <td>{{date('d-m-Y', strtotime($followup->followuptakendate)) }}</td>
                
                 @else
-                <td><span class='hide'>{{$followup->followupdays}}</span>{{ date('j F, Y', strtotime($followup->followupdays))}}</td>
+                <td>{{date('d-m-Y', strtotime($followup->followupdays)) }}</td>
                 
                 @endif
                  <td>  @if($followup->followuptime == null)
@@ -118,8 +118,8 @@
                   @else
                    {{$followup->followuptime}}
                 @endif </td>
-                <td> {{ $followup->firstname }}</td>
-                <td> {{ $followup->lastname }}</td>
+                <td> {{ ucwords($followup->firstname) }}</td>
+                <td> {{ ucwords($followup->lastname) }}</td>
                 <td> {{ $followup->gender }}</td>
                 <td> {{ $followup->email }}</td>
                 <td> {{ $followup->mobileno }}</td>
