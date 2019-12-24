@@ -28,6 +28,8 @@ class SendMemberFormController extends Controller
             $url= str_replace('$mobileno',$id, $u);
             $url=str_replace('$msg', $msg, $url);
             $otpsend = Curl::to($url)->get();
+            
+            return redirect()->back()->withSuccess('Form SuccesFully Send');
     }
     public function addmeber(Request $request,$id){
         $shortlink=ShortLink::where('code',$id)->get()->last();

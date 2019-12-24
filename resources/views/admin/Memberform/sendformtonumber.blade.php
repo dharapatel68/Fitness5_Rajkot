@@ -27,7 +27,18 @@ td{
      	 <h1 style="text-decoration: none;">Send Form</h1>
      </section>
       <section class="content">
-      <!-- Info boxes -->
+
+         
+@if(session()->has('success'))
+    <div class="alert alert-success">
+        {{session('success') }}
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+         </button>
+    </div>
+
+@endif
+<!-- Info boxes -->
      	 <div class="row">
      	 	<div class="col-md-12">
      	 		<div class="row">
@@ -82,7 +93,7 @@ td{
 	$("#send").on('click', function(){
 		var code='dfd';
 		var id=$('#mobileno').val();
-		alert(id);
+		// alert(id);
 		location.href = '/sendmemberform/'+id+'/'+code+'';
      // window.location = "sendmemberform/"+id+"/"+code"";    
 });
