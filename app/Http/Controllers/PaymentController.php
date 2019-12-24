@@ -1297,7 +1297,7 @@ $gstno='';
 
       /*dd($payment[0]);*/
       $filename = time().'invoice.pdf';
-      $link_send = url('/').'/transactionpaymentreceipt/'.$invoice_no;
+      $pdflink = url('/').'/transactionpaymentreceipt/'.$invoice_no;
       // $pdflink = app('bitly')->getUrl($link_send);
      
     $member_message = Member::where('userid', $userid)->first();
@@ -1322,7 +1322,7 @@ $gstno='';
       $msg= str_replace("[join date]",$join_date,$msg);
       $msg= str_replace("[End Date]", $end_date,$msg);
       $msg= str_replace("[InvoiceID]",$invoice_no,$msg); 
-      // $msg= str_replace("[url]", $pdflink,$msg); 
+      $msg= str_replace("[url]", $pdflink,$msg); 
       
 
       $due='';
@@ -1929,6 +1929,7 @@ $gstno='';
                 $message->from($data['senderemail'], 'Payment Message');
                 $message->to($data['mail']);
                 $message->subject($data['subject']);
+                
 
           });
 
