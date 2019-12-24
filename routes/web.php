@@ -25,14 +25,19 @@
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
+
+
+
 Route::get('/', function () {
   return redirect('adminloginpage');
 });
+Route::any('/adminloginpage','AdminController@loginpage');
+
 Route::any('/memberlogin','MemberLoginController@memberlogin');
 Route::any('/memberdashboard/{userid?}','MemberLoginController@memberdashboard');
 // 
 
-Route::any('/adminloginpage','AdminController@loginpage');
 Route::any('check', 'AdminController@check')->name('check');
 Route::group(['middleware' => ['admin']], function() {
 
@@ -54,7 +59,7 @@ Route::get('assignedterms','AssignTermsController@index');
 Route::any('assignterms','AssignTermsController@create');
 Route::any('editassignterms/{id}','AssignTermsController@editassignterms');
 Route::get('schemes', 'SchemeController@index');
-Route::any('addMember', 'MemberController@otpverify');
+Route::any('addMember/{id?}', 'MemberController@otpverify');
 
 
 Route::any('members', 'MemberController@index')->name('memberindex');
@@ -719,7 +724,8 @@ Route::any('loaduserprofile','AdminController@loaduserprofile')->name('loaduserp
 
 /************************************end dashboard route****************************/
 
-Route::any('sendmemberform/{id}', 'SendMemberFormController@sendmemberform')->name('sendmemberform');
+Route::any('sendmemberform/{id}/{code}', 'SendMemberFormController@sendmemberform')->name('sendmemberform');
+
 Route::any('addtrainerprofile', 'TrainerProfileController@addtrainerprofile')->name('addtrainerprofile');
 Route::any('viewtrainers', 'TrainerProfileController@viewtrainers')->name('viewtrainers');
 Route::any('viewtrainerprofile/{id}', 'TrainerProfileController@viewtrainerprofile')->name('viewtrainerprofile');
@@ -731,3 +737,19 @@ Route::any('activityreport', 'ActivityReportController@activityreport')->name('a
 });
 //////////////////////////////////////////// HR Module End ///////////////////////////////////////////////////////////
 Route::any('employeepinchange/{id}', 'UserController@employeepinchange')->name('employeepinchange'); 
+/****************************start generate short link************************************/
+
+Route::get('generate-shorten-link', 'ShortLinkController@index');
+Route::post('generate-shorten-link', 'ShortLinkController@store')->name('generate.shorten.link.post');
+
+Route::get('sendmemberform1/{code}', 'ShortLinkController@shortenLink')->name('pshorten.link');
+/**********************************************************************************/
+
+Route::any('notaccess', function(){
+	dd('halto tha');
+	return view('notaccess');
+});
+Route::any('{id}/addmember', 'SendMemberFormController@addmeber');
+Route::any('viewrequests', 'SendMemberFormController@viewrequests');
+Route::any('sendformtonumber', 'SendMemberFormController@sendformtonumber');
+Route::any('changeMemberStatus', 'SendMemberFormController@changeMemberStatus');

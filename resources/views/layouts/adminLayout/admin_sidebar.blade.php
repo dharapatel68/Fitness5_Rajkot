@@ -104,6 +104,22 @@
          </ul>
       </li>
       @endif
+        <li class="treeview">
+         <a href="#">
+         <img src="{{ asset('images/icon/regform.jpg') }}" style="height: 14px; width: 14px;margin-left: -3px;">&nbsp;&nbsp;
+         <span>
+         <b>Member Form</b>
+         </span>
+         <span class="pull-right-container">
+         <i class="fa fa-angle-left pull-right"></i>
+         </span>
+         </a>
+         <ul class="treeview-menu">
+             <li><a href="{{ url('sendformtonumber') }}"><i class="fa fa-chevron-right"></i>Send MemberForm</a></li>
+              <li><a href="{{ url('viewrequests')}} "><i class="fa fa-chevron-right"></i>View MemberForm</a></li>
+         </ul>
+      </li>
+      
       @if(isset($permission["'add_device_all'"]))
       <!-- ============================= Device ============================== -->
       <li class="treeview">

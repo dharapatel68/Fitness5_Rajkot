@@ -352,6 +352,44 @@ footer p a:hover {
     color: white;
     box-shadow: 0 5px 20px 0 rgba(0,0,0,.2), 0 13px 24px -11px rgba(156,39,176,.6);
 }
+.badgebox
+{
+    opacity: 0;
+}
+
+.badgebox + .badge
+{
+    /* Move the check mark away when unchecked */
+    text-indent: -999999px;
+    /* Makes the badge's width stay the same checked and unchecked */
+  width: 27px;
+
+
+}
+.wrapper {
+  margin-right: auto; /* 1 */
+  margin-left:  auto; /* 1 */
+
+  max-width: 960px; /* 2 */
+
+  padding-right: 10px; /* 3 */
+  padding-left:  10px; /* 3 */
+}
+.badgebox:focus + .badge
+{
+    /* Set something to make the badge looks focused */
+    /* This really depends on the application, in my case it was: */
+    
+    /* Adding a light border */
+    box-shadow: inset 0px 0px 5px;
+     Taking the difference out of the padding 
+}
+
+.badgebox:checked + .badge
+{
+    /* Move the check mark back when checked */
+  text-indent: 0;
+}
 </style>
 
 </head>
@@ -370,7 +408,14 @@ footer p a:hover {
                     <div class="box box-info">
                         <!-- /.box-header -->
                         <div class="box-body">
-
+                          
+                            @if($trainerprofile->trainerphoto)
+                            @php
+                            $photo=$trainerprofile->trainerphoto;@endphp
+                            @else
+                                    @php
+                            $photo='default.png';@endphp
+                            @endif
                             <!-- <div class="text-center text-capitalize">John Robert Smith</div> -->
                             <!-- <h4 class="text-center text-capitalize">Web Designer & Developer, UX/UI Expert</h4> -->
 
@@ -386,7 +431,7 @@ footer p a:hover {
                                                     <div class="col-md-6 col-lg-10">
                                                         <div class="profile">
                                                             <div class="avatar">
-                                                                <img src="{{url('/files/'.$trainerprofile->trainerphoto)}}" alt="Circle Image" class="img-raised rounded-circle img-fluid" style="height:150px;">
+                                                                <img src="{{url('/files/'.$photo)}}" alt="Circle Image" class="img-raised rounded-circle img-fluid" style="height:150px;">
                                                             </div>
                                                             <div class="name">
                                                                 <h3 class="title">{{ ucfirst($trainerprofile->first_name)}} {{ucfirst($trainerprofile->last_name)}} {{ '(' . $trainerprofile->username .')' }}</h3>
@@ -445,7 +490,7 @@ footer p a:hover {
                         <div class="col-sm-8">
                               <input id="City" type="text" readonly="" value="{{$trainerprofile->   achievments}}" name="city" class="form-control">
                    
-                             
+    
                         </div>
                       </div>
                             
@@ -453,11 +498,19 @@ footer p a:hover {
 
 
                                                             </div>
+                                                                
+                                                          
                                                             <div class="tab-pane" id="freeslots">
 
-                                                                {{$trainerprofile->freeslots}}
-                                                            </div>
+                                                    @php
+                                                    $array=explode(',',$trainerprofile->freeslots);
+                                                    @endphp
 
+                                                               @foreach($array as $ar)
+                                                               <label class="btn btn-default margin"> {{$ar}}
+                                                                <input type="checkbox" name="slots[]" class="badgebox" checked="" value="06:00 AM To 07:00 AM"><span class="badge bg-orange">&check;</span></label>
+                                                               @endforeach
+                                                            </div>
 
                                                             <div class="tab-pane" id="results">
                                                                     

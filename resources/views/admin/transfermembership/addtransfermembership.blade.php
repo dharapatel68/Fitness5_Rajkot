@@ -1,10 +1,10 @@
 @extends('layouts.adminLayout.admin_design')
 @section('content')
 <style type="text/css">
-	.content-wrapper{
-		padding-right: 15px !important;
-		padding-left: 15px !important;
-	}
+  .content-wrapper{
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+  }
   .td{
   max-width: 20% !important;
 }
@@ -14,8 +14,8 @@ table tr {
 
 }
 .select2{
-	width: 100% !important;
-	
+  width: 100% !important;
+  
 }
  .badgebox
    {
@@ -42,12 +42,12 @@ table tr {
    text-indent: 0;
    }
 .select2-container--default .select2-selection--single{
-	border-radius: 2px !important;
-	max-height: 100% !important;
-	    border-color: #d2d6de !important;
-	        height: 32px;
-	        max-width: 100%;
-	        min-width: 100% !important;
+  border-radius: 2px !important;
+  max-height: 100% !important;
+      border-color: #d2d6de !important;
+          height: 32px;
+          max-width: 100%;
+          min-width: 100% !important;
 }
 .select2-selection__choice__remove{
   color: #000 !important;
@@ -133,21 +133,21 @@ table tr {
     <!-- Content Header (Page header) -->
     <section class="content-header">
 
-     	 <h1 style="text-decoration: none;"></h1>
+       <h1 style="text-decoration: none;"></h1>
      </section>
       <section class="content">
       <!-- Info boxes -->
-     	 <div class="row">
-     	 	<div class="col-md-12">
-     	 		<div class="row">
-     	 			<div class="box box-info">
-     	 				 <div class="box-header with-border">
-			              <h3 class="box-title">Transfer Membership</h3>
+       <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="box box-info">
+               <div class="box-header with-border">
+                    <h3 class="box-title">Transfer Membership</h3>
 
-			              
-			            </div>
-			            <!-- /.box-header -->
-			        
+                    
+                  </div>
+                  <!-- /.box-header -->
+              
                       @if(request()->route('id'))
                       @php 
                       $i=request()->route('id');
@@ -157,8 +157,8 @@ table tr {
                        $i='';
                       @endphp
                       @endif
-			            	<form action="{{url('addtransfermembership')}}" method="post" id="transferform">
-			            		{{csrf_field()}}
+                    <form action="{{url('addtransfermembership')}}" method="post" id="transferform">
+                      {{csrf_field()}}
                       <div class="box-body">
                          <div class="col-lg-12">
                           <div class="col-lg-1"><label>From::</label></div>
@@ -327,7 +327,7 @@ table tr {
                       <br>
                    <input type="hidden" name="transferfrom" id="transferfrom">
                    <input type="hidden" name="transferto" id="transferto">
-			                <div class="col-lg-12" style="align-self: center">
+                      <div class="col-lg-12" style="align-self: center">
                         <br>
                         <center>
                           <div class="form-group">
@@ -432,15 +432,15 @@ table tr {
       </div>
       </div>
       </div>
-						      </form>
-			         
-     	 			</div>
-     	 		
-     	 	</div>
+                  </form>
+               
+            </div>
+          
+        </div>
 
-      	 </div>
+         </div>
     
- 	  </section>
+    </section>
 </div>
 <script>
    $("#verify").click(function(){
@@ -499,15 +499,15 @@ table tr {
 
     //Datemask dd/mm/yyyy
     $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-    //Datemask2 mm/dd/yyyy
-    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Datemask2 dd/mm/yyyy
+    $('#datemask2').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
     //Money Euro
     $('[data-mask]').inputmask()
 
     //Date range picker
     $('#reservation').daterangepicker()
     //Date range picker with time picker
-    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'dd/mm/yyyy h:mm A' })
     //Date range as a button
     $('#daterange-btn').daterangepicker(
       {
@@ -655,7 +655,7 @@ table tr {
                 $.each(data, function(i,item){
                
 
-                  var txt = '<tr class="changebackcolor"><td style="width:10% !important;"><label><input type="checkbox" name="check[]"value="'+item.schemeid+'"  checked class="largerCheckbox badgebox" onclick="checkboxclick(this)"><span class="badge bg-orange">&check;</span></label></td><td style="width:15%"><input class="form-control" type="text" value="'+item.schemename+'"></td><td style="width:15% !important;"><input type="text"class="form-control" value="'+item.amount+'"></td><td style="width:15% !important;"><input class="form-control" type="text" value="'+item.discount+'"></td><td style="width:15% !important;"><input class="form-control" type="text" value="'+item.joindate+'"></td><td style="width:15% !important;"><input class="form-control" type="text" value="'+item.expiredate+'"></td></tr>';
+                  var txt = '<tr class="changebackcolor"><td style="width:10% !important;"><label><input type="checkbox" name="check[]"value="'+item.schemeid+'"  checked class="largerCheckbox badgebox" onclick="checkboxclick(this)"><span class="badge bg-orange">&check;</span></label></td><td style="width:15%"><input class="form-control" type="text" value="'+item.schemename+'"></td><td style="width:15% !important;"><input type="text"class="form-control" value="'+item.amount+'"></td><td style="width:15% !important;"><input class="form-control" type="text" value="'+item.discount+'"></td><td style="width:15% !important;"><input class="form-control" type="text" value="'+formatDate(item.joindate)+'"></td><td style="width:15% !important;"><input class="form-control" type="text" value="'+formatDate(item.expiredate)+'"></td></tr>';
                     // jsarray[i] = item.schemeid;
   
                     
@@ -687,6 +687,27 @@ table tr {
   }
 </script>
 <script type="text/javascript">
+  function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+   
+    return [day, month, year].join('/');
+}
+</script>
+<!-- <script type="text/javascript">
+    function formatDate(date) {
+
+    var todayTime = new Date();
+    var month = format(todayTime .getMonth() + 1);
+    var day = format(todayTime .getDate());
+    var year = format(todayTime .getFullYear());
+    return month + "/" + day + "/" + year;
+
+</script> -->
+<script type="text/javascript">
+
    $('#next1').on('click',function(){
     
      var username = document.getElementById("usernamefrom1").value;

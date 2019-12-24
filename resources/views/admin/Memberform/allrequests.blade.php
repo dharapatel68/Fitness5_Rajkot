@@ -6,13 +6,7 @@
 		padding-left: 15px !important;
 	}
 td{
-	max-width: 10%;
-   word-break: break-all  !important;
-
-}
-table td{
-  width: 10% !important;
-  max-width: 10% !important;
+	max-width: 20%;
 }
 .select2{
 	width: 100% !important;
@@ -30,77 +24,17 @@ table td{
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-     	 <h1 style="text-decoration: none;">All Trainers</h1>
+     	 <h1 style="text-decoration: none;">All Requests</h1>
      </section>
       <section class="content">
       <!-- Info boxes -->
      	 <div class="row">
      	 	<div class="col-md-12">
      	 		<div class="row">
-     	 		<!-- 	<div class="box box-info">
-     	 				 <div class="box-header with-border">
-			              <h3 class="box-title">Filters</h3>
-
-			              <div class="box-tools pull-right">
-			                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-			                </button>
-			                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-			              </div>
-			            </div>
-			            <!-- /.box-header -->
-			             <!-- <div class="box-body">
-			            	<form action="{{url('memberreport')}}" method="post">
-			            		{{csrf_field()}}
-							<div class="table-responsive">
-							  <table class="table no-margin">
-							  <thead>
-						  <tr>
-							    <th>From :</th>
-							    <th>To :</th>
-							  
-							    <th>Username</th>
-                  <th>Any Keyword</th>
-
-							    
-							  </tr>
-							</thead>
-							<tbody>
-					
-							<tr>
-							<td><input type="date" name="fdate" class="form-control" value="{{$query['fdate']}}"></td>
-							<td><input type="date" name="tdate" class="form-control" value="{{$query['tdate']}}"></td>
-					
-							<td><select name="username" class="form-control select2 span8" data-placeholder="Select a Username" >
-								<option value="" selected="" disabled="">Select a Username</option>
-						
-
-								<option value=""  @if(isset($query['username'])) {{$query['username'] == $user->userid ? 'selected':''}} @endif>
-									
-							
-							
-									 </option>
-			</select></td>
-                    <td><input type="text" name="keyword" placeholder="Search Keyword" class="form-control" value="{{$query['keyword']}}"></td>
-								
-							
-							</tr>
-							<tr>
-							
-								<td style="text-align: left" colspan="4"><button type="submit" name="search" class="btn bg-orange"><i class="fa fa-filter"></i>   Filters</button><a href="{{ url('memberreport') }}" class="btn bg-red">Clear</a></td>
-								
-							</tr>
-							
-
-							</tbody>
-							</table>
-
-							</div>
-						</form>
-			            </div>	
-     	 			</div> -->
+   
      	 			<div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title"></h3>
+              <h3 class="box-title">All Request</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -110,46 +44,42 @@ table td{
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <div class="table-responsive" style="word-wrap: break-word;">
+              <div class="table-responsive">
                 <table class="table no-margin">
                   <thead>
                   <tr>
-                    <th>View</th>
-                  	<th>Employee</th>
-                    <th>Level Of Trainer</th>
-                    <th>City</th>
-                    <th>Experience</th>
-                    <th>Achievments</th>
-                    <th>Photo</th>
-                    <th>Results</th>
+                  	<th>Member</th>
+                    <th>Username</th>
+                    <th>Mobileno</th>
+                    <th>Response</th>
+                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
-                    @foreach($data as $data1)  
-                     <tr>
-                      <td><a href="{{url('viewtrainerprofile/'.$data1->trainerprofileid)}}"><i class="fa fa-eye"></i></td>
-
-                        <td>{{ucwords($data1->first_name)}} {{ucwords($data1->last_name)}}</td>
-                        <td>{{$data1->leveloftrainer}}</td>
-                        <td>{{$data1->city}}</td>
-                        <td>{{$data1->exp }} </td>
-                        <td>{{$data1->achievments }}</td>
-                        <td>{{$data1->photo }}</td>
-                        <td  style="width: 10px !important ;">{{$data1->results}}</td> 
-                     </tr>
-     		           @endforeach
-
-	
-                  	
+                    @foreach($memberdata as $data)
+                    <tr>
+                      <td>{{$data->firstname}} {{$data->lastname}}</td>
+                      <td>{{$data->username}}</td>
+                      <td>{{$data->mobileno}}</td>
+                      <td>@if($data->answer==1){{'Accepted'}} @elseif($data->answer==3){{'Rejected'}} @else {{'Pending'}} @endif</td>
+                      <td><a href="{{url('addMember/'.$data->memberid)}}"><i class="fa fa-check"></i></a>
+                      <a href="{{url('')}}"><i class="fa fa-times"></i></a></td>
+                    </tr>
+                    @endforeach
                   </tbody>
                 </table>
                     <div class="datarender" style="text-align: center">
-                         {{ $data->links() }}    
-          </div>
+                </div>
+      
               </div>
               <!-- /.table-responsive -->
             </div>
-   
+            <!-- /.box-body -->
+        <!--     <div class="box-footer clearfix">
+              <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+              <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
+            </div> -->
+            <!-- /.box-footer -->
           </div>
      	 		</div>
      	 	</div>
@@ -157,6 +87,29 @@ table td{
       	 </div>
  	  </section>
 </div>
+<script>
+function changestatus($id)
+{
+        var id=$id;
+        // alert(beltno);
+        var _token = $('input[name="_token"]').val();
+        $.ajax({
+                  url:"{{ url('changeMemberStatus') }}",
+                  method:"POST",
+                  data:{id:id, _token:_token},
+                  success:function(result)
+                  {
+                    var data=result;
+                    if(data){
+                      // alert(data);
+                     
+                    }
+                  },
+                   dataType:"json"
+                 })
+
+}
+</script>
 <script type="text/javascript">
 
   $(function () {

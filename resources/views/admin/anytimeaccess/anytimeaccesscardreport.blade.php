@@ -134,7 +134,7 @@ td{
                       <td>{{date('d-m-Y', strtotime($anytimeaccessdata1->assigneddate)) }}</td>
                       <td>{{date('d-m-Y', strtotime($anytimeaccessdata1->returndate)) }}</td>
                     <td>{{$anytimeaccessdata1->beltno}}</td>
-                    <td>{{$anytimeaccessdata1->firstname}} {{$anytimeaccessdata1->lastname}}</td>
+                    <td>{{ucwords($anytimeaccessdata1->firstname)}} {{ucwords($anytimeaccessdata1->lastname)}}</td>
                       
                     </tr>
                       @endforeach

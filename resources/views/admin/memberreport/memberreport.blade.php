@@ -127,7 +127,7 @@ table td{
                      <tr>
 
                       <td>{{date('d-m-Y', strtotime($data1->createddate))}}</td>
-                       <td>{{$data1->firstname}} {{$data1->lastname}}</td>
+                       <td>{{ucwords($data1->firstname)}} {{ucwords($data1->lastname)}}</td>
                         <td>@if ($data1->memberdietplanid == null )<a href="{{url('assigndiettomember/'.$data1->memid)}}">Not Assigned</a> @else  {{$data1->dietplanname}} @endif</td>
                           <td>@if ($data1->workoutid == null) <a href="{{ url('assignExercise/'.$data1->memid) }}">Not Assigned</a>  @else  {{$data1->workoutname }} @endif</td>
                           <td>@if($data1->dietassigndate) {{ date('d-m-Y', strtotime($data1->dietassigndate))}} @endif</td><td>@if($data1->workoutassigndate){{ date('d-m-Y', strtotime($data1->workoutassigndate))}}@endif

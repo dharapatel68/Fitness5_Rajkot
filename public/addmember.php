@@ -1,8 +1,20 @@
-@extends('layouts.adminLayout.admin_design') @section('content')
+<?php
+
+ include 'global.php';
+
+$url= $_SERVER['REQUEST_URI'];
+$arr = explode("/", $url, 3);
+$first = $arr[1];
+
+// $GLOBALS['addmember']="green";
+// echo $GLOBALS['addmember'];
+?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- left column -->
-<script src="{{ asset('bower_components/jquery/src/ajax/jquery.min.js') }}"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>   
+<!-- <script src="{{ asset('bower_components/jquery/src/ajax/jquery.min.js') }}"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
 <style type="text/css">
    /*  .accordion-container {
    position: relative;
@@ -12,6 +24,9 @@
    outline: 0;
    cursor: pointer
    }*/
+   .bg-orange{
+      background-color: orange;
+   }
    .accordion-container .article-title {
    display: block;
    position: relative;
@@ -152,35 +167,12 @@
    }
 </style>
 <div class="content-wrapper">
-<section class="content-header">
-   <h2>Membership Form <a href="{{url('viewrequests')}}" class="btn bg-orange"> View All Form</a></h2>
-
+<section class="content-header text-center"> 
+   <img src="/images/fitness5.png" height="100px" width="100px"><h2>Membership Form</h2>
 </section>
 <!-- general form elements -->
-
 <div class="content">
-@if ($errors->any())
-<div class="alert alert-danger">
-   <button type="button" class="close" data-dismiss="alert">×</button>
-   <ul>
-      @foreach ($errors->all() as $error)
-      <li>{{ $error }}</li>
-      @endforeach
-   </ul>
-</div>
-@endif @if ($message = Session::get('message')) @if($message=="Succesfully added")
-<div class="alert alert-success alert-block">
-   <button type="button" class="close" data-dismiss="alert">×</button> <strong>{{ $message }}</strong>
-</div>
-@endif @if($message=="User Already exists")
-<div class="alert alert-danger alert-block" id="danger-alert1">
-   <button type="button" class="close" data-dismiss="alert">×</button> <strong>{{ $message }}</strong>
-</div>
-@endif @if($message=="User Is Already Exits")
-<div class="alert alert-danger alert-block" id="alert1">
-   <button type="button" class="close" data-dismiss="alert">×</button> <strong>{{ $message }}</strong>
-</div>
-@endif @endif
+
 <script type="text/javascript">
    $(document).ready (function(){
            $("#danger-alert1").fadeTo(1000, 500).slideUp(500, function(){
@@ -193,44 +185,10 @@
 </script>
 <section id="content">
 
-   <form action="{{ url('verify') }}" method="post" enctype="multipart/form-data" enctype="multipart/formdata" id="member_form" onsubmit = "return ValidateForm();">
-      {{ csrf_field() }}
+   <form action="/storemember.php" method="post" enctype="multipart/form-data" enctype="multipart/formdata" id="member_form" onsubmit = "return ValidateForm();">
+     
       <div id="accordion" class="accordion-container">
-      <!--  <article class="content-entry">
-         <h4 class="article-title"><i></i>Personal Details</h4>
-         <div class="accordion-content"><br/>
-            <div class="well well-lg">
-             <div class="row">
-               <div class="col-md-6">
-         
-                 <label for="1" class="btn btn-success">Body Building <input type="checkbox" onclick="" id="1" class="badgebox"><span class="badge">&check;</span></label>        
-               </div>
-               <div class="col-md-6">
-                 <label for="2" class="btn btn-success">Weight Gain <input type="checkbox" id="2" class="badgebox"><span class="badge">&check;</span></label>
-                 
-               </div>
-             </div><br/>
-             <div class="row">
-               <div class="col-md-6">
-                  <label for="3" class="btn btn-success">Weight Loss <input type="checkbox" id="3" class="badgebox"><span class="badge">&check;</span></label>
-               </div>
-               <div class="col-md-6">
-                 <label for="4" class="btn btn-success">Height <input type="checkbox" id="4" class="badgebox"><span class="badge">&check;</span></label>  
-               </div>
-             </div><br/>
-             <div class="row">
-               <div class="col-md-6">
-                  <label for="5" class="btn btn-success">Others, Specify<input type="checkbox" id="5" class="badgebox"><span class="badge">&check;</span></label>
-               </div>
-             </div>
-             
-         
-         
-            </div>
-         </div>
-         /.accordion-content-->
-      <!--         </article> -->
-
+      <input type="hidden" name="code" value="<?php echo $first; ?>">
       <article class="content-entry open">
          <h4 class="article-title"><i></i>Registration Details</h4>
          <div class="accordion-content" style="display:block;">
@@ -239,77 +197,77 @@
             <div class="form-group">
                <label>First Name<span style="color: red">*</span>
                </label>
-               <input type="text" name="firstname" id="firstname" class="form-control" placeholder="Firstname" class="span11" required="" maxlength="60" value="{{ old('firstname') }} @if(!empty($memberdata->firstname)){{ $memberdata->firstname }} @endif" />
+               <input type="text" name="firstname" id="firstname" class="form-control" placeholder="Firstname" class="span11" required="" maxlength="60"
+                value="<?php if(isset($_POST['firstname'])){ echo $_POST['firstname'];}?>" />
             </div>
             <div class="form-group">
                <label>LastName<span style="color: red">*</span>
                </label>
-               <input type="text" name="lastname" id="lastname" class="form-control inline-block" placeholder="LastName" class="span11" maxlength="60" value="{{ old('lastname') }}@if(!empty($memberdata->lastname)){{ $memberdata->lastname }} @endif" required="" />
+               <input type="text" name="lastname" id="lastname" class="form-control inline-block" placeholder="LastName" class="span11" maxlength="60"   value="<?php if(isset($_POST['lastname'])){ echo $_POST['lastname'];}?>"  required="" />
             </div>
             <div class="form-group">
                <label>User Name</label>
-               <input type="text" name="username" id="username" class="form-control" placeholder="User Name" class="span11" required="" maxlength="60" value="@if(!empty($memberdata->username)){{ $memberdata->username }} @endif" /><span id="error_username"></span>
+               <input type="text" name="username" id="username" class="form-control" placeholder="User Name" class="span11" required="" maxlength="60" value="<?php if(isset($_POST['username'])){ echo $_POST['username'];}?>" /><span id="error_username"></span>
             </div>
             <div class="form-group">
                <label>Gender<span style="color: red">*</span>
                </label>
                <label>
-               <input type="radio" name="gender" value="Female" required   @if(!empty($memberdata->gender)){{ $memberdata->gender  == 'Female' ? 'checked' : ''}} @endif >Female</label>
+               <input type="radio" name="gender" value="Female" required>Female</label>
                <label>
-               <input type="radio" name="gender" value="Male"  @if(!empty($memberdata->gender)){{ $memberdata->gender  == 'Male' ? 'checked' : ''}} @endif>Male</label>
+               <input type="radio" name="gender" value="Male">Male</label>
             </div>
             <div class="form-group">
                <label>Email<span style="color: red">*</span>
                </label>
-               <input type="email" maxlength="60" value="{{ old('email') }} @if(!empty($memberdata->email)){{ $memberdata->email }} @endif" id="email" name="email" class="form-control" placeholder="Email Id" class="span11" required />
+               <input type="email" maxlength="60" value="<?php if(isset($_POST['email'])){ echo $_POST['email'];}?>"  id="email" name="email" class="form-control" placeholder="Email Id" class="span11" required />
             </div>
             <div class="form-group">
                <label>Cell Phone Number<span style="color: red">*</span>
                </label>
-               <input type="text" name="CellPhoneNumber" value="{{ old('mobileno') }} @if(!empty($memberdata->mobileno)){{ $memberdata->mobileno }} @endif" id="MobileNo" minlength="10" maxlength="10" class="form-control number" placeholder="Cell Phone Number" required="" class="span11" /><span id="error_usermobile"></span>
+               <input type="text" name="CellPhoneNumber" value="<?php if(isset($_POST['CellPhoneNumber'])){ echo $_POST['CellPhoneNumber'];}?>"   id="MobileNo" minlength="10" maxlength="10" class="form-control number" placeholder="Cell Phone Number" required="" class="span11" /><span id="error_usermobile"></span>
             </div>
             <div class="form-group">
                <label>Preferred Timing</label>
                <br> <span><label>From</label></span>
-             
                <select type="time" class="form-control" name="working_hour_from_1" id="fromtime" required="">
-                <option value="06:00" @if(old( 'working_hour_from_1')=='06:00' ) selected @endif @if(!empty($memberdata->working_hour_from_1)) {{ $memberdata->working_hour_from_1=='06:00' ? 'selected' : ''}} @endif>06:00 AM</option>
-               <option value="07:00" @if(old( 'working_hour_from_1')=='07:00' ) selected @endif >07:00 AM</option>
-               <option value="08:00" @if(old( 'working_hour_from_1')=='08:00' ) selected @endif >08:00 AM</option>
-               <option value="09:00" @if(old( 'working_hour_from_1')=='09:00' ) selected @endif>09:00 AM</option>
-               <option value="10:00" @if(old( 'working_hour_from_1')=='10:00' ) selected @endif >10:00 AM</option>
-               <option value="11:00" @if(old( 'working_hour_from_1')=='11:00' ) selected @endif >11:00 AM</option>
-               <option value="12:00"  >12:00 PM</option>
-               <option value="13:00"  >01:00 PM</option>
-               <option value="14:00"  >02:00 PM</option>
-               <option value="15:00" @if(old( 'working_hour_from_1')=='15:00' ) selected @endif>03:00 PM</option>
-               <option value="16:00" @if(old( 'working_hour_from_1')=='16:00' ) selected @endif>04:00 PM</option>
-               <option value="17:00" @if(old( 'working_hour_from_1')=='17:00' ) selected @endif>05:00 PM</option>
-               <option value="18:00" @if(old( 'working_hour_from_1')=='18:00' ) selected @endif>06:00 PM</option>
-               <option value="19:00" @if(old( 'working_hour_from_1')=='19:00' ) selected @endif >07:00 PM</option>
-               <option value="20:00" @if(old( 'working_hour_from_1')=='20:00' ) selected @endif >08:00 PM</option>
-               <option value="21:00" @if(old('working_hour_from_1')=='21:00' ) selected @endif >09:00 PM</option>
-               <option value="22:00" @if(old( 'working_hour_from_1')=='22:00' ) selected @endif >10:00 PM</option>
+               <option value="06:00" @if($_POST( 'working_hour_from_1')=='06:00' ) selected @endif>06:00 AM</option>
+               <option value="07:00" @if($_POST( 'working_hour_from_1')=='07:00' ) selected @endif>07:00 AM</option>
+               <option value="08:00" @if($_POST( 'working_hour_from_1')=='08:00' ) selected @endif>08:00 AM</option>
+               <option value="09:00" @if($_POST( 'working_hour_from_1')=='09:00' ) selected @endif>09:00 AM</option>
+               <option value="10:00" @if($_POST( 'working_hour_from_1')=='10:00' ) selected @endif>10:00 AM</option>
+               <option value="11:00" @if($_POST( 'working_hour_from_1')=='11:00' ) selected @endif>11:00 AM</option>
+               <option value="12:00" @if($_POST( 'working_hour_from_1')=='12:00' ) selected @endif>12:00 PM</option>
+               <option value="13:00" @if($_POST( 'working_hour_from_1')=='13:00' ) selected @endif>01:00 PM</option>
+               <option value="14:00" @if($_POST( 'working_hour_from_1')=='14:00' ) selected @endif>02:00 PM</option>
+               <option value="15:00" @if($_POST( 'working_hour_from_1')=='15:00' ) selected @endif>03:00 PM</option>
+               <option value="16:00" @if($_POST( 'working_hour_from_1')=='16:00' ) selected @endif>04:00 PM</option>
+               <option value="17:00" @if($_POST( 'working_hour_from_1')=='17:00' ) selected @endif>05:00 PM</option>
+               <option value="18:00" @if($_POST( 'working_hour_from_1')=='18:00' ) selected @endif>06:00 PM</option>
+               <option value="19:00" @if($_POST( 'working_hour_from_1')=='19:00' ) selected @endif>07:00 PM</option>
+               <option value="20:00" @if($_POST( 'working_hour_from_1')=='20:00' ) selected @endif>08:00 PM</option>
+               <option value="21:00" @if($_POST( 'working_hour_from_1')=='21:00' ) selected @endif>09:00 PM</option>
+               <option value="22:00" @if($_POST( 'working_hour_from_1')=='22:00' ) selected @endif>10:00 PM</option>
                </select>
                <label>To</label>
                <select type="time" class="form-control" id="totime" name="working_hour_to_1" required="">
-               <option value="07:00" @if(old( 'working_hour_to_1')=='07:00' ) selected @endif  >07:00 AM</option>
-               <option value="08:00" @if(old( 'working_hour_to_1')=='08:00' ) selected @endif>08:00 AM</option>
-               <option value="09:00" @if(old( 'working_hour_to_1')=='09:00' ) selected @endif>09:00 AM</option>
-               <option value="10:00" @if(old( 'working_hour_to_1')=='10:00' ) selected @endif>10:00 AM</option>
-               <option value="11:00" @if(old( 'working_hour_to_1')=='11:00' ) selected @endif>11:00 AM</option>
-               <option value="12:00" @if(old( 'working_hour_to_1')=='12:00' ) selected @endif>12:00 PM</option>
-               <option value="13:00" @if(old( 'working_hour_to_1')=='13:00' ) selected @endif>01:00 PM</option>
-               <option value="14:00" @if(old( 'working_hour_to_1')=='14:00' ) selected @endif>02:00 PM</option>
-               <option value="15:00" @if(old( 'working_hour_to_1')=='15:00' ) selected @endif>03:00 PM</option>
-               <option value="16:00" @if(old( 'working_hour_to_1')=='16:00' ) selected @endif>04:00 PM</option>
-               <option value="17:00" @if(old( 'working_hour_to_1')=='17:00' ) selected @endif>05:00 PM</option>
-               <option value="18:00" @if(old( 'working_hour_to_1')=='18:00' ) selected @endif>06:00 PM</option>
-               <option value="19:00" @if(old( 'working_hour_to_1')=='19:00' ) selected @endif>07:00 PM</option>
-               <option value="20:00" @if(old( 'working_hour_to_1')=='20:00' ) selected @endif>08:00 PM</option>
-               <option value="21:00" @if(old( 'working_hour_to_1')=='21:00' ) selected @endif>09:00 PM</option>
-               <option value="22:00" @if(old( 'working_hour_to_1')=='22:00' ) selected @endif>10:00 PM</option>
-               <option value="22:00" @if(old( 'working_hour_to_1')=='23:00' ) selected @endif>11:00 PM</option>
+               <option value="07:00" @if($_POST( 'working_hour_to_1')=='07:00' ) selected @endif>07:00 AM</option>
+               <option value="08:00" @if($_POST( 'working_hour_to_1')=='08:00' ) selected @endif>08:00 AM</option>
+               <option value="09:00" @if($_POST( 'working_hour_to_1')=='09:00' ) selected @endif>09:00 AM</option>
+               <option value="10:00" @if($_POST( 'working_hour_to_1')=='10:00' ) selected @endif>10:00 AM</option>
+               <option value="11:00" @if($_POST( 'working_hour_to_1')=='11:00' ) selected @endif>11:00 AM</option>
+               <option value="12:00" @if($_POST( 'working_hour_to_1')=='12:00' ) selected @endif>12:00 PM</option>
+               <option value="13:00" @if($_POST( 'working_hour_to_1')=='13:00' ) selected @endif>01:00 PM</option>
+               <option value="14:00" @if($_POST( 'working_hour_to_1')=='14:00' ) selected @endif>02:00 PM</option>
+               <option value="15:00" @if($_POST( 'working_hour_to_1')=='15:00' ) selected @endif>03:00 PM</option>
+               <option value="16:00" @if($_POST( 'working_hour_to_1')=='16:00' ) selected @endif>04:00 PM</option>
+               <option value="17:00" @if($_POST( 'working_hour_to_1')=='17:00' ) selected @endif>05:00 PM</option>
+               <option value="18:00" @if($_POST( 'working_hour_to_1')=='18:00' ) selected @endif>06:00 PM</option>
+               <option value="19:00" @if($_POST( 'working_hour_to_1')=='19:00' ) selected @endif>07:00 PM</option>
+               <option value="20:00" @if($_POST( 'working_hour_to_1')=='20:00' ) selected @endif>08:00 PM</option>
+               <option value="21:00" @if($_POST( 'working_hour_to_1')=='21:00' ) selected @endif>09:00 PM</option>
+               <option value="22:00" @if($_POST( 'working_hour_to_1')=='22:00' ) selected @endif>10:00 PM</option>
+               <option value="22:00" @if($_POST( 'working_hour_to_1')=='23:00' ) selected @endif>11:00 PM</option>
                </select>
             </div>
          </div>
@@ -321,23 +279,23 @@
          <div class="well well-lg">
             <div class="form-group">
                <label>Address</label>
-               <textarea rows="2" cols="20" name="Address" maxlength="60" wrap="soft" class="form-control" placeholder="Address" class="span11">{{ old('Address') }} @if(!empty($memberdata->address)){{ $memberdata->address }} @endif</textarea>
+               <textarea rows="2" cols="20" name="Address" maxlength="60" wrap="soft" class="form-control" placeholder="Address" class="span11"><?php if(isset($_POST['CellPhoneNumber'])){ echo $_POST['CellPhoneNumber'];}?></textarea>
             </div>
             <div class="form-group">
                <label>City</label>
-               <input type="text" name="City" value="{{ old('City') }} @if(!empty($memberdata->city)){{ $memberdata->city }} @endif" maxlength="60" class="form-control" placeholder="City" class="span11" />
+               <input type="text" name="City"  maxlength="60" class="form-control" placeholder="City" class="span11" value="<?php if(isset($_POST['City'])){ echo $_POST['City'];}?>"   />
             </div>
             <div class="form-group">
                <label>Home Phone Number</label>
-               <input type="text" name="HomePhoneNumber" class="form-control number" id="HomePhoneNumber" placeholder="Home Phone Number" minlength="10" maxlength="10" value="{{ old('HomePhoneNumber') }} @if(!empty($memberdata->homephonenumber)){{ $memberdata->homephonenumber }} @endif" class="span11" /> <span class="errmsg"></span>
+               <input type="text" name="HomePhoneNumber" class="form-control number" id="HomePhoneNumber" placeholder="Home Phone Number" minlength="10" maxlength="10" value="<?php if(isset($_POST['HomePhoneNumber'])){ echo $_POST['HomePhoneNumber'];}?>"class="span11" /> <span class="errmsg"></span>
             </div>
             <div class="form-group">
                <label>Office Phone Number</label>
-               <input type="text" name="OfficePhoneNumber" class="form-control number" id="OfficePhoneNumber"  minlength="10" maxlength="10" class="span11" value="@if(!empty($memberdata->officephonenumber)){{ $memberdata->officephonenumber }} @endif {{ old('OfficePhoneNumber') }} " placeholder="Office Phone Number"/> <span class="errmsg"></span>
+               <input type="text" name="OfficePhoneNumber" class="form-control number" id="OfficePhoneNumber" placeholder="Office Phone Number" minlength="10" maxlength="10" class="span11" value="<?php if(isset($_POST['OfficePhoneNumber'])){ echo $_POST['OfficePhoneNumber'];}?>" /> <span class="errmsg"></span>
             </div>
             <!--/.accordion-content-->
       </article>
-  
+     
       <div id="alldata">
       <article class="content-entry">
       <h4 class="article-title"><i></i>Emergancy Contact Details </h4>
@@ -346,19 +304,19 @@
       <div class="well well-lg">
       <div class="form-group">
       <label>Emergancy Contact Name</label>
-      <input type="text" name="emergancyname" value="{{ old('emergancyname') }} @if(!empty($memberdata->emergancyname)){{ $memberdata->emergancyname }} @endif " maxlength="60" class="form-control" placeholder="EmergancyName" class="span11" id="emergancyname" />
+      <input type="text" name="emergancyname"  value="<?php if(isset($_POST['emergancyname'])){ echo $_POST['emergancyname'];}?>" maxlength="60" class="form-control" placeholder="EmergancyName" class="span11" id="emergancyname" OfficePhoneNumber />
       </div>
       <div class="form-group">
       <label>Emergancy Contact Relation</label>
-      <input type="text" name="emergancyrelation" value="{{ old('emergancyrelation') }} @if(!empty($memberdata->emergancyrelation)){{ $memberdata->emergancyrelation }} @endif " maxlength="60" class="form-control" placeholder="EmergancyRelation" class="span11" id="emergancyrelation"/>
+      <input type="text" name="emergancyrelation" value="<?php if(isset($_POST['emergancyrelation'])){ echo $_POST['emergancyrelation'];}?>"  maxlength="60" class="form-control" placeholder="EmergancyRelation" class="span11" id="emergancyrelation"/>
       </div>
       <div class="form-group">
       <label>Emergancy Contact Address</label>
-      <textarea rows="2" cols="20" name="emergancyaddress" maxlength="60" wrap="soft" class="form-control" placeholder="Emergancy Address" class="span11">{{ old('emergancyaddress') }} @if(!empty($memberdata->emergancyaddress)){{ $memberdata->emergancyaddress }} @endif</textarea>
+      <textarea rows="2" cols="20" name="emergancyaddress" maxlength="60" wrap="soft" class="form-control" placeholder="Emergancy Address" class="span11"><?php if(isset($_POST['emergancyaddress'])){ echo $_POST['emergancyaddress'];}?></textarea>
       </div>
       <div class="form-group">
       <label>Emergancy Contact Number</label>
-      <input type="text" name="EmergancyPhoneNumber" class="form-control number" placeholder="EmergancyPhoneNumber" value="{{ old('EmergancyPhoneNumber') }} @if(!empty($memberdata->emergancyphonenumber)){{ $memberdata->emergancyphonenumber }} @endif" id="EmergancyPhoneNumber" minlength="10" maxlength="10" class="span11" />&nbsp;<span class="errmsg"></span>
+      <input type="text" name="EmergancyPhoneNumber" class="form-control number" placeholder="EmergancyPhoneNumber" value="<?php if(isset($_POST['EmergancyPhoneNumber'])){ echo $_POST['EmergancyPhoneNumber'];}?>"  id="EmergancyPhoneNumber" minlength="10" maxlength="10" class="span11" />&nbsp;<span class="errmsg"></span>
       </div>
       </div>
       <!--/.accordion-content-->
@@ -369,21 +327,21 @@
       <div class="well well-lg">
       <div class="form-group">
       <label>Blood group</label>
-      <input type="text" maxlength="3" value="{{ old('bloodgroup') }} @if(!empty($memberdata->bloodgroup)){{ $memberdata->bloodgroup }} @endif" name="bloodgroup" class="form-control" class="span10" />
+      <input type="text" maxlength="3" value="<?php if(isset($_POST['bloodgroup'])){ echo $_POST['bloodgroup'];}?>"   name="bloodgroup" class="form-control" class="span10" />
       </div>
       <div class="form-group">
       <label>Other Medical Details</label>
       <br>
       <label>A</label>
-      <input type="text" maxlength="60" value="{{ old('SpecificGoalsa') }}" name="SpecificGoalsa" class="form-control" class="span10" />
+      <input type="text" maxlength="60"  value="<?php if(isset($_POST['SpecificGoalsa'])){ echo $_POST['SpecificGoalsa'];}?>"   name="SpecificGoalsa" class="form-control" class="span10" />
       </div>
       <div class="form-group">
       <label>B</label>
-      <input type="text" maxlength="60" value="{{ old('SpecificGoalsb') }}" name="SpecificGoalsb" class="form-control" class="span10" />
+      <input type="text" maxlength="60" value="<?php if(isset($_POST['SpecificGoalsb'])){ echo $_POST['SpecificGoalsb'];}?>"  name="SpecificGoalsb" class="form-control" class="span10" />
       </div>
       <div class="form-group">
       <label>C</label>
-      <input type="text" maxlength="60" value="{{ old('SpecificGoalsc') }}" name="SpecificGoalsc" class="form-control" class="span10" />
+      <input type="text" maxlength="60" value="<?php if(isset($_POST['SpecificGoalsc'])){ echo $_POST['SpecificGoalsc'];}?>"  name="SpecificGoalsc" class="form-control" class="span10" />
       </div>
       </div>
       </div>
@@ -397,27 +355,27 @@
       <label>Hear About..</label>
       <select class="form-control" name="HearAbout">
       <option disabled="" selected>--Select Any--</option>
-      <option value="Fitness Five Member" @if(old( 'HearAbout')=='Fitness Five Member' ) selected @endif @if(!empty($memberdata->hearabout == ? )){{ $memberdata->hearabout == 'Fitness Five Member' ? 'selected' :'' }} @endif>Fitness Five Member</option>
-      <option value="We Called Them" @if(old( 'HearAbout')=='We Called Them' ) selected @endif>We Called Them</option>
-      <option value="Friends/Family" @if(old( 'HearAbout')=='Friends/Family' ) selected @endif>Friends/Family</option>
-      <option value="Via Internet" @if(old( 'HearAbout')=='Via Internet' ) selected @endif>Via Internet</option>
-      <option value="Word Of Mouth" @if(old( 'HearAbout')=='Word Of Mouth' ) selected @endif>Word Of Mouth</option>
-      <option value="Radio Advertise" @if(old( 'HearAbout')=='Radio Advertise' ) selected @endif>Radio Advertise</option>
-      <option value="Magazine Advertise" @if(old( 'HearAbout')=='Magazine Advertise' ) selected @endif>Magazine Advertise</option>
-      <option value="Other" @if(old( 'HearAbout')=='Other' ) selected @endif>Other</option>
+      <option value="Fitness Five Member" @if($_POST( 'HearAbout')=='Fitness Five Member' ) selected @endif>Fitness Five Member</option>
+      <option value="We Called Them" @if($_POST( 'HearAbout')=='We Called Them' ) selected @endif>We Called Them</option>
+      <option value="Friends/Family" @if($_POST( 'HearAbout')=='Friends/Family' ) selected @endif>Friends/Family</option>
+      <option value="Via Internet" @if($_POST( 'HearAbout')=='Via Internet' ) selected @endif>Via Internet</option>
+      <option value="Word Of Mouth" @if($_POST( 'HearAbout')=='Word Of Mouth' ) selected @endif>Word Of Mouth</option>
+      <option value="Radio Advertise" @if($_POST( 'HearAbout')=='Radio Advertise' ) selected @endif>Radio Advertise</option>
+      <option value="Magazine Advertise" @if($_POST( 'HearAbout')=='Magazine Advertise' ) selected @endif>Magazine Advertise</option>
+      <option value="Other" @if($_POST( 'HearAbout')=='Other' ) selected @endif>Other</option>
       </select>
       </div>
       <div class="form-group">
       <label>Profession</label>
-      <input type="text" maxlength="60" value="{{ old('profession') }}" class="form-control" name="profession" placeholder="Profession" class="span11" />
+      <input type="text" maxlength="60" value="<?php if(isset($_POST['profession'])){ echo $_POST['profession'];}?>" class="form-control" name="profession" placeholder="Profession" class="span11" />
       </div>
       <div class="form-group">
       <label>Birthdate</label>
-      <input placeholder="Birthdate" value="{{ old('birthday') }}" type="date"  class="form-control" max="<?php echo date('Y-m-d');?>" name="birthday" class="span11">
+      <input placeholder="Birthdate" value="<?php if(isset($_POST['birthday'])){ echo $_POST['birthday'];}?>"  type="date"  class="form-control" max="<?php echo date('Y-m-d');?>" name="birthday" class="span11">
       </div>
       <div class="form-group">
       <label>Anniversary</label>
-      <input placeholder="Anniversary" value="{{ old('anniversary') }}" type="date" onkeypress="return false" class="form-control" max="<?php echo date('Y-m-d');?>" name="anniversary" class="span11">
+      <input placeholder="Anniversary" value="<?php if(isset($_POST['anniversary'])){ echo $_POST['anniversary'];}?>" type="date" onkeypress="return false" class="form-control" max="<?php echo date('Y-m-d');?>" name="anniversary" class="span11">
       </div>
          <div class="form-group">
              <label>Are you coming from any company?</label>
@@ -950,7 +908,7 @@
       <div class="form-group">
       <label>Photo</label>
       <input type="file" name="file" class="form-control" id="profileimage" accept="image/jpg, image/jpeg, image/png" class="span11" />
-      <img src="" id="img" height="100px">
+      <img  id="img" height="100px">
        <input type="hidden" name="base64image" class="image-tag">
          <div id="my_camera"></div>
 
@@ -984,7 +942,7 @@
       </div>
       </div>
       <div class="col-sm-offset-4">
-      <button type="submit" id="save_memberform" class="btn bg-orange margin">Save</button> <a href="{{ url('members') }}" class="btn bg-red margin">Cancel</a>
+      <button type="submit" id="save_memberform" class="btn btn-success margin">Save</button> <a href="{{ url('members') }}" class="btn btn-danger margin">Cancel</a>
       </div>
       </div>
    </form>
@@ -1369,7 +1327,8 @@ function saveSnap(data_uri){
                   }
                   else
                   {
-                   $('#img').attr('src', '/assets/no_preview.png');
+                     console.log('dsfs');
+                   $('#img').attr('src', '/public/images/no_preview.png');
                  }
                });
    
@@ -1816,32 +1775,4 @@ color: black;
        }
      })
        });
-</script>@endsection @push('script')
-<script type="text/javascript">
-   $(document).ready(function(){
-         $('#member_form').validate({
-           rules: {
-             firstname : {
-               required : true,
-               maxlength : 60
-             },
-             lastname : {
-               required : true,
-               maxlength : 60
-             },
-             username : {
-               required : true,
-               maxlength : 60
-             },
-             email : {
-               required : true,
-               maxlength : 60,
-               email : true
-             },
-           }
-         });
-       });
- /* $('#member_form').on('submit',function(){
-  });*/
-
-</script>@endpush
+</script>

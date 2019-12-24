@@ -1,20 +1,20 @@
 @extends('layouts.adminLayout.admin_design')
 @section('content')
 <style type="text/css">
-	.content-wrapper{
-		padding-right: 15px !important;
-		padding-left: 15px !important;
-	}
+  .content-wrapper{
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+  }
 td{
-	max-width: 10%;
+  max-width: 10%;
 }
 table td{
   width: 10% !important;
   max-width: 10% !important;
 }
 .select2{
-	width: 100% !important;
-	
+  width: 100% !important;
+  
 }
 
 .badgebox
@@ -56,12 +56,12 @@ table td{
   text-indent: 0;
 }
 .select2-container--default .select2-selection--single{
-	border-radius: 2px !important;
-	max-height: 100% !important;
-	    border-color: #d2d6de !important;
-	        height: 32px;
-	        max-width: 100%;
-	        min-width: 100% !important;
+  border-radius: 2px !important;
+  max-height: 100% !important;
+      border-color: #d2d6de !important;
+          height: 32px;
+          max-width: 100%;
+          min-width: 100% !important;
 }
 </style>
 
@@ -69,7 +69,7 @@ table td{
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-     	 <h1 style="text-decoration: none;">Trainer Profile</h1>
+       <h1 style="text-decoration: none;">Trainer Profile</h1>
      </section>
       <section class="content">
        
@@ -81,7 +81,7 @@ table td{
         @endif 
       <!-- Info boxes -->
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-lg-12">
           <div class="row">
             <div class="box box-info">
               <div class="box-header with-border">
@@ -98,6 +98,7 @@ table td{
               <form name="refreshForm">
                 <input type="hidden" name="visited" value=""/>
               </form>
+              <div class="col-lg-1"></div>
               <div class="col-lg-8">
                 <form action="{{ url('addtrainerprofile')}}" role="form" method="post" class="form-horizontal" enctype="multipart/form-data">
                   {{csrf_field()}}
@@ -148,7 +149,7 @@ table td{
                      <div class="form-group">
                         <label for="Exp" class="col-sm-4 control-label">Exp.</label>
                         <div class="col-sm-8">
-                          <textarea name="achievments"class="form-control" name="exp"></textarea>
+                          <textarea class="form-control" name="exp"></textarea>
                         <!-- <input type="text" name="exp" class="form-control"> -->
                        
                         </div>
@@ -162,29 +163,74 @@ table td{
                         </div>
                       </div>
                        <div class="form-group">
-                        <label for="AvailableSlot" class="col-sm-4 control-label">Available Slots</label>
-                   <div class="col-sm-8">
-                        <input type="text" name="slots" class="form-control">
+                        <label for="AvailableSlot" class="col-sm-4 control-label">Available slots :</label>
+                      
+                    <div  class="col-sm-12 col-sm-offset-4" style="margin-top: -30px;">
+                  
+                   <div class="col-sm-4">
                       
 
-                       <label class="btn btn-default margin">05:00 AM To 06:AM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="1"><span class="badge bg-orange">&check;</span></label>
-                           <label class="btn btn-default margin">05:00 AM To 06:AM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="1"><span class="badge bg-orange">&check;</span></label>
+                     
+                       <label class="btn btn-default margin">06:00 AM To 07:00 AM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="06:00 AM To 07:00 AM"><span class="badge bg-orange">&check;</span></label>
+                          
+                          
+                           <label class="btn btn-default margin">09:00 AM To 10:00 AM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="09:00 AM To 10:00 AM"><span class="badge bg-orange">&check;</span></label>
+                 
+                           <label class="btn btn-default margin">12:00 PM To 01:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="12:00 PM To 01:00 PM"><span class="badge bg-orange">&check;</span></label>
+                           <label class="btn btn-default margin">03:00 PM To 04:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="03:00 PM To 04:00 PM"><span class="badge bg-orange">&check;</span></label>
 
-                           <label class="btn btn-default margin">05:00 AM To 06:AM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="1"><span class="badge bg-orange">&check;</span></label>
-                           <label class="btn btn-default margin">05:00 AM To 06:AM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="1"><span class="badge bg-orange">&check;</span></label>
-                           <label class="btn btn-default margin">05:00 AM To 06:AM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="1"><span class="badge bg-orange">&check;</span></label>
-                           <label class="btn btn-default margin">05:00 AM To 06:AM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="1"><span class="badge bg-orange">&check;</span></label>
-                           <label class="btn btn-default margin">05:00 AM To 06:AM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="1"><span class="badge bg-orange">&check;</span></label>
+                            <label class="btn btn-default margin">06:00 PM To 07:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="06:00 PM To 07:00 PM"><span class="badge bg-orange">&check;</span></label>
+                           <label class="btn btn-default margin">09:00 PM To 10:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="09:00 PM To 10:00 PM"><span class="badge bg-orange">&check;</span></label>
+                       
+                               </div>  
+                                <div class="col-sm-4">  
+                                   <label class="btn btn-default margin">07:00 AM To 08:00 AM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="07:00 AM To 08:00 AM"><span class="badge bg-orange">&check;</span></label>
+                                    <label class="btn btn-default margin">10:00 AM To 11:00 AM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="10:00 AM To 11:00 AM"><span class="badge bg-orange">&check;</span></label>
+
+                            <label class="btn btn-default margin">01:00 PM To 02:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="01:00 PM To 02:00 PM"><span class="badge bg-orange">&check;</span></label>
+                            <label class="btn btn-default margin">10:00 PM To 11:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="10:00 PM To 11:00 PM"><span class="badge bg-orange">&check;</span></label>
+                      
+                           
+
+                   
+
+                            <label class="btn btn-default margin">04:00 PM To 05:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="04:00 PM To 05:00 PM"><span class="badge bg-orange">&check;</span></label>
+
+                            <label class="btn btn-default margin">07:00 PM To 08:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="07:00 PM To 08:00 PM"><span class="badge bg-orange">&check;</span></label>
+                            
+                               </div>  
+                                <div class="col-sm-4"> 
+                                 <label class="btn btn-default margin">08:00 AM To 09:00 AM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="08:00 AM To 09:00 AM"><span class="badge bg-orange">&check;</span></label>
+
+                           <label class="btn btn-default margin">11:00 AM To 12:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="11:00 AM To 12:00 PM"><span class="badge bg-orange">&check;</span></label>
+                             <label class="btn btn-default margin">02:00 PM To 03:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="02:00 PM To 03:00 PM"><span class="badge bg-orange">&check;</span></label>
+                              <label class="btn btn-default margin">05:00 PM To 06:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="05:00 PM To 06:00 PM"><span class="badge bg-orange">&check;</span></label>
+
+                            <label class="btn btn-default margin">08:00 PM To 09:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="08:00 PM To 09:00 PM"><span class="badge bg-orange">&check;</span></label>
+                                 
+
+                      
                             </div>
                       </div>
-                      
+                     
+                      </div> 
                       <div class="form-group">
                         <label for="results" class="col-sm-4 control-label">Photo</label>
                         <div class="col-sm-8">
@@ -217,14 +263,17 @@ table td{
                     </div>
                   </div>
                 </form>
+
               </div>
+                
             </div>
-              </div>	
+            <div class="col-lg-3"></div>
+              </div>  
             </div>
           </div>
         </div>
       </div>
- 	  </section>
+    </section>
 </div>
 
 <script type="text/javascript">
@@ -393,7 +442,7 @@ $('#file-input').on("change", previewImages);
   })
 </script>
 <script type="text/javascript">
-	$("#mode").select2({
+  $("#mode").select2({
     placeholder: "Select a Mode"
 });
 </script>
