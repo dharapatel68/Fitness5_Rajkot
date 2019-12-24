@@ -1571,10 +1571,10 @@ textarea.input100 {
                                 <td>@if ($package->status == 1) {{ 'Active'}} @endif @if($package->status == 0) {{'Inactive' }} @endif @if($package->status == 3) {{ 'Tranfered'}} @endif</td>
                                 @if($package->status == 1)
                                 <td id="joindate{{$key}}">
-                                  <input type="date" onkeypress="return false" name="" value="{{$package->joindate}}" min="<?php echo date(" Y-m-d ");?>"  {{ Session::get('role')  == 'admin' ?  '': 'disabled'}}>
+                                  <input type="date" onkeypress="return false"onkeydown="return false" name="" value="{{$package->joindate}}" min="<?php echo date(" Y-m-d ");?>"  {{ Session::get('role')  == 'admin' ?  '': 'disabled'}}>
                                 </td>
                                 <td id="enddate{{$key}}">
-                                  <input type="date" onkeypress="return false" name="" value="{{$package->expiredate}}" min="<?php echo $package->expiredate;?>"  {{ Session::get('role')  == 'admin' ?  '': 'disabled'}}>
+                                  <input type="date" onkeypress="return false"onkeydown="return false" name="" value="{{$package->expiredate}}" min="<?php echo $package->expiredate;?>"  {{ Session::get('role')  == 'admin' ?  '': 'disabled'}}>
                                 </td>@else
                                 <td>{{date('d-m-Y', strtotime($package->joindate)) }}</td>
                                 <td>{{date('d-m-Y', strtotime($package->expiredate)) }}</td>@endif
