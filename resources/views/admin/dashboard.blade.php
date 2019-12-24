@@ -594,13 +594,22 @@ function opendiv(userid,username){
           }else{
             userprofile+=' src="/images/default.png"';
           }
-          userprofile+=' name="aboutme" id="profile" width="140" height="140" border="0" class="img-circle"><h3 class="media-heading">'+userview.firstname[0].toUpperCase()+userview.firstname.slice(1)+' '+userview.lastname[0].toUpperCase()+userview.lastname.slice(1)+'<small>';
+          userprofile+=' name="aboutme" id="profile" width="140" height="140" border="0" class="img-circle"><h3 class="media-heading">'+userview.firstname[0].toUpperCase()+userview.firstname.slice(1)+' '+userview.lastname[0].toUpperCase()+userview.lastname.slice(1)+'<br><small>'; if (userview.status == 0) {
+            userprofile+='Deactive';
+          }if (userview.status == 1) {
+            userprofile+='Active';
+          }
+          if (userview.status == 2) {
+            userprofile+='Freeze';
+          }
+        
           if (userview.city != null) {
             userprofile+='' +userview.city;
           }
           if (userview.professional != null) {
             userprofile+='Professional:' +userview.professional;
           }
+
           userprofile+='</small></div><div class="nav-tabs-custom"><ul class="nav nav-tabs nav-justified"><li  class="active"><a href="#day" data-toggle="tab" id="inq">Packages</a></li><li><a href="#month" data-toggle="tab" id="reg">Fetch Logs</a></li><li><a href="#year" data-toggle="tab" id="ftstep"></a></li></ul><div class="tab-content"><div class="tab-pane active" id="day">';
 
           userprofile+='</h3><span></span></center><ul style=" margin-left:12px;">';
@@ -647,7 +656,12 @@ function opendiv(userid,username){
           $('#search-bar').empty();
           $('#search-bar').append(userprofile);
           $('#menus').empty(); 
-          $('.userprofile').after('<a href="assignPackageOrRenewalPackage/'+userid+'"class="btn bg-green margin"><i class="fa fa-users"></i>  Assign Package</a><a href="addMeasurement/'+userid+'"class="btn bg-green margin"><i class="fa fa-plus"></i>  Add Measurment</a><a href="assigndiettomember/'+userview.memberid+'"class="btn bg-green margin"><i class="fa fa-cutlery"></i>   Assign Diet</a><a href="assignExercise/'+userview.memberid+'"class="btn bg-green margin"><i class="fa fa-cutlery"></i>   Assign Workout</a>');
+          if(userview.status!=1){
+             $('.userprofile').after('<a href="assignPackageOrRenewalPackage/'+userid+'"class="btn bg-green margin disabled"><i class="fa fa-users"></i>  Assign Package</a><a href="addMeasurement/'+userid+'"class="btn bg-green margin disabled"><i class="fa fa-plus"></i>  Add Measurment</a><a href="assigndiettomember/'+userview.memberid+'"class="btn bg-green margin disabled"><i class="fa fa-cutlery"></i>   Assign Diet</a><a href="assignExercise/'+userview.memberid+'"class="btn bg-green margin disabled"><i class="fa fa-cutlery"></i>   Assign Workout</a>');
+           }else{
+             $('.userprofile').after('<a href="assignPackageOrRenewalPackage/'+userid+'"class="btn bg-green margin"><i class="fa fa-users"></i>  Assign Package</a><a href="addMeasurement/'+userid+'"class="btn bg-green margin"><i class="fa fa-plus"></i>  Add Measurment</a><a href="assigndiettomember/'+userview.memberid+'"class="btn bg-green margin"><i class="fa fa-cutlery"></i>   Assign Diet</a><a href="assignExercise/'+userview.memberid+'"class="btn bg-green margin"><i class="fa fa-cutlery"></i>   Assign Workout</a>');
+           }
+         
 
           $('#headermodal').append('<h4>'+userview.firstname[0].toUpperCase()+userview.firstname.slice(1)+'  '+userview.lastname[0].toUpperCase()+userview.lastname.slice(1)+'</h4>');
       }
