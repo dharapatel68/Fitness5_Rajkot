@@ -23,10 +23,10 @@
      
          <section class="content-header"><h2></h2></section>
           <!-- general form elements -->
-           <section class="content">
-        <div class="row">
+          <section class="content">
+           <div class="">
 
-          <div class="box box-primary">
+            <div class="box box-primary">
    @if ($errors->any())
             <div class="alert alert-danger">
                  <button type="button" class="close" data-dismiss="alert">×</button> 
