@@ -297,8 +297,8 @@ public function otpverify(Request $request){
  {
 /*****************************commit rollback*****************************************/
 
-     //   DB::beginTransaction();
-     // try {
+       DB::beginTransaction();
+     try {
        $request->validate([
      
     'CellPhoneNumber' => 'required|max:11|min:10',
@@ -873,20 +873,20 @@ public function otpverify(Request $request){
 
       $userid=$usermember->userid;
 
-  //       DB::commit();
-  //       $success = true;
-  //   return redirect('assignPackageOrRenewalPackage/'.$userid)->with('users');
+        DB::commit();
+        $success = true;
+    return redirect('assignPackageOrRenewalPackage/'.$userid)->with('users');
 
-  //   } catch (\Exception $e) {
+    } catch (\Exception $e) {
   // ************cache code*************************
-  //       $success = false;
-  //       DB::rollback();
+        $success = false;
+        DB::rollback();
 
-  //   }
-  // /*************if try code fails**************************/
-  //   if ($success == false) { 
-  //     return redirect('dashboard');
-  //   }
+    }
+  /*************if try code fails**************************/
+    if ($success == false) { 
+      return redirect('dashboard');
+    }
 
     /************************END *commit rollback****************************************/
   /*******************************************************************/
