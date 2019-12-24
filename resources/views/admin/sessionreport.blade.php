@@ -232,7 +232,7 @@
                 <td>{{date('d-m-Y',strtotime($g->date))}}</td>
                 <td>{{$g->hoursfrom}} </td>
                 <td>{{$g->hoursto}} </td>
-                <td>{{date('d-m-Y',strtotime($g->actualdate))}}</td>
+                <td>@if($g->actualdate) {{date('d-m-Y',strtotime($g->actualdate))}} @endif</td>
                <td>{{$g->actualtime}}</td>
 
 
