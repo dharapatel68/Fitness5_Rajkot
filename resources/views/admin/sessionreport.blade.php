@@ -219,7 +219,7 @@
                 <th>Persessionamount</th>
                 <th>Paymentstatus</th>
                 
-                 <th>Action</th>
+                
                 </tr>
                 </thead>
                 <tbody>
@@ -232,7 +232,7 @@
                 <td>{{date('d-m-Y',strtotime($g->date))}}</td>
                 <td>{{$g->hoursfrom}} </td>
                 <td>{{$g->hoursto}} </td>
-                <td>{{date('d-m-Y',strtotime($g->actualdate))}}</td>
+                <td>@if($g->actualdate) {{date('d-m-Y',strtotime($g->actualdate))}} @endif</td>
                <td>{{$g->actualtime}}</td>
 
 
@@ -247,7 +247,7 @@
                 <td> {{$g->persessionamount}}</td>
                 <td>{{$g->paymentstatus}} </td>
               
-                <td><a href="{{ url('editMeasurement/') }}"class="edit" title="Edit"><i class="fa fa-edit"></i></a>  </td>           
+                          
                 </tr>
                  @endforeach
                 </tbody>
