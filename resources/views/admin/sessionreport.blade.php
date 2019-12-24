@@ -219,7 +219,7 @@
                 <th>Persessionamount</th>
                 <th>Paymentstatus</th>
                 
-                 <th>Action</th>
+                
                 </tr>
                 </thead>
                 <tbody>
@@ -247,7 +247,7 @@
                 <td> {{$g->persessionamount}}</td>
                 <td>{{$g->paymentstatus}} </td>
               
-                <td><a href="{{ url('editMeasurement/') }}"class="edit" title="Edit"><i class="fa fa-edit"></i></a>  </td>           
+                          
                 </tr>
                  @endforeach
                 </tbody>
