@@ -199,7 +199,7 @@ $(document).ready( function () {
               </div>
           </div>
              <div class="col-lg-6 col-xs-12">
-              <div class="box">
+              <div class="box" style="height:109px;">
                 <div class="box-header with-border">
                   <div class="box-body">
                     <a href="{{url('addinquiry')}}" class="btn btn-social bg-warning">
@@ -594,7 +594,13 @@ function opendiv(userid,username){
           }else{
             userprofile+=' src="/images/default.png"';
           }
-          userprofile+=' name="aboutme" id="profile" width="140" height="140" border="0" class="img-circle"><h3 class="media-heading">'+userview.firstname[0].toUpperCase()+userview.firstname.slice(1)+' '+userview.lastname[0].toUpperCase()+userview.lastname.slice(1)+'<br><small>'; if (userview.status == 0) {
+          userprofile+=' name="aboutme" id="profile" width="140" height="140" border="0" class="img-circle"><h3 class="media-heading">'+userview.firstname[0].toUpperCase()+userview.firstname.slice(1)+' '+userview.lastname[0].toUpperCase()+userview.lastname.slice(1)+'';
+           if (userview.city != null) {
+            userprofile+='(' +userview.city+ ')';
+          }
+          if (userview.professional != null) {
+            userprofile+='<br>Professional:' +userview.professional;
+          }  userprofile+='<br><small>'; if (userview.status == 0) {
             userprofile+='Deactive';
           }if (userview.status == 1) {
             userprofile+='Active';
@@ -603,12 +609,7 @@ function opendiv(userid,username){
             userprofile+='Freeze';
           }
         
-          if (userview.city != null) {
-            userprofile+='' +userview.city;
-          }
-          if (userview.professional != null) {
-            userprofile+='Professional:' +userview.professional;
-          }
+         
 
           userprofile+='</small></div><div class="nav-tabs-custom"><ul class="nav nav-tabs nav-justified"><li  class="active"><a href="#day" data-toggle="tab" id="inq">Packages</a></li><li><a href="#month" data-toggle="tab" id="reg">Fetch Logs</a></li><li><a href="#year" data-toggle="tab" id="ftstep"></a></li></ul><div class="tab-content"><div class="tab-pane active" id="day">';
 
