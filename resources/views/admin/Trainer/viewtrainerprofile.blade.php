@@ -478,7 +478,7 @@ footer p a:hover {
                       </div>
                             
                                 <div class="form-group">
-                        <label for="City" class="col-sm-4 control-label">Experiance</label>
+                        <label for="City" class="col-sm-4 control-label">Experience</label>
                         <div class="col-sm-8">
                               <input id="City" type="text" readonly="" value="{{$trainerprofile->exp}}" name="city" class="form-control">
                    
@@ -505,11 +505,12 @@ footer p a:hover {
                                                     @php
                                                     $array=explode(',',$trainerprofile->freeslots);
                                                     @endphp
-
+                                                                @if(count($array)>1)
                                                                @foreach($array as $ar)
                                                                <label class="btn btn-default margin"> {{$ar}}
                                                                 <input type="checkbox" name="slots[]" class="badgebox" checked="" value="06:00 AM To 07:00 AM"><span class="badge bg-orange">&check;</span></label>
                                                                @endforeach
+                                                               @endif
                                                             </div>
 
                                                             <div class="tab-pane" id="results">
