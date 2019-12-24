@@ -36,10 +36,10 @@ if (mysqli_query($conn, $sql)) {
     echo "New record created successfully";
     $sql2 = "UPDATE `short_links` SET `status` = '0' WHERE  code='".$_POST["code"]."'";
 		if (mysqli_query($conn, $sql2)) {
-			echo 'done';
+			  header("Location: success.php");
 		}
 		else{
-				echo 'oops';
+				  header("Location: failer.php");
 		}
 		
 
