@@ -81,7 +81,7 @@ table td{
         @endif 
       <!-- Info boxes -->
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-lg-12">
           <div class="row">
             <div class="box box-info">
               <div class="box-header with-border">
@@ -98,6 +98,7 @@ table td{
               <form name="refreshForm">
                 <input type="hidden" name="visited" value=""/>
               </form>
+              <div class="col-lg-1"></div>
               <div class="col-lg-8">
                 <form action="{{ url('addtrainerprofile')}}" role="form" method="post" class="form-horizontal" enctype="multipart/form-data">
                   {{csrf_field()}}
@@ -162,51 +163,74 @@ table td{
                         </div>
                       </div>
                        <div class="form-group">
-                        <label for="AvailableSlot" class="col-sm-4 control-label">Available slots[]</label>
-                   <div class="col-sm-8">
+                        <label for="AvailableSlot" class="col-sm-4 control-label">Available slots :</label>
+                      
+                    <div  class="col-sm-12 col-sm-offset-4" style="margin-top: -30px;">
+                  
+                   <div class="col-sm-4">
                       
 
                      
                        <label class="btn btn-default margin">06:00 AM To 07:00 AM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="1"><span class="badge bg-orange">&check;</span></label>
-                           <label class="btn btn-default margin">07:00 AM To 08:00 AM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="2"><span class="badge bg-orange">&check;</span></label>
-
-                           <label class="btn btn-default margin">08:00 AM To 09:00 AM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="3"><span class="badge bg-orange">&check;</span></label>
+                          <input type="checkbox" name="slots[]" class="badgebox" value="06:00 AM To 07:00 AM"><span class="badge bg-orange">&check;</span></label>
+                          
+                          
                            <label class="btn btn-default margin">09:00 AM To 10:00 AM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="4"><span class="badge bg-orange">&check;</span></label>
-                           <label class="btn btn-default margin">10:00 AM To 11:00 AM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="5"><span class="badge bg-orange">&check;</span></label>
-                           <label class="btn btn-default margin">11:00 AM To 12:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="6"><span class="badge bg-orange">&check;</span></label>
+                          <input type="checkbox" name="slots[]" class="badgebox" value="09:00 AM To 10:00 AM"><span class="badge bg-orange">&check;</span></label>
+                 
                            <label class="btn btn-default margin">12:00 PM To 01:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="7"><span class="badge bg-orange">&check;</span></label>
-                           
-                            <label class="btn btn-default margin">01:00 PM To 02:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="8"><span class="badge bg-orange">&check;</span></label>
-                            <label class="btn btn-default margin">02:00 PM To 03:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="9"><span class="badge bg-orange">&check;</span></label>
-                            <label class="btn btn-default margin">03:00 PM To 04:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="10"><span class="badge bg-orange">&check;</span></label>
-                            <label class="btn btn-default margin">04:00 PM To 05:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="11"><span class="badge bg-orange">&check;</span></label>
-                            <label class="btn btn-default margin">05:00 PM To 0:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="12"><span class="badge bg-orange">&check;</span></label>
-                            <label class="btn btn-default margin">06:00 PM To 07:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="13"><span class="badge bg-orange">&check;</span></label>
-                            <label class="btn btn-default margin">07:00 PM To 08:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="14"><span class="badge bg-orange">&check;</span></label>
-                            <label class="btn btn-default margin">08:00 PM To 09:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="15"><span class="badge bg-orange">&check;</span></label>
-                                  <label class="btn btn-default margin">09:00 PM To 10:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="16"><span class="badge bg-orange">&check;</span></label>
+                          <input type="checkbox" name="slots[]" class="badgebox" value="12:00 PM To 01:00 PM"><span class="badge bg-orange">&check;</span></label>
+                           <label class="btn btn-default margin">03:00 PM To 04:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="03:00 PM To 04:00 PM"><span class="badge bg-orange">&check;</span></label>
 
-                        <label class="btn btn-default margin">10:00 PM To 11:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="17"><span class="badge bg-orange">&check;</span></label>
+                            <label class="btn btn-default margin">06:00 PM To 07:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="06:00 PM To 07:00 PM"><span class="badge bg-orange">&check;</span></label>
+                           <label class="btn btn-default margin">09:00 PM To 10:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="09:00 PM To 10:00 PM"><span class="badge bg-orange">&check;</span></label>
+                       
+                               </div>  
+                                <div class="col-sm-4">  
+                                   <label class="btn btn-default margin">07:00 AM To 08:00 AM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="07:00 AM To 08:00 AM"><span class="badge bg-orange">&check;</span></label>
+                                    <label class="btn btn-default margin">10:00 AM To 11:00 AM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="10:00 AM To 11:00 AM"><span class="badge bg-orange">&check;</span></label>
+
+                            <label class="btn btn-default margin">01:00 PM To 02:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="01:00 PM To 02:00 PM"><span class="badge bg-orange">&check;</span></label>
+                            <label class="btn btn-default margin">10:00 PM To 11:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="10:00 PM To 11:00 PM"><span class="badge bg-orange">&check;</span></label>
+                      
+                           
+
+                   
+
+                            <label class="btn btn-default margin">04:00 PM To 05:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="04:00 PM To 05:00 PM"><span class="badge bg-orange">&check;</span></label>
+
+                            <label class="btn btn-default margin">07:00 PM To 08:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="07:00 PM To 08:00 PM"><span class="badge bg-orange">&check;</span></label>
+                            
+                               </div>  
+                                <div class="col-sm-4"> 
+                                 <label class="btn btn-default margin">08:00 AM To 09:00 AM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="08:00 AM To 09:00 AM"><span class="badge bg-orange">&check;</span></label>
+
+                           <label class="btn btn-default margin">11:00 AM To 12:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="11:00 AM To 12:00 PM"><span class="badge bg-orange">&check;</span></label>
+                             <label class="btn btn-default margin">02:00 PM To 03:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="02:00 PM To 03:00 PM"><span class="badge bg-orange">&check;</span></label>
+                              <label class="btn btn-default margin">05:00 PM To 06:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="05:00 PM To 06:00 PM"><span class="badge bg-orange">&check;</span></label>
+
+                            <label class="btn btn-default margin">08:00 PM To 09:00 PM
+                          <input type="checkbox" name="slots[]" class="badgebox" value="08:00 PM To 09:00 PM"><span class="badge bg-orange">&check;</span></label>
+                                 
+
+                      
                             </div>
                       </div>
-                      
+                     
+                      </div> 
                       <div class="form-group">
                         <label for="results" class="col-sm-4 control-label">Photo</label>
                         <div class="col-sm-8">
@@ -239,8 +263,11 @@ table td{
                     </div>
                   </div>
                 </form>
+
               </div>
+                
             </div>
+            <div class="col-lg-3"></div>
               </div>  
             </div>
           </div>

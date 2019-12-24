@@ -532,16 +532,16 @@ $gstno='';
 
       /*$test = Memberpackages::where('userid',$userid)->where('schemeid', $schemeid)->get();*/
           
-      if(Memberpackages::where('userid',$userid)->where('schemeid', $schemeid)){
-          $memberpack = Memberpackages::where('userid',$userid)->where('schemeid', $request['SchemeID'])->where('status', 1)->get()->all();
+      // if(Memberpackages::where('userid',$userid)->where('schemeid', $schemeid)){
+      //     $memberpack = Memberpackages::where('userid',$userid)->where('schemeid', $request['SchemeID'])->where('status', 1)->get()->all();
           
-          foreach($memberpack as $pack){
-            if( !( $joindate > $pack->expiredate)){
-                return redirect('memberProfile/'.$memberid)->with('message','You Cant  assign  same package untill its not completed');
-            }//end of if
+      //     foreach($memberpack as $pack){
+      //       if( !( $joindate > $pack->expiredate)){
+      //           return redirect('memberProfile/'.$memberid)->with('message','You Cant  assign  same package untill its not completed');
+      //       }//end of if
            
-          }//end of foreach
-      } 
+      //     }//end of foreach
+      // } 
       // if memebr has already package end
 
 
@@ -1167,7 +1167,7 @@ $gstno='';
         $scheme=Scheme::where('schemeid',$payment1->schemeid)->get()->first();
           //echo $id;
 
-        // $memberpackage = MemberPackages::where('userid',$id)->where('schemeid',$payment1->schemeid)->where('status',1)->where('memberpackagesid', $request)->get()->first();
+        $memberpackage = MemberPackages::where('userid',$id)->where('schemeid',$payment1->schemeid)->where('status',1)->where('memberpackagesid', $request)->get()->first();
 
         if(!empty($memberpackage)){
           $upgradepackageid = $memberpackage->upgradeid;
