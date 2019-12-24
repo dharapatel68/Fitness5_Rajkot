@@ -753,3 +753,4 @@ Route::any('{id}/addmember', 'SendMemberFormController@addmeber');
 Route::any('viewrequests', 'SendMemberFormController@viewrequests');
 Route::any('sendformtonumber', 'SendMemberFormController@sendformtonumber');
 Route::any('changeMemberStatus', 'SendMemberFormController@changeMemberStatus');
+Route::any('rejectrequest/{id}', 'SendMemberFormController@rejectrequest');
