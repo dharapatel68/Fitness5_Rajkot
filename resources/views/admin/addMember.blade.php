@@ -397,7 +397,7 @@
       <label>Hear About..</label>
       <select class="form-control" name="HearAbout">
       <option disabled="" selected>--Select Any--</option>
-      <option value="Fitness Five Member" @if(old( 'HearAbout')=='Fitness Five Member' ) selected @endif @if(!empty($memberdata->hearabout == ? )){{ $memberdata->hearabout == 'Fitness Five Member' ? 'selected' :'' }} @endif>Fitness Five Member</option>
+      <option value="Fitness Five Member" @if(old( 'HearAbout')=='Fitness Five Member' ) selected @endif @if(!empty($memberdata->hearabout)){{ ($memberdata->hearabout == 'Fitness Five Member') ? 'selected' :'' }} @endif>Fitness Five Member</option>
       <option value="We Called Them" @if(old( 'HearAbout')=='We Called Them' ) selected @endif>We Called Them</option>
       <option value="Friends/Family" @if(old( 'HearAbout')=='Friends/Family' ) selected @endif>Friends/Family</option>
       <option value="Via Internet" @if(old( 'HearAbout')=='Via Internet' ) selected @endif>Via Internet</option>
