@@ -106,7 +106,7 @@
       @endif
         <li class="treeview">
          <a href="#">
-         <img src="{{ asset('images/icon/device.jpg') }}" style="height: 14px; width: 14px;margin-left: -3px;">&nbsp;&nbsp;
+         <img src="{{ asset('images/icon/regform.jpg') }}" style="height: 14px; width: 14px;margin-left: -3px;">&nbsp;&nbsp;
          <span>
          <b>Member Form</b>
          </span>
@@ -116,7 +116,7 @@
          </a>
          <ul class="treeview-menu">
              <li><a href="{{ url('sendformtonumber') }}"><i class="fa fa-chevron-right"></i>Send MemberForm</a></li>
-              <li><a href="{{ url('viewrequests')}}><i class="fa fa-chevron-right"></i>View MemberForm</a></li>
+              <li><a href="{{ url('viewrequests')}} "><i class="fa fa-chevron-right"></i>View MemberForm</a></li>
          </ul>
       </li>
       
