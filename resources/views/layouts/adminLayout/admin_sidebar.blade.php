@@ -116,7 +116,7 @@
          </a>
          <ul class="treeview-menu">
              <li><a href="{{ url('sendformtonumber') }}"><i class="fa fa-chevron-right"></i>Send MemberForm</a></li>
-              <li><a href="http://127.0.0.1:8000/viewrequests"><i class="fa fa-chevron-right"></i>View MemberForm</a></li>
+              <li><a href="{{ url('viewrequests')}}><i class="fa fa-chevron-right"></i>View MemberForm</a></li>
          </ul>
       </li>
       
