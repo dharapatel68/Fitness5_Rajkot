@@ -13,7 +13,8 @@ class SendMemberFormController extends Controller
    public function sendmemberform(Request $request,$id,$code)
     {	
     	    $link_send = url('/').'/'.$id.'/addmember';
-            $msg="Link at [url]";
+            $msg="Dear Guest,
+Thank you for your Interest at Fitness5. We are excited to welcome you.For quick registration process Kindly fill-up form by clicking given link: [url]";
             $bitlylink = app('bitly')->getUrl($link_send);
             ShortLink::create([
                 'code'=>$id,
@@ -62,6 +63,12 @@ class SendMemberFormController extends Controller
         $memberdata->status=1;
         $memberdata->save();
         return 'success';
+    }
+    public function rejectrequest(Request $request,$id){
+        $memberdata=MemberData::where('memberid',$request->id)->get()->first();
+        $memberdata->answer=3;
+        $memberdata->save();
+        return  redirect()->back()->withSuccess('SuccesFully Rejected');
     }
     
     

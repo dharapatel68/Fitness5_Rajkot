@@ -61,9 +61,9 @@ td{
                       <td>{{$data->firstname}} {{$data->lastname}}</td>
                       <td>{{$data->username}}</td>
                       <td>{{$data->mobileno}}</td>
-                      <td>@if($data->answer==1){{'Accepted'}} @elseif($data->answer==3){{'Rejected'}} @else {{'Pending'}} @endif</td>
+                      <td @if($data->answer==1) style="color:green;" @elseif($data->answer==3)style="color:red;"  @else style="color:blue;" @endif>@if($data->answer==1){{'Accepted'}} @elseif($data->answer==3){{'Rejected'}} @else {{'Pending'}} @endif</td>
                       <td><a href="{{url('addMember/'.$data->memberid)}}"><i class="fa fa-check"></i></a>
-                      <a href="{{url('')}}"><i class="fa fa-times"></i></a></td>
+                      <a href="{{url('rejectrequest/'.$data->memberid)}}"><i class="fa fa-times"></i></a></td>
                     </tr>
                     @endforeach
                   </tbody>
