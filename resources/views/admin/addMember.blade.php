@@ -239,16 +239,16 @@
             <div class="form-group">
                <label>First Name<span style="color: red">*</span>
                </label>
-               <input type="text" name="firstname" id="firstname" class="form-control" placeholder="Firstname" class="span11" required="" maxlength="60" value="{{ old('firstname') }} @if(!empty($memberdata->firstname)){{$memberdata->firstname }} @endif" />
+               <input type="text" name="firstname" id="firstname" class="form-control" placeholder="Firstname" class="span11" required="" maxlength="60" value="{{old('firstname')}}@if(!empty($memberdata->firstname)){{$memberdata->firstname}}@endif" />
             </div>
             <div class="form-group">
                <label>LastName<span style="color: red">*</span>
                </label>
-               <input type="text" name="lastname" id="lastname" class="form-control inline-block" placeholder="LastName" class="span11" maxlength="60" value="{{ old('lastname') }}@if(!empty($memberdata->lastname)){{$memberdata->lastname }} @endif" required="" />
+               <input type="text" name="lastname" id="lastname" class="form-control inline-block" placeholder="LastName" class="span11" maxlength="60" value="{{old('lastname')}}@if(!empty($memberdata->lastname)){{$memberdata->lastname}}@endif" required="" />
             </div>
             <div class="form-group">
                <label>User Name</label>
-               <input type="text" name="username" id="username" class="form-control" placeholder="User Name" class="span11" required="" maxlength="60" value="@if(!empty($memberdata->username)){{$memberdata->username }} @endif" /><span id="error_username"></span>
+               <input type="text" name="username" id="username" class="form-control" placeholder="User Name" class="span11" required="" maxlength="60" value="@if(!empty($memberdata->username)){{$memberdata->username}}@endif" /><span id="error_username"></span>
             </div>
             <div class="form-group">
                <label>Gender<span style="color: red">*</span>
@@ -266,7 +266,7 @@
             <div class="form-group">
                <label>Cell Phone Number<span style="color: red">*</span>
                </label>
-               <input type="text" name="CellPhoneNumber" value="{{ old('mobileno') }}@if(!empty($memberdata->mobileno)){{$memberdata->mobileno }} @endif" id="MobileNo" minlength="10" maxlength="10" class="form-control number" placeholder="Cell Phone Number" required="" class="span11" /><span id="error_usermobile"></span>
+               <input type="text" name="CellPhoneNumber" value="{{old('mobileno')}}@if(!empty($memberdata->mobileno)){{$memberdata->mobileno}}@endif" id="MobileNo" minlength="10" maxlength="10" class="form-control number" placeholder="Cell Phone Number" required="" class="span11" /><span id="error_usermobile"></span>
             </div>
             <div class="form-group">
                <label>Preferred Timing</label>
@@ -329,11 +329,11 @@
             </div>
             <div class="form-group">
                <label>Home Phone Number</label>
-               <input type="text" name="HomePhoneNumber" class="form-control number" id="HomePhoneNumber" placeholder="Home Phone Number" minlength="10" maxlength="10" value="{{ old('HomePhoneNumber') }} @if(!empty($memberdata->homephonenumber)){{$memberdata->homephonenumber }} @endif" class="span11" /> <span class="errmsg"></span>
+               <input type="text" name="HomePhoneNumber" class="form-control number" id="HomePhoneNumber" placeholder="Home Phone Number" minlength="10" maxlength="10" value="{{old('HomePhoneNumber')}}@if(!empty($memberdata->homephonenumber)){{$memberdata->homephonenumber}} @endif" class="span11" /> <span class="errmsg"></span>
             </div>
             <div class="form-group">
                <label>Office Phone Number</label>
-               <input type="text" name="OfficePhoneNumber" class="form-control number" id="OfficePhoneNumber"  minlength="10" maxlength="10" class="span11" value="@if(!empty($memberdata->officephonenumber)){{$memberdata->officephonenumber }} @endif {{ old('OfficePhoneNumber') }} " placeholder="Office Phone Number"/> <span class="errmsg"></span>
+             <input type="text" name="OfficePhoneNumber" class="form-control number" id="OfficePhoneNumber"  minlength="10" maxlength="10" class="span11" value="{{ old('OfficePhoneNumber')}}@if(!empty($memberdata->officephonenumber)){{$memberdata->officephonenumber}} @endif" placeholder="Office Phone Number"/> <span class="errmsg"></span>
             </div>
             <!--/.accordion-content-->
       </article>
