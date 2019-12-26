@@ -1061,6 +1061,7 @@ public function ajaxgetjoindate(Request $request){
 
       if($request->isMethod('post'))
       {
+
         $packageid=$request->packageid;
           $traineridgen=$request->trainerid;
           $memberidgen=$request->memberid;

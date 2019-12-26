@@ -1129,6 +1129,7 @@
           
          </ul>
       </li>
+          @if(isset($permission["'add_bank'"]) || isset($permission["'view_Bank'"]) || isset($permission["'add_categories'"]) || isset($permission["'view_categories'"]) || isset($permission["'add_expenses'"]) || isset($permission["'view_expenses'"]))
         <li class="treeview">
                <a href="#">
                     <i class="fa fa-inr"></i>
@@ -1230,7 +1231,7 @@
               </li>
            </ul>
         </li>
- 
+      @endif
      {{--  <li class="treeview">
          <a href="#">
          <img src="{{ asset('images/icon/hr.png') }}" style="height: 22px; width: 22px;margin-left: -3px;">&nbsp;&nbsp;
