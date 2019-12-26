@@ -59,7 +59,9 @@ class MeasurementController extends Controller
                $usersall= Ptmember::where('trainerid', Session::get('employeeid'))->leftjoin('member','member.memberid','ptmember.memberid')->groupBy('ptmember.memberid')->pluck('ptmember.memberid')->all();
                 foreach ($usersall as $key => $value) {
                  $val= Member::where('memberid',$value)->where('status',1)->join('users', 'member.userid', '=', 'users.userid')->first();
-                 array_push($users, $val);
+                  if($val){
+                    array_push($users, $val);
+                  }
                 }
               }
               else{
@@ -86,7 +88,10 @@ class MeasurementController extends Controller
           $usersall= Ptmember::where('trainerid', Session::get('employeeid'))->leftjoin('member','member.memberid','ptmember.memberid')->groupBy('ptmember.memberid')->pluck('ptmember.memberid')->all();
           foreach ($usersall as $key => $value) {
             $val= Member::where('memberid',$value)->where('status',1)->join('users', 'member.userid', '=', 'users.userid')->first();
-            array_push($users, $val);
+              if($val){
+          array_push($users, $val);
+        }
+       
           $measurement1=Measurement::with('Member')->where('memberid',$value)->get()->first();
           if($measurement1){
             array_push($measurement, $measurement1);    
@@ -107,7 +112,9 @@ class MeasurementController extends Controller
           $usersall= Ptmember::where('trainerid', Session::get('employeeid'))->leftjoin('member','member.memberid','ptmember.memberid')->groupBy('ptmember.memberid')->pluck('ptmember.memberid')->all();
           foreach ($usersall as $key => $value){
             $val= Member::where('memberid',$value)->where('status',1)->join('users', 'member.userid', '=', 'users.userid')->first();
-            array_push($users, $val);
+             if($val){
+          array_push($users, $val);
+        }
 
             $measurement = Measurement::whereIn('memberid' ,$usersall);
           }

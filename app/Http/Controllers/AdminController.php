@@ -342,7 +342,10 @@ $today=date('Y-m-d 00:00:00');
    // dd($packexpiretrainerall);
   foreach ($packexpiretrainerall as $key => $value) {
     $member=Member::where('memberid',$value)->get()->first();
-     $memberpackage= MemberPackages::leftjoin('member','member.userid','memberpackages.userid')->where('memberpackages.userid',$member->userid)->orderBy('memberpackages.expiredate', 'desc')->leftjoin('schemes','schemes.schemeid','memberpackages.schemeid')->get()->first();
+     $now =  date('Y-m-d', strtotime(' + 15 days'));
+     $memberpackage= MemberPackages::leftjoin('member','member.userid','memberpackages.userid')->where('memberpackages.expiredate','<',$now)->where('memberpackages.userid',$member->userid)->orderBy('memberpackages.expiredate', 'desc')->leftjoin('schemes','schemes.schemeid','memberpackages.schemeid')->get()->first();
+if($memberpackage){
+
 
       $date1=date_create( $memberpackage->expiredate);
           $date2=date_create( date('Y-m-d'));
@@ -379,6 +382,7 @@ $today=date('Y-m-d 00:00:00');
         array_push($packexpiretrainer, $memberpackage);
       }
 
+  }
   }
    $trainersession=Ptmember::where('trainerid', $trainerid)->leftjoin('member','member.memberid','ptmember.memberid')->leftjoin('schemes','schemes.schemeid','ptmember.schemeid')->whereIn('ptmember.status',['Active','Pending'])->select('member.*','ptmember.*','ptmember.status as ptstatus','schemes.schemename')->paginate(8);
 // dd($trainersession);
