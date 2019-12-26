@@ -423,7 +423,8 @@ $(document).ready( function () {
 
 
       @if( session('role')== 'trainer')
-     <div class="row">
+
+    <!-- <div class="row">
       <div class="col-lg-6">
         <div class="box">
           <div class="box-header with-border">
@@ -557,7 +558,7 @@ $(document).ready( function () {
            </div>
          </div>
        </div>
-     </div>
+     </div>-->
       @endif
        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                 <div class="modal-dialog" role="document" style="overflow-y: scroll; max-height:80%;  margin-top: 50px; margin-bottom:50px;" >
