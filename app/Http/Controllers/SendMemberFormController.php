@@ -13,8 +13,7 @@ class SendMemberFormController extends Controller
    public function sendmemberform(Request $request,$id,$code)
     {	
     	    $link_send = url('/').'/'.$id.'/addmember';
-            $msg="Dear Guest,
-Thank you for your Interest at Fitness5. We are excited to welcome you.For quick registration process Kindly fill-up form by clicking given link: [url]";
+            $msg="Fitness5 goes paperless. Kindly  click on the link below and fill up our Membership refgistration form: [url]";
             $bitlylink = app('bitly')->getUrl($link_send);
             ShortLink::create([
                 'code'=>$id,
