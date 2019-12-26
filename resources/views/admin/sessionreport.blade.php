@@ -160,18 +160,18 @@
                 <!-- text input -->
                 <div class="col-md-3">
                 <div class="form-group">
-                  <label>Trainer12</label>
+                  <label>Trainer</label>
                   @if(Session::get('role')=="trainer")
-                  <select name="trainerid" class="form-control select2" id="trainerid" required disabled="" data-placeholder="Select Trainer">
-                    
+                  
+                    @php
                     $trainerid=Session::get('employeeid');
-                    @foreach ($employees as $employee)
-                      <option value="{{$employee->employeeid}}" {{ $trainerid == $employee->employeeid ? 'selected':''}}>{{$employee->username}}</option>
-                    @endforeach
-                  </select>
+                    $trainername=Session::get('username');
+                    @endphp 
+                    <input type="text" class="form-control" name="trainername" id="trainername" readonly="" value="{{$trainername}}">
+                     <input type="hidden" name="trainerid" id="trainerid"  value="{{$trainerid}}">
                   @else
                       <select name="trainerid" class="form-control select2" id="trainerid" title="Select Trainer" data-header="Select Trainer" required data-placeholder="Select Trainer">
-                    <option></option>
+                   
                     
                     @foreach ($employees as $employee)
                       <option value="{{$employee->employeeid}}" {{ $tid == $employee->employeeid ? 'selected':''}}>{{$employee->username}}</option>
