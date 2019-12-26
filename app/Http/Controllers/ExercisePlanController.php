@@ -13,7 +13,8 @@ use App\Workout;
 use App\Workouttag;
 use App\MemberExercise;
 use App\MemberWorkout;
-
+use Session;
+use App\Ptmember;
 
 class ExercisePlanController extends Controller
 {
@@ -56,7 +57,7 @@ class ExercisePlanController extends Controller
 
                 // foreach ($tags as $j => $value) {
                                   
- $commaSeparated = implode(',', $tags); 
+              $commaSeparated = implode(',', $tags); 
               for ($k=1; $k <= $count; $k++) {
 
                   if($request['tab'.$i.'exercisename'.$k.'']){
@@ -166,7 +167,19 @@ Workouttag::create([
      
         $tagsassign = ExercisePlan::pluck('exerciseplanlevel')->all();
          $tags= ExerciseLevel::get()->all();
+              if(Session::get('role')=='trainer'){
+                $members=[];
+               $usersall= Ptmember::where('trainerid', Session::get('employeeid'))->leftjoin('member','member.memberid','ptmember.memberid')->groupBy('ptmember.memberid')->pluck('ptmember.memberid')->all();
+                foreach ($usersall as $key => $value) {
+                 $val= Member::where('memberid',$value)->where('status',1)->join('users', 'member.userid', '=', 'users.userid')->first();
+                  if($val){
+                    array_push($members, $val);
+                  }
+                }
+              }
+              else{
        $members= Member::where('status',1)->get()->all();
+     }
       return view('admin.exercise.assignexercise',compact('members','tags'));
     }
     public function packageload(Request $request){
