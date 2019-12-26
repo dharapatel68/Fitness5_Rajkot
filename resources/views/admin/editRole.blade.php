@@ -355,6 +355,14 @@
                        <td><input type="checkbox" class="check" name="permission['delete_expenses']" @if(isset($permission["'delete_expenses'"])) checked @endif></td>
 
                       </tr>
+                         <tr><th>Member Form</th>
+                      <td><input type="checkbox" class="check addall" name="permission['memberform_all']" @if(isset($permission["'memberform_all'"])) checked @endif></td>
+                       <td><input type="checkbox" class="check" name="permission['add_memberform']" @if(isset($permission["'add_memberform'"])) checked @endif></td>
+                       <td><input type="checkbox" class="check" name="permission['view_memberform']" @if(isset($permission["'view_memberform'"])) checked @endif></td>
+                       <td><input type="checkbox" class="check" name="permission['edit_memberform']" @if(isset($permission["'edit_memberform'"])) checked @endif></td>
+                       <td><input type="checkbox" class="check" name="permission['delete_memberform']" @if(isset($permission["'delete_memberform'"])) checked @endif></td>
+
+                      </tr>
                     </tbody>
                   </table>
                 </div>

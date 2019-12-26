@@ -7,6 +7,8 @@ use App\User;
 use App\Member;
 use App\Measurement;
 use DB;
+use Session;
+use App\Ptmember;
 
 class MeasurementController extends Controller
 {
@@ -52,7 +54,19 @@ class MeasurementController extends Controller
               ]);
             return  redirect('viewMeasurement')->with('message','Succesfully Added');
               }
+              if(Session::get('role')=='trainer'){
+                $users=[];
+               $usersall= Ptmember::where('trainerid', Session::get('employeeid'))->leftjoin('member','member.memberid','ptmember.memberid')->groupBy('ptmember.memberid')->pluck('ptmember.memberid')->all();
+                foreach ($usersall as $key => $value) {
+                 $val= Member::where('memberid',$value)->where('status',1)->join('users', 'member.userid', '=', 'users.userid')->first();
+                 array_push($users, $val);
+                }
+              }
+              else{
+
                $users= DB::table('member')->join('users', 'member.userid', '=', 'users.userid')->where('member.status',1)->get()->all();
+              }
+
        return  view('admin.measurement.addMeasurement',compact('users'));
        
     }
@@ -66,63 +80,75 @@ class MeasurementController extends Controller
      public function viewMeasurement(Request $request)
     {
         
-        if($request->isMethod('post'))
-
-    {
+        if(Session::get('role')=='trainer'){
+          $users=[];
+          $measurement=[];
+          $usersall= Ptmember::where('trainerid', Session::get('employeeid'))->leftjoin('member','member.memberid','ptmember.memberid')->groupBy('ptmember.memberid')->pluck('ptmember.memberid')->all();
+          foreach ($usersall as $key => $value) {
+            $val= Member::where('memberid',$value)->where('status',1)->join('users', 'member.userid', '=', 'users.userid')->first();
+            array_push($users, $val);
+          $measurement1=Measurement::with('Member')->where('memberid',$value)->get()->first();
+          if($measurement1){
+            array_push($measurement, $measurement1);    
+          }
+          }
+        }
        
-       if($request->get('from')!="")
-        {
-         
-        $from = date($request->get('from'));
-        if($request->get('to')){
-          $to = date($request->get('to'));
-        }
         else{
-          $to = date('Y-m-d');
+          $measurement=Measurement::with('Member')->get()->all();
+          $users= DB::table('member')->join('users', 'member.userid', '=', 'users.userid')->get()->all();
         }
-           $users= DB::table('member')->join('users', 'member.userid', '=', 'users.userid')->get()->all();
-        $measurement = Measurement::whereBetween('todaydate', [$from, $to])->get()->all();
         
-          return view('admin.measurement.viewMeasurement',compact('users','measurement'));
-      }
-      else if($request->get('to')!="")
+      if($request->isMethod('post'))
       {
-        
-        $to = date($request->get('to'));
-        if($request->get('from')){
+        DB::enableQueryLog();
+        if(Session::get('role')=='trainer'){
+           $users=[];
+          $usersall= Ptmember::where('trainerid', Session::get('employeeid'))->leftjoin('member','member.memberid','ptmember.memberid')->groupBy('ptmember.memberid')->pluck('ptmember.memberid')->all();
+          foreach ($usersall as $key => $value){
+            $val= Member::where('memberid',$value)->where('status',1)->join('users', 'member.userid', '=', 'users.userid')->first();
+            array_push($users, $val);
+
+            $measurement = Measurement::whereIn('memberid' ,$usersall);
+          }
+        }
+        if($request->get('from')!="")
+        {
           $from = date($request->get('from'));
+          if($request->get('to')){
+            $to = date($request->get('to'));
+          }
+          else{
+            $to = date('Y-m-d');
+          }
+          $measurement->whereBetween('todaydate', [$from, $to]);
         }
-        else{
-          $from = date('Y-m-d');
-        }
-        $users= DB::table('member')->join('users', 'member.userid', '=', 'users.userid')->get()->all();
-        $measurement = Measurement::whereBetween('todaydate', [$from, $to])->get()->all();
+        else if($request->get('to')!="")
+        {
         
-          return view('admin.measurement.viewMeasurement',compact('users','measurement'));
+          $to = date($request->get('to'));
+          if($request->get('from')){
+            $from = date($request->get('from'));
+          }
+          else{
+            $from = date('Y-m-d');
+          }
+          $measurement->whereBetween('todaydate', [$from, $to]);
       }
       else if($request->get('selectusername')!="")
       {
-
         $id=$request->get('selectusername');
 
-        // dd($status);
-         $users= DB::table('member')->join('users', 'member.userid', '=', 'users.userid')->get()->all();
-        $measurement = Measurement::where('memberid',$id)->get()->all();
-
-        return view('admin.measurement.viewMeasurement',compact('users','measurement'));
+        $measurement->where('memberid',$id);
       }
-
-      else{
-               $users= DB::table('member')->join('users', 'member.userid', '=', 'users.userid')->get()->all();
-      $measurement=Measurement::get()->all();
-
-        return view('admin.measurement.viewMeasurement',compact('users','measurement'));
-      }
+       $measurement=$measurement->get()->all();
+     
+     // dd(DB::getQueryLog());
 
       
+        return view('admin.measurement.viewMeasurement',compact('users','measurement'));
       }
-         $users= DB::table('member')->join('users', 'member.userid', '=', 'users.userid')->get()->all();
-         $measurement=Measurement::with('Member')->get()->all();
+        
          // dd($measurement);
 
         return view('admin.measurement.viewMeasurement',compact('users','measurement'));

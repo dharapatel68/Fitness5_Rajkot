@@ -73,7 +73,7 @@
     <div class="content" style="margin-top: 70px;">
         <h3 style="margin-left: 200px;">Consent Form of {{  ucfirst($request->firstname)}} {{  ucfirst($request->lastname)}} #{{$request->memberid}}</h3>
         <p style="font-size:10">Member Name: @if($request->firstname)<b>
-        {{  ucfirst($request->firstname)}}{{  ucfirst($request->lastname)}}</b>@else _____________________ @endif
+        {{  ucfirst($request->firstname)}}  {{  ucfirst($request->lastname)}}</b>@else _____________________ @endif
             <br>Cell No.: @if( $request->phone)<b>
         {{  $request->phone}}</b>@else _____________________ @endif
             <br>Email @if( $request->email)<b>
@@ -107,7 +107,7 @@
             </li>
         </ul>
         <p>
-            <br>I , <b>{{  ucfirst($request->firstname)}} {{  ucfirst($request->lastname)}} </b> hereby agree to all the membership terms and conditions mentioned above &nbsp; and further more detailed rules and regulations on the website:www.fitness5.in
+            <br>I , <b>{{  ucfirst($request->firstname)}}   {{  ucfirst($request->lastname)}} </b> hereby agree to all the membership terms and conditions mentioned above &nbsp; and further more detailed rules and regulations on the website:www.fitness5.in
             <center><b>WAIVER</b>
             </center>
             <!-- <ol style="line-height:10px;"> -->
