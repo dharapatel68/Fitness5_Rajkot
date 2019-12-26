@@ -1105,10 +1105,10 @@ public function ajaxgetjoindate(Request $request){
               
            
         
-             $demo =  DB::table('member')->where('member.status',1)->where('memberid', '=', $member)->get();
-        
-          $mobileno=$demo[0]->mobileno;
-             $package = DB::select( DB::raw("SELECT memberpackages.*,schemes.schemeid,schemes.schemename from memberpackages left Join schemes on memberpackages.schemeid=schemes.schemeid left Join schemeterms on schemeterms.schemeid=schemes.schemeid where memberpackages.userid='".$demo[0]->userid."' AND memberpackages.status='1' AND schemeterms.value != 0"));
+             $demo =  DB::table('member')->where('memberid', '=', $member)->get()->first();
+
+          $mobileno=$demo->mobileno;
+             $package = DB::select( DB::raw("SELECT memberpackages.*,schemes.schemeid,schemes.schemename from memberpackages left Join schemes on memberpackages.schemeid=schemes.schemeid left Join schemeterms on schemeterms.schemeid=schemes.schemeid where memberpackages.userid='".$demo->userid."' AND memberpackages.status='1' AND schemeterms.value != 0"));
              if($package){
                foreach ($package as $key => $value) {
                    $value->mobileno = $mobileno;

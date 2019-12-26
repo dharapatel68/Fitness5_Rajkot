@@ -323,6 +323,34 @@
                        <td><input type="checkbox" class="check" name="permission['edit_anytimeaccess']"></td>
                        <td><input type="checkbox" class="check" name="permission['delete_anytimeaccess']"></td>
                       </tr>
+                            <tr>
+                       <th>Bank Details</th>
+                       <td><input type="checkbox" class="check addall" name="permission['Bank_all']" ></td>
+                        <td><input type="checkbox" class="check" name="permission['add_bank']"></td>
+                       <td><input type="checkbox" class="check" name="permission['view_Bank']" ></td>
+                       <td><input type="checkbox" class="check" name="permission['edit_Bank']" ></td>
+                       <td><input type="checkbox" class="check" name="permission['delete_Bank']"></td>
+
+
+                     </tr>
+                      <tr>
+                       <th>Expense Categories</th>
+                       <td><input type="checkbox" class="check addall" name="permission['categories_all']" @if(isset($permission["'categories_all'"])) checked @endif></td>
+                        <td><input type="checkbox" class="check" name="permission['add_categories']"></td>
+                       <td><input type="checkbox" class="check" name="permission['view_categories']"></td>
+                       <td><input type="checkbox" class="check" name="permission['edit_categories']"></td>
+                       <td><input type="checkbox" class="check" name="permission['delete_categories']"></td>
+
+                    
+                     </tr>
+                     <tr><th>Expenses</th>
+                      <td><input type="checkbox" class="check addall" name="permission['expenses_all']" @if(isset($permission["'expenses_all'"])) checked @endif></td>
+                       <td><input type="checkbox" class="check" name="permission['add_expenses']" ></td>
+                       <td><input type="checkbox" class="check" name="permission['view_expenses']" ></td>
+                       <td><input type="checkbox" class="check" name="permission['edit_expenses']"></td>
+                       <td><input type="checkbox" class="check" name="permission['delete_expenses']"></td>
+
+                      </tr>
                     </tbody>
                   </table>
                 </div>

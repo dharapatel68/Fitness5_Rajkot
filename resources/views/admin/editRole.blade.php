@@ -326,6 +326,35 @@
                        <td><input type="checkbox" class="check" name="permission['edit_anytimeaccess']" @if(isset($permission["'freezemembership_all'"])) checked @endif></td>
                        <td><input type="checkbox" class="check" name="permission['delete_anytimeaccess']" @if(isset($permission["'freezemembership_all'"])) checked @endif></td>
                       </tr>
+               
+                        <tr>
+                       <th>Bank Details</th>
+                       <td><input type="checkbox" class="check addall" name="permission['Bank_all']" @if(isset($permission["'Bank_all'"])) checked @endif></td>
+                        <td><input type="checkbox" class="check" name="permission['add_bank']" @if(isset($permission["'add_bank'"])) checked @endif></td>
+                       <td><input type="checkbox" class="check" name="permission['view_Bank']" @if(isset($permission["'view_Bank'"])) checked @endif></td>
+                       <td><input type="checkbox" class="check" name="permission['edit_Bank']" @if(isset($permission["'edit_Bank'"])) checked @endif></td>
+                       <td><input type="checkbox" class="check" name="permission['delete_Bank']" @if(isset($permission["'delete_Bank'"])) checked @endif></td>
+
+
+                     </tr>
+                      <tr>
+                       <th>Expense Categories</th>
+                       <td><input type="checkbox" class="check addall" name="permission['categories_all']" @if(isset($permission["'categories_all'"])) checked @endif></td>
+                        <td><input type="checkbox" class="check" name="permission['add_categories']" @if(isset($permission["'add_categories'"])) checked @endif></td>
+                       <td><input type="checkbox" class="check" name="permission['view_categories']" @if(isset($permission["'view_categories'"])) checked @endif></td>
+                       <td><input type="checkbox" class="check" name="permission['edit_categories']" @if(isset($permission["'edit_categories'"])) checked @endif></td>
+                       <td><input type="checkbox" class="check" name="permission['delete_categories']" @if(isset($permission["'delete_categories'"])) checked @endif></td>
+
+                    
+                     </tr>
+                     <tr><th>Expenses</th>
+                      <td><input type="checkbox" class="check addall" name="permission['expenses_all']" @if(isset($permission["'expenses_all'"])) checked @endif></td>
+                       <td><input type="checkbox" class="check" name="permission['add_expenses']" @if(isset($permission["'add_expenses'"])) checked @endif></td>
+                       <td><input type="checkbox" class="check" name="permission['view_expenses']" @if(isset($permission["'view_expenses'"])) checked @endif></td>
+                       <td><input type="checkbox" class="check" name="permission['edit_expenses']" @if(isset($permission["'edit_expenses'"])) checked @endif></td>
+                       <td><input type="checkbox" class="check" name="permission['delete_expenses']" @if(isset($permission["'delete_expenses'"])) checked @endif></td>
+
+                      </tr>
                     </tbody>
                   </table>
                 </div>
