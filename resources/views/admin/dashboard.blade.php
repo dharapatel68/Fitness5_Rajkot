@@ -424,7 +424,7 @@ $(document).ready( function () {
 
       @if( session('role')== 'trainer')
 
-    <!-- <div class="row">
+ <div class="row">
       <div class="col-lg-6">
         <div class="box">
           <div class="box-header with-border">
@@ -487,7 +487,7 @@ $(document).ready( function () {
               <thead>
                 <tr>
                   <th>Member Name</th>
-                  <th>Date</th>
+                  <th>Status</th>
                 </tr>
               </thead>
              <tbody>
@@ -496,7 +496,7 @@ $(document).ready( function () {
                 @foreach($measurements as $key => $measurement)
                   <tr>
                     <td>{{$measurement->firstname}} {{$measurement->lastname}}</td>
-                    <td>{{date('j F, Y', strtotime($measurement->todaydate))}}</td>
+                    <td>{{ 'Remaining' }}</td>
                   </tr>
                 @endforeach
               @endif
@@ -524,12 +524,14 @@ $(document).ready( function () {
                <table id="membersession" class="table table-bordered table-striped">
               <thead>
                 <tr>
-                  
+                  <th style="display: none"></th>
                   <th>Member Name</th>
                   <th>Status</th>
                   <th>Scheme Name</th>
-                  <th>Expire on</th>
-                  <th>Days</th>
+                  <th>Date</th>
+                  <th>Day</th>
+                  
+                
                 </tr>
               </thead>
              <tbody>
@@ -539,11 +541,12 @@ $(document).ready( function () {
               @foreach($trainersession as $key => $trainersession1)
             
                <tr>
+                  <td style="display: none">{{$trainersession1->date}}</td>
                   <td>{{$trainersession1->firstname}}  {{$trainersession1->lastname}}</td>
-                 <td @if($trainersession1->ptstatus == 'Pending') class='red'  @else  class='green' @endif>{{$trainersession1->ptstatus}}</td>
-                 <td>{{$trainersession1->schemename}}</td>
-                 <td @if($trainersession1->diff == "Expired") class='red'@endif><span>{{str_replace("+", "", $trainersession1->diff)}}</span>  </td>
-                
+                  <td @if($trainersession1->ptstatus == 'Pending') class='red'  @else  class='green' @endif>{{$trainersession1->ptstatus}}</td>
+                  <td>{{$trainersession1->schemename}}</td>
+                  <td>{{date('d-m-Y', strtotime($trainersession1->date))}}</td>
+                  <td>{{$trainersession1->day}}</td>
                </tr>
                @endforeach
 
@@ -558,7 +561,7 @@ $(document).ready( function () {
            </div>
          </div>
        </div>
-     </div>-->
+     </div>
       @endif
        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                 <div class="modal-dialog" role="document" style="overflow-y: scroll; max-height:80%;  margin-top: 50px; margin-bottom:50px;" >
@@ -755,14 +758,14 @@ function opendiv(userid,username){
           userprofile+='</small></div><div class="nav-tabs-custom"><ul class="nav nav-tabs nav-justified"><li  class="active"><a href="#day" data-toggle="tab" id="inq">Packages</a></li><li><a href="#month" data-toggle="tab" id="reg">Fetch Logs</a></li><li><a href="#year" data-toggle="tab" id="ftstep"></a></li></ul><div class="tab-content"><div class="tab-pane active" id="day">';
 
           userprofile+='</h3><span></span></center><ul style=" margin-left:12px;">';
-          userprofile+='<table class="table"><thead><th>Package</th><th>Joindate</th><th>Expiredate</th><thead><tbody>';
+          userprofile+='<table class="table"><thead><th>Package</th><th>Joindate</th><th>Expiredate</th><th>Print</th><thead><tbody>';
           if(userview.packages){
               $.each(userview.packages,function(item,i){ 
               let current_datetime = new Date(i.joindate)
               let formatted_date = current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear();
               let current = new Date(i.expiredate)
               let formatted = current.getDate() + "-" + (current.getMonth() + 1) + "-" + current.getFullYear();
-              userprofile+='<tr><td>'+i.schemename+'</td><td>'+formatted_date+'</td><td>'+formatted+'</td></tr>';
+              userprofile+='<tr><td>'+i.schemename+'</td><td>'+formatted_date+'</td><td>'+formatted+'</td><td><a href="transactionpaymentreceipt/'+i.memberpackagesid+'")}}"><i class="fa fa-print"></i></a></td></tr>';
 
             });
             userprofile+='</tbody></table></ul></div>';
@@ -799,9 +802,9 @@ function opendiv(userid,username){
           $('#search-bar').append(userprofile);
           $('#menus').empty(); 
           if(userview.status!=1){
-             $('.userprofile').after('<a href="assignPackageOrRenewalPackage/'+userid+'"class="btn bg-green margin disabled"><i class="fa fa-users"></i>  Assign Package</a><a href="addMeasurement/'+userid+'"class="btn bg-green margin disabled"><i class="fa fa-plus"></i>  Add Measurment</a><a href="assigndiettomember/'+userview.memberid+'"class="btn bg-green margin disabled"><i class="fa fa-cutlery"></i>   Assign Diet</a><a href="assignExercise/'+userview.memberid+'"class="btn bg-green margin disabled"><i class="fa fa-cutlery"></i>   Assign Workout</a>');
+             $('.userprofile').after('<a href="assignPackageOrRenewalPackage/'+userid+'"class="btn bg-orange margin disabled"><i class="fa fa-users"></i>  Assign Package</a><a href="addMeasurement/'+userid+'"class="btn bg-orange margin disabled"><i class="fa fa-plus"></i>  Add Measurment</a><a href="assigndiettomember/'+userview.memberid+'"class="btn bg-orange margin disabled"><i class="fa fa-cutlery"></i>   Assign Diet</a><a href="assignExercise/'+userview.memberid+'"class="btn bg-orange margin disabled"><i class="fa fa-cutlery"></i>   Assign Workout</a><a href="Printconsentform" class="btn bg-orange margin disabled"><i class="fa fa-cutlery"></i>   Print</a>');
            }else{
-             $('.userprofile').after('<a href="assignPackageOrRenewalPackage/'+userid+'"class="btn bg-green margin"><i class="fa fa-users"></i>  Assign Package</a><a href="addMeasurement/'+userid+'"class="btn bg-green margin"><i class="fa fa-plus"></i>  Add Measurment</a><a href="assigndiettomember/'+userview.memberid+'"class="btn bg-green margin"><i class="fa fa-cutlery"></i>   Assign Diet</a><a href="assignExercise/'+userview.memberid+'"class="btn bg-green margin"><i class="fa fa-cutlery"></i>   Assign Workout</a>');
+             $('.userprofile').after('<form action="Printconsentform" class="form-inline"><a href="assignPackageOrRenewalPackage/'+userid+'"class="btn bg-orange margin"><i class="fa fa-users"></i>  Assign Package</a><a href="addMeasurement/'+userid+'"class="btn bg-orange margin"><i class="fa fa-plus"></i>  Add Measurment</a><a href="assigndiettomember/'+userview.memberid+'"class="btn bg-orange margin"><i class="fa fa-cutlery"></i>   Assign Diet</a><a href="assignExercise/'+userview.memberid+'"class="btn bg-orange margin"><i class="fa fa-cutlery"></i>  Assign Workout</a><input type="hidden" name="firstname" value="'+userview.firstname+'" ><input type="hidden" name="lastname" value="'+userview.lastname+'" ><input type="hidden" name="memberid" value="'+userview.memberid+'" ><input type="hidden" name="phone" value="'+userview.mobileno+'" ><input type="hidden" name="email" value="'+userview.email+'" ><button type="submit" class="btn bg-orange margin">Print consentform</button></form>');
            }
          
 

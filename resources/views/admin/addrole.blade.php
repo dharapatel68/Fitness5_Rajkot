@@ -351,6 +351,14 @@
                        <td><input type="checkbox" class="check" name="permission['delete_expenses']"></td>
 
                       </tr>
+                         <tr><th>Member Form</th>
+                      <td><input type="checkbox" class="check addall" name="permission['memberform_all']" ></td>
+                       <td><input type="checkbox" class="check" name="permission['add_memberform']" ></td>
+                       <td><input type="checkbox" class="check" name="permission['view_memberform']" ></td>
+                       <td><input type="checkbox" class="check" name="permission['edit_memberform']" ></td>
+                       <td><input type="checkbox" class="check" name="permission['delete_memberform']" ></td>
+
+                      </tr>
                     </tbody>
                   </table>
                 </div>

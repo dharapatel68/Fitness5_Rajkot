@@ -59,6 +59,21 @@
                 });   
  });
 </script>
+@if(isset($_POST['selectusername']))
+@php    $mid=$_POST['selectusername'];  @endphp   
+@else   
+@php    $mid=0;  @endphp    
+@endif
+@if(isset($_POST['from']))
+@php    $from=$_POST['from'];  @endphp   
+@else   
+@php    $from='';  @endphp    
+@endif
+@if(isset($_POST['to']))
+@php    $to=$_POST['to'];  @endphp   
+@else   
+@php    $to='';  @endphp    
+@endif
  <form role="form" action="{{ url('viewMeasurement') }}" name="viewMeasurement" method="POST" id="package_form">
   {{ csrf_field() }}
 <div class="box box-primary" id="secondstep" >
@@ -74,8 +89,10 @@
       <div class="form-group">
         <label>Username<span style="color: red">*</span></label>
 
-       <select name="selectusername" id="username"  class="form-control selectpicker"title="Select Username" data-live-search="true" data-selected-text-format="count"  data-actions-box="true" data-count-selected-text="{0} User Name Selected" data-header="Select Username" required><option selected value="" disabled="">--Please Select--</option>@foreach($users as $user)
-        <option value="{{ $user->memberid }}">{{ $user->username }}</option>@endforeach
+       <select name="selectusername" id="username"  class="form-control select2"title="Select Username" data-placeholder="Select Username">
+
+        <option selected value="" disabled="">--Please Select--</option>@foreach($users as $user)
+        <option value="{{ $user->memberid }}" {{ $user->memberid == $mid ? 'selected' : ''}}>{{ $user->username }}</option>@endforeach
         </select>
       </div>
  
@@ -85,7 +102,7 @@
       <div class="form-group">
         <label>Mobile No:</label>
         <select name="selectmobileno" id="mobileNo" class="form-control" disabled="" ><option selected >--Please Select--</option>@foreach($users as $user)
-        <option value="{{ $user->userid }}">{{ $user->mobileno }}</option>@endforeach
+        <option value="{{ $user->memberid }}"  {{ $user->memberid == $mid ? 'selected' : ''}} >{{ $user->mobileno }}</option>@endforeach
         </select>
       </div>
     </div>
@@ -94,7 +111,7 @@
        <div class="col-lg-3">
       <div class="input-group">
         <label>From Date</label>
-        <input type="date" onkeypress="return false" name="from" class="form-control">
+        <input type="date" onkeypress="return false" name="from" class="form-control" value="{{ $from }}">
       </div>
 <!-- /input-group -->
     </div>
@@ -103,7 +120,7 @@
       <div class="col-lg-3">
       <div class="input-group">
         <label>To Date</label>
-        <input type="date" onkeypress="return false" name="to" class="form-control">
+        <input type="date" onkeypress="return false" name="to" class="form-control"  value="{{ $to }}">
       </div>
 <!-- /input-group -->
     </div>
@@ -198,7 +215,10 @@
        "lengthMenu": [[10, 15, -1], [10, 15, "All"]]
    });
       
+$(document).on('ready',function(){
 
+  $('#username').trigger('change');
+})
 
 </script>
 <script type="text/javascript">
@@ -263,7 +283,7 @@ function clear_form_elements() {
       success:function(result)
       {
       var data=result;
-       $('select[name=selectmobileno]').val(data.userid);
+       $('select[name=selectmobileno]').val(data.memberid);
       // $('#mobileNo').val();
       },
        dataType:"json"
@@ -295,5 +315,70 @@ function clear_form_elements() {
 @push('script')
 <script type="text/javascript">
 
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    })
+
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass   : 'iradio_minimal-blue'
+    })
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass   : 'iradio_minimal-red'
+    })
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass   : 'iradio_flat-green'
+    })
+
+    //Colorpicker
+    $('.my-colorpicker1').colorpicker()
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+
+    //Timepicker
+    $('.timepicker').timepicker({
+      showInputs: false
+    })
+  })
 </script>
 @endpush

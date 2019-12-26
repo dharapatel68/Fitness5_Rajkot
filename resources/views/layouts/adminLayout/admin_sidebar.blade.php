@@ -104,6 +104,9 @@
          </ul>
       </li>
       @endif
+     @if(isset($permission["'memberform_all'"]) || isset($permission["'add_memberform'"]) || isset($permission["'view_memberform'"])) 
+
+
         <li class="treeview">
          <a href="#">
          <img src="{{ asset('images/icon/regform.png') }}" style="height: 14px; width: 14px;margin-left: -3px;">&nbsp;&nbsp;
@@ -119,7 +122,7 @@
               <li><a href="{{ url('viewrequests')}} "><i class="fa fa-chevron-right"></i>View MemberForm</a></li>
          </ul>
       </li>
-      
+      @endif
       @if(isset($permission["'add_device_all'"]))
       <!-- ============================= Device ============================== -->
       <li class="treeview">

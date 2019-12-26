@@ -59,7 +59,8 @@ class AdminController extends Controller
     
     public function dashboard(Request $request){
  
-       $today = Carbon::today();
+
+      $today = Carbon::today();
       $today= $today->format('Y-m-d');
       $numberofinquiry =0;
       $numberofinquirytoday=0;
@@ -381,8 +382,18 @@ $today=date('Y-m-d 00:00:00');
   }
    $trainersession=Ptmember::where('trainerid', $trainerid)->leftjoin('member','member.memberid','ptmember.memberid')->leftjoin('schemes','schemes.schemeid','ptmember.schemeid')->whereIn('ptmember.status',['Active','Pending'])->select('member.*','ptmember.*','ptmember.status as ptstatus','schemes.schemename')->paginate(8);
 // dd($trainersession);
-   $measurements=Measurement::leftjoin('member','member.memberid','measurement.memberid')->paginate(8);
+ 
+$measurements=[];
+$trainermembermeasur=DB::table("ptmember")->select('memberid')->groupBy('memberid')->where('trainerid', $trainerid)->whereNotIn('memberid',function($query) {
 
+   $query->select('memberid')->from('measurement');
+
+})->get()->all();
+foreach ($trainermembermeasur as $key => $value) {
+
+$memtr=Member::where('memberid',$value->memberid)->get()->first();
+array_push($measurements, $memtr);
+}
       return view('admin.dashboard',compact('data','collection','payment','duepayment','packageexpirenearly','followup','packexpiretrainer','trainersession','measurements'));
      }
      public function loaduserbytype(Request $request){

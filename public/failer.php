@@ -18,11 +18,10 @@
 	<script src="https://2-22-4-dot-lead-pages.appspot.com/static/lp918/min/jquery-1.9.1.min.js"></script>
 	<script src="https://2-22-4-dot-lead-pages.appspot.com/static/lp918/min/html5shiv.js"></script>
 </head>
-<body style="
-    background-image: radial-gradient(black, transparent);
-    color: white;
-">
+<body style="background-image: radial-gradient(black, transparent);
+    color: white;">
 	<header class="site-header" id="header">
+		<img src="/images/fitness5.png">
 		<h1 class="site-header__title" data-lead-id="site-header-title">Oops !</h1>
 	</header>
 
