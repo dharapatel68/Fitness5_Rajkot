@@ -2,32 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Auth;
-use DB;
-use Hash;
-use App\Admin;
-use App\Member;
-use App\Files;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Http\Request; 
+use Auth; 
+use DB; 
+use Hash; 
+use App\Admin; 
+use App\Member; 
+use App\Files; 
+use Illuminate\Support\Facades\Input; 
 use Session;
-use Carbon\Carbon;
-use App\Payment;
-use App\Role;
-use App\MemberPackages;
-use App\Scheme;
-use App\User_log;
-use App\User;
-use App\DeviceFetchlogs;
-use Illuminate\Pagination\LengthAwarePaginator;
-use DateTime;
-use App\Inquiry;
-use App\Followup;
-use Mail;
-use App\Registration;
-use App\ApiTrack;
-use PHPMailerAutoload;
-use Curl;
+use Carbon\Carbon; 
+use App\Payment; 
+use App\Role; 
+use App\MemberPackages; 
+use App\Scheme; 
+use App\User_log; 
+use App\User; 
+use App\DeviceFetchlogs; 
+use Illuminate\Pagination\LengthAwarePaginator; 
+use DateTime; 
+use App\Inquiry; 
+use App\Followup; 
+use Mail; 
+use App\Registration; 
+use App\ApiTrack; 
+use PHPMailerAutoload; 
+use Curl; 
+use App\Ptmember;
+use App\Measurement;
 
 
 
@@ -57,7 +59,13 @@ class AdminController extends Controller
     
     public function dashboard(Request $request){
  
-
+      $all=MemberPackages::where('status',1)->get()->all();
+      foreach ($all as $key => $value) {
+       $member=Member::where('userid',$value->userid)->get()->first();
+       $member->status=1;
+       $member->save();
+      }
+      dd('done');
       $today = Carbon::today();
       $today= $today->format('Y-m-d');
       $numberofinquiry =0;
@@ -332,9 +340,57 @@ $today=date('Y-m-d 00:00:00');
     }
 
    dd($packageexpirenearly);*/
-  $collection='';
 
-      return view('admin.dashboard',compact('data','collection','payment','duepayment','packageexpirenearly','followup'));
+  $collection='';
+  $packexpiretrainer=array();
+ $trainerid=$this->auth=Session::get('employeeid');
+  $packexpiretrainerall=Ptmember::where('trainerid', $trainerid)->groupBy('memberid')->pluck('memberid')->all();
+   // dd($packexpiretrainerall);
+  foreach ($packexpiretrainerall as $key => $value) {
+    $member=Member::where('memberid',$value)->get()->first();
+     $memberpackage= MemberPackages::leftjoin('member','member.userid','memberpackages.userid')->where('memberpackages.userid',$member->userid)->orderBy('memberpackages.expiredate', 'desc')->leftjoin('schemes','schemes.schemeid','memberpackages.schemeid')->get()->first();
+
+      $date1=date_create( $memberpackage->expiredate);
+          $date2=date_create( date('Y-m-d'));
+
+          $diff=date_diff($date2,$date1);
+            // dd( $diff);
+          /*if diff is positive*/
+          if($diff->invert == 0 ){
+              if($diff->days == 0){
+                $diff='Today';
+                $finaldiff = $diff;
+              }
+              else{
+                $diff=$diff->format("%R%a days");
+                $finaldiff = $diff;
+              }
+          }
+          /*if diff is negative*/
+          else{
+            $diff=$diff->format("%R%a days");
+            // dd( $diff);
+            if($diff < -7){
+              $finaldiff ='';
+            }
+            else{
+              // $diff=$diff->format("%R%a days");
+              $finaldiff = 'Expired';
+            }
+          }
+     // $memberpackage=MemberPackages::where('userid',$member->userid)->get()->all();
+      // $memberpackage=DB::select( DB::raw("SELECT * FROM `memberpackages` left JOIN member on member.userid = memberpackages.userid where memberpackages.userid = '".$member->userid."' AND memberpackages.expiredate = (SELECT MAX(expiredate) from memberpackages where userid = ".$member->userid.")"));
+      if($finaldiff){
+        $memberpackage['diff']=$finaldiff;
+        array_push($packexpiretrainer, $memberpackage);
+      }
+
+  }
+   $trainersession=Ptmember::where('trainerid', $trainerid)->leftjoin('member','member.memberid','ptmember.memberid')->leftjoin('schemes','schemes.schemeid','ptmember.schemeid')->whereIn('ptmember.status',['Active','Pending'])->select('member.*','ptmember.*','ptmember.status as ptstatus','schemes.schemename')->paginate(8);
+// dd($trainersession);
+   $measurements=Measurement::leftjoin('member','member.memberid','measurement.memberid')->paginate(8);
+
+      return view('admin.dashboard',compact('data','collection','payment','duepayment','packageexpirenearly','followup','packexpiretrainer','trainersession','measurements'));
      }
      public function loaduserbytype(Request $request){
  ;

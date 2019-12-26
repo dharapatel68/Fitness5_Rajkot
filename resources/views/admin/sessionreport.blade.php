@@ -102,7 +102,7 @@
     $mid=$_POST['memberid'];
     $membername=\App\Member::where(['memberid' => $mid])->get(['firstname','lastname'])->first();
     $membername=$membername->firstname.' '.$membername->lastname;
-
+    
   }
   else{
     $mid=0;
@@ -274,10 +274,13 @@
 </div>
 </div>
 <script type="text/javascript">
+  var tid=<?php echo $tid;?>;
+      var mid=<?php echo $mid;?>;
+      var pid=<?php echo $pid;?>;
  $( document ).ready(function() {
-     var trainerid=<?php echo $tid;?>;
-      var memberid=<?php echo $mid;?>;
-      var packageid=<?php echo $pid;?>;
+     var tid=<?php echo $tid;?>;
+      var mid=<?php echo $mid;?>;
+      var pid=<?php echo $pid;?>;
     if(trainerid == 0 && memberid == 0 && packageid ==0){
    $('#sessionreport').css('display','none');
   }
@@ -287,7 +290,9 @@
       if(memberid !== 0){
        
       }
-     
+    $('#trainerid').trigger('change');
+ // $('#memberid').trigger('change'); 
+
      
 });
  $('#view').on('click',function(){
@@ -361,10 +366,11 @@ console.log(packageid);
                                        $("#memberid").append($("<option></option>").attr("value", item.memberid).text(item.firstname+' '+item.lastname));
 
                                       });
-                                       
+                                    $("#memberid option[value="+mid+"]").attr("selected", "selected");
+                                       $("#memberid").trigger('change');
                                     }
-                                    $("#memberid option[value="+memberid+"]").attr("selected", "selected");
-                                       $("#packageid option[value="+packageid+"]").attr("selected", "selected");
+                                   // alert(mid);
+                                      
 
                                     
                                         // $("#memberid").append($("<option></option>").attr("value", item.memberid).text(item.username));
@@ -380,27 +386,28 @@ console.log(packageid);
     
                 <script type="text/javascript">
                   $('#memberid').change(function(){
-             
+                     
                        
-                       var member = $('#memberid').val();
-                    // alert(member);
+                       var member1 = $('#memberid').val();
+                      // alert(member1);
                  
 
                               $.ajax({
                                    url:"{{ URL::route('getpackage') }}",
                                    method:"GET",
-                                   data:{"_token": "{{ csrf_token() }}","memberid":member},
+                                   data:{"_token": "{{ csrf_token() }}","memberid":member1},
                                    async:false,
                                   success:function(data) {
                                     // alert(data);
                                     if(data){
-
+                                      // alert($('#memberid').val());
                                       $('#packageid').find('option:not(:first)').remove();
                                        $.each(data, function(i, item){
                                       $('#mobileno').val(item.mobileno);
                                         $("#packageid").append($("<option></option>").attr("value", item.memberpackagesid).text(item.schemename));
 
                                       });
+                                        $("#packageid option[value="+pid+"]").attr("selected", "selected");
                                     }
                                    
 
@@ -412,6 +419,7 @@ console.log(packageid);
                           
                               // $('select[name="mobile_no"]').fadeIn();
                  });
+                     
        </script>
               
                
