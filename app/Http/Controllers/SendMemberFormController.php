@@ -7,13 +7,16 @@ use App\ShortLink;
 use App\Smssetting;
 use Ixudra\Curl\Facades\Curl;
 use App\MemberData;
+use App\Message;
 
 class SendMemberFormController extends Controller
 {
    public function sendmemberform(Request $request,$id,$code)
     {	
     	    $link_send = url('/').'/'.$id.'/addmember';
-            $msg="Fitness5 goes paperless. Kindly  click on the link below and fill up our Membership refgistration form: [url]";
+           $msg= Message::where('messagesid',18)->get()->first();
+           $msg=$msg->message;
+            
             $bitlylink = app('bitly')->getUrl($link_send);
             ShortLink::create([
                 'code'=>$id,

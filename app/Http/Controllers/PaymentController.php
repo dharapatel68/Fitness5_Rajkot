@@ -1298,7 +1298,7 @@ $gstno='';
       /*dd($payment[0]);*/
       $filename = time().'invoice.pdf';
       $pdflink = url('/').'/transactionpaymentreceipt/'.$invoice_no;
-      // $pdflink = app('bitly')->getUrl($link_send);
+      $pdflink = app('bitly')->getUrl($pdflink);
      
     $member_message = Member::where('userid', $userid)->first();
       if(!empty($member_message)){
