@@ -216,6 +216,7 @@ $(document).ready( function () {
 
 
    <div class="row">
+
 <!--   <div class="col-lg-6">
     <div class="box">
       <div class="box-header with-border">
@@ -418,6 +419,145 @@ $(document).ready( function () {
       </div>
  
      
+      @endif
+
+
+      @if( session('role')== 'trainer')
+     <div class="row">
+      <div class="col-lg-6">
+        <div class="box">
+          <div class="box-header with-border">
+            <h3 class="box-title">Client's Renewal</h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <div class="table-responsive">
+               <table id="clientsrenewal" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  
+                  <th>Member Name</th>
+                  <th>Package</th>
+                  <th>Expire on</th>
+                  <th>Days</th>
+                </tr>
+              </thead>
+             <tbody>
+             
+              @if(count($packexpiretrainer)>0)
+
+              @foreach($packexpiretrainer as $key => $packexpiretrainer1)
+            
+               <tr>
+                  <td>{{$packexpiretrainer1->firstname}} {{$packexpiretrainer1->lastname}}</td>
+                 <td>{{$packexpiretrainer1->schemename}}</td>
+                 <td>{{date('j F, Y', strtotime($packexpiretrainer1->expiredate))}}</td>
+                 <td @if($packexpiretrainer1->diff == "Expired") class='red'@endif><span>{{str_replace("+", "", $packexpiretrainer1->diff)}}</span>  </td>
+                
+               </tr>
+               @endforeach
+               @endif
+             </tbody>
+            </table>
+              </div>
+            
+           </div>
+         </div>
+       </div>
+       <div class="col-lg-6">
+        <div class="box">
+          <div class="box-header with-border">
+            <h3 class="box-title">Measurement</h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <div class="table-responsive">
+               <table id="measurementpending" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Member Name</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+             <tbody>
+             
+              @if(count($measurements)>0)
+                @foreach($measurements as $key => $measurement)
+                  <tr>
+                    <td>{{$measurement->firstname}} {{$measurement->lastname}}</td>
+                    <td>{{date('j F, Y', strtotime($measurement->todaydate))}}</td>
+                  </tr>
+                @endforeach
+              @endif
+             </tbody>
+            </table>
+            </div>
+           </div>
+         </div>
+       </div>
+     </div>
+      <div class="row">
+       <div class="col-lg-12">
+        <div class="box">
+          <div class="box-header with-border">
+            <h3 class="box-title">Member Session</h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <div class="table-responsive">
+               <table id="membersession" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  
+                  <th>Member Name</th>
+                  <th>Status</th>
+                  <th>Scheme Name</th>
+                  <th>Expire on</th>
+                  <th>Days</th>
+                </tr>
+              </thead>
+             <tbody>
+             
+              @if(count($trainersession)>0)
+
+              @foreach($trainersession as $key => $trainersession1)
+            
+               <tr>
+                  <td>{{$trainersession1->firstname}}  {{$trainersession1->lastname}}</td>
+                 <td @if($trainersession1->ptstatus == 'Pending') class='red'  @else  class='green' @endif>{{$trainersession1->ptstatus}}</td>
+                 <td>{{$trainersession1->schemename}}</td>
+                 <td @if($trainersession1->diff == "Expired") class='red'@endif><span>{{str_replace("+", "", $trainersession1->diff)}}</span>  </td>
+                
+               </tr>
+               @endforeach
+
+             </tbody>
+
+            </table>
+              <div class="datarender" style="text-align: center">
+               {{ $trainersession->links() }}  </div>
+               @endif
+              </div>
+            
+           </div>
+         </div>
+       </div>
+     </div>
       @endif
        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                 <div class="modal-dialog" role="document" style="overflow-y: scroll; max-height:80%;  margin-top: 50px; margin-bottom:50px;" >
@@ -752,6 +892,34 @@ function fetchlog1(){
       'autoWidth'   : false
 
     });
+    $('#clientsrenewal').DataTable({
+      'paging'      : false,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : false,
+      'autoWidth'   : false
+
+    });
+    $('#measurementpending').DataTable({
+      'paging'      : false,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : false,
+      'autoWidth'   : false
+
+    });
+    $('#membersession').DataTable({
+      'paging'      : false,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : false,
+      'autoWidth'   : false
+
+    });
+    
   })
 
 
