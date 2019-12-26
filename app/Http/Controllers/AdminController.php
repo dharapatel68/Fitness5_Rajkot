@@ -59,14 +59,7 @@ class AdminController extends Controller
     
     public function dashboard(Request $request){
  
-      $all=MemberPackages::where('status',1)->get()->all();
-      foreach ($all as $key => $value) {
-       $member=Member::where('userid',$value->userid)->get()->first();
-       $member->status=1;
-       $member->save();
-      }
-      dd('done');
-      $today = Carbon::today();
+       $today = Carbon::today();
       $today= $today->format('Y-m-d');
       $numberofinquiry =0;
       $numberofinquirytoday=0;
