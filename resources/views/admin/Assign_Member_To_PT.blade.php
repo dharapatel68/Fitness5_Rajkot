@@ -80,6 +80,19 @@
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+  }
+    .select2{
+  width: 100% !important;
+  
+}
+.select2-container--default .select2-selection--single{
+  border-radius: 2px !important;
+  max-height: 100% !important;
+      border-color: #d2d6de !important;
+          height: 32px;
+          max-width: 100%;
+          min-width: 100% !important;
+}
   </style>
   <div class="content-wrapper">
    
@@ -108,20 +121,33 @@
                  {{ csrf_field() }}
                 <!-- text input -->
                 <div class="form-group">
+
                   <label>Trainer<span style="color: red">*</span></label>
+                   @if(Session::get('role')=="trainer")
+                  
+                    @php
+                    $trainerid=Session::get('employeeid');
+                    $trainername=Session::get('username');
+                    @endphp 
+                    <input type="text" class="form-control" name="trainername" id="trainername" readonly="" value="{{$trainername}}">
+                     <input type="hidden" name="trainerid" id="trainerid"  value="{{$trainerid}}">
+                  @else
+                     
+
                    <select name="trainerid" class="form-control selectpicker" id="trainerid" title="Select Trainer" data-live-search="true" data-selected-text-format="count"  data-actions-box="true" data-count-selected-text="{0} Trainer Selected" data-header="Select Trainer" required="">
                     @foreach ($employees as $employee)
                       <option value="{{$employee->employeeid}}" @if(old('trainerid') == $employee->employeeid) selected @endif>{{$employee->username}}</option>
                     @endforeach
                   </select>
+
+                  @endif
                 </div>
 
                 <div class="form-group">
                   <label>Member<span style="color: red">*</span></label>
-                   <select name="memberid" class="form-control selectpicker" id="memberid" title="Select Memeber" data-live-search="true" data-selected-text-format="count"  data-actions-box="true" data-count-selected-text="{0} Memeber Selected" data-header="Select Memeber" required="">
-                    @foreach ($members as $member)
-                      <option value="{{$member->memberid}}"  @if(old('memberid') == $member->memberid) selected @endif>{{$member->firstname .' '. $member->lastname}}</option>
-                    @endforeach
+                   <select name="memberid" class="form-control select2" id="memberid" data-placeholder="Select Member" data-header="Select Memeber" required="">
+                    <option></option>
+                   
                   </select>
                 </div>
                   <div class="form-group">
@@ -262,6 +288,74 @@
           </div>
                  
   </section>
+  <script type="text/javascript">
+
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    })
+
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass   : 'iradio_minimal-blue'
+    })
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass   : 'iradio_minimal-red'
+    })
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass   : 'iradio_flat-green'
+    })
+
+    //Colorpicker
+    $('.my-colorpicker1').colorpicker()
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+
+    //Timepicker
+    $('.timepicker').timepicker({
+      showInputs: false
+    })
+  })
+</script>
   <script type="text/javascript">
     Date.prototype.getWeek = function() {
     var onejan = new Date(this.getFullYear(),0,1);
@@ -1842,11 +1936,11 @@
 </div>
 </div>
 </div>
-<!-- <script type="text/javascript">
+<script type="text/javascript">
   $(document).ready( function (){
-  $('#example1').DataTable();
+  $('#trainerid').trigger('change');
 });
-</script> -->
+</script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 @endsection
 @push('script')
@@ -1881,5 +1975,39 @@
       return false;
     }
    });
+      $('#trainerid').change(function(){
+                       var trainerid = $('#trainerid').val();
+                  
+               // $('#sessionreport').css('display','none');
+                         $('#memberid').find('option:not(:first)').remove();
+                              $.ajax({
+                                   url:"{{ url('gettrainermember') }}",
+                                   method:"GET",
+                                   data:{"_token": "{{ csrf_token() }}","trainerid":trainerid},
+                                  success:function(data) {
+                                    // alert(data);
+                                      
+                                    if(data){
+                                      console.log(data);
+                                      $.each(data, function(i, item){
+                                      
+                                       $("#memberid").append($("<option></option>").attr("value", item.memberid).text(item.firstname+' '+item.lastname));
+
+                                      });
+                                    // $("#memberid option[value="+mid+"]").attr("selected", "selected");
+                                    //    $("#memberid").trigger('change');
+                                    }
+                                   // alert(mid);
+                                      
+
+                                    
+                                        // $("#memberid").append($("<option></option>").attr("value", item.memberid).text(item.username));
+                                  },
+                                   dataType:'json',
+
+                              });
+                          
+                              // $('select[name="mobile_no"]').fadeIn();
+                 });
 </script>
 @endpush
