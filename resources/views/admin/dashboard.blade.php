@@ -217,7 +217,7 @@ $(document).ready( function () {
 
    <div class="row">
 
-<!--   <div class="col-lg-6">
+  <div class="col-lg-6">
     <div class="box">
       <div class="box-header with-border">
         <h3 class="box-title">Collection</h3>
@@ -247,13 +247,15 @@ $(document).ready( function () {
             </thead>
                  <tbody>
             @if($collection)
+
               @foreach($collection as $key => $collec)
               <tr>
+                      
                 <td style="display: none">{{$collec->rootschemeid}}</td>
-                <td>{{$collec->RootScheme}}</td>
-                <td>{{ $collec->day_payment ? $collec->day_payment : 0  }}</td>
-                <td>{{$collec->month_payment ? $collec->month_payment : 0  }}</td>
-                <td>{{$collec->yearamount ? $collec->yearamount : 0  }}</td>
+                <td>{{$collec->rootschemename}}</td>
+                <td>{{$collec->daywisetotal  ? $collec->daywisetotal : 0  }}</td>
+                <td>{{$collec->monthwisetotal ? $collec->monthwisetotal : 0  }}</td>
+                <td>{{$collec->yearwisetotal ? $collec->yearwisetotal : 0  }}</td>
               </tr>
               @endforeach
             @endif
@@ -266,7 +268,7 @@ $(document).ready( function () {
                        
       </div>
     </div>
-  </div> -->
+  </div> 
      <div class="col-lg-6">
                  <div class="box">
               <div class="box-header with-border">

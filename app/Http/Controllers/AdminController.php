@@ -30,6 +30,7 @@ use PHPMailerAutoload;
 use Curl; 
 use App\Ptmember;
 use App\Measurement;
+use App\RootScheme;
 
 
 
@@ -121,61 +122,70 @@ class AdminController extends Controller
       // $payment = Payment::select(['payments.memberid as mid','payments.*'])->with('Scheme.RootScheme')->leftJoin('member','member.memberid','=','payments.memberid')->where('mode','!=','total')->paginate(10);
 // DB::enableQueryLog();
 
+
+$year=date('Y');
+$month=date('m');
+$day=date('d');
+$monthtotal='';
+ $daytotal='';
+
+   $filterquery =  DB::select("SELECT tmp3.rootschemeid, tmp3.rootschemename,tmp3.date, tmp3.Total, DATE_FORMAT(STR_TO_DATE(tmp3.date, '%d-%m-%Y'), '%m') Month from (SELECT tmp2.rootschemeid, rootschemes.rootschemename,tmp2.date, SUM(tmp2.Total) Total from rootschemes JOIN (SELECT tmp1.rootschemeid, rootschemes.rootschemename, tmp1.schemeid, tmp1.date, tmp1.Total from rootschemes join (select schemes.rootschemeid, temp.schemeid, temp.date, temp.Total from schemes JOIN (SELECT payments.schemeid, DATE_FORMAT(payments.date, '%d-%m-%Y') date, SUM(payments.amount) Total FROM `payments`  left join schemes on schemes.schemeid = payments.schemeid  where payments.amount > 0 GROUP by payments.schemeid, DATE_FORMAT(payments.date, '%d-%m-%Y') ) temp on schemes.schemeid = temp.schemeid) tmp1 on rootschemes.rootschemeid = tmp1.rootschemeid ORDER BY tmp1.date) tmp2 on rootschemes.rootschemeid = tmp2.rootschemeid GROUP by tmp2.date, tmp2.rootschemeid, rootschemes.rootschemename) tmp3 " );
      
-      // $filterquery =  DB::select("SELECT tmp2.rootschemeid, rootschemes.rootschemename,tmp2.date, SUM(tmp2.Total)  from rootschemes JOIN (SELECT tmp1.rootschemeid, rootschemes.rootschemename, tmp1.schemeid, tmp1.date, tmp1.Total from rootschemes join (select schemes.rootschemeid,  temp.schemeid, temp.date, temp.Total from schemes JOIN (SELECT payments.schemeid, DATE_FORMAT(payments.date, '%d-%m-%Y') date, SUM(payments.amount) Total FROM `payments` left join schemes on schemes.schemeid = payments.schemeid GROUP by payments.schemeid, DATE_FORMAT(payments.date,  '%d-%m-%Y') ) temp on schemes.schemeid = temp.schemeid) tmp1 on rootschemes.rootschemeid = tmp1.rootschemeid ORDER BY tmp1.date) tmp2 on rootschemes.rootschemeid = tmp2.rootschemeid 
-      //    GROUP by tmp2.date, tmp2.rootschemeid, rootschemes.rootschemename");
-      // // dd($filterquery);
-      // $rootschemes= RootScheme::get()->all();
-//       foreach($rootschemes as $paymentcollection){
+      foreach ($filterquery  as $key => $value) {
+ 
+        $monthtotal =  DB::select("SELECT tmp3.rootschemeid, tmp3.rootschemename,tmp3.date, tmp3.Total, DATE_FORMAT(STR_TO_DATE(tmp3.date, '%d-%m-%Y'), '%m') Month from (SELECT tmp2.rootschemeid, rootschemes.rootschemename,tmp2.date, SUM(tmp2.Total) Total from rootschemes JOIN (SELECT tmp1.rootschemeid, rootschemes.rootschemename, tmp1.schemeid, tmp1.date, tmp1.Total from rootschemes join (select schemes.rootschemeid, temp.schemeid, temp.date, temp.Total from schemes JOIN (SELECT payments.schemeid, DATE_FORMAT(payments.date, '%d-%m-%Y') date, SUM(payments.amount) Total FROM `payments`  left join schemes on schemes.schemeid = payments.schemeid  where payments.amount > 0 GROUP by payments.schemeid, DATE_FORMAT(payments.date, '%d-%m-%Y') ) temp on schemes.schemeid = temp.schemeid) tmp1 on rootschemes.rootschemeid = tmp1.rootschemeid ORDER BY tmp1.date) tmp2 on rootschemes.rootschemeid = tmp2.rootschemeid GROUP by tmp2.date, tmp2.rootschemeid, rootschemes.rootschemename) tmp3 WHERE DATE_FORMAT(STR_TO_DATE(tmp3.date, '%d-%m-%Y'), '%m') = ".$month."" );
 
-//         $filterquery1 =  DB::select("SELECT tmp2.rootschemeid, rootschemes.rootschemename,tmp2.date, SUM(tmp2.Total)  from rootschemes JOIN (SELECT tmp1.rootschemeid, rootschemes.rootschemename, tmp1.schemeid, tmp1.date, tmp1.Total from rootschemes join (select schemes.rootschemeid,  temp.schemeid, temp.date, temp.Total from schemes JOIN (SELECT payments.schemeid, DATE_FORMAT(payments.date, '%d-%m-%Y') date, SUM(payments.amount) Total FROM `payments` left join schemes on schemes.schemeid = payments.schemeid GROUP by payments.schemeid, DATE_FORMAT(payments.date,  '%d-%m-%Y') ) temp on schemes.schemeid = temp.schemeid) tmp1 on rootschemes.rootschemeid = tmp1.rootschemeid ORDER BY tmp1.date) tmp2 on rootschemes.rootschemeid = tmp2.rootschemeid   WHERE MONTH(tmp2.date) = 12  GROUP by tmp2.date, tmp2.rootschemeid, rootschemes.rootschemename");
-// // dd($filterquery1);
-//         $paymentcollection['total']=$paymentcollection['total']+$filterquery1->total;
-//       }
+      
+        $daytotal =  DB::select("SELECT tmp3.rootschemeid, tmp3.rootschemename,tmp3.date, tmp3.Total, DATE_FORMAT(STR_TO_DATE(tmp3.date, '%d-%m-%Y'), '%m') Month from (SELECT tmp2.rootschemeid, rootschemes.rootschemename,tmp2.date, SUM(tmp2.Total) Total from rootschemes JOIN (SELECT tmp1.rootschemeid, rootschemes.rootschemename, tmp1.schemeid, tmp1.date, tmp1.Total from rootschemes join (select schemes.rootschemeid, temp.schemeid, temp.date, temp.Total from schemes JOIN (SELECT payments.schemeid, DATE_FORMAT(payments.date, '%d-%m-%Y') date, SUM(payments.amount) Total FROM `payments` left join schemes on schemes.schemeid = payments.schemeid GROUP by payments.schemeid, DATE_FORMAT(payments.date, '%d-%m-%Y') ) temp on schemes.schemeid = temp.schemeid) tmp1 on rootschemes.rootschemeid = tmp1.rootschemeid ORDER BY tmp1.date) tmp2 on rootschemes.rootschemeid = tmp2.rootschemeid GROUP by tmp2.date, tmp2.rootschemeid, rootschemes.rootschemename) tmp3 WHERE  DATE_FORMAT(STR_TO_DATE(tmp3.date, '%d-%m-%Y'), '%d') = ".$day." AND  DATE_FORMAT(STR_TO_DATE(tmp3.date, '%d-%m-%Y'), '%m') = ".$month ." AND DATE_FORMAT(STR_TO_DATE(tmp3.date, '%d-%m-%Y'), '%Y') = ".$year ."" );
+    
+      }
+      
 
-   // dd(DB::getQueryLog());
+
+        $total=0;
+        foreach ($filterquery as $key => $value) {
+          $total+=$value->Total;
+        } //WHERE DATE_FORMAT(STR_TO_DATE(tmp3.date, '%d-%m-%Y'), '%m') = ".$month."  dd(DB::getQueryLog());
       $today_date = date('Y-m-d');
       $finalarray = [];
-
-      if(!empty($filterquery)){
-
-        foreach ($filterquery as $key => $query) {
-          //dd($payment_today);
-          $year = date('Y');
-          $query->schemeid;
-           $payment_year = Payment::where('schemeid',$query->schemeid)->sum('payments.amount');
+      $finalarray['filterquery']=$filterquery;
+      $finalarray['daytotal']=$daytotal;
+      $finalarray['monthtotal']= $monthtotal;
    
-           
-          $payment_month = Payment::leftjoin('schemes', 'payments.schemeid', 'schemes.schemeid')->leftjoin('rootschemes', 'schemes.schemeid', 'rootschemes.rootschemeid')->select(DB::raw("SUM(payments.amount) as monthamount"))->where('payments.mode', 'total')->groupBy('rootschemes.rootschemeid')->where('schemes.schemeid', $query->schemeid)->whereMonth('payments.paymentdate', $month)->first();
-  // dd($payment_month);
+      $rootschemes=Payment::where('payments.schemeid','!=',0)->leftjoin('schemes','schemes.schemeid','payments.schemeid')->groupBy('schemes.rootschemeid')->get(['schemes.rootschemeid'])->all();
 
-          if(!empty($payment_month)){
-             $payment_year['month_payment'] = $payment_month['monthamount'];
-
+      foreach ($rootschemes as $key => $value) {
+        $rootschemename=RootScheme::where('rootschemeid',$value->rootschemeid)->pluck('rootschemename')->first();
+        
+        foreach ($finalarray['daytotal'] as $key => $value1) {
+          if($value1->rootschemeid == $value->rootschemeid){
+            $value['daywisetotal']+=$value1->Total;
+            $value['rootschemename']=$rootschemename;
           }
-          $payment_today = Payment::leftjoin('schemes', 'payments.schemeid', 'schemes.schemeid')->leftjoin('rootschemes', 'schemes.schemeid', 'rootschemes.rootschemeid')->select(DB::raw("SUM(payments.amount) as todayamount"))->whereDate('paymentdate', $today_date)->where('schemes.schemeid', $query->schemeid)->where('mode', 'total')->groupBy('rootschemes.rootschemeid')->first();
-          // dd($payment_today);
-         if(!empty($payment_today)){
-
-          $payment_year['day_payment'] = $payment_today['todayamount'];
-          }
-
-
-          array_push($finalarray, $payment_year);
-
-
         }
-  
- 
-          $currentPage = LengthAwarePaginator::resolveCurrentPage();
-          $collection = collect($finalarray);
-          $perPage = 10;
-          $currentPageItems = $collection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
-          $paginatedItems= new LengthAwarePaginator($currentPageItems , count($collection), $perPage);
-          $paginatedItems->setPath($request->url());
-          $collection=$paginatedItems;
-
+        foreach ($finalarray['monthtotal'] as $key => $value1) {
+          if($value1->rootschemeid == $value->rootschemeid){
+            $value['monthwisetotal']+=$value1->Total;
+            $value['rootschemename']=$rootschemename;
+          }
+        }
+        foreach ($filterquery as $key => $value1) {
+          if($value1->rootschemeid == $value->rootschemeid){
+            $value['yearwisetotal']+=$value1->Total;
+            $value['rootschemename']=$rootschemename;
+          }
+        }
       }
+      $collection=$rootschemes;
+          // $currentPage = LengthAwarePaginator::resolveCurrentPage();
+          // $collection = collect($finalarray);
+          // $perPage = 10;
+          // $currentPageItems = $collection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+          // $paginatedItems= new LengthAwarePaginator($currentPageItems , count($collection), $perPage);
+          // $paginatedItems->setPath($request->url());
+          // $collection=$paginatedItems;
+
+
 $duepayment = Payment::leftJoin('member','member.memberid','=','payments.memberid')->whereRaw('paymentid IN (select MAX(paymentid) FROM payments GROUP BY memberid)')->where('payments.remainingamount', '>',0)->paginate(5);
  // dd($duepayment);
 
@@ -335,7 +345,7 @@ $today=date('Y-m-d 00:00:00');
 
    dd($packageexpirenearly);*/
 
-  $collection='';
+ 
   $packexpiretrainer=array();
  $trainerid=$this->auth=Session::get('employeeid');
   $packexpiretrainerall=Ptmember::where('trainerid', $trainerid)->groupBy('memberid')->pluck('memberid')->all();
