@@ -176,8 +176,12 @@
                                   success:function(data) {
                                     // alert(data);
                                       $.each(data, function(i, item){
-                                      
-                                        $("#packageid").append($("<option></option>").attr("value", item.memberpackagesid).text(item.schemename));
+                                        let current_datetime = new Date(item.joindate)
+                                        let formatted_date = current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear();
+                                         let enddatetime = new Date(item.expiredate)
+                                        let end_date = enddatetime.getDate() + "-" + (enddatetime.getMonth() + 1) + "-" + enddatetime.getFullYear();
+                                        $("#packageid").append($("<option></option>").attr("value", item.memberpackagesid).text(' '+item.schemename+'  Start '+formatted_date+' End '+end_date));
+                                        
 
                                       });
                                   },
