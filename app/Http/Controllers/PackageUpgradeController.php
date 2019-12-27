@@ -607,7 +607,7 @@ class PackageUpgradeController extends Controller
 
           $due='';
           if($transactiontype == 'Partially'){
-            $due="Due Amount:[Due Amount] Next Due Date: [Due Date]";
+            $due=" Due Amount:[Due Amount] Next Due Date: [Due Date]";
             $due= str_replace("[Due Amount]",$remainingamount,$due);
             $due= str_replace("[Due Date]", date('d-m-Y', strtotime($due_date)),$due);
 
@@ -843,7 +843,7 @@ class PackageUpgradeController extends Controller
           }
         }
 
-        $msg=   DB::table('messages')->where('messagesid','22')->get()->first();
+        $msg=   DB::table('messages')->where('messagesid','33')->get()->first();
 
         $msg =$msg->message;
         $msg = str_replace("[Name of Member]",$fullname,$msg);
