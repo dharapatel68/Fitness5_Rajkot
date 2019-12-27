@@ -28,6 +28,7 @@ use App\Apischedule;
 use Mail;
 use DB;
 use DateTime;
+use Session;
 
 
 class FreezemembershipController extends Controller
