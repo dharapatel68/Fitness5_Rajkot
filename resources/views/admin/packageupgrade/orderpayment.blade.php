@@ -357,11 +357,6 @@ window.onunload=function() { return confirm("OnUnload?"); };
     return 'Any string';
 };*/
 
-function disableF5(e) { if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault(); };
-
-$(document).ready(function(){
-     $(document).on("keydown", disableF5);
-});
 
 /*$('#save').click(function(){
   $(this).attr('disabled', 'true');

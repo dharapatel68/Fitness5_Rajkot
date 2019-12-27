@@ -22,6 +22,7 @@ use App\Smssetting;
 use App\Notification;
 use App\Notificationmsgdetails;
 use App\Emailnotificationdetails;
+use Session;
 
 class PackageUpgradeController extends Controller
 {

@@ -27,7 +27,7 @@
 // });
 
 
-
+Route::any('transactionpaymentreceipt/{id}', 'PaymentController@transactionpaymentreceipt')->name('transactionpaymentreceipt');
 
 Route::get('/', function () {
   return redirect('adminloginpage');
@@ -281,7 +281,7 @@ Route::get('assignPackageOrRenewalPackage/{id?}','PaymentController@demopayment'
 Route::post('placeorder','PaymentController@placeorder')->name('placeorder');
 Route::post('placeorderfinal','PaymentController@placeorderfinal')->name('placeorderfinal');
 Route::any('transactionfinalforpackage','PaymentController@transactionfinalforpackage')->name('transactionfinalforpackage');
-Route::any('transactionpaymentreceipt/{id}', 'PaymentController@transactionpaymentreceipt')->name('transactionpaymentreceipt');
+
 Route::any('remainingplaceorder/{id}', 'PaymentController@remainingplaceorder')->name('remainingplaceorder');
 Route::any('remainingplaceorderprocess/{id}', 'PaymentController@remainingplaceorderprocess')->name('remainingplaceorderprocess');
 Route::post('remainingpaymentfinal','PaymentController@remainingpaymentfinal')->name('remainingpaymentfinal');
@@ -513,7 +513,7 @@ Route::get('demopayment','PaymentController@demopayment')->name('demopayment');
 Route::post('placeorder','PaymentController@placeorder')->name('placeorder');
 Route::post('placeorderfinal','PaymentController@placeorderfinal')->name('placeorderfinal');
 Route::any('transactionfinalforpackage','PaymentController@transactionfinalforpackage')->name('transactionfinalforpackage');
-Route::any('transactionpaymentreceipt/{id}', 'PaymentController@transactionpaymentreceipt')->name('transactionpaymentreceipt');
+// Route::any('transactionpaymentreceipt/{id}', 'PaymentController@transactionpaymentreceipt')->name('transactionpaymentreceipt');
 Route::any('remainingplaceorder/{id}', 'PaymentController@remainingplaceorder')->name('remainingplaceorder');
 
 
