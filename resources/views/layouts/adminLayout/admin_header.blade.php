@@ -271,62 +271,40 @@
               <!-- User image -->
               <li class="user-header">
                 <img src="{{ asset('images/'.$photo) }}" class="img-circle" alt="User Image">
-
                 <p>
-
-   @php $us = session('username');
-    $photo ='';
-    $user =   DB::table('employee')->where('username',$us)->get()->first();
-    if(!empty($user)){
-
-      if($user->photo){
-        $photo = $user->photo;
-    }else{
-      $photo =  'default.png';
-    }
-  } else {
-
-    $photo =  'default.png';
-  }
-
-  
-    
-          
-     @endphp  
-
-
-
- @php $us = session('username');
-    $role ='';
-
-    $user1 =   DB::table('employee')->where('username',$us)->get()->first();
-    if(!empty($user1)){
-if($user1->role){
-        $role = $user1->role;
-    }else{
-      $role =  'Gym Owner';
-    }
-  } else {
-
-    $role =  'Gym Owner';
-  }
-
-  
-  
-    
-          
-     @endphp  
-
-
-
+                    @php $us = session('username');
+                      $photo ='';
+                      $user =   DB::table('employee')->where('username',$us)->get()->first();
+                      if(!empty($user)){
+                        if($user->photo){
+                          $photo = $user->photo;
+                        }else{
+                          $photo =  'default.png';
+                        }
+                      } else {
+                        $photo =  'default.png';
+                      }
+                    @endphp  
+                      @php $us = session('username');
+                      $role ='';
+                      $user1 =   DB::table('employee')->where('username',$us)->get()->first();
+                      if(!empty($user1)){
+                        if($user1->role){
+                          $role = $user1->role;
+                        }else{
+                          $role =  'Gym Owner';
+                        }
+                      } else {
+                        $role =  'Gym Owner';
+                      }
+                    @endphp  
                   <b>{{session('username')}}</b>
                   <small>{{$role}}</small>
                 </p>
               </li>
-            
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="{{url('/logout')}}" class="btn btn-default btn-flat">Sign out</a>

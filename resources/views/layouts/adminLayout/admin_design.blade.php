@@ -382,122 +382,14 @@ ul {
 <!-- <script src="{{ asset('dist/js/pages/dashboard2.js') }}"></script> -->
 <!-- AdminLTE for demo purposes -->
 <!-- <script src="{{ asset('dist/js/demo.js') }}"></script> -->
-
-
 @include('layouts.adminLayout.admin_header')
 @include('layouts.adminLayout.admin_sidebar')
 @yield('content')
-
 @include('layouts.adminLayout.admin_footer')
-
-<!-- <script
-  src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-  crossorigin="anonymous"></script> -->
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 @stack('script')
-
 <script type="text/javascript">
-
-//$('#form').on('submit', function(event) {
-
-function validateform(){
-   // event.preventDefault();
-  // var searchIDs = $('input[type="checkbox"]').map(function(){     return $(this).val();    }).get(); // <----
-     // $next = $('input[type="checkbox"]').next('td').find('[type=text]');
-     //  $next.attr('required','required');
-     var x= true;
-          $('input[type="checkbox"]').map(function(){
-            if($(this).prop("checked") == true){
-              var y=  $(this).closest('tr').find('[type=text]').val();
-             $(this).closest('tr').find('[type=text]').attr('required','required');
-                if (y == "")
-                {
-                  
-                  // alert("kindly enter values of selected terms !");
-                 x= false;
-              }
-            }
-            else if($(this).prop("checked") == false){
-              
-            }
-        });
-          //alert(x);
-       if (x == false)
-         return false;
-       else
-        return true;
-  }
-  function validateform1(){
-   // event.preventDefault();
-  // var searchIDs = $('input[type="checkbox"]').map(function(){     return $(this).val();    }).get(); // <----
-     // $next = $('input[type="checkbox"]').next('td').find('[type=text]');
-     //  $next.attr('required','required');
-     var x= true;
-          $('input[type="checkbox"]').map(function(){
-            if($(this).prop("checked") == true){
-              var y=  $(this).closest('tr').find('[type=text]').val();
-             $(this).closest('tr').find('[type=text]').attr('required','required');
-                if (y == "")
-                {
-                  alert("kindly enter values of selected terms !");
-                 x= false;
-              }
-            }
-            else if($(this).prop("checked") == false){
-              
-            }
-        });
-          //alert(x);
-       if (x == false)
-         return false;
-       else
-        return true;
-  }
-      // $('input[type="text"]').attr('required','required');
-
-//});
-    // $('input[type="checkbox"]').checked(function() {
-
-    //         alert("Checkbox");
-    //     if ($('input[type="text"]').attr('required')) {
-    //         $('input[type="text"]').removeAttr('required');
-    //     } 
-
-    //     else {
-    //         $('input[type="text"]').attr('required','required');
-    //     }
-
-    // });
-
-
-  // This function is called from the pop-up menus to transfer to
-  // a different page. Ignore if the value returned is a null string:
-  // function goPage (newURL) {
-
-  //     // if url is empty, skip the menu dividers and reset the menu selection to default
-  //     if (newURL != "") {
-      
-  //         // if url is "-", it is this page -- reset the menu:
-  //         if (newURL == "-" ) {
-  //             resetMenu();            
-  //         } 
-  //         // else, send page to designated URL            
-  //         else {  
-  //           document.location.href = newURL;
-  //         }
-  //     }
-  // }
-
-// resets the menu selection upon entry to this page:
-// function resetMenu() {
-//    document.gomenu.selector.selectedIndex = 2;
-// }
-
-//  $( function() {
-//     $( "#datepicker" ).datepicker();
-//   } );
  $(".number").keypress(function (e) {
      //if the letter is not digit then display error and don't type anything
      if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
@@ -506,13 +398,10 @@ function validateform(){
                return false;
     }
    });
-
 </script>
 <script src="{{ asset('bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <script type="text/javascript">
   /*$(document).ready(function(){
-
-
     setInterval(function(){ 
      $.ajax({
       type : 'POST',

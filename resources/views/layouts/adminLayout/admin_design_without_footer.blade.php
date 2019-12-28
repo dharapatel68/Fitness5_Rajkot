@@ -7,7 +7,6 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
    <link rel="icon" href="{{asset('/images/fitness5.png')}}">
-
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
   <!-- Font Awesome -->
@@ -21,7 +20,6 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css') }}">
-
 <!-- <link rel="stylesheet" href="{{ asset('bower_components/bootstrap/dist/css/jquery.dataTables.css') }}" /> -->
 <!-- <link rel="stylesheet" href="{{ asset('bower_components/bootstrap/dist/css/dataTables.responsive.css') }}" /> -->
 <link rel="stylesheet" href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.datetimepicker.min.css') }}" />
@@ -45,9 +43,6 @@ bootstrap.datetimepicker.min.js') }}"></script>
 <!-- <script  src="{{ asset('bower_components/bootstrap/dist/js/dataTables.responsive.js') }}"></script> -->
 <!-- <script  src="{{ asset('bower_components/bootstrap/dist/js/dataTables.bootstrap.js') }}"></script> -->
 <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap-toggle.min.js') }}"></script>
-
-
-
 <!-- <link rel="stylesheet" href="css/jquery.gritter.css" />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'> -->
 <style type="text/css">

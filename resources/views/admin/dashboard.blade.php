@@ -143,16 +143,16 @@ $(document).ready( function () {
             <div class="inner">
               <p>Member Count</p>
               <h3>{{$data['membercounttoday']}}</h3>
-                 <div class="info-box-content"> 
-              <label>Total</label>
-                {{$data['membercounttotal']}}
-             </div>
+                <div class="info-box-content"> 
+                <label>Total</label>
+                  {{$data['membercounttotal']}}
+                </div>
               
             </div>
             <div class="icon">
               <i class="fa fa-paw"></i>
             </div>
-            <a  class="small-box-footer" href="{{ route('todaymember') }}"> More info 
+            <a  class="small-box-footer"> More info 
             <i class="fa fa-arrow-circle-right" ></i>
             </a>
           </div>
@@ -355,7 +355,7 @@ $(document).ready( function () {
                <tr>
                   <td>{{$packageexpire->firstname}} {{$packageexpire->lastname}}</td>
                  <td>{{$packageexpire->schemename}}</td>
-                 <td>{{date('j F, Y', strtotime($packageexpire->expiredate))}}</td>
+                 <td>{{date('d-m-Y', strtotime($packageexpire->expiredate))}}</td>
                  <td @if($packageexpire->diff == "Expired") class='red'@endif><span class="label label-success">{{str_replace("+", "", $packageexpire->diff)}}</span> </a> </td>
                 
                </tr>
@@ -459,7 +459,7 @@ $(document).ready( function () {
                <tr>
                   <td>{{$packexpiretrainer1->firstname}} {{$packexpiretrainer1->lastname}}</td>
                  <td>{{$packexpiretrainer1->schemename}}</td>
-                 <td>{{date('j F, Y', strtotime($packexpiretrainer1->expiredate))}}</td>
+                 <td>{{date('d-m-Y', strtotime($packexpiretrainer1->expiredate))}}</td>
                  <td @if($packexpiretrainer1->diff == "Expired") class='red'@endif><span>{{str_replace("+", "", $packexpiretrainer1->diff)}}</span>  </td>
                 
                </tr>
@@ -475,7 +475,7 @@ $(document).ready( function () {
        <div class="col-lg-6">
         <div class="box">
           <div class="box-header with-border">
-            <h3 class="box-title">Measurement</h3>
+            <h3 class="box-title">Measurement Remaining</h3>
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
@@ -489,7 +489,7 @@ $(document).ready( function () {
               <thead>
                 <tr>
                   <th>Member Name</th>
-                  <th>Status</th>
+                  <th>Add</th>
                 </tr>
               </thead>
              <tbody>
@@ -498,7 +498,7 @@ $(document).ready( function () {
                 @foreach($measurements as $key => $measurement)
                   <tr>
                     <td>{{$measurement->firstname}} {{$measurement->lastname}}</td>
-                    <td>{{ 'Remaining' }}</td>
+                    <td><a href="{{ url('addMeasurement/'.$measurement->memberid) }}"class="btn-xs edit"><i class="fa fa-plus"></i>  </a></td>
                   </tr>
                 @endforeach
               @endif
@@ -510,7 +510,7 @@ $(document).ready( function () {
        </div>
      </div>
       <div class="row">
-       <div class="col-lg-12">
+       <div class="col-lg-8">
         <div class="box">
           <div class="box-header with-border">
             <h3 class="box-title">Member Session</h3>
@@ -530,7 +530,7 @@ $(document).ready( function () {
                   <th>Member Name</th>
                   <th>Status</th>
                   <th>Scheme Name</th>
-                  <th>Date</th>
+                  <th style="display: none">Date</th>
                   <th>Day</th>
                   
                 
@@ -543,21 +543,21 @@ $(document).ready( function () {
               @foreach($trainersession as $key => $trainersession1)
             
                <tr>
-                  <td style="display: none">{{$trainersession1->date}}</td>
+                  <td style="display: none">{{$trainersession1->day}}</td>
                   <td>{{$trainersession1->firstname}}  {{$trainersession1->lastname}}</td>
                   <td @if($trainersession1->ptstatus == 'Pending') class='red'  @else  class='green' @endif>{{$trainersession1->ptstatus}}</td>
                   <td>{{$trainersession1->schemename}}</td>
-                  <td>{{date('d-m-Y', strtotime($trainersession1->date))}}</td>
+                  <td style="display: none">{{date('d-m-Y', strtotime($trainersession1->date))}}</td>
                   <td>{{$trainersession1->day}}</td>
                </tr>
                @endforeach
-
+                      @endif
              </tbody>
 
             </table>
               <div class="datarender" style="text-align: center">
-               {{ $trainersession->links() }}  </div>
-               @endif
+              </div>
+         
               </div>
             
            </div>
