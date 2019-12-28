@@ -394,7 +394,7 @@ if($memberpackage){
 
   }
   }
-   $trainersession=Ptmember::where('trainerid', $trainerid)->leftjoin('member','member.memberid','ptmember.memberid')->leftjoin('schemes','schemes.schemeid','ptmember.schemeid')->whereIn('ptmember.status',['Active','Pending'])->select('member.*','ptmember.*','ptmember.status as ptstatus','schemes.schemename')->paginate(8);
+   $trainersession=Ptmember::where('trainerid', $trainerid)->leftjoin('member','member.memberid','ptmember.memberid')->leftjoin('schemes','schemes.schemeid','ptmember.schemeid')->whereIn('ptmember.status',['Active','Pending'])->select('member.*','ptmember.*','ptmember.status as ptstatus','schemes.schemename')->paginate(10);
 // dd($trainersession);
  
 $measurements=[];
