@@ -233,6 +233,14 @@ $first = $arr[1];
                            <input type="text" name="CellPhoneNumber" value="<?php if(isset($_POST['CellPhoneNumber'])){ echo $_POST['CellPhoneNumber'];}?>" id="MobileNo" minlength="10" maxlength="10" class="form-control number" placeholder="Cell Phone Number" required="" class="span11" /><span id="error_usermobile"></span>
                         </div>
                         <div class="form-group">
+                            <label>Birthdate</label>
+                            <input placeholder="Birthdate" value="<?php if(isset($_POST['birthday'])){ echo $_POST['birthday'];}?>" type="date" class="form-control" max="<?php echo date('Y-m-d');?>" name="birthday" class="span11" id="birthday" >
+                     </div>
+                     <div class="form-group">
+                         <label>Anniversary</label>
+                         <input placeholder="Anniversary" value="<?php if(isset($_POST['anniversary'])){ echo $_POST['anniversary'];}?>" type="date" onkeypress="return false" class="form-control" max="<?php echo date('Y-m-d');?>" name="anniversary" class="span11">
+                        </div>
+                        <div class="form-group">
                            <label>Preferred Timing</label>
                            <br> <span><label>From</label></span>
                         <select type="time" class="form-control" name="working_hour_from_1" id="fromtime" required="">
@@ -378,14 +386,7 @@ $first = $arr[1];
                 <label>Profession</label>
                 <input type="text" maxlength="60" value="<?php if(isset($_POST['profession'])){ echo $_POST['profession'];}?>" class="form-control" name="profession" placeholder="Profession" class="span11" />
             </div>
-            <div class="form-group">
-                <label>Birthdate</label>
-                <input placeholder="Birthdate" value="<?php if(isset($_POST['birthday'])){ echo $_POST['birthday'];}?>" type="date" class="form-control" max="<?php echo date('Y-m-d');?>" name="birthday" class="span11" id="birthday" >
-            </div>
-            <div class="form-group">
-                <label>Anniversary</label>
-                <input placeholder="Anniversary" value="<?php if(isset($_POST['anniversary'])){ echo $_POST['anniversary'];}?>" type="date" onkeypress="return false" class="form-control" max="<?php echo date('Y-m-d');?>" name="anniversary" class="span11">
-            </div>
+      
             <div class="form-group">
                 <label>Are you coming from any company?</label>
                 (if Yes than select)
