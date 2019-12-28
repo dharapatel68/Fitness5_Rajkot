@@ -28,87 +28,25 @@ table td{
 }
 </style>
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
      	 <h1 style="text-decoration: none;">All Trainers</h1>
      </section>
+     <!-- content start -->
       <section class="content">
-      <!-- Info boxes -->
      	 <div class="row">
      	 	<div class="col-md-12">
      	 		<div class="row">
-     	 		<!-- 	<div class="box box-info">
-     	 				 <div class="box-header with-border">
-			              <h3 class="box-title">Filters</h3>
-
-			              <div class="box-tools pull-right">
-			                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-			                </button>
-			                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-			              </div>
-			            </div>
-			            <!-- /.box-header -->
-			             <!-- <div class="box-body">
-			            	<form action="{{url('memberreport')}}" method="post">
-			            		{{csrf_field()}}
-							<div class="table-responsive">
-							  <table class="table no-margin">
-							  <thead>
-						  <tr>
-							    <th>From :</th>
-							    <th>To :</th>
-							  
-							    <th>Username</th>
-                  <th>Any Keyword</th>
-
-							    
-							  </tr>
-							</thead>
-							<tbody>
-					
-							<tr>
-							<td><input type="date" name="fdate" class="form-control" value="{{$query['fdate']}}"></td>
-							<td><input type="date" name="tdate" class="form-control" value="{{$query['tdate']}}"></td>
-					
-							<td><select name="username" class="form-control select2 span8" data-placeholder="Select a Username" >
-								<option value="" selected="" disabled="">Select a Username</option>
-						
-
-								<option value=""  @if(isset($query['username'])) {{$query['username'] == $user->userid ? 'selected':''}} @endif>
-									
-							
-							
-									 </option>
-			</select></td>
-                    <td><input type="text" name="keyword" placeholder="Search Keyword" class="form-control" value="{{$query['keyword']}}"></td>
-								
-							
-							</tr>
-							<tr>
-							
-								<td style="text-align: left" colspan="4"><button type="submit" name="search" class="btn bg-orange"><i class="fa fa-filter"></i>   Filters</button><a href="{{ url('memberreport') }}" class="btn bg-red">Clear</a></td>
-								
-							</tr>
-							
-
-							</tbody>
-							</table>
-
-							</div>
-						</form>
-			            </div>	
-     	 			</div> -->
+            <!-- box start -->
      	 			<div class="box box-info">
             <div class="box-header with-border">
               <h3 class="box-title"></h3>
-
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
               </div>
             </div>
-            <!-- /.box-header -->
+            <!-- for all trainer -->
             <div class="box-body">
               <div class="table-responsive" style="word-wrap: break-word;">
                 <table class="table no-margin">
@@ -128,7 +66,6 @@ table td{
                     @foreach($data as $data1)  
                      <tr>
                       <td><a href="{{url('viewtrainerprofile/'.$data1->trainerprofileid)}}"><i class="fa fa-eye"></i></td>
-
                         <td>{{ucwords($data1->first_name)}} {{ucwords($data1->last_name)}}</td>
                         <td>{{$data1->leveloftrainer}}</td>
                         <td>{{$data1->city}}</td>
@@ -138,24 +75,20 @@ table td{
                         <td  style="width: 10px !important ;">{{$data1->results}}</td> 
                      </tr>
      		           @endforeach
-
-	
-                  	
                   </tbody>
                 </table>
-                    <div class="datarender" style="text-align: center">
+                  <div class="datarender" style="text-align: center">
                          {{ $data->links() }}    
-          </div>
-              </div>
-              <!-- /.table-responsive -->
+                  </div>
+                </div>
             </div>
-   
           </div>
-     	 		</div>
-     	 	</div>
-
-      	 </div>
- 	  </section>
+          <!-- box End -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- content end -->
 </div>
 <script type="text/javascript">
 

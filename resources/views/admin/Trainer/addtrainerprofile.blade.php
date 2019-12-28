@@ -69,217 +69,212 @@ table td{
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-       <h1 style="text-decoration: none;">Trainer Profile</h1>
-     </section>
-      <section class="content">
-       
-            @if($errors->any())
-          <div class="alert alert-danger alert-block">
-            <button type="button" class="close" data-dismiss="alert">×</button> 
-             <strong>{{$errors->first()}}</strong>
-          </div>
-        @endif 
-      <!-- Info boxes -->
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="row">
-            <div class="box box-info">
-              <div class="box-header with-border">
-                <h3 class="box-title">Trainer Profile</h3>
-
-              <div class="box-tools pull-right">
-              <!--   <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
-              
-              </div>
-              </div>
-              <div class="box-body">
-                <div class="box-body">
-              <form name="refreshForm">
-                <input type="hidden" name="visited" value=""/>
-              </form>
-              <div class="col-lg-1"></div>
-              <div class="col-lg-8">
-                <form action="{{ url('addtrainerprofile')}}" role="form" method="post" class="form-horizontal" enctype="multipart/form-data">
-                  {{csrf_field()}}
-
-                
-                  <div id="specific" >
-                      <div class="form-group">
-                        <label for="productid" class="col-sm-4 control-label">Select Trianer</label>
-                        <div class="col-sm-8">
-                          <select id="trainerid" class="form-control select2" data-placeorder="--Select Trainer--" name="trainerid">
-                            @if(!empty($trainer))
-                              <option value="" disabled="" selected="">--Select Trainer--</option>
-                              @foreach($trainer as $tr )
-                                <option value="{{ $tr->employeeid }}">{{ $tr->username }}</option>
-                              @endforeach
-                            @else
-                              <option value="">--No Company Available--</option>
-                            @endif
-                          </select>
-                          @if($errors->has('companyid'))
-                            <span class="help-block">
-                              <strong>{{ $errors->first('companyid') }}</strong>
-                                </span>
-                          @endif
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="city" class="col-sm-4 control-label">City</label>
-                        <div class="col-sm-8">
-                        <input type="text" name="city" class="form-control" id="city" readonly="">
-                       
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="level" class="col-sm-4 control-label">Level Of Trainer</label>
-                        <div class="col-sm-8">
-                          <select name="level" class="form-control">
-                            <option value="">--Please Select--</option>
-                          @foreach($levels as $lvl)
-                             <option value="{{$lvl->id}}">{{$lvl->level}}</option>
-                          @endforeach
-                          </select>
-
-                        <!-- <input type="text" name="level" class="form-control" id="leveloftrainer" readonly=""> -->
-                       
-                        </div>
-                      </div>
-                     <div class="form-group">
-                        <label for="Exp" class="col-sm-4 control-label">Exp.</label>
-                        <div class="col-sm-8">
-                          <textarea class="form-control" name="exp"></textarea>
-                        <!-- <input type="text" name="exp" class="form-control"> -->
-                       
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="Achievments" class="col-sm-4 control-label">Achievments</label>
-                        <div class="col-sm-8">
-                          <textarea name="achievments"class="form-control"></textarea>
-                        <!-- <input type="text" name="achievments" class="form-control"> -->
-                       
-                        </div>
-                      </div>
-                       <div class="form-group">
-                        <label for="AvailableSlot" class="col-sm-4 control-label">Available slots :</label>
-                      
-                    <div  class="col-sm-12 col-sm-offset-4" style="margin-top: -30px;">
-                  
-                   <div class="col-sm-4">
-                      
-
-                     
-                       <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>06:00 AM To 07:00 AM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="06:00 AM To 07:00 AM"></label>
-                          
-                          
-                           <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>09:00 AM To 10:00 AM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="09:00 AM To 10:00 AM"></label>
-                 
-                           <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>12:00 PM To 01:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="12:00 PM To 01:00 PM"></label>
-                           <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>03:00 PM To 04:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="03:00 PM To 04:00 PM"></label>
-
-                            <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>06:00 PM To 07:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="06:00 PM To 07:00 PM"></label>
-                           <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>09:00 PM To 10:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="09:00 PM To 10:00 PM"></label>
-                       
-                               </div>  
-                                <div class="col-sm-4">  
-                                   <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>07:00 AM To 08:00 AM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="07:00 AM To 08:00 AM"></label>
-                                    <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>10:00 AM To 11:00 AM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="10:00 AM To 11:00 AM"></label>
-
-                            <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>01:00 PM To 02:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="01:00 PM To 02:00 PM"></label>
-                          <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>04:00 PM To 05:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="04:00 PM To 05:00 PM"></label>
-                          <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>07:00 PM To 08:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="07:00 PM To 08:00 PM"></label>
-                            <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>10:00 PM To 11:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="10:00 PM To 11:00 PM"></label>
-                      
-                            
-                           
-
-                   
-
-
-                            
-                            
-                               </div>  
-                                <div class="col-sm-4"> 
-                                 <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>08:00 AM To 09:00 AM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="08:00 AM To 09:00 AM"></label>
-
-                           <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>11:00 AM To 12:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="11:00 AM To 12:00 PM"></label>
-                             <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>02:00 PM To 03:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="02:00 PM To 03:00 PM"></label>
-                              <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>05:00 PM To 06:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="05:00 PM To 06:00 PM"></label>
-
-                            <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>08:00 PM To 09:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="08:00 PM To 09:00 PM"></label>
-                          <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>11:00 PM To 12:00 PM
-                          <input type="checkbox" name="slots[]" class="badgebox" value="11:00 PM To 12:00 PM"></label>
-                      
-                                 
-
-                      
-                            </div>
-                      </div>
-                     
-                      </div> 
-                      <div class="form-group">
-                        <label for="results" class="col-sm-4 control-label">Photo</label>
-                        <div class="col-sm-8">
-                      
-                        <input type="file" name="photo" id="photo" class="form-control"  accept="image/jpg, image/jpeg, image/png" onchange="loadImageFile()">
-                        <span id="img_error"></span>
-                        <img src="" id="img" height="100px">
-
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="results" class="col-sm-4 control-label">Results</label>
-                        <div class="col-sm-8">
-                              <input id="file-input" type="file" multiple name="results[]" class="form-control error">
-                              <span id="file_error"></span>
-                          <div id="preview"></div>
-                             
-                        </div>
-                      </div>
-                    <br>
-                  <div class="form-group">
-                    <div class="col-sm-offset-6 col-sm-6">
-                      <button name="add" type="submit" id="add" class="btn btn-success"><span class="fa fa-plus"></span>
-                        Add
-                      </button>
-                      <button name="deduct" type="submit" id="deduct" class="btn btn-danger" style="display: none;">
-                        <span class="fa fa-minus"></span> Deduct
-                      </button>
-                      <a href="{{ url('viewstock') }}" type="button" class="btn btn-default">Cancel</a>
-                    </div>
-                  </div>
-                </form>
-
-              </div>
-                
-            </div>
-            <div class="col-lg-3"></div>
-              </div>  
-            </div>
-          </div>
-        </div>
-      </div>
+        <h1 style="text-decoration: none;">Trainer Profile</h1>
     </section>
-</div>
+    <section class="content">
+
+        @if($errors->any())
+        <div class="alert alert-danger alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{$errors->first()}}</strong>
+        </div>
+        @endif
+        <!-- Info boxes -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Trainer Profile</h3>
+
+                        </div>
+                        <div class="box-body">
+                            <div class="box-body">
+                                <form name="refreshForm">
+                                    <input type="hidden" name="visited" value="" />
+                                </form>
+                                <div class="col-lg-1"></div>
+                                <div class="col-lg-8">
+                                    <form action="{{ url('addtrainerprofile')}}" role="form" method="post" class="form-horizontal" enctype="multipart/form-data">
+                                        {{csrf_field()}}
+
+                                        <div id="specific">
+                                            <div class="form-group">
+                                                <label for="productid" class="col-sm-4 control-label">Select Trianer</label>
+                                                <div class="col-sm-8">
+                                                    <select id="trainerid" class="form-control select2" data-placeorder="--Select Trainer--" name="trainerid">
+                                                        @if(!empty($trainer))
+                                                        <option value="" disabled="" selected="">--Select Trainer--</option>
+                                                        @foreach($trainer as $tr )
+                                                        <option value="{{ $tr->employeeid }}">{{ $tr->username }}</option>
+                                                        @endforeach @else
+                                                        <option value="">--No Company Available--</option>
+                                                        @endif
+                                                    </select>
+                                                    @if($errors->has('companyid'))
+                                                    <span class="help-block">
+                              <strong>{{ $errors->first('companyid') }}</strong>
+                                </span> @endif
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="city" class="col-sm-4 control-label">City</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" name="city" class="form-control" id="city" readonly="">
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="level" class="col-sm-4 control-label">Level Of Trainer</label>
+                                                <div class="col-sm-8">
+                                                    <select name="level" class="form-control">
+                                                        <option value="">--Please Select--</option>
+                                                        @foreach($levels as $lvl)
+                                                        <option value="{{$lvl->id}}">{{$lvl->level}}</option>
+                                                        @endforeach
+                                                    </select>
+
+                                                    <!-- <input type="text" name="level" class="form-control" id="leveloftrainer" readonly=""> -->
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Exp" class="col-sm-4 control-label">Exp.</label>
+                                                <div class="col-sm-8">
+                                                    <textarea class="form-control" name="exp"></textarea>
+                                                    <!-- <input type="text" name="exp" class="form-control"> -->
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Achievments" class="col-sm-4 control-label">Achievments</label>
+                                                <div class="col-sm-8">
+                                                    <textarea name="achievments" class="form-control"></textarea>
+                                                    <!-- <input type="text" name="achievments" class="form-control"> -->
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="AvailableSlot" class="col-sm-4 control-label">Available slots :</label>
+
+                                                <div class="col-sm-12 col-sm-offset-4" style="margin-top: -30px;">
+
+                                                    <div class="col-sm-4">
+
+                                                        <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>06:00 AM To 07:00 AM
+                                                            <input type="checkbox" name="slots[]" class="badgebox" value="06:00 AM To 07:00 AM">
+                                                        </label>
+
+                                                        <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>09:00 AM To 10:00 AM
+                                                            <input type="checkbox" name="slots[]" class="badgebox" value="09:00 AM To 10:00 AM">
+                                                        </label>
+
+                                                        <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>12:00 PM To 01:00 PM
+                                                            <input type="checkbox" name="slots[]" class="badgebox" value="12:00 PM To 01:00 PM">
+                                                        </label>
+                                                        <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>03:00 PM To 04:00 PM
+                                                            <input type="checkbox" name="slots[]" class="badgebox" value="03:00 PM To 04:00 PM">
+                                                        </label>
+
+                                                        <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>06:00 PM To 07:00 PM
+                                                            <input type="checkbox" name="slots[]" class="badgebox" value="06:00 PM To 07:00 PM">
+                                                        </label>
+                                                        <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>09:00 PM To 10:00 PM
+                                                            <input type="checkbox" name="slots[]" class="badgebox" value="09:00 PM To 10:00 PM">
+                                                        </label>
+
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>07:00 AM To 08:00 AM
+                                                            <input type="checkbox" name="slots[]" class="badgebox" value="07:00 AM To 08:00 AM">
+                                                        </label>
+                                                        <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>10:00 AM To 11:00 AM
+                                                            <input type="checkbox" name="slots[]" class="badgebox" value="10:00 AM To 11:00 AM">
+                                                        </label>
+
+                                                        <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>01:00 PM To 02:00 PM
+                                                            <input type="checkbox" name="slots[]" class="badgebox" value="01:00 PM To 02:00 PM">
+                                                        </label>
+                                                        <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>04:00 PM To 05:00 PM
+                                                            <input type="checkbox" name="slots[]" class="badgebox" value="04:00 PM To 05:00 PM">
+                                                        </label>
+                                                        <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>07:00 PM To 08:00 PM
+                                                            <input type="checkbox" name="slots[]" class="badgebox" value="07:00 PM To 08:00 PM">
+                                                        </label>
+                                                        <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>10:00 PM To 11:00 PM
+                                                            <input type="checkbox" name="slots[]" class="badgebox" value="10:00 PM To 11:00 PM">
+                                                        </label>
+
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>08:00 AM To 09:00 AM
+                                                            <input type="checkbox" name="slots[]" class="badgebox" value="08:00 AM To 09:00 AM">
+                                                        </label>
+
+                                                        <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>11:00 AM To 12:00 PM
+                                                            <input type="checkbox" name="slots[]" class="badgebox" value="11:00 AM To 12:00 PM">
+                                                        </label>
+                                                        <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>02:00 PM To 03:00 PM
+                                                            <input type="checkbox" name="slots[]" class="badgebox" value="02:00 PM To 03:00 PM">
+                                                        </label>
+                                                        <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>05:00 PM To 06:00 PM
+                                                            <input type="checkbox" name="slots[]" class="badgebox" value="05:00 PM To 06:00 PM">
+                                                        </label>
+
+                                                        <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>08:00 PM To 09:00 PM
+                                                            <input type="checkbox" name="slots[]" class="badgebox" value="08:00 PM To 09:00 PM">
+                                                        </label>
+                                                        <label class="btn btn-default margin"><span class="badge bg-orange">&check;</span>11:00 PM To 12:00 PM
+                                                            <input type="checkbox" name="slots[]" class="badgebox" value="11:00 PM To 12:00 PM">
+                                                        </label>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="results" class="col-sm-4 control-label">Photo</label>
+                                                <div class="col-sm-8">
+
+                                                    <input type="file" name="photo" id="photo" class="form-control" accept="image/jpg, image/jpeg, image/png" onchange="loadImageFile()">
+                                                    <span id="img_error"></span>
+                                                    <img src="" id="img" height="100px">
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="results" class="col-sm-4 control-label">Results</label>
+                                                <div class="col-sm-8">
+                                                    <input id="file-input" type="file" multiple name="results[]" class="form-control error">
+                                                    <span id="file_error"></span>
+                                                    <div id="preview"></div>
+
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-6 col-sm-6">
+                                                    <button name="add" type="submit" id="add" class="btn btn-success"><span class="fa fa-plus"></span> Add
+                                                    </button>
+                                                    <button name="deduct" type="submit" id="deduct" class="btn btn-danger" style="display: none;">
+                                                        <span class="fa fa-minus"></span> Deduct
+                                                    </button>
+                                                    <a href="{{ url('viewstock') }}" type="button" class="btn btn-default">Cancel</a>
+                                                </div>
+                                            </div>
+                                    </form>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+    </div>
 
 <script type="text/javascript">
 var fileReader = new FileReader();

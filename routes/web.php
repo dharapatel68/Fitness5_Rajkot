@@ -745,10 +745,7 @@ Route::post('generate-shorten-link', 'ShortLinkController@store')->name('generat
 Route::get('sendmemberform1/{code}', 'ShortLinkController@shortenLink')->name('pshorten.link');
 /**********************************************************************************/
 
-Route::any('notaccess', function(){
-	dd('halto tha');
-	return view('notaccess');
-});
+
 Route::any('{id}/addmember', 'SendMemberFormController@addmeber');
 Route::any('viewrequests', 'SendMemberFormController@viewrequests');
 Route::any('sendformtonumber', 'SendMemberFormController@sendformtonumber');

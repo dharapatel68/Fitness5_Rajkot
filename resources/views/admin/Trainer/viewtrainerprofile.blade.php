@@ -408,21 +408,14 @@ footer p a:hover {
                     <div class="box box-info">
                         <!-- /.box-header -->
                         <div class="box-body">
-                          
-                            @if($trainerprofile->trainerphoto)
-                            @php
-                            $photo=$trainerprofile->trainerphoto;@endphp
-                            @else
-                                    @php
-                            $photo='default.png';@endphp
-                            @endif
-                            <!-- <div class="text-center text-capitalize">John Robert Smith</div> -->
-                            <!-- <h4 class="text-center text-capitalize">Web Designer & Developer, UX/UI Expert</h4> -->
+
+                            @if($trainerprofile->trainerphoto) @php $photo=$trainerprofile->trainerphoto;@endphp @else @php $photo='default.png';@endphp @endif
+                         
 
                             <div class="profile-page">
-                          
-                                    <div class="page-header" data-parallax="true" style="background-image: url('/images/fitness5back.jpg');"></div>
-                               
+
+                                <div class="page-header" data-parallax="true" style="background-image: url('/images/fitness5back.jpg');"></div>
+
                                 <div class="main main-raised">
                                     <div class="profile-content">
                                         <div class="container">
@@ -443,110 +436,81 @@ footer p a:hover {
                                             </center>
                                             <div class="row">
                                                 <center>
-                                                <div class="col-xs-12 col-sm-8 col-lg-10 col-10 col-md-8 col-md-offset-1 col-md-offset-0 col-xl-offset-1 ">
-                                                    <div class="nav-tabs-custom">
-                                                        <center>
-                                                            <ul class="nav nav-tabs nav-justified">
+                                                    <div class="col-xs-12 col-sm-8 col-lg-10 col-10 col-md-8 col-md-offset-1 col-md-offset-0 col-xl-offset-1 ">
+                                                        <div class="nav-tabs-custom">
+                                                            <center>
+                                                                <ul class="nav nav-tabs nav-justified">
 
-                                                                <li class="active"><a href="#about" data-toggle="tab" aria-expanded="true">About</a></li>
-                                                                <li class=""><a href="#freeslots" data-toggle="tab" aria-expanded="true">Available Slot</a></li>
-                                                                <li class=""><a href="#results" data-toggle="tab" aria-expanded="false">Results</a></li>
-                                                            </ul>
-                                                        </center>
-                                                        <div class="tab-content">
+                                                                    <li class="active"><a href="#about" data-toggle="tab" aria-expanded="true">About</a></li>
+                                                                    <li class=""><a href="#freeslots" data-toggle="tab" aria-expanded="true">Available Slot</a></li>
+                                                                    <li class=""><a href="#results" data-toggle="tab" aria-expanded="false">Results</a></li>
+                                                                </ul>
+                                                            </center>
+                                                            <div class="tab-content">
+                                                                <div class="tab-pane active" id="about">
+                                                                    <div class="form-horizontal">
+                                                                        <br>
+                                                                        <div class="form-group">
+                                                                            <label for="City" class="col-sm-4 control-label">City</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input id="City" type="text" readonly="" value="{{$trainerprofile->trainercity}}" name="city" class="form-control">
 
-                                                            <div class="tab-pane active" id="about">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group justify-content-left">
+                                                                            <label for="City" class="col-sm-4 control-label">Level Of Trainer</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input id="City" type="text" readonly="" value="{{$trainerprofile->   leveloftrainer}}" name="city" class="form-control">
 
-                                                                <div class="form-horizontal">
+                                                                            </div>
+                                                                        </div>
 
-                                                                    <br>
-                                                                      <div class="form-group">
-                        <label for="City" class="col-sm-4 control-label">City</label>
-                        <div class="col-sm-8">
-                              <input id="City" type="text" readonly="" value="{{$trainerprofile->trainercity}}" name="city" class="form-control">
-                   
-                             
-                        </div>
-                      </div>
-                          <div class="form-group justify-content-left">
-                        <label for="City" class="col-sm-4 control-label">Level Of Trainer</label>
-                        <div class="col-sm-8">
-                              <input id="City" type="text" readonly="" value="{{$trainerprofile->   leveloftrainer}}" name="city" class="form-control">
-                   
-                             
-                        </div>
-                      </div>
-                            
-                                <div class="form-group">
-                        <label for="City" class="col-sm-4 control-label">Experience</label>
-                        <div class="col-sm-8">
-                              <input id="City" type="text" readonly="" value="{{$trainerprofile->exp}}" name="city" class="form-control">
-                   
-                             
-                        </div>
-                      </div>
-                         <div class="form-group">
-                        <label for="City" class="col-sm-4 control-label">Achievments</label>
-                        <div class="col-sm-8">
-                              <input id="City" type="text" readonly="" value="{{$trainerprofile->   achievments}}" name="city" class="form-control">
-                   
-    
-                        </div>
-                      </div>
-                            
+                                                                        <div class="form-group">
+                                                                            <label for="City" class="col-sm-4 control-label">Experience</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input id="City" type="text" readonly="" value="{{$trainerprofile->exp}}" name="city" class="form-control">
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="City" class="col-sm-4 control-label">Achievments</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input id="City" type="text" readonly="" value="{{$trainerprofile->   achievments}}" name="city" class="form-control">
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
+                                                                <div class="tab-pane" id="freeslots">
+                                                                    @php $array=explode(',',$trainerprofile->freeslots); @endphp @if(count($array)>1) @foreach($array as $ar)
+                                                                    <label class="btn btn-default margin"> {{$ar}}
+                                                                        <input type="checkbox" name="slots[]" class="badgebox" checked="" value="06:00 AM To 07:00 AM"><span class="badge bg-orange">&check;</span></label>
+                                                                    @endforeach @endif
+                                                                </div>
+                                                                <div class="tab-pane" id="results">
+                                                                    @if($trainerprofile->results)
+                                                                    <center>
+                                                                        <tr>
+                                                                            @php $img= json_decode($trainerprofile->results); @endphp @foreach($img as $img1)
 
-
-                                                            </div>
-                                                                
-                                                          
-                                                            <div class="tab-pane" id="freeslots">
-
-                                                    @php
-                                                    $array=explode(',',$trainerprofile->freeslots);
-                                                    @endphp
-                                                                @if(count($array)>1)
-                                                               @foreach($array as $ar)
-                                                               <label class="btn btn-default margin"> {{$ar}}
-                                                                <input type="checkbox" name="slots[]" class="badgebox" checked="" value="06:00 AM To 07:00 AM"><span class="badge bg-orange">&check;</span></label>
-                                                               @endforeach
-                                                               @endif
-                                                            </div>
-
-                                                            <div class="tab-pane" id="results">
-                                                                    
-                                                                @if($trainerprofile->results)
-                                                                <center><tr>
-                                                                   @php $img=  json_decode($trainerprofile->results); @endphp
-
-                                                                                 @foreach($img as $img1)
-
-                                                                  <td><img src="/files/{{$img1}}" target="_blank" height="100px;" width="100px;"></td>
-                                                                            @endforeach  </tr>
-                                                                            @else
-                                                                            {{ 'Not Uploaded' }} </center>
-                                                                @endif
-                                                          
+                                                                            <td><img src="/files/{{$img1}}" target="_blank" height="100px;" width="100px;"></td>
+                                                                            @endforeach </tr>
+                                                                        @else {{ 'Not Uploaded' }} 
+                                                                    </center>
+                                                                    @endif
                                                             </div>
                                                             <!-- /.tab-pane -->
                                                         </div>
                                                         <!-- /.tab-content -->
                                                     </div>
-
-                                                    <!-- /.nav-tabs-custom -->
+                                                        <!-- /.nav-tabs-custom -->
                                                 </div>
-
-                          
                                             </div>
-
-                                            
-
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
