@@ -380,7 +380,7 @@ $first = $arr[1];
             </div>
             <div class="form-group">
                 <label>Birthdate</label>
-                <input placeholder="Birthdate" value="<?php if(isset($_POST['birthday'])){ echo $_POST['birthday'];}?>" type="date" class="form-control" max="<?php echo date('Y-m-d');?>" name="birthday" class="span11" required>
+                <input placeholder="Birthdate" value="<?php if(isset($_POST['birthday'])){ echo $_POST['birthday'];}?>" type="date" class="form-control" max="<?php echo date('Y-m-d');?>" name="birthday" class="span11" id="birthday" >
             </div>
             <div class="form-group">
                 <label>Anniversary</label>
@@ -774,8 +774,12 @@ function saveSnap(data_uri){
         $('#save_memberform').attr('disabled',false);
        return false;
     }
-
-
+      if( $('#birthday').val() == "" ) {
+             alert( "Please Provide Birthdate!" );
+              $('#save_memberform').attr('disabled',false);
+             return false;
+          }
+ 
    var fname = document.getElementById('firstname').value;
    if(!fname){
       alert ( "Please Enter Firstname" );
