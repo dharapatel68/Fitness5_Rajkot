@@ -40,7 +40,7 @@ class SendMemberFormController extends Controller
             if($shortlink->status==1){
                   include public_path().'/addmember.php';
             }else{
-                return abort(404);
+                include public_path().'/alreadysubmitted.php';
             }
 
         }
