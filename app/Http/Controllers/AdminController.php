@@ -109,7 +109,8 @@ class AdminController extends Controller
                               ->get()->count();
       $paymenttoday =0;
 
-      $payment= DB::table('payments')->where('date','=',$today)->whereIn('mode',['no mode','total'])->get()->all();
+
+      $payment= DB::table('payments')->where('date',$today)->whereIn('mode',['no mode','total'])->get()->all();
       if($payment){
         $paymenttoday = count($payment);
       }
@@ -134,12 +135,15 @@ $monthtotal='';
       foreach ($filterquery  as $key => $value) {
  
         $monthtotal =  DB::select("SELECT tmp3.rootschemeid, tmp3.rootschemename,tmp3.date, tmp3.Total, DATE_FORMAT(STR_TO_DATE(tmp3.date, '%d-%m-%Y'), '%m') Month from (SELECT tmp2.rootschemeid, rootschemes.rootschemename,tmp2.date, SUM(tmp2.Total) Total from rootschemes JOIN (SELECT tmp1.rootschemeid, rootschemes.rootschemename, tmp1.schemeid, tmp1.date, tmp1.Total from rootschemes join (select schemes.rootschemeid, temp.schemeid, temp.date, temp.Total from schemes JOIN (SELECT payments.schemeid, DATE_FORMAT(payments.date, '%d-%m-%Y') date, SUM(payments.amount) Total FROM `payments`  left join schemes on schemes.schemeid = payments.schemeid  where payments.amount > 0 GROUP by payments.schemeid, DATE_FORMAT(payments.date, '%d-%m-%Y') ) temp on schemes.schemeid = temp.schemeid) tmp1 on rootschemes.rootschemeid = tmp1.rootschemeid ORDER BY tmp1.date) tmp2 on rootschemes.rootschemeid = tmp2.rootschemeid GROUP by tmp2.date, tmp2.rootschemeid, rootschemes.rootschemename) tmp3 WHERE DATE_FORMAT(STR_TO_DATE(tmp3.date, '%d-%m-%Y'), '%m') = ".$month."" );
+        DB::enableQueryLog();
 
       
-        $daytotal =  DB::select("SELECT tmp3.rootschemeid, tmp3.rootschemename,tmp3.date, tmp3.Total, DATE_FORMAT(STR_TO_DATE(tmp3.date, '%d-%m-%Y'), '%m') Month from (SELECT tmp2.rootschemeid, rootschemes.rootschemename,tmp2.date, SUM(tmp2.Total) Total from rootschemes JOIN (SELECT tmp1.rootschemeid, rootschemes.rootschemename, tmp1.schemeid, tmp1.date, tmp1.Total from rootschemes join (select schemes.rootschemeid, temp.schemeid, temp.date, temp.Total from schemes JOIN (SELECT payments.schemeid, DATE_FORMAT(payments.date, '%d-%m-%Y') date, SUM(payments.amount) Total FROM `payments` left join schemes on schemes.schemeid = payments.schemeid GROUP by payments.schemeid, DATE_FORMAT(payments.date, '%d-%m-%Y') ) temp on schemes.schemeid = temp.schemeid) tmp1 on rootschemes.rootschemeid = tmp1.rootschemeid ORDER BY tmp1.date) tmp2 on rootschemes.rootschemeid = tmp2.rootschemeid GROUP by tmp2.date, tmp2.rootschemeid, rootschemes.rootschemename) tmp3 WHERE  DATE_FORMAT(STR_TO_DATE(tmp3.date, '%d-%m-%Y'), '%d') = ".$day." AND  DATE_FORMAT(STR_TO_DATE(tmp3.date, '%d-%m-%Y'), '%m') = ".$month ." AND DATE_FORMAT(STR_TO_DATE(tmp3.date, '%d-%m-%Y'), '%Y') = ".$year ."" );
-    
+         $daytotal =  DB::select("SELECT tmp3.rootschemeid, tmp3.rootschemename,tmp3.date, tmp3.Total, DATE_FORMAT(STR_TO_DATE(tmp3.date, '%d-%m-%Y'), '%m') Month from (SELECT tmp2.rootschemeid, rootschemes.rootschemename,tmp2.date, SUM(tmp2.Total) Total from rootschemes JOIN (SELECT tmp1.rootschemeid, rootschemes.rootschemename, tmp1.schemeid, tmp1.date, tmp1.Total from rootschemes join (select schemes.rootschemeid, temp.schemeid, temp.date, temp.Total from schemes JOIN (SELECT payments.schemeid, DATE_FORMAT(payments.date, '%d-%m-%Y') date, SUM(payments.amount) Total FROM `payments` left join schemes on schemes.schemeid = payments.schemeid GROUP by payments.schemeid, DATE_FORMAT(payments.date, '%d-%m-%Y') ) temp on schemes.schemeid = temp.schemeid) tmp1 on rootschemes.rootschemeid = tmp1.rootschemeid ORDER BY tmp1.date) tmp2 on rootschemes.rootschemeid = tmp2.rootschemeid GROUP by tmp2.date, tmp2.rootschemeid, rootschemes.rootschemename) tmp3 WHERE  DATE_FORMAT(STR_TO_DATE(tmp3.date, '%d-%m-%Y'), '%d') = ".$day." and DATE_FORMAT(STR_TO_DATE(tmp3.date, '%d-%m-%Y'), '%m') = ".$month." and DATE_FORMAT(STR_TO_DATE(tmp3.date, '%d-%m-%Y'), '%Y') = ".$year."" );
+         //SELECT tmp3.rootschemeid, tmp3.rootschemename,tmp3.date, tmp3.Total, DATE_FORMAT(STR_TO_DATE(tmp3.date, '%d-%m-%Y'), '%m') Month from (SELECT tmp2.rootschemeid, rootschemes.rootschemename,tmp2.date, SUM(tmp2.Total) Total from rootschemes JOIN (SELECT tmp1.rootschemeid, rootschemes.rootschemename, tmp1.schemeid, tmp1.date, tmp1.Total from rootschemes join (select schemes.rootschemeid, temp.schemeid, temp.date, temp.Total from schemes JOIN (SELECT payments.schemeid, DATE_FORMAT(payments.date, '%d-%m-%Y') date, SUM(payments.amount) Total FROM `payments` left join schemes on schemes.schemeid = payments.schemeid GROUP by payments.schemeid, DATE_FORMAT(payments.date, '%d-%m-%Y') ) temp on schemes.schemeid = temp.schemeid) tmp1 on rootschemes.rootschemeid = tmp1.rootschemeid ORDER BY tmp1.date) tmp2 on rootschemes.rootschemeid = tmp2.rootschemeid GROUP by tmp2.date, tmp2.rootschemeid, rootschemes.rootschemename) tmp3 WHERE  DATE_FORMAT(STR_TO_DATE(tmp3.date, '%d-%m-%Y'), '%d') = "06" and DATE_FORMAT(STR_TO_DATE(tmp3.date, '%d-%m-%Y'), '%m') = "01" and DATE_FORMAT(STR_TO_DATE(tmp3.date, '%d-%m-%Y'), '%Y') = "2020"
+        // $daytotal=DB::select("SELECT SUM(amount)Total,schemes.rootschemeid FROM payments JOIN schemes on schemes.schemeid = payments.schemeid WHERE date='".$today."' GROUP BY(schemes.rootschemeid)");
+    // dd(DB::getQueryLog());
       }
-      
+
 
 
         $total=0;
