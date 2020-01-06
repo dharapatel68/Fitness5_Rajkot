@@ -71,7 +71,7 @@ $(document).ready( function () {
         
  
 <div class="container-fluid"> 
-  @if( session('role')== 'admin' ||  session('role') == 'manager')
+  @if( session('role')== 'admin' ||  session('role') == 'manager' || session('role') == 'Manager')
   <div class="row">
      @if( session('role'))
         <div class="col-lg-3 col-xs-6">
@@ -424,7 +424,7 @@ $(document).ready( function () {
       @endif
 
 
-      @if( session('role')== 'trainer')
+      @if( session('role')== 'trainer' || session('role') == 'Trainer')
 
  <div class="row">
       <div class="col-lg-6">
