@@ -134,9 +134,10 @@
                   @else
                      
 
-                   <select name="trainerid" class="form-control selectpicker" id="trainerid" title="Select Trainer" data-live-search="true" data-selected-text-format="count"  data-actions-box="true" data-count-selected-text="{0} Trainer Selected" data-header="Select Trainer" required="">
+                   <select name="trainerid" class="form-control select2" id="trainerid" data-placeholder="-Select Trianer-" required="">
+                    <option></option>
                     @foreach ($employees as $employee)
-                      <option value="{{$employee->employeeid}}" @if(old('trainerid') == $employee->employeeid) selected @endif>{{$employee->username}}</option>
+                      <option value="{{$employee->employeeid}}" >{{$employee->username}}</option>
                     @endforeach
                   </select>
 
@@ -1988,7 +1989,7 @@
                                     // alert(data);
                                       
                                     if(data){
-                                      console.log(data);
+                                     
                                       $.each(data, function(i, item){
                                       
                                        $("#memberid").append($("<option></option>").attr("value", item.memberid).text(item.firstname+' '+item.lastname));

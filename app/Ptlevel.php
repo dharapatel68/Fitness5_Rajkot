@@ -8,6 +8,6 @@ class Ptlevel extends Model
 {
     protected $table='ptlevel';
     protected $fillable = [
-        'ptlevelid','percentage',
+        'level','percentage',
     ];
 }
