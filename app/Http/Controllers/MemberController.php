@@ -297,8 +297,7 @@ public function otpverify(Request $request){
  {
 /*****************************commit rollback*****************************************/
 
-       DB::beginTransaction();
-     try {
+    
        $request->validate([
      
     'CellPhoneNumber' => 'required|max:11|min:10',
@@ -309,6 +308,8 @@ public function otpverify(Request $request){
     'attachments.*' => 'mimes:jpeg,bmp,png|max:2000',
   ]);
    /*************try code**************************/
+      DB::beginTransaction();
+     try {
        $mobileno=$request['CellPhoneNumber'];
        $password= $request->get('username');
        $username=$request->get('username');

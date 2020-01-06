@@ -113,16 +113,16 @@
          <tr><td style=" font-size: 12;border-color: #CACFD2  ;border-left:thick solid;border-right:thick solid;border-color: #CACFD2  ;"colspan="6"> <b>{{$exe1['exerciseday'] == 1 ? 'Monday' :''}}</b></td></tr>
          @endif
                     <tr>
-                           <td style="border-color: #CACFD2  ;border-left:thick solid;border-color: #CACFD2  ;"></td>
+                      <td style="border-color: #CACFD2  ;border-left:thick solid;border-color: #CACFD2  ;"></td>
 
-                        <td >{{ ucfirst($exe1->exercise->exercisename)}}</td>
-                      
-                       <td>{{ $exe1->memberexerciseset != '0' && $exe1->memberexerciseset != ''? $exe1->memberexerciseset : '' }}
+                      <td >{{ ucfirst($exe1->exercise->exercisename)}}</td>
+
+                      <td>{{ $exe1->memberexerciseset != '0' && $exe1->memberexerciseset != ''? $exe1->memberexerciseset : '' }}
                       </td>
-                        <td>{{ $exe1->memberexercisetime != '0' ? $exe1->memberexercisetime : '' }} <!-- {{date('j F, Y', strtotime($exe1['fromdate']))}}  to {{date('j F, Y', strtotime($exe1['todate']))}} --></td>
-                             <td> {{ $exe1['memberexerciserep'] > 0 ? $exe1['memberexerciserep'] :'' }}</td>
-                                       
-                          <td style="border-color: #CACFD2  ;border-color: #CACFD2  ; border-right:thick solid;border-color: #CACFD2  ;"> {{$exe1['memberexerciseins']}}   </td>
+                      <td>{{ $exe1->memberexercisetime != '0' ? $exe1->memberexercisetime : '' }} <!-- {{date('j F, Y', strtotime($exe1['fromdate']))}}  to {{date('j F, Y', strtotime($exe1['todate']))}} --></td>
+                      <td> {{ $exe1['memberexerciserep'] > 0 ? $exe1['memberexerciserep'] :'' }}</td>
+
+                      <td style="border-color: #CACFD2  ;border-color: #CACFD2  ; border-right:thick solid;border-color: #CACFD2  ;"> {{$exe1['memberexerciseins']}}  </td>
 
                     </tr>
          
