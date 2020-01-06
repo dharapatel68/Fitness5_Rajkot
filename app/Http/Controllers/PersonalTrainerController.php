@@ -1097,7 +1097,8 @@ public function ajaxgetjoindate(Request $request){
 
         $trainerid = $request->get('trainerid');
          
- $reportmembers=DB::select( DB::raw("select distinct `member`.* from `member` left join `ptmember` on `ptmember`.`memberid` = `member`.`memberid` left join memberpackages on memberpackages.memberpackagesid = ptmember.packageid where `ptmember`.`trainerid` = '".$trainerid."' and memberpackages.status=1 And(`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending')"));
+ // $reportmembers=DB::select( DB::raw("select distinct `member`.* from `member` left join `ptmember` on `ptmember`.`memberid` = `member`.`memberid` left join memberpackages on memberpackages.memberpackagesid = ptmember.packageid where `ptmember`.`trainerid` = '".$trainerid."' and memberpackages.status=1 And(`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending')"));
+  $reportmembers=DB::select( DB::raw("select distinct `member`.* from `member` left join memberpackages on memberpackages.userid = member.userid left join `schemes` on `schemes`.`schemeid` = `memberpackages`.`schemeid` where `schemes`.`rootschemeid`= 2 and memberpackages.status=1"));
  return  json_encode($reportmembers);
     }
        public function getpackage(Request $request){

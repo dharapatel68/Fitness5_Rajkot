@@ -94,8 +94,9 @@ class TrainerProfileController extends Controller
     	return view('admin.Trainer.viewtrainerprofile',compact('trainerprofile','timeline'));
     }
     public function gettrainerdetail(Request $request){
-    	$trainerdetail=Employee::leftjoin('Ptassignlevel','ptassignlevel.trainerid','employee.employeeid')->where('employeeid',$request->trainerid)->get()->first();
-
-    	return $trainerdetail;
+    	$trainerdetail=Employee::leftjoin('ptassignlevel','ptassignlevel.trainerid','employee.employeeid')->where('employeeid',$request->trainerid)->get()->first();
+    	$level=Ptlevel::where('id',$trainerdetail->levelid)->pluck('level')->first();
+    	$trainerdetail['level']=$level;
+      	return $trainerdetail;
     }
 }
