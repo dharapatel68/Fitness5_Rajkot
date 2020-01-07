@@ -102,19 +102,24 @@ table td{
                                             <div class="form-group">
                                                 <label for="productid" class="col-sm-4 control-label">Select Trianer</label>
                                                 <div class="col-sm-8">
-                                                    <select id="trainerid" class="form-control select2" data-placeorder="--Select Trainer--" name="trainerid">
-                                                        @if(!empty($trainer))
-                                                        <option value="" disabled="" selected="">--Select Trainer--</option>
-                                                        @foreach($trainer as $tr )
-                                                        <option value="{{ $tr->employeeid }}">{{ $tr->username }}</option>
-                                                        @endforeach @else
-                                                        <option value="">--No Company Available--</option>
-                                                        @endif
-                                                    </select>
+                                                    @if(Session('role')== 'trainer' || Session('role')== 'Trainer')
+                                                        <input type="text" class="form-control" readonly="" id="trainername" value="{{Session('username')}}">
+                                                         <input type="text" class="form-control hide" readonly=""  id="trainerid" name="trainerid" value="{{Session('employeeid')}}">
+                                                    @else
+                                                        <select id="trainerid" class="form-control select2" data-placeorder="--Select Trainer--" name="trainerid">
+                                                            @if(!empty($trainer))
+                                                            <option value="" disabled="" selected="">--Select Trainer--</option>
+                                                            @foreach($trainer as $tr )
+                                                            <option value="{{ $tr->employeeid }}">{{ $tr->username }}</option>
+                                                            @endforeach @else
+                                                            <option value="">--No Company Available--</option>
+                                                            @endif
+                                                        </select>
+                                                    @endif
                                                     @if($errors->has('companyid'))
                                                     <span class="help-block">
-                              <strong>{{ $errors->first('companyid') }}</strong>
-                                </span> @endif
+                                                      <strong>{{ $errors->first('companyid') }}</strong>
+                                                        </span> @endif
                                                 </div>
                                             </div>
                                             <div class="form-group">

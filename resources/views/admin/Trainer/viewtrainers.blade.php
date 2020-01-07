@@ -62,20 +62,39 @@ table td{
                     <th>Results</th>
                   </tr>
                   </thead>
-                  <tbody>
-                    @foreach($data as $data1)  
-                     <tr>
-                      <td><a href="{{url('viewtrainerprofile/'.$data1->trainerprofileid)}}"><i class="fa fa-eye"></i></td>
-                        <td>{{ucwords($data1->first_name)}} {{ucwords($data1->last_name)}}</td>
-                        <td>{{$data1->leveloftrainer}}</td>
-                        <td>{{$data1->city}}</td>
-                        <td>{{$data1->exp }} </td>
-                        <td>{{$data1->achievments }}</td>
-                        <td>{{$data1->photo }}</td>
-                        <td  style="width: 10px !important ;">{{$data1->results}}</td> 
-                     </tr>
-     		           @endforeach
-                  </tbody>
+                  @if(Session('role')== 'trainer')
+                    <tbody>
+                      @foreach($data as $data1)
+                       @if($data1->employeeid == Session('employeeid'))
+                       <tr>
+                        <td><a href="{{url('viewtrainerprofile/'.$data1->trainerprofileid)}}"><i class="fa fa-eye"></i></td>
+                          <td>{{ucwords($data1->first_name)}} {{ucwords($data1->last_name)}}</td>
+                          <td>{{$data1->leveloftrainer}}</td>
+                          <td>{{$data1->city}}</td>
+                          <td>{{$data1->exp }} </td>
+                          <td>{{$data1->achievments }}</td>
+                          <td>{{$data1->photo }}</td>
+                          <td  style="width: 10px !important ;">{{$data1->results}}</td> 
+                       </tr>
+                       @endif
+       		           @endforeach
+                    </tbody>
+                  @else
+                    <tbody>
+                      @foreach($data as $data1)  
+                       <tr>
+                        <td><a href="{{url('viewtrainerprofile/'.$data1->trainerprofileid)}}"><i class="fa fa-eye"></i></td>
+                          <td>{{ucwords($data1->first_name)}} {{ucwords($data1->last_name)}}</td>
+                          <td>{{$data1->leveloftrainer}}</td>
+                          <td>{{$data1->city}}</td>
+                          <td>{{$data1->exp }} </td>
+                          <td>{{$data1->achievments }}</td>
+                          <td>{{$data1->photo }}</td>
+                          <td  style="width: 10px !important ;">{{$data1->results}}</td> 
+                       </tr>
+                     @endforeach
+                    </tbody>
+                  @endif
                 </table>
                   <div class="datarender" style="text-align: center">
                          {{ $data->links() }}    

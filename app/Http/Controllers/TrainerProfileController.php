@@ -13,28 +13,35 @@ class TrainerProfileController extends Controller
     public function addtrainerprofile(Request $request){
     	 if ($request->isMethod('post')){
 
-    	 	$messages = [
-          'unique' => 'This Trainer already have profile'];
-		  	 // $request->validate([
-      //         	'trainerid' => 'required|unique:trainerprofile,employeeid',
-      //         	'photo' => 'mimes:jpeg,bmp,png|max:4000',
-    		// 	'results.*' => 'mimes:jpeg,bmp,png|max:4000',
-      //       ],$messages);
+    	 	
+		  	 $request->validate([
+              	'trainerid' => 'required',
+              	'photo' => 'mimes:jpeg,bmp,png|max:4000',
+    			'results.*' => 'mimes:jpeg,bmp,png|max:4000',
+            ]);
+		  	$trainerprofile=TrainerProfile::where('employeeid', $request['trainerid'])->get()->first();
+		  	if($trainerprofile){
+		  		$trainerprofile->leveloftrainer =  $request['level'];
+		  		$trainerprofile->city = $request['city'];
+		  		$trainerprofile->exp = $request['exp'];
+		  		$trainerprofile->achievments = $request['achievments'];
+		  		$trainerprofile->freeslots = implode(',', (array) $request->get('slots'));
+		  		$trainerprofile->save();
 
-    	 	$trainerprofile=TrainerProfile::create([
+		  	}else{
+		  		
+	    	 	$trainerprofile=TrainerProfile::create([
 
-	            'employeeid' => $request['trainerid'],
-	            'leveloftrainer' => $request['level'],
-	            'city' => $request['city'],
-	            'exp' => $request['exp'],
-	            'achievments' => $request['achievments'],
-        'freeslots' => implode(',', (array) $request->get('slots')),
-
-	            'photo' => $request['photo'],
-
-	     
-    	 	]);
-    	 	 if($request->hasfile('results'))
+		            'employeeid' => $request['trainerid'],
+		            'leveloftrainer' => $request['level'],
+		            'city' => $request['city'],
+		            'exp' => $request['exp'],
+		            'achievments' => $request['achievments'],
+	        		'freeslots' => implode(',', (array) $request->get('slots')),
+		            'photo' => $request['photo'],
+	    	 	]);
+		  	}
+    	 	if($request->hasfile('results'))
 		    {
 		      foreach($request->file('results') as $file)
 		      {
