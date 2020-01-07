@@ -438,78 +438,99 @@ textarea.input100 {
 @section('content')
   <div class="content-wrapper">
    @if($errors->any())
-<h4>{{$errors->first()}}</h4>
-@endif
-     
-         <!-- <section class="content-header"><h2>Summary </h2></section> -->
-          <!-- general form elements -->
-        
-        <section class="content container-contact100">
-    
-
-    <div class="wrap-contact100">
-    <!-- style="background-image: url(/images/Fitness5-logo.jpg);" -->
-   
-          
-        </span>
-
-    <div class="col-lg-8">   
-        <section class="content-header"><h3>Summarys Report</h3></section>
-      
+   <h4>{{$errors->first()}}</h4>
+   @endif
+   <!-- <section class="content-header"><h2>Summary </h2></section> -->
+   <!-- general form elements -->
+   <section class="content container-contact100">
+      <div class="wrap-contact100">
+         <!-- style="background-image: url(/images/Fitness5-logo.jpg);" -->
+         </span>
+         <div class="col-lg-8">
+            <section class="content-header">
+               <h3>Summarys Report</h3>
+            </section>
+         </div>
+         <table class="table">
+            <thead>
+               <tr>
+                  <td>Full name</td>
+                  <td>{{$summry['fullname']}}</td>
+               </tr>
+               <tr>
+                  <td>Package</td>
+                  <td>{{$summry['package']}}</td>
+               </tr>
+               <tr>
+                  <td>Starting Date</td>
+                  <td>{{ date('d-m-Y', strtotime($summry['joindate'])) }}</td>
+               </tr>
+               <tr>
+                  <td>Expire Date</td>
+                  <td>{{ date('d-m-Y', strtotime($summry['enddate'])) }}</td>
+               </tr>
+               <tr>
+                  <td>Amount</td>
+                  <td>{{$summry['amount']}}</td>
+               </tr>
+               <tr>
+                  <td>InvoiceID</td>
+                  <td>M{{$summry['InvoiceID']}}</td>
+               </tr>
+               <tr>
+                  <td>Transaction Type</td>
+                  <td>{{$summry['TransactionType']}}</td>
+               </tr>
+               <?php
+                  $due_date = !empty($summry['duedate']) ?  date('d-m-Y', strtotime($summry['duedate'])) : null;
+                  ?>
+               <tr>
+                  <td>Due Date</td>
+                  <td>{{ $due_date }}</td>
+               </tr>
+               <tr>
+                  <td>Due Amount</td>
+                  <td>{{ $summry['dueamnt'] }}</td>
+               </tr>
+               </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td  style="text-align: center;"><button id="smsafterpack"  class="btn btn-warning"><i class="fa fa-commenting"></i> Send Sms</button></td>
+                <td  colspan="2" style="text-align: center;"><button id="emailafterpack"  class="btn btn-warning"><i class="fa fa-envelope" aria-hidden="true"></i> Send Email</button></td>
+              </tr>
+               <tr>
+                  <td colspan="2" style="text-align: center;"><a href="{{url('transactionpaymentreceipt/'.$summry['InvoiceID'])}}"><b style="font-size: 20px;">Download Print  <i class="fa fa-print" style="size: 20px;"></i></b></a></td>
+                  <td colspan="2" style="text-align: center;"><a href="{{url('transactionpaymentreceipt/'.$summry['InvoiceID'])}}" target="blank"><b style="font-size: 20px;">View Print  <i class="fa fa-print" style="size: 20px;"></i></b></a></td>
+               </tr>
+               <tr>
+                  <td colspan="2" style="text-align: center;"><a href="{{url('dashboard')}}"><b style="font-size: 20px;"> Dashboard  <i class="fa fa-tachometer" style="size: 20px;"></i></b></a></td>
+               </tr>
+               <tr>
+                  <td colspan="2" style="text-align: center;display: none;" id="expiry_set"><button class="btn btn-success">Expiry Set</button></td>
+               </tr>
+               <tr>
+                  <td colspan="2" style="text-align: center;display: none;" id="expiry_not_set"><button class="btn btn-danger">Expiry Not Set</button></td>
+               </tr>
+               <tr>
+                  <td colspan="2" style="text-align: center;">
+                     <a href="{{url('enrolldevicecomman/'.$summry['userid'] )}}" id="enrolluserfromsummary">
+                        <b class="btn bg-orange" style="font-size: 17px;">
+                           Enroll In Device  <!-- <i class="fa fa-print" style="size: 20px;"></i> -->
+                        </b>
+                     </a>
+                  </td>
+               </tr>
+               <tr>
+                  <td colspan="2" style="text-align: center;">
+                     <a class="btn bg-danger" id="usernotset" style="font-size: 15px;">User Not Set Into Device</a>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
       </div>
-
-  <table class="table">
-    <thead>
-      <tr>
-      <td>Full name</td><td>{{$summry['fullname']}}</td></tr>
-    <tr>  <td>Package</td> <td>{{$summry['package']}}</td> </tr>
-    <tr>  <td>Starting Date</td> <td>{{ date('d-m-Y', strtotime($summry['joindate'])) }}</td> </tr>
-    <tr>  <td>Expire Date</td>  <td>{{ date('d-m-Y', strtotime($summry['enddate'])) }}</td>  </tr>
-    <tr>  <td>Amount</td>   <td>{{$summry['amount']}}</td> </tr>
-    <tr>  <td>InvoiceID</td>   <td>M{{$summry['InvoiceID']}}</td> </tr>
-    <tr>  <td>Transaction Type</td><td>{{$summry['TransactionType']}}</td></tr>
-    <?php
-      $due_date = !empty($summry['duedate']) ?  date('d-m-Y', strtotime($summry['duedate'])) : null;
-    ?>
-    <tr>  <td>Due Date</td> <td>{{ $due_date }}</td> </tr>
-    <tr>  <td>Due Amount</td> <td>{{ $summry['dueamnt'] }}</td> </tr>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-      <td colspan="2" style="text-align: center;"><a href="{{url('transactionpaymentreceipt/'.$summry['InvoiceID'])}}"><b style="font-size: 20px;"> Print  <i class="fa fa-print" style="size: 20px;"></i></b></a></td>
- </tr>
-
-<tr>
- <td colspan="2" style="text-align: center;"><a href="{{url('dashboard')}}"><b style="font-size: 20px;"> Dashboard  <i class="fa fa-tachometer" style="size: 20px;"></i></b></a></td>
-</tr>
-
-<tr>
- <td colspan="2" style="text-align: center;display: none;" id="expiry_set"><button class="btn btn-success">Expiry Set</button></td>
-</tr>
-
-<tr>
- <td colspan="2" style="text-align: center;display: none;" id="expiry_not_set"><button class="btn btn-danger">Expiry Not Set</button></td>
-</tr>
-
- <tr>
-  <td colspan="2" style="text-align: center;"><a href="{{url('enrolldevicecomman/'.$summry['userid'] )}}" id="enrolluserfromsummary"><b class="btn bg-orange" style="font-size: 17px;"> Enroll In Device  <!-- <i class="fa fa-print" style="size: 20px;"></i> --></b></a></td>
-</tr>
-<tr>
-  <td colspan="2" style="text-align: center;">
-  <a class="btn bg-danger" id="usernotset" style="font-size: 15px;">User Not Set Into Device</a>
-  </td>
-</tr>
-    </tbody>
-  </table>
-
-     
-
-     
-      </div>
-    </div>
-  </section>
-
+</div>
+</section>
 </div>
 <script Language="javascript">
 
@@ -539,83 +560,8 @@ textarea.input100 {
    });
 
 
-/*$( document ).ready(function() {
 
-  $('#enrolluserfromsummary').hide();
-  $('#usernotset').hide();
-
-  let userid   = "{{$summry['userid']}}";
-  let joindate = "{{$summry['joindate']}}";
-  let enddate  = "{{$summry['enddate']}}";
-  let username = "{{$summry['fullname']}}";
-  let mobileno = "{{$summry['mobileno']}}";
-  let specify = 'user';
-
-  // alert(username);
-
-    $.ajax({
-
-      url : "{{url('summarymaxexpiry')}}",
-      type: "GET",
-      data : {_token:"{{csrf_token()}}",userid:userid,enddate:enddate},
-      success : function(data){
-        // alert(data);
-
-      if (data != 'small') {
-       
-        $.ajax({
-                url : "{{route('setuserfromsummary')}}",
-                type: "POST",
-                data : {_token:"{{csrf_token()}}",userid:userid,joindate:joindate,enddate:data,fusername:username,mobileno:mobileno,specify:specify},
-                success: function(data){
-
-                  if (data == 201) {
-                    $('#enrolluserfromsummary').show();
-                    $('#usernotset').hide();
-
-                  }else if(data == 203){
-                    $('#expiry_set').show();
-                    $('#enrolluserfromsummary').hide();
-                  }else if(data == 204){
-                    alert('There is something wrong.');
-                  }else if(data == 205){
-                    alert('Device is not added');
-                  }else{
-                    $('#expiry_not_set').show();
-                    $('#usernotset').hide();
-                  }
-                  // console.log('aaaaaa');
-                },
-                dataType :'json'
-            });
-          }
-        },
-        dataType:"json"
-      });
-    });
- 
-</script>
-
-<script type="text/javascript">
-  // $('#enrolluserfromsummary').click(function(){
-
-  //   let userid   = "{{$summry['userid']}}";
-
-  //   $.ajax({
-
-  //       url : "{{route('enrolluserfromsummary')}}",
-  //       type: "GET",
-  //       data : {_token:"{{csrf_token()}}",userid:userid},
-  //       success : function(data){
-  //         alert(data);
-  //         // console.log('aaaaaa');
-  //       },
-  //   });
-  // });
-
-</script>
-
-<!-- <script type="text/javascript">
+/*<script type="text/javascript">
   $(document).ready(function() {
   alert('dddddddd');
 
@@ -638,6 +584,39 @@ textarea.input100 {
   });
 });
 
-   alert(userid);
-</script> -->
+   alert(userid);*/
+</script> 
+<script type="text/javascript">
+  $('#smsafterpack').on('click',function(){
+    var invoiceid=<?php echo $summry['InvoiceID']; ?>;
+    var userid=<?php echo $summry['userid']; ?>;
+     console.log('aaaaaa'+userid);
+       console.log('aaaaaa'+invoiceid);
+    $.ajax({
+        url : "{{url('smsafterpack')}}",
+        type: "POST",
+        data : {_token:"{{csrf_token()}}",invoiceid:invoiceid,userid:userid},
+        success : function(data){
+         if(data == true){
+          alert('SMS SuccessFully Send');
+         }
+        },
+    });
+  });
+   $('#emailafterpack').on('click',function(){
+    var invoiceid=<?php echo $summry['InvoiceID']; ?>;
+    var userid=<?php echo $summry['userid']; ?>;
+
+    $.ajax({
+        url : "{{url('emailafterpack')}}",
+        type: "POST",
+        data : {_token:"{{csrf_token()}}",invoiceid:invoiceid,userid:userid},
+        success : function(data){
+         if(data == true){
+          alert('SMS SuccessFully Send');
+         }
+        },
+    });
+  });
+</script>
 @endsection

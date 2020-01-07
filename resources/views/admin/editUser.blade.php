@@ -613,22 +613,13 @@ if(olddata){
                 var fname = names.files.item(i).name;      // THE NAME OF THE FILE.
                 var fsize = names.files.item(i).size; 
                 // THE SIZE OF THE FILE.
-                var username='
-                    <?php echo $user->username;?>';
+                var username="<?php echo $user->username;?>";
                 fname= fname+'_'+username; 
                 // alert(fname);
                 filesname.push(fname);
                 // SHOW THE EXTRACTED DETAILS OF THE FILE.
-                // var ap='
-                    <li class="li1">
-                      <a class="files">'+fname+ '</a>
-                      <span class="closebtns">&times;</span>
-                    </li>';
-                var ap=' 
-                    <li class="li1">
-                      <a class="files" >'+fname+'</a>
-                      <span class="closebtns">&times;</span>
-                    </li>';
+             
+                var ap='<li class="li1"><a class="files" >'+fname+'</a><span class="closebtns">&times;</span></li>';
                 $('.li1:last').after(ap); 
               }
             }

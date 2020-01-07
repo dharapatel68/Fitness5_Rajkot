@@ -399,6 +399,10 @@ if($memberpackage){
   }
   }
    $trainersession=Ptmember::where('trainerid', $trainerid)->leftjoin('member','member.memberid','ptmember.memberid')->leftjoin('schemes','schemes.schemeid','ptmember.schemeid')->whereIn('ptmember.status',['Active','Pending'])->select('member.*','ptmember.*','ptmember.status as ptstatus','schemes.schemename')->paginate(10);
+
+   $trainersession2=Ptmember::where('trainerid', $trainerid)->leftjoin('member','member.memberid','ptmember.memberid')->leftjoin('schemes','schemes.schemeid','ptmember.schemeid')->whereIn('ptmember.status',['Active','Pending'])->select('member.*','ptmember.*','ptmember.status as ptstatus','schemes.schemename')->count();
+
+    $trainersession3=Ptmember::where('trainerid', $trainerid)->leftjoin('member','member.memberid','ptmember.memberid')->leftjoin('schemes','schemes.schemeid','ptmember.schemeid')->whereIn('ptmember.status',['Conducted'])->select('member.*','ptmember.*','ptmember.status as ptstatus','schemes.schemename')->count();
 // dd($trainersession);
  
 $measurements=[];
@@ -412,7 +416,7 @@ foreach ($trainermembermeasur as $key => $value) {
 $memtr=Member::where('memberid',$value->memberid)->get()->first();
 array_push($measurements, $memtr);
 }
-      return view('admin.dashboard',compact('data','collection','payment','duepayment','packageexpirenearly','followup','packexpiretrainer','trainersession','measurements'));
+      return view('admin.dashboard',compact('data','collection','payment','duepayment','packageexpirenearly','followup','packexpiretrainer','trainersession','trainersession2','trainersession3','measurements'));
      }
      public function loaduserbytype(Request $request){
  ;

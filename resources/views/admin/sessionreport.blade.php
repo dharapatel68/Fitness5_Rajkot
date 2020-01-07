@@ -390,132 +390,80 @@
  $('#view').on('click',function(){
  
  })
- </script>
-   <script type="text/javascript">
-    
+</script>
+<script type="text/javascript">
+  $('#getexcel').on('click',function(){
+  var trainerid=<?php echo $tid;?>;
+  var memberid=<?php echo $mid;?>;
+  var packageid=<?php echo $pid;?>;
+  if (trainerid!=0 || memberid!=0 || packageid!=0) {
+    $.ajax({
+      url:"{{ url('getqueryresultforexcel') }}",
+      method:"GET",
+      data:{"_token": "{{ csrf_token() }}","memberid":memberid,"trainerid":trainerid,"packageid":packageid},
+        success:function(grid) {
+          grid=JSON.parse("[" + grid + "]");;
+          $.ajax({
+            url:"{{ url('getexcel') }}",
+            method:"POST",
+            data:{"_token": "{{ csrf_token() }}","memberid":memberid,"trainerid":trainerid,"packageid":packageid},
+            success: function (response, textStatus, request) {
+              var a = document.createElement("a");
+              a.href = response.file; 
+              a.download = response.name;
+              document.body.appendChild(a);
+              a.click();
+              a.remove();
+            },
+            dataType:'json',
+          });
+        },
+      });
+    }  
+  });
 
-    $('#getexcel').on('click',function(){
-           var trainerid=<?php echo $tid;?>;
-      var memberid=<?php echo $mid;?>;
-      var packageid=<?php echo $pid;?>;
-      if (trainerid!=0 || memberid!=0 || packageid!=0) {
-        console.log(trainerid);
-console.log(memberid);
-console.log(packageid);
-             
-                      $.ajax({
-                            url:"{{ url('getqueryresultforexcel') }}",
-                            method:"GET",
-                            data:{"_token": "{{ csrf_token() }}","memberid":memberid,"trainerid":trainerid,"packageid":packageid},
-                            success:function(grid) {
-                            // alert(grid);
-
-                             // var grid= JSON.stringify(grid);
-                             // alert(grid);
-                                   grid=JSON.parse("[" + grid + "]");;
-                                   // alert(grid);
-                                        $.ajax({
-                                        url:"{{ url('getexcel') }}",
-                                        method:"POST",
-                                        data:{"_token": "{{ csrf_token() }}","memberid":memberid,"trainerid":trainerid,"packageid":packageid},
-                                      success: function (response, textStatus, request) {
-                                      var a = document.createElement("a");
-                                      a.href = response.file; 
-                                      a.download = response.name;
-                                      document.body.appendChild(a);
-                                      a.click();
-                                      a.remove();
-                                      },
-                        
-                                        dataType:'json',
-
-                                        });
-                                  },
-                                   // dataType:'json',
-
-                              });
-
-         }  
-        
+  $('#trainerid').change(function(){
+    var trainerid = $('#trainerid').val();
+    $('#memberid').find('option:not(:first)').remove();
+    $.ajax({
+      url:"{{ url('getsessiontrainermember') }}",
+      method:"GET",
+      data:{"_token": "{{ csrf_token() }}","trainerid":trainerid},
+      success:function(data) {
+        if(data){
+          $.each(data, function(i, item){
+          $("#memberid").append($("<option></option>").attr("value", item.memberid).text(item.firstname+' '+item.lastname));
+          });
+          $("#memberid option[value="+mid+"]").attr("selected", "selected");
+          $("#memberid").trigger('change');
+        }
+      },
+      dataType:'json',
     });
-
-                  $('#trainerid').change(function(){
-                       var trainerid = $('#trainerid').val();
-                    // alert(trainerid);
-               // $('#sessionreport').css('display','none');
-                         $('#memberid').find('option:not(:first)').remove();
-                              $.ajax({
-                                   url:"{{ url('getsessiontrainermember') }}",
-                                   method:"GET",
-                                   data:{"_token": "{{ csrf_token() }}","trainerid":trainerid},
-                                  success:function(data) {
-                                    // alert(data);
-                                      
-                                    if(data){
-
-                                      $.each(data, function(i, item){
-                                      
-                                       $("#memberid").append($("<option></option>").attr("value", item.memberid).text(item.firstname+' '+item.lastname));
-
-                                      });
-                                    $("#memberid option[value="+mid+"]").attr("selected", "selected");
-                                       $("#memberid").trigger('change');
-                                    }
-                                   // alert(mid);
-                                      
-
-                                    
-                                        // $("#memberid").append($("<option></option>").attr("value", item.memberid).text(item.username));
-                                  },
-                                   dataType:'json',
-
-                              });
-                          
-                              // $('select[name="mobile_no"]').fadeIn();
-                 });
-            
-                </script>
-    
-                <script type="text/javascript">
-                  $('#memberid').change(function(){
-                     
-                       
-                       var member1 = $('#memberid').val();
-                      // alert(member1);
-                 
-
-                              $.ajax({
-                                   url:"{{ URL::route('getpackage') }}",
-                                   method:"GET",
-                                   data:{"_token": "{{ csrf_token() }}","memberid":member1},
-                                   async:false,
-                                  success:function(data) {
-                                    // alert(data);
-                                    if(data){
-                                      // alert($('#memberid').val());
-                                      $('#packageid').find('option:not(:first)').remove();
-                                       $.each(data, function(i, item){
-                                      $('#mobileno').val(item.mobileno);
-                                        $("#packageid").append($("<option></option>").attr("value", item.memberpackagesid).text(item.schemename));
-
-                                      });
-                                        $("#packageid option[value="+pid+"]").attr("selected", "selected");
-                                    }
-                                   
-
-                                     
-                                  },
-                                  dataType:'json',
-
-                              });
-                          
-                              // $('select[name="mobile_no"]').fadeIn();
-                 });
-                     
-       </script>
-              
-               
- 
+  });
+</script>
+<script type="text/javascript">
+  $('#memberid').change(function(){
+    var member1 = $('#memberid').val();
+    $.ajax({
+      url:"{{ URL::route('getpackage') }}",
+      method:"GET",
+      data:{"_token": "{{ csrf_token() }}","memberid":member1},
+      async:false,
+      success:function(data) {
+        if(data){
+          $('#packageid').find('option:not(:first)').remove();
+          $.each(data, function(i, item){
+            $('#mobileno').val(item.mobileno);
+            $("#packageid").append($("<option></option>").attr("value", item.memberpackagesid).text(item.schemename));
+          });
+          $("#packageid option[value="+pid+"]").attr("selected", "selected");
+        }
+      },
+      dataType:'json',
+    });
+  });
+</script>
 <script type="text/javascript">
   $(document).ready( function (){
   $('#measurement').DataTable({

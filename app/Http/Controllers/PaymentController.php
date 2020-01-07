@@ -45,6 +45,7 @@ class PaymentController extends Controller
     $pdf->generate($request);
 
 }
+
 // }public function invoice() {
 //     $pdf = new \App\Invoice;
 //     $output = $pdf->generate();
@@ -1301,15 +1302,15 @@ $gstno='';
       $pdflink = url('/').'/transactionpaymentreceipt/'.$invoice_no;
       $pdflink = app('bitly')->getUrl($pdflink);
 
-$tax = $payment_tax;
-$pdf = PDF::loadView('admin.paymenttransactionreceipt', compact('member','totalpay','request','payment','phoneno','scheme','memberpackage','word','companyName','Gstno','duedate','takenby','discount','tax', 'total_payment', 'oldpayment_data','payment1')); 
-$pdf->save(public_path('mailpdf/'.$filename));
+      $tax = $payment_tax;
+      $pdf = PDF::loadView('admin.paymenttransactionreceipt', compact('member','totalpay','request','payment','phoneno','scheme','memberpackage','word','companyName','Gstno','duedate','takenby','discount','tax', 'total_payment', 'oldpayment_data','payment1')); 
+      $pdf->save(public_path('mailpdf/'.$filename));
 
-$payment_data = Payment::where('paymentid', $payment_process)->first();
-if(!empty($payment_data)){
-  $payment_data->receiptname = $filename;
-  $payment_data->save();
-}
+      $payment_data = Payment::where('paymentid', $payment_process)->first();
+      if(!empty($payment_data)){
+        $payment_data->receiptname = $filename;
+        $payment_data->save();
+      }
     
      
     $member_message = Member::where('userid', $userid)->first();
@@ -1437,7 +1438,12 @@ if(!empty($payment_data)){
       $pdf->generate($id);
 
     }
+      public function pdfStream(Request $request,$id){
 
+      $pdf = new \App\TransactionPaymentReceipt;
+      $pdf->generate($id);
+
+    }
     public function remainingplaceorder($id, Request $request){
 // dd($id);
       $Payment = '';
