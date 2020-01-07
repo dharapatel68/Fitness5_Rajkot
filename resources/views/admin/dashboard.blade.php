@@ -522,19 +522,46 @@ $(document).ready( function () {
               </div>
             </div>
             <div class="box-body">
-              <div class="form-group">
-                  <label>Active/Pending Session</label>
-                  <input type="text" class="form-control" name="exerciselevel" required placeholder="Active/Pending Session" value="{{$trainersession2}}" disabled="">
-                 
-  
-                </div>
- <div class="form-group">
-                  <label>Cunducted Session</label>
-                  <input type="text" class="form-control" name="exerciselevel" required placeholder="Active/Pending Session" value="{{$trainersession3}}" disabled="">
-                 
-  
-                </div>
+              <div class="table-responsive">
+               <table id="membersession" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th style="display: none"></th>
+                  <th>Member Name</th>
+               
+                  <th>Scheme Name</th>
+                  <th>Active/Pending Session</th>
+                  <th>Deducted Session</th>
+              
+            
+                  
+                
+                </tr>
+              </thead>
+             <tbody>
+             
+              @if(count($trainersession)>0)
 
+              
+            
+               <tr>
+             
+                  <td>{{$trainersession[0]->firstname}}  {{$trainersession[0]->lastname}}</td>
+                 
+                  <td>{{$trainersession[0]->schemename}}</td>
+                    <td>{{$trainersession2}}</td>  <td>{{$trainersession3}}</td>
+                
+             
+               </tr>
+              
+                      @endif
+             </tbody>
+
+            </table>
+              <div class="datarender" style="text-align: center">
+              </div>
+         
+              </div>
             
            </div>
          </div>
