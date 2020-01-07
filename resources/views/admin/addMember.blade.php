@@ -271,45 +271,58 @@
             <div class="form-group">
                <label>Preferred Timing</label>
                <br> <span><label>From</label></span>
-             
+               @if($memberdata)
+                  @if($memberdata->workinghourfrom)
+                     @php  $memberdata->workinghourfrom=date('H:i',strtotime($memberdata->workinghourfrom)); @endphp
+                  @endif
+                  @if($memberdata->workinghourfrom)
+                     @php $memberdata->workinghourto=date('H:i',strtotime($memberdata->workinghourto)); @endphp
+                  
+                  @endif
+               @else
+               @php $memberdata= (object) array('workinghourfrom' => 'null');@endphp
+                     @php  $memberdata->workinghourfrom='00:00'; @endphp
+                      @php  $memberdata->workinghourto='00:00'; @endphp
+               @endif
+            
                <select type="time" class="form-control" name="working_hour_from_1" id="fromtime" required="">
-                <option value="06:00" @if(old( 'working_hour_from_1')=='06:00' ) selected @endif @if(!empty($memberdata->working_hour_from_1)) {{$memberdata->working_hour_from_1=='06:00' ? 'selected' : ''}} @endif>06:00 AM</option>
-               <option value="07:00" @if(old( 'working_hour_from_1')=='07:00' ) selected @endif >07:00 AM</option>
-               <option value="08:00" @if(old( 'working_hour_from_1')=='08:00' ) selected @endif >08:00 AM</option>
-               <option value="09:00" @if(old( 'working_hour_from_1')=='09:00' ) selected @endif>09:00 AM</option>
-               <option value="10:00" @if(old( 'working_hour_from_1')=='10:00' ) selected @endif >10:00 AM</option>
-               <option value="11:00" @if(old( 'working_hour_from_1')=='11:00' ) selected @endif >11:00 AM</option>
-               <option value="12:00"  >12:00 PM</option>
-               <option value="13:00"  >01:00 PM</option>
-               <option value="14:00"  >02:00 PM</option>
-               <option value="15:00" @if(old( 'working_hour_from_1')=='15:00' ) selected @endif>03:00 PM</option>
-               <option value="16:00" @if(old( 'working_hour_from_1')=='16:00' ) selected @endif>04:00 PM</option>
-               <option value="17:00" @if(old( 'working_hour_from_1')=='17:00' ) selected @endif>05:00 PM</option>
-               <option value="18:00" @if(old( 'working_hour_from_1')=='18:00' ) selected @endif>06:00 PM</option>
-               <option value="19:00" @if(old( 'working_hour_from_1')=='19:00' ) selected @endif >07:00 PM</option>
-               <option value="20:00" @if(old( 'working_hour_from_1')=='20:00' ) selected @endif >08:00 PM</option>
-               <option value="21:00" @if(old('working_hour_from_1')=='21:00' ) selected @endif >09:00 PM</option>
-               <option value="22:00" @if(old( 'working_hour_from_1')=='22:00' ) selected @endif >10:00 PM</option>
+                <option value="06:00" @if(old( 'working_hour_from_1')=='06:00' ) selected @endif {{$memberdata->workinghourfrom=='06:00' ? 'selected' : ''}}>06:00 AM</option>
+               <option value="07:00" @if(old( 'working_hour_from_1')=='07:00' ) selected @endif {{$memberdata->workinghourfrom == '07:00' ? 'selected': ''}}>07:00 AM</option>
+               <option value="08:00" @if(old( 'working_hour_from_1')=='08:00' ) selected @endif {{$memberdata->workinghourfrom == '08:00' ? 'selected': ''}}>08:00 AM</option>
+               <option value="09:00" @if(old( 'working_hour_from_1')=='09:00' ) selected @endif {{$memberdata->workinghourfrom == '09:00' ? 'selected': ''}}>09:00 AM</option>
+               <option value="10:00" @if(old( 'working_hour_from_1')=='10:00' ) selected @endif {{$memberdata->workinghourfrom == '10:00' ? 'selected': ''}}>10:00 AM</option>
+               <option value="11:00" @if(old( 'working_hour_from_1')=='11:00' ) selected @endif {{$memberdata->workinghourfrom == '11:00' ? 'selected': ''}}>11:00 AM</option>
+               <option value="12:00" @if(old( 'working_hour_from_1')=='12:00' ) selected @endif {{$memberdata->workinghourfrom == '12:00' ? 'selected': ''}}>12:00 PM</option>
+               <option value="13:00" @if(old( 'working_hour_from_1')=='13:00' ) selected @endif {{$memberdata->workinghourfrom == '13:00' ? 'selected': ''}}>01:00 PM</option>
+               <option value="14:00" @if(old( 'working_hour_from_1')=='14:00' ) selected @endif {{$memberdata->workinghourfrom == '14:00' ? 'selected': ''}}>02:00 PM</option>
+               <option value="15:00" @if(old( 'working_hour_from_1')=='15:00' ) selected @endif {{$memberdata->workinghourfrom == '15:00' ? 'selected': ''}}>03:00 PM</option>
+               <option value="16:00" @if(old( 'working_hour_from_1')=='16:00' ) selected @endif {{$memberdata->workinghourfrom == '16:00' ? 'selected': ''}}>04:00 PM</option>
+               <option value="17:00" @if(old( 'working_hour_from_1')=='17:00' ) selected @endif {{$memberdata->workinghourfrom == '17:00' ? 'selected': ''}}>05:00 PM</option>
+               <option value="18:00" @if(old( 'working_hour_from_1')=='18:00' ) selected @endif {{$memberdata->workinghourfrom == '18:00' ? 'selected': ''}}>06:00 PM</option>
+               <option value="19:00" @if(old( 'working_hour_from_1')=='19:00' ) selected @endif {{$memberdata->workinghourfrom == '19:00' ? 'selected': ''}}>07:00 PM</option>
+               <option value="20:00" @if(old( 'working_hour_from_1')=='20:00' ) selected @endif {{$memberdata->workinghourfrom == '20:00' ? 'selected': ''}}>08:00 PM</option>
+               <option value="21:00" @if(old('working_hour_from_1')=='21:00' ) selected @endif {{$memberdata->workinghourfrom == '21:00' ? 'selected': ''}}>09:00 PM</option>
+               <option value="22:00" @if(old( 'working_hour_from_1')=='22:00' ) selected @endif {{$memberdata->workinghourfrom == '22:00' ? 'selected': ''}}>10:00 PM</option>
                </select>
                <label>To</label>
                <select type="time" class="form-control" id="totime" name="working_hour_to_1" required="">
-               <option value="07:00" @if(old( 'working_hour_to_1')=='07:00' ) selected @endif  >07:00 AM</option>
-               <option value="08:00" @if(old( 'working_hour_to_1')=='08:00' ) selected @endif>08:00 AM</option>
-               <option value="09:00" @if(old( 'working_hour_to_1')=='09:00' ) selected @endif>09:00 AM</option>
-               <option value="10:00" @if(old( 'working_hour_to_1')=='10:00' ) selected @endif>10:00 AM</option>
-               <option value="11:00" @if(old( 'working_hour_to_1')=='11:00' ) selected @endif>11:00 AM</option>
-               <option value="12:00" @if(old( 'working_hour_to_1')=='12:00' ) selected @endif>12:00 PM</option>
-               <option value="13:00" @if(old( 'working_hour_to_1')=='13:00' ) selected @endif>01:00 PM</option>
-               <option value="14:00" @if(old( 'working_hour_to_1')=='14:00' ) selected @endif>02:00 PM</option>
-               <option value="15:00" @if(old( 'working_hour_to_1')=='15:00' ) selected @endif>03:00 PM</option>
-               <option value="16:00" @if(old( 'working_hour_to_1')=='16:00' ) selected @endif>04:00 PM</option>
-               <option value="17:00" @if(old( 'working_hour_to_1')=='17:00' ) selected @endif>05:00 PM</option>
-               <option value="18:00" @if(old( 'working_hour_to_1')=='18:00' ) selected @endif>06:00 PM</option>
-               <option value="19:00" @if(old( 'working_hour_to_1')=='19:00' ) selected @endif>07:00 PM</option>
-               <option value="20:00" @if(old( 'working_hour_to_1')=='20:00' ) selected @endif>08:00 PM</option>
-               <option value="21:00" @if(old( 'working_hour_to_1')=='21:00' ) selected @endif>09:00 PM</option>
-               <option value="22:00" @if(old( 'working_hour_to_1')=='22:00' ) selected @endif>10:00 PM</option>
-               <option value="22:00" @if(old( 'working_hour_to_1')=='23:00' ) selected @endif>11:00 PM</option>
+               <option value="07:00" @if(old( 'working_hour_to_1')=='07:00' ) selected @endif {{$memberdata->workinghourto == '07:00' ? 'selected': ''}}>07:00 AM</option>
+               <option value="08:00" @if(old( 'working_hour_to_1')=='08:00' ) selected @endif {{$memberdata->workinghourto == '08:00' ? 'selected': ''}}>08:00 AM</option>
+               <option value="09:00" @if(old( 'working_hour_to_1')=='09:00' ) selected @endif {{$memberdata->workinghourto == '09:00' ? 'selected': ''}}>09:00 AM</option>
+               <option value="10:00" @if(old( 'working_hour_to_1')=='10:00' ) selected @endif {{$memberdata->workinghourto == '10:00' ? 'selected': ''}}>10:00 AM</option>
+               <option value="11:00" @if(old( 'working_hour_to_1')=='11:00' ) selected @endif {{$memberdata->workinghourto == '11:00' ? 'selected': ''}}>11:00 AM</option>
+               <option value="12:00" @if(old( 'working_hour_to_1')=='12:00' ) selected @endif {{$memberdata->workinghourto == '12:00' ? 'selected': ''}}>12:00 PM</option>
+               <option value="13:00" @if(old( 'working_hour_to_1')=='13:00' ) selected @endif {{$memberdata->workinghourto == '13:00' ? 'selected': ''}}>01:00 PM</option>
+               <option value="14:00" @if(old( 'working_hour_to_1')=='14:00' ) selected @endif {{$memberdata->workinghourto == '14:00' ? 'selected': ''}}>02:00 PM</option>
+               <option value="15:00" @if(old( 'working_hour_to_1')=='15:00' ) selected @endif {{$memberdata->workinghourto == '15:00' ? 'selected': ''}}>03:00 PM</option>
+               <option value="16:00" @if(old( 'working_hour_to_1')=='16:00' ) selected @endif {{$memberdata->workinghourto == '16:00' ? 'selected': ''}}>04:00 PM</option>
+               <option value="17:00" @if(old( 'working_hour_to_1')=='17:00' ) selected @endif {{$memberdata->workinghourto == '17:00' ? 'selected': ''}}>05:00 PM</option>
+               <option value="18:00" @if(old( 'working_hour_to_1')=='18:00' ) selected @endif {{$memberdata->workinghourto == '18:00' ? 'selected': ''}}>06:00 PM</option>
+               <option value="19:00" @if(old( 'working_hour_to_1')=='19:00' ) selected @endif {{$memberdata->workinghourto == '19:00' ? 'selected': ''}}>07:00 PM</option>
+               <option value="20:00" @if(old( 'working_hour_to_1')=='20:00' ) selected @endif {{$memberdata->workinghourto == '20:00' ? 'selected': ''}}>08:00 PM</option>
+               <option value="21:00" @if(old( 'working_hour_to_1')=='21:00' ) selected @endif {{$memberdata->workinghourto == '21:00' ? 'selected': ''}}>09:00 PM</option>
+               <option value="22:00" @if(old( 'working_hour_to_1')=='22:00' ) selected @endif {{$memberdata->workinghourto == '22:00' ? 'selected': ''}}>10:00 PM</option>
+               <option value="22:00" @if(old( 'working_hour_to_1')=='23:00' ) selected @endif {{$memberdata->workinghourto == '23:00' ? 'selected': ''}}>11:00 PM</option>
                </select>
             </div>
          </div>
