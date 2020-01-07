@@ -522,43 +522,19 @@ $(document).ready( function () {
               </div>
             </div>
             <div class="box-body">
-              <div class="table-responsive">
-               <table id="membersession" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th style="display: none"></th>
-                  <th>Member Name</th>
-                  <th>Status</th>
-                  <th>Scheme Name</th>
-                  <th style="display: none">Date</th>
-                  <th>Day</th>
-                  
-                
-                </tr>
-              </thead>
-             <tbody>
-             
-              @if(count($trainersession)>0)
+              <div class="form-group">
+                  <label>Active/Pending Session</label>
+                  <input type="text" class="form-control" name="exerciselevel" required placeholder="Active/Pending Session" value="{{$trainersession2}}" disabled="">
+                 
+  
+                </div>
+ <div class="form-group">
+                  <label>Cunducted Session</label>
+                  <input type="text" class="form-control" name="exerciselevel" required placeholder="Active/Pending Session" value="{{$trainersession3}}" disabled="">
+                 
+  
+                </div>
 
-              @foreach($trainersession as $key => $trainersession1)
-            
-               <tr>
-                  <td style="display: none">{{$trainersession1->day}}</td>
-                  <td>{{$trainersession1->firstname}}  {{$trainersession1->lastname}}</td>
-                  <td @if($trainersession1->ptstatus == 'Pending') class='red'  @else  class='green' @endif>{{$trainersession1->ptstatus}}</td>
-                  <td>{{$trainersession1->schemename}}</td>
-                  <td style="display: none">{{date('d-m-Y', strtotime($trainersession1->date))}}</td>
-                  <td>{{$trainersession1->day}}</td>
-               </tr>
-               @endforeach
-                      @endif
-             </tbody>
-
-            </table>
-              <div class="datarender" style="text-align: center">
-              </div>
-         
-              </div>
             
            </div>
          </div>

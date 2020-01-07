@@ -26,7 +26,6 @@
 //     return view('welcome');
 // });
 
-
 Route::any('transactionpaymentreceipt/{id}', 'PaymentController@transactionpaymentreceipt')->name('transactionpaymentreceipt');
 
 Route::get('/', function () {
@@ -752,3 +751,5 @@ Route::any('viewrequests', 'SendMemberFormController@viewrequests');
 Route::any('sendformtonumber', 'SendMemberFormController@sendformtonumber');
 Route::any('changeMemberStatus', 'SendMemberFormController@changeMemberStatus');
 Route::any('rejectrequest/{id}', 'SendMemberFormController@rejectrequest');
+Route::any('smsafterpack', 'SendSmsEmailController@smsafterpack');
+Route::any('emailafterpack', 'SendSmsEmailController@emailafterpack');
