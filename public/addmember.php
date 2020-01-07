@@ -207,13 +207,13 @@ $first = $arr[1];
                            <input type="text" name="firstname" id="firstname" class="form-control" placeholder="Firstname" class="span11" required="" maxlength="60" value="<?php if(isset($_POST['firstname'])){ echo $_POST['firstname'];}?>" />
                         </div>
                         <div class="form-group">
-                              <label>LastName<span style="color: red">*</span>
-                              </label>
-                              <input type="text" name="lastname" id="lastname" class="form-control inline-block" placeholder="LastName" class="span11" maxlength="60" value="<?php if(isset($_POST['lastname'])){ echo $_POST['lastname'];}?>" required="" />
+                            <label>LastName<span style="color: red">*</span>
+                            </label>
+                            <input type="text" name="lastname" id="lastname" class="form-control inline-block" placeholder="LastName" class="span11" maxlength="60" value="<?php if(isset($_POST['lastname'])){ echo $_POST['lastname'];}?>" required="" />
                         </div>
                         <div class="form-group">
-                              <label>User Name</label>
-                              <input type="text" name="username" id="username" class="form-control" placeholder="User Name" class="span11" required="" maxlength="60" value="<?php if(isset($_POST['username'])){ echo $_POST['username'];}?>" readonly /><span id="error_username"></span>
+                            <label class="hide">User Name</label>
+                            <input type="text" name="username" id="username" class="form-control hide" placeholder="User Name" class="span11" required="" maxlength="60" value="<?php if(isset($_POST['username'])){ echo $_POST['username'];}?>" readonly /><span id="error_username"></span>
                         </div>
                         <div class="form-group">
                               <label>Gender<span style="color: red">*</span>
