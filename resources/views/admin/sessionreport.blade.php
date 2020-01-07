@@ -373,9 +373,9 @@
      var tid=<?php echo $tid;?>;
       var mid=<?php echo $mid;?>;
       var pid=<?php echo $pid;?>;
-    if(trainerid == 0 && memberid == 0 && packageid ==0){
-   $('#sessionreport').css('display','none');
-  }
+      if(trainerid == 0 && memberid == 0 && packageid ==0){
+        $('#sessionreport').css('display','none');
+      }
       if(trainerid !== 0){
         
       }
@@ -445,7 +445,7 @@ console.log(packageid);
                // $('#sessionreport').css('display','none');
                          $('#memberid').find('option:not(:first)').remove();
                               $.ajax({
-                                   url:"{{ url('gettrainermember') }}",
+                                   url:"{{ url('getsessiontrainermember') }}",
                                    method:"GET",
                                    data:{"_token": "{{ csrf_token() }}","trainerid":trainerid},
                                   success:function(data) {

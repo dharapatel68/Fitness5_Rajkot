@@ -52,16 +52,16 @@ class ExerciseController extends Controller
       $method = $request->method();
        $exercise=Exercise::findOrFail($id);
         if ($request->isMethod('post')){
-            $photo = $request->file;
+          //  $photo = $request->file;
          $request->validate([
               'exercisename' => 'required',
               'videoname' => ''
               ]);
-            $photo = $request->file;
+           // $photo = $request->file;
             
             $exercise->exercisename=$request->exercisename;
 
-            $exercise->videoname = $photo;
+            $exercise->videoname =$request->videoname;
  
               $exercise->save();
          return redirect('viewExercise')->with('message','Succesfully Edited');

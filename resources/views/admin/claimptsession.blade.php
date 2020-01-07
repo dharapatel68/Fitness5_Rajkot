@@ -154,7 +154,7 @@
                   <input type="hidden" name="trainerid" value="{{$trainerid}}">
                 <?php } ?>
                 </div>
-
+<!-- 
                 <div class="form-group">
                   <label> Actual Trainer</label>
                     <select name="actualtrainerid" class="form-control " id="actualtrainerid" title="Select Trainer" data-live-search="true" data-selected-text-format="count"  data-actions-box="true" data-count-selected-text="{0} Trainer Selected" data-header="Select Trainer" required>
@@ -169,7 +169,7 @@
                     // alert($(this).val());
                     $('#actualtrainerid').val($(this).val());
                   });
-                </script>
+                </script> -->
 
                 <div class="form-group">
                   <label>Member<span style="color: red;">*</span></label>

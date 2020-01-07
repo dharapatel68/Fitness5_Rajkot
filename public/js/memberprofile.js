@@ -683,7 +683,7 @@ if(lene.length < 10){
             if(note)
              {
              $.ajax({
-                 url:"/addnote",
+                 url:"/NotesController/addnote",
                 type: "POST",
                   data:{note:note,user:user, _token:_token},
                   success:function(result)

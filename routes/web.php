@@ -87,14 +87,14 @@ Route::any('addUser', 'UserController@create');
 Route::any('edituser/{id}', 'UserController@edituser');
 
 Route::get('deleteuser/{id}', 'UserController@destroy');
-Route::post('/MemberController/check', 'MemberController@check')->name('MemberController.check');
+Route::any('/MemberController/check', 'MemberController@check')->name('MemberController.check');
 Route::post('/PackageController/getuser', 'PackageController@getuser')->name('PackageController.getuser');
 Route::post('/MemberController/scheme', 'MemberController@scheme')->name('scheme');
 Route::get('/MemberController/create', 'MemberController@create')->name('create');
 Route::post('/MemberController/createuser', 'MemberController@createuser')->name('createuser');
 Route::post('/MemberController/edituser', 'MemberController@edituser')->name('edituser');
 Route::post('/MemberController/schemeActualPrice', 'MemberController@schemeActualPrice')->name('schemeActualPrice');
-Route::post('/MemberController/checkmobile', 'MemberController@checkmobile')->name('MemberController.checkmobile');
+Route::any('/MemberController/checkmobile', 'MemberController@checkmobile')->name('MemberController.checkmobile');
   Route::post('changedate', 'PackageController@changedate')->name('changedate');
 Route::post('changeenddate', 'PackageController@changeenddate')->name('changeenddate');
 
@@ -144,9 +144,9 @@ Route::post('/PackageController/getusername', 'PackageController@getusername')->
 Route::post('/MemberController/createmember', 'MemberController@createmember')->name('createmember');
 Route::any('verify','MemberController@otpverify')->name('otpverify');
 Route::post('postverify','MemberController@postverify')->name('postverify');
-Route::post('/NotesController/addnote', 'NotesController@addnote')->name('addnote');
-Route::post('/NotesController/deletenote', 'NotesController@deletenote')->name('deletenote');
-  Route::post('/NotesController/viewnote', 'NotesController@viewnote')->name('viewnote');
+Route::any('/NotesController/addnote', 'NotesController@addnote')->name('addnote');
+Route::any('/NotesController/deletenote', 'NotesController@deletenote')->name('deletenote');
+  Route::any('/NotesController/viewnote', 'NotesController@viewnote')->name('viewnote');
 Route::post('/NotesController/editnote', 'NotesController@editnote')->name('editnote');
 Route::post('/NotesController/imageupload', 'NotesController@imageupload')->name('imageupload');
 Route::get('idpendingreport','MemberController@idpendingreport');
@@ -189,6 +189,7 @@ Route::any('editMeasurement/{id}','MeasurementController@editMeasurement');
 Route::any('sessionreport/{tid?}/{mid?}/{pid?}', 'PersonalTrainerController@sessionreport')->name('sessionreport');
 Route::any('checktime', 'PackageController@checktime')->name('checktime');
 Route::any('gettrainermember', 'PersonalTrainerController@gettrainermember')->name('gettrainermember');
+Route::any('getsessiontrainermember', 'PersonalTrainerController@getsessiontrainermember')->name('getsessiontrainermember');
 /***************************Excel Report******************************************/
 /*for PT Session Report*/
 Route::any('getexcel', 'PersonalTrainerController@excel')->name('getexcel');

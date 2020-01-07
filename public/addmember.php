@@ -15,6 +15,7 @@ $first = $arr[1];
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
+
 <style type="text/css"> 
 
  .bg-orange{
@@ -192,7 +193,7 @@ $first = $arr[1];
     <!-- general form elements -->
    <div class="content">
       <section id="content">
-         <form action="/storemember.php" method="post" enctype="multipart/form-data" enctype="multipart/formdata" id="member_form" onsubmit="return ValidateForm();">
+         <form action="/storemember.php" method="post" enctype="multipart/formdata" id="member_form" onsubmit="return ValidateForm();">
             <div id="accordion" class="accordion-container">
                <input type="hidden" name="code" value="<?php echo $first; ?>">
                <article class="content-entry open">
@@ -292,8 +293,7 @@ $first = $arr[1];
                             <div class="well well-lg">
                                 <div class="form-group">
                                     <label>Address</label>
-                                    <textarea rows="2" cols="20" name="Address" maxlength="60" wrap="soft" class="form-control" placeholder="Address" class="span11">
-                                        <?php if(isset($_POST['CellPhoneNumber'])){ echo $_POST['CellPhoneNumber'];}?>
+                                    <textarea rows="2" cols="20" name="Address" maxlength="60" wrap="soft" class="form-control" class="span11"><?php if(isset($_POST['CellPhoneNumber'])){ echo $_POST['CellPhoneNumber'];}?>
                                     </textarea>
                                 </div>
                                 <div class="form-group">
@@ -327,8 +327,7 @@ $first = $arr[1];
                                     </div>
                                     <div class="form-group">
                                         <label>Emergancy Contact Address</label>
-                                        <textarea rows="2" cols="20" name="emergancyaddress" maxlength="60" wrap="soft" class="form-control" placeholder="Emergancy Address" class="span11">
-                                            <?php if(isset($_POST['emergancyaddress'])){ echo $_POST['emergancyaddress'];}?>
+                                        <textarea rows="2" cols="20" name="emergancyaddress" maxlength="60" wrap="soft" class="form-control"  class="span11"><?php if(isset($_POST['emergancyaddress'])){ echo $_POST['emergancyaddress'];}?>
                                         </textarea>
                                     </div>
                                     <div class="form-group">
@@ -966,24 +965,6 @@ function saveSnap(data_uri){
            return false;
          });
 </script>
-<script>
-   // we used jQuery 'keyup' to trigger the computation as the user type
-   $('.price').keyup(function () {
-   
-       // initialize the sum (total price) to zero
-       var sum = 0;
-   
-       // we use jQuery each() to loop through all the textbox with 'price' class
-       // and compute the sum for each loop
-       $('.price').each(function() {
-         sum += Number($(this).val());
-       });
-   
-       // set the computed value to 'totalPrice' textbox
-       $('#total').val(sum);
-   
-     });
-</script>
 <script type="text/javascript">
    $('#MobileNo').on('keyup',function(){
       var error_usermobile = '';
@@ -991,8 +972,8 @@ function saveSnap(data_uri){
       var _token = $('input[name="_token"]').val();
    
       $.ajax({
-       url:"{{ route('MemberController.checkmobile') }}",
-       method:"POST",
+       url:"/MemberController/checkmobile",
+       method:"GET",
        data:{usermobile:usermobile, _token:_token},
        success:function(result)
        {
@@ -1190,19 +1171,22 @@ function saveSnap(data_uri){
        var  second = document.getElementById("lastname").value;
        $( "#username" ).trigger( "keyup" );
        $('#username').val(first+""+second);
+       var el = $('#username').val();
+        var val = el.replace(/\s/g, "");
+        $('#username').val(val);
        var error_username = '';
        var username = $('#username').val();
        var _token = $('input[name="_token"]').val();
    
        $.ajax({
-         url:"{{ route('MemberController.check') }}",
-         method:"POST",
+         url:"/MemberController/check",
+         method:"GET",
          data:{username:username, _token:_token},
          success:function(result)
          {
           if(result == 'unique')
           {
-           $('#error_username').html('<label class="text-success">User Name is Valid</label>');
+           // $('#error_username').html('<label class="text-success">User Name is Valid</label>');
            $('#username').removeClass('has-error');
            $('#firstbtn').attr('disabled', false);
          }
@@ -1223,19 +1207,22 @@ function saveSnap(data_uri){
        $( "#username" ).trigger( "keyup" );
    
        $('#username').val(first+""+second);
+        var el = $('#username').val();
+        var val = el.replace(/\s/g, "");
+        $('#username').val(val);
        var error_username = '';
        var username = $('#username').val();
        var _token = $('input[name="_token"]').val();
    
        $.ajax({
-         url:"{{ route('MemberController.check') }}",
-         method:"POST",
+         url:"/MemberController/check",
+         method:"GET",
          data:{username:username, _token:_token},
          success:function(result)
          {
           if(result == 'unique')
           {
-           $('#error_username').html('<label class="text-success">User Name is Valid</label>');
+           // $('#error_username').html('<label class="text-success">User Name is Valid</label>');
            $('#username').removeClass('has-error');
            $('#firstbtn').attr('disabled', false);
          }
@@ -1258,14 +1245,14 @@ function saveSnap(data_uri){
          var _token = $('input[name="_token"]').val();
    
          $.ajax({
-           url:"{{ route('MemberController.check') }}",
-           method:"POST",
+           url:"/MemberController/check",
+           method:"GET",
            data:{username:username, _token:_token},
            success:function(result)
            {
             if(result == 'unique')
             {
-             $('#error_username').html('<label class="text-success">User Name is Valid</label>');
+             // $('#error_username').html('<label class="text-success">User Name is Valid</label>');
              $('#username').removeClass('has-error');
              $('#firstbtn').attr('disabled', false);
            }
