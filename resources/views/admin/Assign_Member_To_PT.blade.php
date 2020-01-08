@@ -134,7 +134,7 @@
                   @else
                      
 
-                   <select name="trainerid" class="form-control select2" id="trainerid" data-placeholder="-Select Trianer-" required="">
+                   <select name="trainerid" class="form-control select2" id="trainerid" data-placeholder="-Select Trainer-" required="">
                     <option></option>
                     @foreach ($employees as $employee)
                       <option value="{{$employee->employeeid}}" >{{$employee->username}}</option>

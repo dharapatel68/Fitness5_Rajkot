@@ -108,7 +108,8 @@ class MemberController extends Controller
           } 
 
          $users= DB::table('member')->join('users', 'member.userid', '=', 'users.userid')->get()->all();
-         $members=$members->paginate(8)->appends('query');
+   
+         $members= $members->get()->all();
 
           return view('admin.members',compact('members','users','query'));
     }
