@@ -398,12 +398,19 @@ if($memberpackage){
 
   }
   }
-   $trainersession=Ptmember::where('trainerid', $trainerid)->leftjoin('member','member.memberid','ptmember.memberid')->leftjoin('schemes','schemes.schemeid','ptmember.schemeid')->whereIn('ptmember.status',['Active','Pending'])->select('member.*','ptmember.*','ptmember.status as ptstatus','schemes.schemename')->paginate(10);
+   $trainersession=Ptmember::where('trainerid', $trainerid)->leftjoin('member','member.memberid','ptmember.memberid')->leftjoin('schemes','schemes.schemeid','ptmember.schemeid')->whereIn('ptmember.status',['Active','Pending'])->select('member.memberid','member.firstname','member.lastname')->groupBy('member.memberid','member.firstname','member.lastname')->get()->all();
+    foreach ($trainersession as $key => $value) {
+     # code...
+      $activecount=Ptmember::where('trainerid', $trainerid)->where('ptmember.memberid',$value->memberid)->leftjoin('member','member.memberid','ptmember.memberid')->leftjoin('schemes','schemes.schemeid','ptmember.schemeid')->whereIn('ptmember.status',['Active','Pending'])->select('member.*','ptmember.*','ptmember.status as ptstatus','schemes.schemename')->get()->all();
+      
+       $value['schemenameprint']=$activecount[0]->schemename;
+       $activecount=count($activecount);
+      $deductedcount=Ptmember::where('trainerid', $trainerid)->where('ptmember.memberid',$value->memberid)->leftjoin('member','member.memberid','ptmember.memberid')->leftjoin('schemes','schemes.schemeid','ptmember.schemeid')->whereIn('ptmember.status',['Conducted'])->select('member.*','ptmember.*','ptmember.status as ptstatus','schemes.schemename')->count();
 
-   $trainersession2=Ptmember::where('trainerid', $trainerid)->leftjoin('member','member.memberid','ptmember.memberid')->leftjoin('schemes','schemes.schemeid','ptmember.schemeid')->whereIn('ptmember.status',['Active','Pending'])->select('member.*','ptmember.*','ptmember.status as ptstatus','schemes.schemename')->count();
+      $value['activecount']=$activecount;
+      $value['deductedcount']=$deductedcount;
+   }
 
-    $trainersession3=Ptmember::where('trainerid', $trainerid)->leftjoin('member','member.memberid','ptmember.memberid')->leftjoin('schemes','schemes.schemeid','ptmember.schemeid')->whereIn('ptmember.status',['Conducted'])->select('member.*','ptmember.*','ptmember.status as ptstatus','schemes.schemename')->count();
-// dd($trainersession);
  
 $measurements=[];
 $trainermembermeasur=DB::table("ptmember")->select('memberid')->groupBy('memberid')->where('trainerid', $trainerid)->whereNotIn('memberid',function($query) {
@@ -416,7 +423,7 @@ foreach ($trainermembermeasur as $key => $value) {
 $memtr=Member::where('memberid',$value->memberid)->get()->first();
 array_push($measurements, $memtr);
 }
-      return view('admin.dashboard',compact('data','collection','payment','duepayment','packageexpirenearly','followup','packexpiretrainer','trainersession','trainersession2','trainersession3','measurements'));
+      return view('admin.dashboard',compact('data','collection','payment','duepayment','packageexpirenearly','followup','packexpiretrainer','trainersession','measurements'));
      }
      public function loaduserbytype(Request $request){
  ;

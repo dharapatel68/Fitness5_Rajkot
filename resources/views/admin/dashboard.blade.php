@@ -528,41 +528,29 @@ $(document).ready( function () {
                 <tr>
                   <th style="display: none"></th>
                   <th>Member Name</th>
-               
                   <th>Scheme Name</th>
                   <th>Active/Pending Session</th>
                   <th>Deducted Session</th>
-              
-            
-                  
-                
                 </tr>
               </thead>
              <tbody>
-             
               @if(count($trainersession)>0)
+              <tr>
 
-              
-            
-               <tr>
-             
-                  <td>{{$trainersession[0]->firstname}}  {{$trainersession[0]->lastname}}</td>
-                 
-                  <td>{{$trainersession[0]->schemename}}</td>
-                    <td>{{$trainersession2}}</td>  <td>{{$trainersession3}}</td>
-                
-             
-               </tr>
-              
-                      @endif
+                @foreach($trainersession as $trainersession1)
+                <td>{{$trainersession1->firstname}}  {{$trainersession1->lastname}}</td>
+                <td>{{$trainersession1->schemenameprint}}</td>
+                <td>{{$trainersession1->activecount}}</td>  
+                <td>{{$trainersession1->deductedcount}}</td>
+              </tr>
+              @endforeach
+              @endif
              </tbody>
-
             </table>
               <div class="datarender" style="text-align: center">
               </div>
          
               </div>
-            
            </div>
          </div>
        </div>
