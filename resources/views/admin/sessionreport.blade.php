@@ -122,7 +122,7 @@
   }
   if(isset($_POST['packageid'])){
     $pid=$_POST['packageid'];
-    $package=\App\MemberPackages::where('memberpackagesid',$pid)->where('status',1)->get()->first();
+    $package=\App\MemberPackages::where('memberpackagesid',$pid)->get()->first();
     $schemeid=$package->schemeid;
     $scheme= \App\Scheme::where('schemeid',$schemeid)->where('status',1)->get()->first();
     $schemename=$scheme->schemename;

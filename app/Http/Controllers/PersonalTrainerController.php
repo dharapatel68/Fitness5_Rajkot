@@ -1105,7 +1105,7 @@ public function ajaxgetjoindate(Request $request){
 
         $trainerid = $request->get('trainerid');
          
- $reportmembers=DB::select( DB::raw("select distinct `member`.* from `member` left join `ptmember` on `ptmember`.`memberid` = `member`.`memberid` left join memberpackages on memberpackages.memberpackagesid = ptmember.packageid where `ptmember`.`trainerid` = '".$trainerid."' and memberpackages.status=1 And(`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending')"));
+ $reportmembers=DB::select( DB::raw("select distinct `member`.* from `member` left join `ptmember` on `ptmember`.`memberid` = `member`.`memberid` left join memberpackages on memberpackages.memberpackagesid = ptmember.packageid where `ptmember`.`trainerid` = '".$trainerid."'  And(`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending')"));
   // $reportmembers=DB::select( DB::raw("select distinct `member`.* from `member` left join memberpackages on memberpackages.userid = member.userid left join `schemes` on `schemes`.`schemeid` = `memberpackages`.`schemeid` where `schemes`.`rootschemeid`= 2 and memberpackages.status=1"));
  return  json_encode($reportmembers);
     }
@@ -1118,7 +1118,7 @@ public function ajaxgetjoindate(Request $request){
              $demo =  DB::table('member')->where('memberid', '=', $member)->get()->first();
 
           $mobileno=$demo->mobileno;
-             $package = DB::select( DB::raw("SELECT memberpackages.*,schemes.schemeid,schemes.schemename from memberpackages left Join schemes on memberpackages.schemeid=schemes.schemeid left Join schemeterms on schemeterms.schemeid=schemes.schemeid where memberpackages.userid='".$demo->userid."' AND memberpackages.status='1' AND schemeterms.value != 0"));
+             $package = DB::select( DB::raw("SELECT memberpackages.*,schemes.schemeid,schemes.schemename from memberpackages left Join schemes on memberpackages.schemeid=schemes.schemeid left Join schemeterms on schemeterms.schemeid=schemes.schemeid where memberpackages.userid='".$demo->userid."' AND schemeterms.value != 0"));
              if($package){
                foreach ($package as $key => $value) {
                    $value->mobileno = $mobileno;
@@ -1141,7 +1141,7 @@ $employee=Employee::where('employeeid',$traineridgen)->where('status',1)->get()-
 $employeename=$employee->username;
 $member=Member::where('memberid',$memberidgen)->where('status',1)->get()->first();
   $membername=$member->firstname.' '.$member->lastname;
-  $package=MemberPackages::where('memberpackagesid',$packageid)->where('status',1)->get()->first();
+  $package=MemberPackages::where('memberpackagesid',$packageid)->get()->first();
   $schemeid=$package->schemeid;
  $scheme= Scheme::where('schemeid',$schemeid)->where('status',1)->get()->first();
 $schemename=$scheme->schemename;
