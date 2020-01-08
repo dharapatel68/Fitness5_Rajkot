@@ -150,6 +150,13 @@
    .box{
    margin-bottom:5px;
    }
+   .text-danger{
+     color: red; 
+     border-color: red;
+   }
+   .has-error{
+      border-color: red;
+   }
 </style>
 <div class="content-wrapper">
 <section class="content-header">
@@ -188,7 +195,13 @@
           });  
            $("#alert").fadeTo(1000, 500).slideUp(500, function(){
             $("#alert").slideUp(500);
-          });   
+          });
+           if($( "#username" ).val() != ''){
+            $( "#username" ).trigger( "keyup" );  
+           }
+           if($( "#username" ).val() != ''){
+            $( "#MobileNo" ).trigger( "keyup" ); 
+           }
          });
 </script>
 <section id="content">
@@ -334,7 +347,7 @@
          <div class="well well-lg">
             <div class="form-group">
                <label>Address</label>
-               <textarea rows="2" cols="20" name="Address" maxlength="60" wrap="soft" class="form-control" placeholder="Address" class="span11">{{ old('Address') }} @if(!empty($memberdata->address)){{$memberdata->address }} @endif</textarea>
+               <textarea rows="2" cols="20" name="Address" maxlength="60" wrap="soft" class="form-control" placeholder="Address" class="span11">@if(!empty($memberdata->address)){{$memberdata->address }} @endif</textarea>
             </div>
             <div class="form-group">
                <label>City</label>
