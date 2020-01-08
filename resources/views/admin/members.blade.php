@@ -258,7 +258,7 @@
             </table>
            <div class="datarender" style="text-align: center">
              @if(isset($query)) 
-            {{ $members->appends($query)->links() }} @else 
+          @else 
             {{ $members->links() }}
           @endif </div></div>
 <!-- /.box-body -->

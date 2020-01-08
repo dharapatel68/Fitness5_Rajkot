@@ -241,47 +241,50 @@ $first = $arr[1];
                          <label>Anniversary</label>
                          <input placeholder="Anniversary" value="<?php if(isset($_POST['anniversary'])){ echo $_POST['anniversary'];}?>" type="date" onkeypress="return false" class="form-control" max="<?php echo date('Y-m-d');?>" name="anniversary" class="span11">
                         </div>
+                       
                         <div class="form-group">
                            <label>Preferred Timing</label>
                            <br> <span><label>From</label></span>
-                        <select type="time" class="form-control" name="working_hour_from_1" id="fromtime" required="">
-                            <option value="06:00" @if($_POST( 'working_hour_from_1')=='06:00' ) selected @endif>06:00 AM</option>
-                            <option value="07:00" @if($_POST( 'working_hour_from_1')=='07:00' ) selected @endif>07:00 AM</option>
-                            <option value="08:00" @if($_POST( 'working_hour_from_1')=='08:00' ) selected @endif>08:00 AM</option>
-                            <option value="09:00" @if($_POST( 'working_hour_from_1')=='09:00' ) selected @endif>09:00 AM</option>
-                            <option value="10:00" @if($_POST( 'working_hour_from_1')=='10:00' ) selected @endif>10:00 AM</option>
-                            <option value="11:00" @if($_POST( 'working_hour_from_1')=='11:00' ) selected @endif>11:00 AM</option>
-                            <option value="12:00" @if($_POST( 'working_hour_from_1')=='12:00' ) selected @endif>12:00 PM</option>
-                            <option value="13:00" @if($_POST( 'working_hour_from_1')=='13:00' ) selected @endif>01:00 PM</option>
-                            <option value="14:00" @if($_POST( 'working_hour_from_1')=='14:00' ) selected @endif>02:00 PM</option>
-                            <option value="15:00" @if($_POST( 'working_hour_from_1')=='15:00' ) selected @endif>03:00 PM</option>
-                            <option value="16:00" @if($_POST( 'working_hour_from_1')=='16:00' ) selected @endif>04:00 PM</option>
-                            <option value="17:00" @if($_POST( 'working_hour_from_1')=='17:00' ) selected @endif>05:00 PM</option>
-                            <option value="18:00" @if($_POST( 'working_hour_from_1')=='18:00' ) selected @endif>06:00 PM</option>
-                            <option value="19:00" @if($_POST( 'working_hour_from_1')=='19:00' ) selected @endif>07:00 PM</option>
-                            <option value="20:00" @if($_POST( 'working_hour_from_1')=='20:00' ) selected @endif>08:00 PM</option>
-                            <option value="21:00" @if($_POST( 'working_hour_from_1')=='21:00' ) selected @endif>09:00 PM</option>
-                            <option value="22:00" @if($_POST( 'working_hour_from_1')=='22:00' ) selected @endif>10:00 PM</option>
+                        <select type="time" class="form-control" name="working_hour_from_1" id="fromtime" >
+                            <option selected="" disabled="" value="">--Select Timing--</option>
+                            <option value="06:00" <?php if(isset($_POST['working_hour_from_1']) =='06:00' ) { echo  'selected'; } ?> >06:00 AM</option>
+                            <option value="07:00"<?php if(isset($_POST['working_hour_from_1']) =='07:00' ) { echo  'selected'; } ?>>07:00 AM</option>
+                            <option value="08:00"<?php if(isset($_POST['working_hour_from_1']) =='08:00' ) { echo  'selected'; } ?> >08:00 AM</option>
+                            <option value="09:00" <?php if(isset($_POST['working_hour_from_1']) =='09:00' ) { echo  'selected'; } ?> >09:00 AM</option>
+                            <option value="10:00" <?php if(isset($_POST['working_hour_from_1']) =='10:00' ) { echo  'selected'; } ?> >10:00 AM</option>
+                            <option value="11:00" @<?php if(isset($_POST['working_hour_from_1']) =='11:00' ) { echo  'selected'; } ?> >11:00 AM</option>
+                            <option value="12:00" <?php if(isset($_POST['working_hour_from_1']) =='12:00' ) { echo  'selected'; } ?> >12:00 PM</option>
+                            <option value="13:00"<?php if(isset($_POST['working_hour_from_1']) =='13:00' ) { echo  'selected'; } ?> >01:00 PM</option>
+                            <option value="14:00"<?php if(isset($_POST['working_hour_from_1']) =='14:00' ) { echo  'selected'; } ?> >02:00 PM</option>
+                            <option value="15:00" <?php if(isset($_POST['working_hour_from_1']) =='15:00' ) { echo  'selected'; } ?> >03:00 PM</option>
+                            <option value="16:00" <?php if(isset($_POST['working_hour_from_1']) =='16:00' ) { echo  'selected'; } ?> >04:00 PM</option>
+                            <option value="17:00"<?php if(isset($_POST['working_hour_from_1']) =='17:00' ) { echo  'selected'; } ?> >05:00 PM</option>
+                            <option value="18:00"<?php if(isset($_POST['working_hour_from_1']) =='18:00' ) { echo  'selected'; } ?> >06:00 PM</option>
+                            <option value="19:00" <?php if(isset($_POST['working_hour_from_1']) =='19:00' ) { echo  'selected'; } ?> >07:00 PM</option>
+                            <option value="20:00" <?php if(isset($_POST['working_hour_from_1']) =='20:00' ) { echo  'selected'; } ?> >08:00 PM</option>
+                            <option value="21:00" <?php if(isset($_POST['working_hour_from_1']) =='21:00' ) { echo  'selected'; } ?> >09:00 PM</option>
+                            <option value="22:00"<?php if(isset($_POST['working_hour_from_1']) =='22:00' ) { echo  'selected'; } ?> >10:00 PM</option>
                         </select>
                         <label>To</label>
-                        <select type="time" class="form-control" id="totime" name="working_hour_to_1" required="">
-                            <option value="07:00" @if($_POST( 'working_hour_to_1')=='07:00' ) selected @endif>07:00 AM</option>
-                            <option value="08:00" @if($_POST( 'working_hour_to_1')=='08:00' ) selected @endif>08:00 AM</option>
-                            <option value="09:00" @if($_POST( 'working_hour_to_1')=='09:00' ) selected @endif>09:00 AM</option>
-                            <option value="10:00" @if($_POST( 'working_hour_to_1')=='10:00' ) selected @endif>10:00 AM</option>
-                            <option value="11:00" @if($_POST( 'working_hour_to_1')=='11:00' ) selected @endif>11:00 AM</option>
-                            <option value="12:00" @if($_POST( 'working_hour_to_1')=='12:00' ) selected @endif>12:00 PM</option>
-                            <option value="13:00" @if($_POST( 'working_hour_to_1')=='13:00' ) selected @endif>01:00 PM</option>
-                            <option value="14:00" @if($_POST( 'working_hour_to_1')=='14:00' ) selected @endif>02:00 PM</option>
-                            <option value="15:00" @if($_POST( 'working_hour_to_1')=='15:00' ) selected @endif>03:00 PM</option>
-                            <option value="16:00" @if($_POST( 'working_hour_to_1')=='16:00' ) selected @endif>04:00 PM</option>
-                            <option value="17:00" @if($_POST( 'working_hour_to_1')=='17:00' ) selected @endif>05:00 PM</option>
-                            <option value="18:00" @if($_POST( 'working_hour_to_1')=='18:00' ) selected @endif>06:00 PM</option>
-                            <option value="19:00" @if($_POST( 'working_hour_to_1')=='19:00' ) selected @endif>07:00 PM</option>
-                            <option value="20:00" @if($_POST( 'working_hour_to_1')=='20:00' ) selected @endif>08:00 PM</option>
-                            <option value="21:00" @if($_POST( 'working_hour_to_1')=='21:00' ) selected @endif>09:00 PM</option>
-                            <option value="22:00" @if($_POST( 'working_hour_to_1')=='22:00' ) selected @endif>10:00 PM</option>
-                            <option value="22:00" @if($_POST( 'working_hour_to_1')=='23:00' ) selected @endif>11:00 PM</option>
+                        <select type="time" class="form-control" id="totime" name="working_hour_to_1">
+                            <option selected="" disabled="" value="">--Select Timing--</option>
+                            <option value="07:00" <?php if(isset($_POST['working_hour_from_1']) =='07:00' ) { echo  'selected'; } ?> >07:00 AM</option>
+                            <option value="08:00" <?php if(isset($_POST['working_hour_from_1']) =='08:00' ) { echo  'selected'; } ?> >08:00 AM</option>
+                            <option value="09:00"<?php if(isset($_POST['working_hour_from_1']) =='09:00' ) { echo  'selected'; } ?> >09:00 AM</option>
+                            <option value="10:00" <?php if(isset($_POST['working_hour_from_1']) =='10:00' ) { echo  'selected'; } ?> >10:00 AM</option>
+                            <option value="11:00"<?php if(isset($_POST['working_hour_from_1']) =='11:00' ) { echo  'selected'; } ?> >11:00 AM</option>
+                            <option value="12:00"<?php if(isset($_POST['working_hour_from_1']) =='12:00' ) { echo  'selected'; } ?> >12:00 PM</option>
+                            <option value="13:00" <?php if(isset($_POST['working_hour_from_1']) =='13:00' ) { echo  'selected'; } ?> >01:00 PM</option>
+                            <option value="14:00" <?php if(isset($_POST['working_hour_from_1']) =='14:00' ) { echo  'selected'; } ?> >02:00 PM</option>
+                            <option value="15:00" <?php if(isset($_POST['working_hour_from_1']) =='15:00' ) { echo  'selected'; } ?> >03:00 PM</option>
+                            <option value="16:00" <?php if(isset($_POST['working_hour_from_1']) =='16:00' ) { echo  'selected'; } ?> >04:00 PM</option>
+                            <option value="17:00" <?php if(isset($_POST['working_hour_from_1']) =='17:00' ) { echo  'selected'; } ?> >05:00 PM</option>
+                            <option value="18:00" <?php if(isset($_POST['working_hour_from_1']) =='18:00' ) { echo  'selected'; } ?> >06:00 PM</option>
+                            <option value="19:00"<?php if(isset($_POST['working_hour_from_1']) =='19:00' ) { echo  'selected'; } ?> >07:00 PM</option>
+                            <option value="20:00" <?php if(isset($_POST['working_hour_from_1']) =='20:00' ) { echo  'selected'; } ?> >08:00 PM</option>
+                            <option value="21:00" <?php if(isset($_POST['working_hour_from_1']) =='21:00' ) { echo  'selected'; } ?> >09:00 PM</option>
+                            <option value="22:00"<?php if(isset($_POST['working_hour_from_1']) =='22:00' ) { echo  'selected'; } ?> >10:00 PM</option>
+                            <option value="23:00" <?php if(isset($_POST['working_hour_from_1']) =='23:00' ) { echo  'selected'; } ?> >11:00 PM</option>
                         </select>
                      </div>
                   </div>
@@ -293,7 +296,7 @@ $first = $arr[1];
                             <div class="well well-lg">
                                 <div class="form-group">
                                     <label>Address</label>
-                                    <textarea rows="2" cols="20" name="Address" maxlength="60" wrap="soft" class="form-control" class="span11"><?php if(isset($_POST['CellPhoneNumber'])){ echo $_POST['CellPhoneNumber'];}?>
+                                    <textarea rows="2" cols="20" name="Address" maxlength="60" wrap="soft" class="form-control" class="span11"><?php if(isset($_POST['CellPhoneNumber'])){echo$_POST['CellPhoneNumber'];}?>
                                     </textarea>
                                 </div>
                                 <div class="form-group">
@@ -757,7 +760,38 @@ function saveSnap(data_uri){
 
                                                                             
    ErrorText= "";
-  
+    var fname = document.getElementById('firstname').value;
+   if(!fname){
+      alert ( "Please Enter Firstname" );
+       $('#save_memberform').attr('disabled',false);
+      return false; 
+   }
+   
+   var lname = document.getElementById('lastname').value;
+   if(!lname){
+      alert ( "Please Enter LastName" );
+       $('#save_memberform').attr('disabled',false);
+      return false; 
+   }
+       if( $('#birthday').val() == "" ) {
+             alert( "Please Provide Birthdate!" );
+              $('#save_memberform').attr('disabled',false);
+             return false;
+          }
+    var fromt = document.getElementById('fromtime').value;
+   
+
+   if(!fromt){
+       $('#save_memberform').attr('disabled',false);
+      alert ( "Please Enter From Time" );
+      return false; 
+   }
+   var tot = document.getElementById('totime').value;
+   if(!tot){
+      alert ( "Please Enter To Time" );
+       $('#save_memberform').attr('disabled',false);
+      return false; 
+   }
      if( $('#emergancyname').val() == "" ) {
        alert( "Please Provide Emergancy Name!" );
             $('#save_memberform').attr('disabled',false);
@@ -774,36 +808,8 @@ function saveSnap(data_uri){
         $('#save_memberform').attr('disabled',false);
        return false;
     }
-      if( $('#birthday').val() == "" ) {
-             alert( "Please Provide Birthdate!" );
-              $('#save_memberform').attr('disabled',false);
-             return false;
-          }
- 
-   var fname = document.getElementById('firstname').value;
-   if(!fname){
-      alert ( "Please Enter Firstname" );
-       $('#save_memberform').attr('disabled',false);
-      return false; 
-   }
-   var fromt = document.getElementById('fromtime').value;
-   if(!fromt){
-       $('#save_memberform').attr('disabled',false);
-      alert ( "Please Enter From Time" );
-      return false; 
-   }
-   var tot = document.getElementById('totime').value;
-   if(!tot){
-      alert ( "Please Enter To Time" );
-       $('#save_memberform').attr('disabled',false);
-      return false; 
-   }
-   var lname = document.getElementById('lastname').value;
-   if(!lname){
-      alert ( "Please Enter LastName" );
-       $('#save_memberform').attr('disabled',false);
-      return false; 
-   }
+   
+  
    var checked_gender = document.querySelector('input[name = "gender"]:checked');
       
       if(checked_gender != null){  //Test if something was checked
@@ -971,27 +977,27 @@ function saveSnap(data_uri){
       var usermobile = $('#MobileNo').val();
       var _token = $('input[name="_token"]').val();
    
-      $.ajax({
-       url:"/MemberController/checkmobile",
-       method:"GET",
-       data:{usermobile:usermobile, _token:_token},
-       success:function(result)
-       {
-        if(result == 'unique')
-        {
-         $('#error_usermobile').html('<label class="text-success"></label>');
-         $('#MobileNo').removeClass('has-error');
+     //  $.ajax({
+     //   url:"/MemberController/checkmobile",
+     //   method:"GET",
+     //   data:{usermobile:usermobile, _token:_token},
+     //   success:function(result)
+     //   {
+     //    if(result == 'unique')
+     //    {
+     //     $('#error_usermobile').html('<label class="text-success"></label>');
+     //     $('#MobileNo').removeClass('has-error');
          
-       }
-       else
-       {
-           // alert("hi1");
-           $('#error_usermobile').html('<label class="text-danger">Mobile number is Already exist</label>');
-           $('#MobileNo').addClass('has-error');
+     //   }
+     //   else
+     //   {
+     //       // alert("hi1");
+     //       $('#error_usermobile').html('<label class="text-danger">Mobile number is Already exist</label>');
+     //       $('#MobileNo').addClass('has-error');
    
-         }
-       }
-     })
+     //     }
+     //   }
+     // })
     });
 </script>
 <script type="text/javascript">
@@ -1178,27 +1184,27 @@ function saveSnap(data_uri){
        var username = $('#username').val();
        var _token = $('input[name="_token"]').val();
    
-       $.ajax({
-         url:"/MemberController/check",
-         method:"GET",
-         data:{username:username, _token:_token},
-         success:function(result)
-         {
-          if(result == 'unique')
-          {
-           // $('#error_username').html('<label class="text-success">User Name is Valid</label>');
-           $('#username').removeClass('has-error');
-           $('#firstbtn').attr('disabled', false);
-         }
-         else
-         {
-           // alert("hi1");
-           $('#error_username').html('<label class="text-danger">User Name is Already Exist</label>');
-           $('#username').addClass('has-error');
-           $('#firstbtn').attr('disabled', 'disabled');
-         }
-       }
-     })
+     //   $.ajax({
+     //     url:"/MemberController/check",
+     //     method:"GET",
+     //     data:{username:username, _token:_token},
+     //     success:function(result)
+     //     {
+     //      if(result == 'unique')
+     //      {
+     //       // $('#error_username').html('<label class="text-success">User Name is Valid</label>');
+     //       $('#username').removeClass('has-error');
+     //       $('#firstbtn').attr('disabled', false);
+     //     }
+     //     else
+     //     {
+     //       // alert("hi1");
+     //       $('#error_username').html('<label class="text-danger">User Name is Already Exist</label>');
+     //       $('#username').addClass('has-error');
+     //       $('#firstbtn').attr('disabled', 'disabled');
+     //     }
+     //   }
+     // })
      });
      $('#lastname').on('keyup',function(){
    
@@ -1214,27 +1220,27 @@ function saveSnap(data_uri){
        var username = $('#username').val();
        var _token = $('input[name="_token"]').val();
    
-       $.ajax({
-         url:"/MemberController/check",
-         method:"GET",
-         data:{username:username, _token:_token},
-         success:function(result)
-         {
-          if(result == 'unique')
-          {
-           // $('#error_username').html('<label class="text-success">User Name is Valid</label>');
-           $('#username').removeClass('has-error');
-           $('#firstbtn').attr('disabled', false);
-         }
-         else
-         {
-           // alert("hi1");
-           $('#error_username').html('<label class="text-danger">User Name is Already Exist</label>');
-           $('#username').addClass('has-error');
-           $('#firstbtn').attr('disabled', 'disabled');
-         }
-       }
-     })
+     //   $.ajax({
+     //     url:"/MemberController/check",
+     //     method:"GET",
+     //     data:{username:username, _token:_token},
+     //     success:function(result)
+     //     {
+     //      if(result == 'unique')
+     //      {
+     //       // $('#error_username').html('<label class="text-success">User Name is Valid</label>');
+     //       $('#username').removeClass('has-error');
+     //       $('#firstbtn').attr('disabled', false);
+     //     }
+     //     else
+     //     {
+     //       // alert("hi1");
+     //       $('#error_username').html('<label class="text-danger">User Name is Already Exist</label>');
+     //       $('#username').addClass('has-error');
+     //       $('#firstbtn').attr('disabled', 'disabled');
+     //     }
+     //   }
+     // })
      });
 </script>
 <script type="text/javascript">
@@ -1244,27 +1250,27 @@ function saveSnap(data_uri){
          var username = $('#username').val();
          var _token = $('input[name="_token"]').val();
    
-         $.ajax({
-           url:"/MemberController/check",
-           method:"GET",
-           data:{username:username, _token:_token},
-           success:function(result)
-           {
-            if(result == 'unique')
-            {
-             // $('#error_username').html('<label class="text-success">User Name is Valid</label>');
-             $('#username').removeClass('has-error');
-             $('#firstbtn').attr('disabled', false);
-           }
-           else
-           {
-           // alert("hi1");
-           $('#error_username').html('<label class="text-danger">User Name is Already Exist</label>');
-           $('#username').addClass('has-error');
-           $('#firstbtn').attr('disabled', 'disabled');
-         }
-       }
-     })
+     //     $.ajax({
+     //       url:"/MemberController/check",
+     //       method:"GET",
+     //       data:{username:username, _token:_token},
+     //       success:function(result)
+     //       {
+     //        if(result == 'unique')
+     //        {
+     //         // $('#error_username').html('<label class="text-success">User Name is Valid</label>');
+     //         $('#username').removeClass('has-error');
+     //         $('#firstbtn').attr('disabled', false);
+     //       }
+     //       else
+     //       {
+     //       // alert("hi1");
+     //       $('#error_username').html('<label class="text-danger">User Name is Already Exist</label>');
+     //       $('#username').addClass('has-error');
+     //       $('#firstbtn').attr('disabled', 'disabled');
+     //     }
+     //   }
+     // })
        });
 </script>
 </section>
