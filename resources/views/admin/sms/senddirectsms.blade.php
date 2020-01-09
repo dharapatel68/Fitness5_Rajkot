@@ -79,6 +79,19 @@
 .pointer {
   cursor: pointer;
 }
+.select2{
+   max-width: 100% !important;
+   width: 100% !important;
+}
+
+.select2-container--default .select2-selection--single{
+  border-radius: 2px !important;
+  max-height: 100% !important;
+      border-color: #d2d6de !important;
+          height: 32px;
+          max-width: 100%;
+          min-width: 100% !important;
+}
 .tagcolor{
   background-color: #DF9A04;
   color: #fff;
@@ -146,20 +159,38 @@ li {
                 <form action="{{url('directmessage')}}" method="post">
                     {{ csrf_field() }}
                     <div class="col-lg-6 col-lg-offset-1">
+
+
+
+                         <div class="form-group">
+                          <label>Select User Name</label>
+ 
+         <select  name="username" class="form-control select2 " width="100%" data-placeholder="Select a Username"  id="username" >
+      <option value="" selected disabled>Select User Name</option>
+    
+      @foreach($users as $user)
+
+
+        <option value="{{ $user->mobileno }}" @if(isset($query['username'])) {{$query['username'] == $user->userid ? 'selected':''}} @endif>{{ $user->username }}</option>
+
+      @endforeach
+    </select>
+
+
+                      </div>
+                        <div class="form-group">
+                          <label>OR</label>
+                         
+                        </div>
+
                         <div class="form-group">
                           <label>Mobileno</label>
                           <input type="text" name="mobileno" class="number form-control" placeholder="Enter Mobile No" maxlength="10">
                         </div>
-                      </div>
 
-                      <!-- <div class="col-lg-6">
-                        <select name="messagestemplate" id="messagestemplatename"  class="form-control selectpicker"title="Select Member" data-live-search="true" data-selected-text-format="count"  data-actions-box="true" data-count-selected-text="{0} User Name Selected" data-header="Select Notification Template"><option selected disabled=""> Please choose an Template </option>
-                          @foreach($messagetemp as $m)
-                          <option value="{{ $m->messagesid }}">{{ ($m->subject) }}</option>
-                          @endforeach
-                          </select>
-                          <input type="hidden" name="msgid" id="msgid">
-                      </div> -->
+
+
+                  
                     </div>
 
                     <div class="mt-2 col-lg-12" style="padding: 10px;"></div>
@@ -222,6 +253,75 @@ li {
 </div>
 @endsection
 @push('script')
+ 
+<script type="text/javascript">
+
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    })
+
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass   : 'iradio_minimal-blue'
+    })
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass   : 'iradio_minimal-red'
+    })
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass   : 'iradio_flat-green'
+    })
+
+    //Colorpicker
+    $('.my-colorpicker1').colorpicker()
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+
+    //Timepicker
+    $('.timepicker').timepicker({
+      showInputs: false
+    })
+  })
+</script>
 <script type="text/javascript">
 
    $('#sendsmsuser').prop('disabled', true);
