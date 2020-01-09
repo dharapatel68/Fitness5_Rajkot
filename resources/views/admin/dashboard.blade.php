@@ -383,8 +383,8 @@ $(document).ready( function () {
                   <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                 </div>
               </div>
-              <div class="box-body">
-               <table id="package" class="table table-responsive">
+              <div class="box-body table-responsive">
+               <table id="package" class="table">
                 <thead>
                   <tr>
  <th style="display:none;">ID</th>
