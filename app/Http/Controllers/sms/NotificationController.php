@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Message;
 use DB;
+use Session;
+
 use App\RootScheme;
 use App\Scheme;
 use App\ExerciseLevel;
@@ -1536,63 +1538,94 @@ class NotificationController extends Controller
 
          }
 
-         public function directmessage(Request $request){
+         public function directmessage(Request $request)
 
+         {
+
+      
+
+    
           $messagetemp = Message::where('editablestatus',1)->get()->all();
+           
+ 
+      $loginuser = Session::get('username'); 
+      $method = $request->method();
 
-          if ($request->isMethod('post')) {
-            
+      $username = $request->get('username');
+      $MobileNo = $request->get('MobileNo');
+
+
+      $users= DB::table('member')->join('users', 'member.userid', '=', 'users.userid')->where('users.userstatus', 'mem')->whereIn('member.status',[1,2,0])->get()->all();
+
+
+          if ($request->isMethod('post'))
+
+
+           {
+
             $mobileno = $request->get('mobileno');
+              $username = $request->get('username');
             $selectedmsgid = $request->get('msgid');
             $msg2 = $request->get('textareasms');
             $msg = urlencode($msg2);
+            if($mobileno != '' || $username != ''){
+                if ($msg2 != '') {
 
-            // print_r($mobileno);echo "<br/>";
-            // print_r($selectedmsgid);echo "<br/>";
-            // print_r($selectedmsg);echo "<br/>";
+                  $smssetting = Smssetting::where('status',1)->where('smsonoff','Active')->first();
 
-            if ($mobileno != '' && $msg2 != '') {
+                  if ($smssetting) {
+                   
+                    $u = $smssetting->url;
+                     if($mobileno){
 
-              $smssetting = Smssetting::where('status',1)->where('smsonoff','Active')->first();
+                         $url= str_replace('$mobileno', $mobileno, $u);
+                     }else{
+                        $url= str_replace('$mobileno', $username, $u);
+                     }
+                      // $url= str_replace('$username', $username, $u);
+                    $url=str_replace('$msg', $msg, $url);
 
-              if ($smssetting) {
-               
-                $u = $smssetting->url;
-                $url= str_replace('$mobileno', $mobileno, $u);
-                $url=str_replace('$msg', $msg, $url);
+                //   dd($url);
 
-               
+                    $otpsend = Curl::to($url)->get();
 
-                $otpsend = Curl::to($url)->get();
+                    $action = new Notificationmsgdetails();
+                    $action->user_id = session()->get('admin_id');
+                    if($mobileno){
+                       $action->mobileno = $mobileno;
+                    
+                    }
+                    else{   $action->mobileno = $username;}
+                    
+                 
+                    $action->smsmsg = $msg2;
+                    $action->smsrequestid = $otpsend;
+                    $action->subject = 'Direct Message';
+                    $action->save();
 
-                $action = new Notificationmsgdetails();
-                $action->user_id = session()->get('admin_id');
-                $action->mobileno = $mobileno;
-                $action->smsmsg = $msg2;
-                $action->smsrequestid = $otpsend;
-                $action->subject = 'Direct Message';
-                $action->save();
+                  }
 
-              }
+                  return Redirect::back()->with('msg','Message Send Successfully');
 
-              return Redirect::back()->with('msg','Message Send Successfully');
+                }
+                else{
 
+                   return Redirect::back()->withErrors('You Sould Enter Message');
+
+                }
             }else{
-
-               return Redirect::back()->withErrors('You Sould Enter Mobileno and Message');
-
+                 return Redirect::back()->withErrors('You Sould Enter Mobileno/Username');
             }
 
           }
 
-          return view('admin.sms.senddirectsms',compact('messagetemp'));
+          return view('admin.sms.senddirectsms',compact('messagetemp','users'));
+
 
          }
      }
-// print_r($mbirthday);
 
-// DB::enableQueryLog();
-                            
 
-// print_r( DB::getQueryLog());
-//6546543544
+
+
+
