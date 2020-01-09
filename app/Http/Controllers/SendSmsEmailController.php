@@ -150,7 +150,7 @@ class SendSmsEmailController extends Controller
 			$message->from($data['senderemail'], 'Payment Message');
 			$message->to($data['mail']);
 			$message->subject($data['subject']);
-			 $message->attach(public_path().'\mailpdf\\'.$filename.'', ['mime' => 'application/pdf']);
+			 $message->attach(public_path().'/mailpdf/'.$filename.'', ['mime' => 'application/pdf']);
 
           });
 
