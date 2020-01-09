@@ -50,7 +50,7 @@ class SendMemberFormController extends Controller
 
     }
      public function viewrequests(Request $request){
-        $memberdata=MemberData::get()->all();
+        $memberdata=MemberData::where('status',1)->where('answer',2)->orderBy('memberid','desc')->get()->all();
         return view('admin.Memberform.allrequests',compact('memberdata'));
 
     }

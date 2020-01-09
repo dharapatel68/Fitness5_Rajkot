@@ -256,7 +256,7 @@
                 </div>
                 <div class="form-group">
                     <label>Working Hour(Per Day)<span style="color: red;">*</span></label>
-                    <input type="text" name="workinghour" class="form-control number" maxlength="3" required="" value="{{ old('workinghour') }}">
+                    <input type="text" name="workinghour" class="form-control" maxlength="5" required="" value="{{ old('workinghour') }}">
                     @if($errors->has('workinghour'))
                      <span class="help-block">
                      <strong>{{ $errors->first('workinghour') }}</strong>
@@ -524,6 +524,9 @@ $('#last_name').change(function(){
            let lname = $('#last_name').val();
            let username = fname+lname;
            $('#username').val(username);
+             var el = $('#username').val();
+        var val = el.replace(/\s/g, "");
+        $('#username').val(val);
             $('#username').trigger('keyup');
 
        });

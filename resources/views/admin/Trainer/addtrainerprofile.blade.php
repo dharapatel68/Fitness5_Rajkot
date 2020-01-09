@@ -267,7 +267,7 @@ table td{
                                                     <button name="deduct" type="submit" id="deduct" class="btn btn-danger" style="display: none;">
                                                         <span class="fa fa-minus"></span> Deduct
                                                     </button>
-                                                    <a href="{{ url('viewstock') }}" type="button" class="btn btn-default">Cancel</a>
+                                                    <a href="{{ url('viewtrainers') }}" type="button" class="btn btn-default">Cancel</a>
                                                 </div>
                                             </div>
                                     </form>

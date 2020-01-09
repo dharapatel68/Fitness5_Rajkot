@@ -28,6 +28,9 @@
     text-transform: none; */
 
   }
+  .call{
+  color: #7758EE;
+}
    .label{
       font-size: 85%;
     }
@@ -356,7 +359,7 @@ $(document).ready( function () {
                   <td>{{$packageexpire->firstname}} {{$packageexpire->lastname}}</td>
                  <td>{{$packageexpire->schemename}}</td>
                  <td>{{date('d-m-Y', strtotime($packageexpire->expiredate))}}</td>
-                 <td @if($packageexpire->diff == "Expired") class='red'@endif><span class="label label-success">{{str_replace("+", "", $packageexpire->diff)}}</span> </a> </td>
+                 <td @if($packageexpire->diff == "Expired") class='red'@endif><a href="{{url('assignPackageOrRenewalPackage/'.$packageexpire->userid)}}"><span class="label label-success">{{str_replace("+", "", $packageexpire->diff)}}</span> </a> </td>
                 
                </tr>
                @endforeach
@@ -384,26 +387,36 @@ $(document).ready( function () {
                <table id="package" class="table table-responsive">
                 <thead>
                   <tr>
-
+ <th style="display:none;">ID</th>
                     <th>Name</th>
                    
                     <th>MobileNo</th>
                     <th>FollowupTime</th>
                     <th>Rating</th>
-                
+                  <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
 
                   @if($followup)
-
+     <?php $i=0; ?> 
                   @foreach($followup as $key => $flup)
 
                   <tr>
+                        <td style="display: none;">{{$flup->inquiriesid}}</td>
+
                     <td>{{$flup->firstname}}   {{$flup->lastname}} </td>
                     <td>{{$flup->mobileno}}</td>
                     <td>{{$flup->followuptime}}</td>
                      <td class="{{ $flup->rating == 'cold' || $flup->rating == 'notinterested' ? 'red' : 'green'}}">{{ ucfirst($flup->rating)}}</td>
+
+                         <td>
+                         
+                      
+                           <a href="{{url('viewfollowupprofile/'.$flup->inquiriesid)}}"class="Add" title="View Inquiry Profile" id="viewfollowupprofile{{$i}}"><i class="fa fa-eye"></i></a>
+                        
+                         
+                           <a href="{{ url('viewfollowup/'.$flup->inquiriesid) }}"class="call" id="addfollowup{{$i}}" title="Add Followup" onclick="call()"><i class="fa fa-phone"></i></a>
 
                   </tr>
                   @endforeach
@@ -595,6 +608,22 @@ $(document).ready( function () {
 <script type="text/javascript" src="//cdn.datatables.net/plug-ins/1.10.19/sorting/date-euro.js"></script>
  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  <script type="text/javascript">
+    function emailafterpacsdck(invoiceid,userid){
+    alert('fdgd');
+    var invoiceid=invoiceid;
+    var userid=userid;
+
+    $.ajax({
+        url : "emailafterpack",
+        type: "POST",
+        data : {_token:"{{csrf_token()}}",invoiceid:invoiceid,userid:userid},
+        success : function(data){
+         if(data == true){
+          alert('SMS SuccessFully Send');
+         }
+        },
+    });
+  }
     $( "#project" ).autocomplete({
       minLength: 0,
       source: function( request, response )
@@ -645,8 +674,7 @@ $(document).ready( function () {
  
         return false;
       }
-    })
-    .autocomplete( "instance" )._renderItem = function( ul, item ) {
+    }).autocomplete( "instance" )._renderItem = function( ul, item ) {
       return $( "<li>" )
         .append( "<div>" + item.label + "<br>" + item.desc + "</div>" )
         .appendTo( ul );
@@ -758,7 +786,7 @@ function opendiv(userid,username){
               let formatted_date = current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear();
               let current = new Date(i.expiredate)
               let formatted = current.getDate() + "-" + (current.getMonth() + 1) + "-" + current.getFullYear();
-              userprofile+='<tr><td>'+i.schemename+'</td><td>'+formatted_date+'</td><td>'+formatted+'</td><td><a href="transactionpaymentreceipt/'+i.memberpackagesid+'")}}"><i class="fa fa-print"></i></a></td></tr>';
+              userprofile+='<tr><td>'+i.schemename+'</td><td>'+formatted_date+'</td><td>'+formatted+'</td><td><a href="transactionpaymentreceipt/'+i.memberpackagesid+'")}}"><i class="fa fa-print margin"></i></a><a id="emailafterpack"    onclick="return emailafterpacsdck('+i.memberpackagesid+','+userid+');" class="red"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></td></tr>';
 
             });
             userprofile+='</tbody></table></ul></div>';
@@ -811,47 +839,7 @@ function opendiv(userid,username){
       // alert(username);
        $('#checkuser').trigger('click');
     }
-   
-
-
-}
-
-function fetchlog1(){
- 
-       let start_date = $('#fetchfrom').val(); 
-       let end_date = $('#fetchto').val();
-       let register_id = $('#userid').val();
-      
-        if(start_date && end_date){
-
-         $('#tbody').empty();
-        
-         $.ajax({
-           type : 'get',
-           url : '{{ url("getallrecord") }}',
-           data : {start_date:start_date, end_date:end_date,register_id:register_id, _token:'{{ csrf_token() }}' },
-           success : function(data){
-              var fetchlogs='<table class="table">'+
-                                 '<thead>'+
-                                 '<tr>'+
-                                 '<th>#</th>'+
-                                 '<th>PunchDate</th>'+
-                                 '<th >PunchTime</th>'+
-                                 '</tr>'+
-                                 '</thead>'+
-                                 '<tbody id="fetchlogtbody">'+
-                                 '</tbody>'+
-                                 '</table>';
-              $('#fetchlog').after(fetchlogs);
-             $('#fetchlogtbody').append(data);
-           }
-   
-         });
-       } else {
-         alert('please select date');
-       }
-}
-  
+   };
 </script>
       <script type="text/javascript">
   $(function () {
@@ -921,7 +909,7 @@ function fetchlog1(){
 
 
 </script>
-
+<script src="{{asset('/js/dashboard.js')}}"></script>
   
     
 @endsection

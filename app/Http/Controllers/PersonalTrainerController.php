@@ -344,7 +344,7 @@ class PersonalTrainerController extends Controller
       $ptlevel = DB::table('ptlevel')->get();
       // $ptassignlevel = DB::table('ptassignlevel')->leftJoin('employee', 'ptassignlevel.trainerid', '=', 'employee.employeeid')->get();
 
-  $ptassignlevel = DB::table('ptassignlevel')->leftJoin('employee', 'ptassignlevel.trainerid', '=', 'employee.employeeid')->where('employee.roleid','4')->get();
+  $ptassignlevel = DB::table('ptassignlevel')->leftJoin('employee', 'ptassignlevel.trainerid', '=', 'employee.employeeid')->where('employee.roleid','4')->OrderBy('ptassignlevelid','desc')->get();
   $msg = 'PT level is assign successfully';
 
     return view('admin.Assign_PT_Level',compact('employee','ptlevel','ptassignlevel','msg'));
@@ -413,7 +413,7 @@ class PersonalTrainerController extends Controller
 
       $employee = DB::table('employee')->where('roleid','4')->get();
       $ptlevel = DB::table('ptlevel')->get();
-      $ptassignlevel = DB::table('ptassignlevel')->leftJoin('employee', 'ptassignlevel.trainerid', '=', 'employee.employeeid')->get();
+      $ptassignlevel = DB::table('ptassignlevel')->leftJoin('employee', 'ptassignlevel.trainerid', '=', 'employee.employeeid')->OrderBy('ptassignlevelid','desc')->get();
 
     return view('admin.Assign_PT_Level',compact('employee','ptlevel','ptassignlevel'));
    }
@@ -519,7 +519,7 @@ public function ajaxgetjoindate(Request $request){
 
              $ptlevel=DB::table('ptassignlevel')->where('trainerid',$request->trainerid)->get();
              if(count($ptlevel) == 0){
-               $msg="Something Went Wrong";
+               $msg="Please Assign PT level";
                
                return redirect('claimptsession')->withErrors(['msg' => $msg]);
              } 
@@ -670,7 +670,11 @@ public function ajaxgetjoindate(Request $request){
         $q=array();
         $q=DB::select( DB::raw("SELECT schemeid from memberpackages where memberpackagesid=".$packageid." AND status = 1"));
         $schemeid = $q[0]->schemeid;
-          
+        $nottime=Ptslot::where('trainerid',$trainerid)->get()->count();
+          if(!$nottime>0){
+            $ptslots='noslots'; 
+          }
+          else{
           // $query =DB::select( DB::raw("SELECT COUNT(ptmemberid)  from ptmember where memberid = '".$memberid."' AND packageid='".$packageid."'"));
           $query=DB::table('ptmember')->where(['memberid'=>$memberid,'packageid'=>$packageid])->get();
           $ptslots=array();
@@ -684,11 +688,11 @@ public function ajaxgetjoindate(Request $request){
              $query=DB::table('ptmember')->where(['memberid'=>$memberid,'trainerid'=>$trainerid,'packageid'=>$packageid])->get();
              if(count($query)>0)
              {
-                $ptslots =DB::select( DB::raw("SELECT ptslot.day as Day,ptmember.fromdate as ptfromdate,ptslot.*,ptmember.* from ptslot LEFT JOIN  ptmember ON ptslot.trainerid = ptmember.trainerid AND ptmember.status='Active' AND ptslot.day=ptmember.day AND ptmember.schemeid='".$schemeid."' where ptslot.trainerid = '".$trainerid."'"));
+              $ptslots =DB::select( DB::raw("SELECT ptslot.day as Day,ptmember.fromdate as ptfromdate,ptslot.*,ptmember.* from ptslot LEFT JOIN  ptmember ON ptslot.trainerid = ptmember.trainerid AND ptmember.status='Active' AND ptslot.day=ptmember.day AND ptmember.schemeid='".$schemeid."' where ptslot.trainerid = '".$trainerid."'"));
              }
           }
 
-
+        }
           // $ptslots =  DB::table('ptslot')->leftJoin('ptmember',['ptslot.TrainerId'=>'ptmember.TrainerId','ptslot.Day'=>'ptmember.day'])->where(['ptslot.TrainerId' => $trainerid ,'ptmember.status' => 'Active'])->get()->all();
           // dd( DB::getQueryLog());
          echo json_encode($ptslots);
@@ -1106,6 +1110,7 @@ public function ajaxgetjoindate(Request $request){
         $trainerid = $request->get('trainerid');
          
  $reportmembers=DB::select( DB::raw("select distinct `member`.* from `member` left join `ptmember` on `ptmember`.`memberid` = `member`.`memberid` left join memberpackages on memberpackages.memberpackagesid = ptmember.packageid where `ptmember`.`trainerid` = '".$trainerid."'  And(`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending')"));
+
   // $reportmembers=DB::select( DB::raw("select distinct `member`.* from `member` left join memberpackages on memberpackages.userid = member.userid left join `schemes` on `schemes`.`schemeid` = `memberpackages`.`schemeid` where `schemes`.`rootschemeid`= 2 and memberpackages.status=1"));
  return  json_encode($reportmembers);
     }
