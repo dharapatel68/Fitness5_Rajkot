@@ -383,8 +383,8 @@ $(document).ready( function () {
                   <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                 </div>
               </div>
-              <div class="box-body">
-               <table id="package" class="table table-responsive">
+              <div class="box-body table-responsive">
+               <table id="package" class="table">
                 <thead>
                   <tr>
  <th style="display:none;">ID</th>
@@ -609,7 +609,6 @@ $(document).ready( function () {
  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  <script type="text/javascript">
     function emailafterpacsdck(invoiceid,userid){
-    alert('fdgd');
     var invoiceid=invoiceid;
     var userid=userid;
 
