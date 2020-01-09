@@ -609,7 +609,6 @@ $(document).ready( function () {
  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  <script type="text/javascript">
     function emailafterpacsdck(invoiceid,userid){
-    alert('fdgd');
     var invoiceid=invoiceid;
     var userid=userid;
 
