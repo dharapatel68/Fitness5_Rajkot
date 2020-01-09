@@ -249,8 +249,14 @@
             <div class="box box-primary">
 
                 <div class="box-header with-border">
-                  <h3 class="box-title">Member List</h3>
-                </div>
+                  <h3 class="box-title">Member List &nbsp; &nbsp; &nbsp;</h3>
+                   <label>
+      <input type="checkbox"  name="uncheckall" class="uncheckall" id="uncheckall" checked="">Check All/Uncheck All
+    </label>
+     <!--  <label>
+      <input type="checkbox" class="checkall" id="checkAll">Check All
+    </label>
+           -->      </div>
 
                 <div class="box-body"> 
                   <div class="table-responsive" id="memberlist" style="overflow-y: scroll;">
@@ -384,6 +390,11 @@
 @endsection
 @push('script')
 <script type="text/javascript">
+ 
+
+//
+</script>
+<script type="text/javascript">
 
   $('#search').click(function(){
     var rootschemeid = $('#rootscheme').val();
@@ -397,25 +408,6 @@
         // alert(mstatus);
  
     
- 
-    // var smsfemale = $('#smsfemale').val();
-  // alert(smsfemale);
-    // var smsgender = $('.smsgender').val();
-    // console.log(smsfemale);
-    // console.log(smsfemale);
-
-     // alert(smsmale);
-
-  // <div class="form-group">
-  //                 <label>Gender</label>
-                     // <input type="checkbox" name="Female" value="1" checked="">
-  //                     Female
-                   
-  //                     <input type="checkbox" name="Male" value="1" checked="">
-  //                     Male
-                    
-  //                 </div>
-
       $.ajax({
         type:'get',
         url : '{{url("smssearch")}}',
@@ -444,7 +436,7 @@
               // $.each(item, function(i1, item1) { 
                //alert(item.email);
                
-                   html +='<tr><td><input type="checkbox" checked id="ajaxmlist'+i+'" value="'+item.firstname+'"></td><td>'+item.firstname+'</td><td>'+item.lastname+'</td><td>'+item.mobileno+'</td><input type="hidden" id="mobileno'+i+'" value="'+item.mobileno+'"><input type="hidden" id="lastname'+i+'" value="'+item.lastname+'"><input type="hidden" id="memail'+i+'" value="'+item.email+'"></tr>';
+                   html +='<tr><td><input class="check" type="checkbox" checked id="ajaxmlist'+i+'" value="'+item.firstname+'"></td><td>'+item.firstname+'</td><td>'+item.lastname+'</td><td>'+item.mobileno+'</td><input type="hidden" id="mobileno'+i+'" value="'+item.mobileno+'"><input type="hidden" id="lastname'+i+'" value="'+item.lastname+'"><input type="hidden" id="memail'+i+'" value="'+item.email+'"></tr>';
                  
                    
             });
@@ -454,6 +446,26 @@
                  
           $('#tbody').html(html);
 
+
+   $(function () {
+            $("#uncheckall").on("click", function () {
+                var all = $(this);
+                $('input:checkbox').each(function () {
+                    $(this).prop("checked", all.prop("checked"));
+                });
+            });
+        });
+
+// $('.uncheckall').click(function() {
+//                  $(":checkbox").attr("checked", false);
+//              });
+
+// $('.checkall').click(function() {
+//                  $(":checkbox").attr("checked", true);
+//              });
+                //  $("#checkAll").click(function () {
+                //     $('#ajaxmlist'+i).prop('checked', $(this).prop('checked'));
+                // });
        },
         dataType:"json",
     });

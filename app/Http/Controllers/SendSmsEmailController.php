@@ -112,21 +112,20 @@ class SendSmsEmailController extends Controller
        $action->save();
 
        }
-
-      if (strpos($otpsend, 'success') !== false) {
-          $success = true;
+ 
+      if (strpos($otpsend, '"ErrorCode":"000"') == 1) {
+          $success = 'true';
       }else{
-      	 $success = false;
+      	 $success = 'false';
       }
       return $success;
 
-      // $tax = $payment_tax;
-      //   $pdf = PDF::loadView('admin.paymenttransactionreceipt', compact('member','totalpay','request','payment','phoneno','scheme','memberpackage','word','companyName','Gstno','duedate','takenby','discount','tax', 'total_payment', 'oldpayment_data','payment1'));
-      //  $pdf->save(public_path('mailpdf/'.$filename));
+
 
 
     }
     public function emailafterpack(Request $request){
+      $storagePath='';
     	$invoice_no = $request->get('invoiceid');
     	$userid=$request->get('userid');
     	 $user = User::leftjoin('member', 'users.memid', 'member.memberid')->where('users.userid', $userid)->get()->first();
@@ -136,6 +135,7 @@ class SendSmsEmailController extends Controller
     	
         $emailsetting =  Emailsetting::where('status',1)->first();
         $email=$user->email;
+         $storagePath='mailpdf/'.$filename;
         if ($emailsetting) {
 
         $data = [
@@ -145,13 +145,12 @@ class SendSmsEmailController extends Controller
                'subject' => $emailsetting->hearder,
                'senderemail'=> $emailsetting->senderemailid,
             ];
-
-      
+            // dd(public_path().'\mailpdf\\'.$filename.'');
        	Mail::send('admin.name', ["data1"=>$data], function($message) use ($data, $filename){
 			$message->from($data['senderemail'], 'Payment Message');
 			$message->to($data['mail']);
 			$message->subject($data['subject']);
-			$message->attach(public_path().'/mailpdf/'.$filename.'');
+			 $message->attach(public_path().'\mailpdf\\'.$filename.'', ['mime' => 'application/pdf']);
 
           });
 

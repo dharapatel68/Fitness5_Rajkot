@@ -430,12 +430,15 @@
       method:"GET",
       data:{"_token": "{{ csrf_token() }}","trainerid":trainerid},
       success:function(data) {
-        if(data){
-          $.each(data, function(i, item){
+       var  result=data;
+        if(result){
+          $.each(result, function(i, item){
           $("#memberid").append($("<option></option>").attr("value", item.memberid).text(item.firstname+' '+item.lastname));
           });
           $("#memberid option[value="+mid+"]").attr("selected", "selected");
-          $("#memberid").trigger('change');
+          if(mid){
+            $("#memberid").trigger('change');
+          }
         }
       },
       dataType:'json',

@@ -154,7 +154,7 @@
                 <tr>
                   <th>Paid Amount</th>
                   <th>:</th>
-                  <th><span id="total_paid" style="color: red;">0</span></th>
+                  <th>&nbsp;&nbsp;<span id="total_paid" style="color: red;">0</span></th>
                 </tr>
               </div>
               </table>
