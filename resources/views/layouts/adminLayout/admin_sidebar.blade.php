@@ -829,35 +829,6 @@
          </ul>
       </li>
       @endif
- @if(isset($permission["'add_exercise_tags'"]) || isset($permission["'view_exercise_tags'"]) )
-            <li class="treeview">
-               <a href="#">
-               <img src="{{ asset('images/icon/tags.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp;
-               <span>
-               <b>Tags</b>
-               </span>
-               <span class="pull-right-container">
-               <i class="fa fa-angle-left pull-right"></i>
-               </span>
-               </a>
-               <ul class="treeview-menu">
-                  @if(isset($permission["'add_exercise_tags'"]))
-                  <li>
-                     <a href="{{ url('addExerciseLevel') }}">
-                     <i class="fa fa-plus"></i>Add  Tag
-                     </a>
-                  </li>
-                  @endif
-                  @if(isset($permission["'view_exercise_tags'"]))
-                  <li>
-                     <a href="{{ url('viewExerciseLevel') }}">
-                     <i class="fa fa-eye"></i>View Tags
-                     </a>
-                  </li>
-                  @endif
-               </ul>
-            </li>
-            @endif
       @if(isset($permission["'add_measurement'"]) || isset($permission["'view_measurement'"]))
       <li class="treeview">
          <a href="#">
@@ -887,76 +858,7 @@
          </ul>
 
 
- @if(isset($permission["'smsdashboard_all'"]) || isset($permission["'add_smstemplate'"]) || isset($permission["'edit_smstemplate'"]) || isset($permission["'view_smstemplate'"]))
-           
 
-
-      <li class="treeview">
-         <a href="#">
-         <i class="fa fa-envelope"></i>
-         <span>
-         <b>Sms Dashboard</b>
-         </span>
-         <span class="pull-right-container">
-         <i class="fa fa-angle-left pull-right"></i>
-         </span>
-         </a>
-         <ul class="treeview-menu">
-             @if(isset($permission["'add_smstemplate'"]))
-            <li>
-               <a href="{{ url('addnewtemplate') }}">
-               <i class="fa fa-chevron-right"></i>Add SMS Template
-               </a>
-            </li>
-            @endif
-             @if(isset($permission["'edit_smstemplate'"]))
-            <li>
-               <a href="{{ url('editsms') }}">
-               <i class="fa fa-chevron-right"></i>Edit SMS Template
-               </a>
-            </li>
-             @endif
-
-               @if(isset($permission["'view_smstemplate'"]))
-            <li>
-               <a href="{{ url('sendsms') }}">
-               <i class="fa fa-chevron-right"></i>Send SMS To Member
-               </a>
-            </li>
-            <li>
-               <a href="{{ url('sendinquirysms') }}">
-               <i class="fa fa-chevron-right"></i>Send SMS To Inquiry
-               </a>
-            </li>
-            <li>
-               <a href="{{ url('sendregistrationsms') }}">
-               <i class="fa fa-chevron-right"></i>Send SMS To Register User
-               </a>
-            </li>
-            <li>
-               <a href="{{ url('directmessage') }}">
-               <i class="fa fa-chevron-right"></i>Direct Message
-               </a>
-            </li>
-            <li>
-               <a href="{{ url('fetchsmslogs') }}">
-               <i class="fa fa-chevron-right"></i>Fetch Logs
-               </a>
-            </li>
-            <li>
-               <a href="{{ url('msgsettings') }}">
-               <i class="fa fa-chevron-right"></i>SMS/Email Settings
-               </a>
-            </li>
-            <li>
-               <a href="{{ url('editsmssettings') }}">
-               <i class="fa fa-chevron-right"></i>Edit SMS/Email Settings
-               </a>
-            </li>
-            @endif
-         </ul>
-      </li>
-      @endif
          @if(isset($permission["'add_diet_plan'"]) || isset($permission["'view_diet_plan'"]))
       <li class="treeview" >
          <a href="#">
@@ -1108,31 +1010,9 @@
       </li>
       </li>
       @endif
-       <li i class="treeview">
-         <a href="#">
-         <i class="fa fa-dot-circle-o"></i>
-         <span>
-         <b>Trainer Module</b>
-         </span>
-         <span class="pull-right-container">
-         <i class="fa fa-angle-left pull-right"></i>
-         </span>
-         </a>
-         <ul class="treeview-menu ">
-            <li>
-               <a href="{{ url('addtrainerprofile') }}">
-                  <i class="fa fa-chevron-right"></i>Add Trainer Profile
-               </a>
-            </li>
-              <li>
-               <a href="{{ url('viewtrainers') }}">
-                  <i class="fa fa-chevron-right"></i>View Trainer Profile
-               </a>
-            </li>
-          
-         </ul>
-      </li>
-          @if(isset($permission["'add_bank'"]) || isset($permission["'view_Bank'"]) || isset($permission["'add_categories'"]) || isset($permission["'view_categories'"]) || isset($permission["'add_expenses'"]) || isset($permission["'view_expenses'"]))
+
+
+       @if(isset($permission["'add_bank'"]) || isset($permission["'view_Bank'"]) || isset($permission["'add_categories'"]) || isset($permission["'view_categories'"]) || isset($permission["'add_expenses'"]) || isset($permission["'view_expenses'"]))
         <li class="treeview">
                <a href="#">
                     <i class="fa fa-inr"></i>
@@ -1235,6 +1115,134 @@
            </ul>
         </li>
       @endif
+      
+
+ @if(isset($permission["'smsdashboard_all'"]) || isset($permission["'add_smstemplate'"]) || isset($permission["'edit_smstemplate'"]) || isset($permission["'view_smstemplate'"]))
+           
+
+
+      <li class="treeview">
+         <a href="#">
+         <i class="fa fa-envelope"></i>
+         <span>
+         <b>Sms Dashboard</b>
+         </span>
+         <span class="pull-right-container">
+         <i class="fa fa-angle-left pull-right"></i>
+         </span>
+         </a>
+         <ul class="treeview-menu">
+             @if(isset($permission["'add_smstemplate'"]))
+            <li>
+               <a href="{{ url('addnewtemplate') }}">
+               <i class="fa fa-chevron-right"></i>Add SMS Template
+               </a>
+            </li>
+            @endif
+             @if(isset($permission["'edit_smstemplate'"]))
+            <li>
+               <a href="{{ url('editsms') }}">
+               <i class="fa fa-chevron-right"></i>Edit SMS Template
+               </a>
+            </li>
+             @endif
+
+               @if(isset($permission["'view_smstemplate'"]))
+            <li>
+               <a href="{{ url('sendsms') }}">
+               <i class="fa fa-chevron-right"></i>Send SMS To Member
+               </a>
+            </li>
+            <li>
+               <a href="{{ url('sendinquirysms') }}">
+               <i class="fa fa-chevron-right"></i>Send SMS To Inquiry
+               </a>
+            </li>
+            <li>
+               <a href="{{ url('sendregistrationsms') }}">
+               <i class="fa fa-chevron-right"></i>Send SMS To Register User
+               </a>
+            </li>
+            <li>
+               <a href="{{ url('directmessage') }}">
+               <i class="fa fa-chevron-right"></i>Direct Message
+               </a>
+            </li>
+            <li>
+               <a href="{{ url('fetchsmslogs') }}">
+               <i class="fa fa-chevron-right"></i>Fetch Logs
+               </a>
+            </li>
+            <li>
+               <a href="{{ url('msgsettings') }}">
+               <i class="fa fa-chevron-right"></i>SMS/Email Settings
+               </a>
+            </li>
+            <li>
+               <a href="{{ url('editsmssettings') }}">
+               <i class="fa fa-chevron-right"></i>Edit SMS/Email Settings
+               </a>
+            </li>
+            @endif
+         </ul>
+      </li>
+      @endif
+       
+ @if(isset($permission["'add_exercise_tags'"]) || isset($permission["'view_exercise_tags'"]) )
+            <li class="treeview">
+               <a href="#">
+               <img src="{{ asset('images/icon/tags.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp;
+               <span>
+               <b>Tags</b>
+               </span>
+               <span class="pull-right-container">
+               <i class="fa fa-angle-left pull-right"></i>
+               </span>
+               </a>
+               <ul class="treeview-menu">
+                  @if(isset($permission["'add_exercise_tags'"]))
+                  <li>
+                     <a href="{{ url('addExerciseLevel') }}">
+                     <i class="fa fa-plus"></i>Add  Tag
+                     </a>
+                  </li>
+                  @endif
+                  @if(isset($permission["'view_exercise_tags'"]))
+                  <li>
+                     <a href="{{ url('viewExerciseLevel') }}">
+                     <i class="fa fa-eye"></i>View Tags
+                     </a>
+                  </li>
+                  @endif
+               </ul>
+            </li>
+            @endif
+
+<li i class="treeview">
+         <a href="#">
+         <i class="fa fa-dot-circle-o"></i>
+         <span>
+         <b>Trainer Module</b>
+         </span>
+         <span class="pull-right-container">
+         <i class="fa fa-angle-left pull-right"></i>
+         </span>
+         </a>
+         <ul class="treeview-menu ">
+            <li>
+               <a href="{{ url('addtrainerprofile') }}">
+                  <i class="fa fa-chevron-right"></i>Add Trainer Profile
+               </a>
+            </li>
+              <li>
+               <a href="{{ url('viewtrainers') }}">
+                  <i class="fa fa-chevron-right"></i>View Trainer Profile
+               </a>
+            </li>
+          
+         </ul>
+      </li>
+         
      {{--  <li class="treeview">
          <a href="#">
          <img src="{{ asset('images/icon/hr.png') }}" style="height: 22px; width: 22px;margin-left: -3px;">&nbsp;&nbsp;
