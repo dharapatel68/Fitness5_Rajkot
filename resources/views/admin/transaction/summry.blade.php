@@ -85,9 +85,13 @@ iframe {
   border: none !important;
 }
 
+.green{
+  color: green;
+}
 
-
-
+.red{
+   color: red;
+}
 /*//////////////////////////////////////////////////////////////////
 [ Contact ]*/
 
@@ -496,8 +500,8 @@ textarea.input100 {
             </thead>
             <tbody>
               <tr>
-                <td  style="text-align: center;"><button id="smsafterpack"  class="btn btn-warning"><i class="fa fa-commenting"></i> Send Sms</button></td>
-                <td  colspan="2" style="text-align: center;"><button id="emailafterpack"  class="btn btn-warning"><i class="fa fa-envelope" aria-hidden="true"></i> Send Email</button></td>
+                <td  style="text-align: center;"><a id="smsafterpack"  class="green"><i class="fa fa-commenting"></i> Send SMS</a></td>
+                <td  colspan="2" style="text-align: center;"><a id="emailafterpack" class="red"><i class="fa fa-envelope-o" aria-hidden="true"></i> Send Email</a></td>
               </tr>
                <tr>
                   <td colspan="2" style="text-align: center;"><a href="{{url('transactionpaymentreceipt/'.$summry['InvoiceID'])}}"><b style="font-size: 20px;">Download Print  <i class="fa fa-print" style="size: 20px;"></i></b></a></td>
@@ -589,14 +593,13 @@ textarea.input100 {
   $('#smsafterpack').on('click',function(){
     var invoiceid=<?php echo $summry['InvoiceID']; ?>;
     var userid=<?php echo $summry['userid']; ?>;
-     console.log('aaaaaa'+userid);
-       console.log('aaaaaa'+invoiceid);
     $.ajax({
         url : "{{url('smsafterpack')}}",
         type: "POST",
         data : {_token:"{{csrf_token()}}",invoiceid:invoiceid,userid:userid},
         success : function(data){
-         if(data == true){
+           var result=data; 
+         if(result == 'true'){
           alert('SMS SuccessFully Send');
          }
         },
@@ -611,7 +614,8 @@ textarea.input100 {
         type: "POST",
         data : {_token:"{{csrf_token()}}",invoiceid:invoiceid,userid:userid},
         success : function(data){
-         if(data == true){
+        
+         if(data == 'true'){
           alert('SMS SuccessFully Send');
          }
         },

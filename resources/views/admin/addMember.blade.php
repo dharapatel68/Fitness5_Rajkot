@@ -975,7 +975,18 @@
       <div class="well well-lg">
       <div class="form-group">
       <label>Photo</label>
-      <input type="file" name="file" class="form-control" id="profileimage" accept="image/jpg, image/jpeg, image/png" class="span11" />
+     
+   
+     
+      @if(isset($memberdata->photo))
+         @if($memberdata->photo != "")
+            <img src="{{asset('files/'.$memberdata->photo)}}">
+            <input type="hidden"  name="filefrommember" value="{{$memberdata->photo}}">
+         @endif
+      @else
+          <input type="file" name="file" class="form-control" id="profileimage" accept="image/jpg, image/jpeg, image/png" class="span11" />
+      @endif
+
       <img src="" id="img" height="100px">
        <input type="hidden" name="base64image" class="image-tag">
          <div id="my_camera"></div>
@@ -997,12 +1008,30 @@
       <div class="accordion-content">
       <br/>
       <div class="well well-lg">
-      <div class="field" align="left">
-      <h3>ID Proofs </h3>
-      <h5>(can attach more than one):</h5> 
-      <input type="file" id="files" name="attachments[]" multiple />
-      <ul id="fn"></ul> <i id="file"></i>
-      </div>
+        
+
+      @if(isset($memberdata->files))
+        @if($memberdata->files != "")
+            <input type="hidden"  name="attachmentsfrommember" value="{{$memberdata->files}}">
+            @php $attachments= explode (",", $memberdata->files);
+             @endphp
+
+            <ul id="fn">
+               @foreach($attachments as $attach)
+               <li> <a href="\files\{{$attach}}"class="files">{{$attach}} </a></li>
+               @endforeach
+            </ul>
+          
+         @endif
+      @else
+         <div class="field" align="left">
+            <h3>ID Proofs </h3>
+            <h5>(can attach more than one):</h5> 
+            <input type="file" id="files" name="attachments[]" multiple />
+            <ul id="fn"></ul> <i id="file"></i>
+         </div>
+      @endif
+      
       <br>
       <div class="form-group">
       <div class="col-sm-offset-3"></div>
@@ -1753,6 +1782,9 @@ color: black;
        var  second = document.getElementById("lastname").value;
        $( "#username" ).trigger( "keyup" );
        $('#username').val(first+""+second);
+         var el = $('#username').val();
+        var val = el.replace(/\s/g, "");
+        $('#username').val(val);
        var error_username = '';
        var username = $('#username').val();
        var _token = $('input[name="_token"]').val();
@@ -1786,6 +1818,9 @@ color: black;
        $( "#username" ).trigger( "keyup" );
    
        $('#username').val(first+""+second);
+         var el = $('#username').val();
+        var val = el.replace(/\s/g, "");
+        $('#username').val(val);
        var error_username = '';
        var username = $('#username').val();
        var _token = $('input[name="_token"]').val();

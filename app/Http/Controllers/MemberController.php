@@ -298,16 +298,29 @@ public function otpverify(Request $request){
  {
 /*****************************commit rollback*****************************************/
 
-    
-       $request->validate([
-     
-    'CellPhoneNumber' => 'required|max:11|min:10',
-    'lastname' => 'required|max:255',
-    'firstname' => 'required',
-    'gender' =>'required',
-    'file' => 'mimes:jpeg,bmp,png|max:2000',
-    'attachments.*' => 'mimes:jpeg,bmp,png|max:2000',
-  ]);
+      if($request->filefrommember!='' || $request->filefrommember!= null){
+        $request->validate([
+        'CellPhoneNumber' => 'required|max:11|min:10',
+        'lastname' => 'required|max:255',
+        'firstname' => 'required',
+        'gender' =>'required',
+        ]);
+        $photo=$request->filefrommember;
+      }
+    else{
+      $request->validate([
+
+        'CellPhoneNumber' => 'required|max:11|min:10',
+        'lastname' => 'required|max:255',
+        'firstname' => 'required',
+        'gender' =>'required',
+        'file' => 'mimes:jpeg,bmp,png|max:2000',
+        'attachments.*' => 'mimes:jpeg,bmp,png|max:2000',
+        
+      ]);
+       $photo='';
+    }
+       
    /*************try code**************************/
       DB::beginTransaction();
      try {
@@ -497,9 +510,16 @@ public function otpverify(Request $request){
       $formemidinsert->regid =$reg_id;
       $formemidinsert->save();
     }
-
-    $photo=''; 
-
+    $memberdata=MemberData::where('mobileno',$request['CellPhoneNumber'])->where('status',1)->where('answer',2)->get()->first();
+    if($memberdata){
+      $memberdata->answer = 1;
+      $memberdata->save();
+    }
+     
+    if($request->filefrommember!='' || $request->filefrommember!= null){
+      $usermember->photo= $photo;
+      $usermember->save();
+    }
     if($file = $request->file('file')){
       $file_name = $file->getClientOriginalName();
       $file_size = $file->getClientSize();
@@ -1946,7 +1966,7 @@ public function schemeActualPrice(Request $request)
             foreach($request->file('attachments') as $file)
               { 
               $name=$file->getClientOriginalName();
-               $name= $name.'_'.$request['username'];
+              $name= $name.'_'.$request['username'];
               $file->move(public_path().'/files/', $name);  
               $data[] =$request['allfiles'];
               }

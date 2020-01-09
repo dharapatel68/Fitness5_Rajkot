@@ -380,7 +380,12 @@
         html+='<tr><th>Day</th><th>6:00 am</th><th>7:00 am</th><th>8:00 am</th><th>9:00 am</th><th>10:00 am</th><th>11:00 am</th><th>12:00 pm</th><th>13:00 pm</th><th>14:00 pm</th><th>15:00 pm</th><th>16:00 pm</th><th>17:00 pm</th><th>18:00 pm</th><th>19:00 pm</th><th>20:00 pm</th><th>21:00 pm</th><th>22:00 pm</th><th>23:00 pm</th><!-- <th>Action</th> --><!-- <th>Delete</th> --></tr></thead>';
   
         var n=0;
-        //// alert(data);
+        var result=data;
+        if(result=="noslots")
+        {
+          swal(" Please Add PT Time","Error!","error");
+          $('#close').trigger('click');
+        }
         if(data=="")
         {
           swal(" Member Can not Assign Second Time in Same Package","Error!","error");

@@ -193,7 +193,7 @@ $first = $arr[1];
     <!-- general form elements -->
    <div class="content">
       <section id="content">
-         <form action="/storemember.php" method="post" enctype="multipart/formdata" id="member_form" onsubmit="return ValidateForm();">
+         <form action="/storemember.php" method="post" enctype="multipart/form-data" id="member_form" onsubmit="return ValidateForm();">
             <div id="accordion" class="accordion-container">
                <input type="hidden" name="code" value="<?php echo $first; ?>">
                <article class="content-entry open">
@@ -400,242 +400,7 @@ $first = $arr[1];
                     @endforeach
                 </select>
             </div>
-        </div>
-    </div>
-    <!--/.accordion-content-->
-   </article>
-     
-      <!--/.accordion-content-->
-    <article class="content-entry">
-    <h4 class="article-title"><i></i>Fitness Goals & Exercise Program</h4>
-    <div class="accordion-content">
-        <br/>
-        <div class="well well-lg">
-            <label>FitnessGoals</label>
-            <table class="table" aria-describedby="example1_info">
-                <tr>
-                    <td>
-                        <label>LoseBodyFat
-                            <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="1"><span class="badge bg-orange">&check;</span>
-                        </label>
-                    </td>
-                    <td>
-                        <label>DevelopMuscle
-                            <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="2"> <span class="badge bg-orange">&check;</span>
-                        </label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>ImproveBalance
-                            <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="4"> <span class="badge bg-orange">&check;</span>
-                        </label>
-                    </td>
-                    <td>
-                        <label>RehabilitateAnInjury
-                            <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="3"> <span class="badge bg-orange">&check;</span>
-                        </label>
-                    </td>
-                </tr>
-                <tr></tr>
-                <td>
-                    <label>ImproveFlexibility
-                        <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="5"> <span class="badge bg-orange">&check;</span>
-                    </label>
-                </td>
-                <td>
-                    <label>NutritionalEducation
-                        <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="6"> <span class="badge bg-orange">&check;</span>
-                    </label>
-                </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>DesignBeginnersProgram
-                            <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="7"> <span class="badge bg-orange">&check;</span>
-                        </label>
-                    </td>
-                    <td>
-                        <label>DesignAdvancedProgram
-                            <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="8"> <span class="badge bg-orange">&check;</span>
-                        </label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>TrainSpecific
-                            <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="9"> <span class="badge bg-orange">&check;</span>
-                        </label>
-                    </td>
-                    <td>
-                        <label>Safety
-                            <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="10"> <span class="badge bg-orange">&check;</span>
-                        </label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>MakeExerciseFun
-                            <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="11"> <span class="badge bg-orange">&check;</span>
-                        </label>
-                    </td>
-                    <td>
-                        <label>Motivation
-                            <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="12"> <span class="badge bg-orange">&check;</span>
-                        </label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>Other
-                            <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="1"> <span class="badge bg-orange">&check;</span>
-                        </label>
-                    </td>
-                    <td>
-                        <textarea name="OtherHelp" placeholder="OtherHelp" class="span2"></textarea>
-                    </td>
-                </tr>
-            </table>
-            <div class="form-group">
-                <label>What activities interest you ?</label>
-                <br>
-                <table class="table table-bordered table-striped dataTable table-wrapper" role="grid" aria-describedby="example1_info">
-                    <tr>
-                        <td>
-                            <label>Baseball
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="1"> <span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                        <td>
-                            <label>Basketball
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="2"> <span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                        <td>
-                            <label>Boxing
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="3"> <span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>KickBoxing
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="4"> <span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                        <td>
-                            <label>Skiing
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="5"><span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                        <td>
-                            <label> <span class="checkmark"></span> Football
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="6"> <span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>Golf
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="7"> <span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                        <td>
-                            <label>Hiking
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="8"> <span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                        <td>
-                            <label>Pilates
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="9"> <span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>Racquetball
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="10"> <span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                        <td>
-                            <label>IndoorCycling
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="11"> <span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                        <td>
-                            <label>Kayaking
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="12"> <span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>RockClimbing
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="13"> <span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                        <td>
-                            <label>Running
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="14"> <span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                        <td>
-                            <label>Soccer
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="15"> <span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>Swimming
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="16"> <span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                        <td>
-                            <label>Tennis
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="17"> <span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                        <td>
-                            <label>Triathlon
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="18"> <span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>Walking
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="19"> <span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                        <td>
-                            <label>WeightTrainning
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="20"> <span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                        <td>
-                            <label>Yoga
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="21"> <span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>Stretching
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="22"><span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                        <td>
-                            <label>Other
-                                <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="23"> <span class="badge bg-orange">&check;</span>
-                            </label>
-                        </td>
-                        <td>
-                            <textarea name="OtherActivity" placeholder="OtherActivity" class="span2"></textarea>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+   
             <div class="form-group">
                 <label>How often a week whould you like to exercise ?</label>
                 <input type="text" name="OftenWeekExercise" class="form-control number" placeholder="Often Week Exercise" class="span11" />
@@ -662,6 +427,7 @@ $first = $arr[1];
             </div>
         </div>
     </div>
+      
     <!--/.accordion-content-->
 </article>
 <article class="content-entry">
@@ -670,7 +436,7 @@ $first = $arr[1];
         <div class="well well-lg">
             <div class="form-group">
                 <label>Photo</label>
-                <input type="file" name="file" class="form-control" id="profileimage" accept="image/jpg, image/jpeg, image/png" class="span11" />
+                <input type="file" name="profileimage" class="form-control" id="profileimage" accept="image/jpg, image/jpeg, image/png" class="span11" />
                 <img id="img" height="100px">
                 <input type="hidden" name="base64image" class="image-tag">
                 <div id="my_camera"></div>
