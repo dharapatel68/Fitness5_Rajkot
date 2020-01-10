@@ -651,11 +651,15 @@ $gstno='';
 
         $memberData = Member::where('userid', $userid)->first();
 
+         if(!Session::get('role')=='admin'){
+
          $admin_no = Employee::where('employeeid', $request->admin)->select('mobileno')->first();
+       
           
         DB::table('otpverify')->where('mobileno', $admin_no->mobileno)->orderBy('otpverifyid', 'desc')->update(['isexpired' => 1]);
-
-         DB::table('otpverify')->where('mobileno', $memberData->mobileno)->orderBy('otpverifyid', 'desc')->update(['isexpired' => 1]);
+         }
+         // DB::table('otpverify')->where('mobileno', $memberData->mobileno)->orderBy('otpverifyid', 'desc')->update(['isexpired' => 1]);
+         
 
         if(!empty($memberData)){
           $memberid = $memberData->memberid;
