@@ -147,8 +147,8 @@ td{
                     @foreach($trans as $tran)
                     <tr> 
                       <td>{{date('d-m-Y', strtotime($tran->transfer_on)) }}</td>
-                      <td>ucwords({{$tran->fromfirstname}})ucwords( {{$tran->fromlastname}})</td>
-                      <td>ucwords({{$tran->tofirstname}})ucwords( {{$tran->tolastname}})</td>
+                      <td> {{ ucwords($tran->fromfirstname) }} {{ ucwords($tran->fromlastname)}}</td>
+                      <td> {{ ucwords($tran->tofirstname) }} {{ ucwords($tran->tolastname)}}</td>
                       <td>{{$tran->schemename}}</td>
                       <td>{{date('d-m-Y', strtotime($tran->transfer->joindate))}}</td>
                   

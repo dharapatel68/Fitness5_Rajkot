@@ -354,7 +354,14 @@ table tr {
                                 <div class="col-lg-12">
                                     <center>
                                         <div class="form-group">
+
+                                            @if(Session::get('role')=="admin")
+                                            <input type="submit" name="submit" class="btn bg-green margin"id="submit" value="Transfer">     
+                                            
+                                            @else
                                             <input type="button" value="Transfer" class="btn bg-green margin" data-toggle="modal" data-target="#myModal" id="submit" />
+                                       
+                                            @endif
                                             <!-- <input type="submit" name="submit" value="Transfer" class="btn bg-green margin"> -->
                                             <a href="" value="" class="btn bg-red">Cancel</a>
 

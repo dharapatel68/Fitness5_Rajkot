@@ -1,3 +1,4 @@
+
 <?php 
  include 'global.php';
 
@@ -22,7 +23,6 @@ if (!$conn) {
 
     die("Connection failed: " . mysqli_connect_error());
 }
-
 $today=date('Y-m-d');
  $mpin=rand(1000, 9999);
  $workinghourfrom = date("Y-m-d H:i:s", strtotime($_POST["working_hour_from_1"]));
@@ -52,6 +52,7 @@ if (mysqli_query($conn, $sql)) {
     echo "New record created successfully";
     $sql2 = "UPDATE `short_links` SET `status` = '0' WHERE  code='".$_POST["code"]."'";
 		if (mysqli_query($conn, $sql2)) {
+
 			  header("Location: success.php");
 		}
 		else{
