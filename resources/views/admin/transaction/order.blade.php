@@ -1319,13 +1319,12 @@ function calculate(){
         $('#total_amount').val(Math.ceil(finalamount));
         alert('Discount should not be greater than 100');
       } else {
-        alert('dfdvd');
         let baseamount_disount_cal = Number((baseprice/100)) * Number(discount);
         let percentage_discount = baseprice - baseamount_disount_cal;
         let discount_tax = Number(Number(percentage_discount/100)) * Number(tax);
         
         let final_amount_tax = Number(percentage_discount) + Number(discount_tax); 
-        console.log('dsfsfdsf'+final_amount_tax);
+
         $('#total_amount').val(Math.ceil(final_amount_tax));
 
         let updated_total_amount = $('#total_amount').val();
@@ -1441,11 +1440,16 @@ $('#Discount1').keyup(function(){
 $('#amount_paid').on('input',function(){
   let paid_amount = $(this).val();
   //console.log(paid_amount);
+  var role='<?php echo session()->get('role');?>';
+
     calculate();
   if(paid_amount){
         if(paid_amount == 0 || paid_amount < 0 ){
-          $('#otp_button').show();
-          $('#save').hide();
+          if(!role=='admin'){
+            $('#otp_button').show();
+            $('#save').hide();
+          }
+
       }
  
   }

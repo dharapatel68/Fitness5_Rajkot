@@ -17,6 +17,7 @@ use App\OTPVerify;
 use App\Claimptsession;
 use App\Smssetting;
 use App\Notificationmsgdetails;
+use Session;
 
 class TransferMembershipController extends Controller
 {
