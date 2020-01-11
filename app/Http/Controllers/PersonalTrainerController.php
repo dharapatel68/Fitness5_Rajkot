@@ -14,6 +14,7 @@ use App\MemberPackages;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Ptmember;
 
 class PersonalTrainerController extends Controller
 {
@@ -690,6 +691,9 @@ public function ajaxgetjoindate(Request $request){
              {
               $ptslots =DB::select( DB::raw("SELECT ptslot.day as Day,ptmember.fromdate as ptfromdate,ptslot.*,ptmember.* from ptslot LEFT JOIN  ptmember ON ptslot.trainerid = ptmember.trainerid AND ptmember.status='Active' AND ptslot.day=ptmember.day AND ptmember.schemeid='".$schemeid."' where ptslot.trainerid = '".$trainerid."'"));
              }
+             else{
+                $ptslots =DB::select( DB::raw("SELECT ptslot.day as Day,ptmember.fromdate as ptfromdate,ptslot.*,ptmember.* from ptslot LEFT JOIN  ptmember ON ptslot.trainerid = ptmember.trainerid AND ptmember.status='Active' AND ptslot.day=ptmember.day AND ptmember.schemeid='".$schemeid."' where ptslot.trainerid = '".$trainerid."'"));
+             }
           }
 
         }
@@ -703,130 +707,133 @@ public function ajaxgetjoindate(Request $request){
 
     if($request->isMethod('post'))
     {
-      // echo $request;exit;
+      $trainerchanges= Ptmember::where('memberid',$request->memberid)->where('packageid',$request->memberpackagesid)->get()->all();
 
+      if($trainerchanges){
+        foreach ($trainerchanges as $key => $value) {
+          $value->status = 'Deactive';
+          $value->save();
+        }
+      }
        $session=DB::select( DB::raw("SELECT  value from schemeterms where schemeid=(select schemeid from memberpackages where memberpackagesid=".$request->post('memberpackagesid')." AND status = 1) And termsid=2"));
-       $j=0;
+      $j=0;
       $n=6;
-      // echo $n;
+
       for($i=0;$i<=$n;$i++)
       {
-        // echo "$i";
-      $strainerid= $request->post('strainerid');
-      $memberid=$request->post('memberid');
-      $fromdate= $request->post('fromdate');
-      $enddate=$request->post('enddate');
-      $sday=$request->post('sday'.$i);
-      $memberpackagesid=$request->post('memberpackagesid');
-      $q=DB::select( DB::raw("SELECT  expiredate,schemeid from memberpackages where memberpackagesid=".$memberpackagesid." AND status = 1"));
-      // $nod=$q[0]->expiredate;
-      $todate= $q[0]->expiredate;
-      $schemeid=$q[0]->schemeid;
-      // dd($todate);
-      for($date=$fromdate;$date<=$todate;$date=date('Y-m-d',strtotime($date.'+ 1 days ')))
-      {
-        if($j < $session[0]->value)
+
+        $strainerid= $request->post('strainerid');
+        $memberid=$request->post('memberid');
+        $fromdate= $request->post('fromdate');
+        $enddate=$request->post('enddate');
+        $sday=$request->post('sday'.$i);
+        $memberpackagesid=$request->post('memberpackagesid');
+        $q=DB::select( DB::raw("SELECT  expiredate,schemeid from memberpackages where memberpackagesid=".$memberpackagesid." AND status = 1"));
+
+        $todate= $q[0]->expiredate;
+        $schemeid=$q[0]->schemeid;
+       
+        for($date=$fromdate;$date<=$todate;$date=date('Y-m-d',strtotime($date.'+ 1 days ')))
         {
-          // dd($i);
-          $day=date('l',strtotime($date)); 
-          if($day==$sday)
+          if($j < $session[0]->value)
           {
-            // dd($i);
-            $t='';
-            if($request->post('600'.$i)!="")
+           
+            $day=date('l',strtotime($date)); 
+            if($day==$sday)
             {
-              $t=$request->post('600'.$i);
-            }
-            if($request->post('700'.$i)!="")
-            {
-              $t=$request->post('700'.$i);
-            }
-            if($request->post('800'.$i)!="")
-            {
-              $t=$request->post('800'.$i);
-            }
-            if($request->post('900'.$i)!="")
-            {
-              $t=$request->post('900'.$i);
-            }
-            if($request->post('1000'.$i)!="")
-            {
-              $t=$request->post('1000'.$i);
-            }
-            if($request->post('1100'.$i)!="")
-            {
-              $t=$request->post('1100'.$i);
-            }
-            if($request->post('1200'.$i)!="")
-            {
-              $t=$request->post('1200'.$i);
-            }
-            if($request->post('1300'.$i)!="")
-            {
-              $t=$request->post('1300'.$i);
-            }
-            if($request->post('1400'.$i)!="")
-            {
-              $t=$request->post('1400'.$i);
-            }
-            if($request->post('1500'.$i)!="")
-            {
-              $t=$request->post('1500'.$i);
-            }
-            if($request->post('1600'.$i)!="")
-            {
-              $t=$request->post('1600'.$i);
-            }
-            if($request->post('1700'.$i)!="")
-            {
-              $t=$request->post('1700'.$i);
-            }
-            if($request->post('1800'.$i)!="")
-            {
-              $t=$request->post('1800'.$i);
-            }
-            if($request->post('1900'.$i)!="")
-            {
-              $t=$request->post('1900'.$i);
-            }
-            if($request->post('2000'.$i)!="")
-            {
-              $t=$request->post('2000'.$i);
-            }
-            if($request->post('2100'.$i)!="")
-            {
-              $t=$request->post('2100'.$i);
-            }
-            if($request->post('2200'.$i)!="")
-            {
-              $t=$request->post('2200'.$i);
-            }
-            if($request->post('2300'.$i)!="")
-            {
-              $t=$request->post('2300'.$i);
-            }
-            // dd($t);
-             $insert=[
-                       'trainerid' => $strainerid,
-                       'memberid' => $memberid,
-                       'date'=>$date,
-                       'fromdate' => $fromdate,
-                       'todate' => $todate,
-                       'day' => $day,
-                       'packageid'=>$memberpackagesid,
-                       'schemeid'=>$schemeid,
-                       'hoursfrom' =>$t];
-            $pm = DB::table('ptmember')->insert($insert);
-            if($t!="")
-            {
-              $j++;
+      
+              $t='';
+              if($request->post('600'.$i)!="")
+              {
+                $t=$request->post('600'.$i);
+              }
+              if($request->post('700'.$i)!="")
+              {
+                $t=$request->post('700'.$i);
+              }
+              if($request->post('800'.$i)!="")
+              {
+                $t=$request->post('800'.$i);
+              }
+              if($request->post('900'.$i)!="")
+              {
+                $t=$request->post('900'.$i);
+              }
+              if($request->post('1000'.$i)!="")
+              {
+                $t=$request->post('1000'.$i);
+              }
+              if($request->post('1100'.$i)!="")
+              {
+                $t=$request->post('1100'.$i);
+              }
+              if($request->post('1200'.$i)!="")
+              {
+                $t=$request->post('1200'.$i);
+              }
+              if($request->post('1300'.$i)!="")
+              {
+                $t=$request->post('1300'.$i);
+              }
+              if($request->post('1400'.$i)!="")
+              {
+                $t=$request->post('1400'.$i);
+              }
+              if($request->post('1500'.$i)!="")
+              {
+                $t=$request->post('1500'.$i);
+              }
+              if($request->post('1600'.$i)!="")
+              {
+                $t=$request->post('1600'.$i);
+              }
+              if($request->post('1700'.$i)!="")
+              {
+                $t=$request->post('1700'.$i);
+              }
+              if($request->post('1800'.$i)!="")
+              {
+                $t=$request->post('1800'.$i);
+              }
+              if($request->post('1900'.$i)!="")
+              {
+                $t=$request->post('1900'.$i);
+              }
+              if($request->post('2000'.$i)!="")
+              {
+                $t=$request->post('2000'.$i);
+              }
+              if($request->post('2100'.$i)!="")
+              {
+                $t=$request->post('2100'.$i);
+              }
+              if($request->post('2200'.$i)!="")
+              {
+                $t=$request->post('2200'.$i);
+              }
+              if($request->post('2300'.$i)!="")
+              {
+                $t=$request->post('2300'.$i);
+              }
+
+               $insert=[
+                         'trainerid' => $strainerid,
+                         'memberid' => $memberid,
+                         'date'=>$date,
+                         'fromdate' => $fromdate,
+                         'todate' => $todate,
+                         'day' => $day,
+                         'packageid'=>$memberpackagesid,
+                         'schemeid'=>$schemeid,
+                         'hoursfrom' =>$t];
+              $pm = DB::table('ptmember')->insert($insert);
+              if($t!="")
+              {
+                $j++;
+              }
             }
           }
         }
-      }
-      // dd($todate);
-      // $sdays= $request->post('sdays'.$i);
-      // echo $sdays;exit;
       }
     }
 
@@ -1079,7 +1086,7 @@ public function ajaxgetjoindate(Request $request){
       
  
             $grid=array();
-            $grid = DB::select( DB::raw("select `ptmember`.*,claimptsession.*,ptmember.memberid AS 'pmemberid',ptmember.trainerid AS 'ptrainerid',ptmember.packageid AS 'ppackageid',ptmember.status AS 'ptmemberstatus', `employee`.`username`, `employee`.`employeeid` from `ptmember` left join `employee` on `employee`.`employeeid` = `ptmember`.`trainerid` right join claimptsession on ptmember.trainerid=claimptsession.trainerid AND ptmember.memberid=claimptsession.memberid AND ptmember.date=claimptsession.scheduledate  where `ptmember`.`memberid` = '".$memberidgen."' and `ptmember`.`packageid` = '".$packageid."' and `ptmember`.`trainerid` = '".$traineridgen."' and (`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending' or `ptmember`.`status` = 'Conducted')"));
+            $grid = DB::select( DB::raw("select `ptmember`.*,claimptsession.*,ptmember.memberid AS 'pmemberid',ptmember.trainerid AS 'ptrainerid',ptmember.packageid AS 'ppackageid',ptmember.status AS 'ptmemberstatus', `employee`.`username`, `employee`.`employeeid` from `ptmember` left join `employee` on `employee`.`employeeid` = `ptmember`.`trainerid` right join claimptsession on ptmember.trainerid=claimptsession.trainerid AND ptmember.memberid=claimptsession.memberid AND ptmember.date=claimptsession.scheduledate  where `ptmember`.`memberid` = '".$memberidgen."' and `ptmember`.`packageid` = '".$packageid."' and `ptmember`.`trainerid` = '".$traineridgen."' and (`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending'  or `ptmember`.`status` = 'Deactive' or `ptmember`.`status` = 'Conducted')"));
          // $grid = DB::select( DB::raw("select `ptmember`.*,claimptsession.*,ptmember.memberid AS 'pmemberid',ptmember.trainerid AS 'ptrainerid',ptmember.packageid AS 'ppackageid',ptmember.status AS 'ptmemberstatus', `employee`.`username`, `employee`.`employeeid` from `ptmember` left join `employee` on `employee`.`employeeid` = `ptmember`.`trainerid` left join claimptsession on ptmember.trainerid=claimptsession.trainerid AND ptmember.memberid=claimptsession.memberid AND ptmember.date=claimptsession.scheduledate  where `ptmember`.`memberid` = '".$memberidgen."' and `ptmember`.`packageid` = '".$packageid."' and `ptmember`.`trainerid` = '".$traineridgen."' and (`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending' or `ptmember`.`status` = 'Conducted')"));
 
          $trainerid=$traineridgen;
@@ -1109,7 +1116,7 @@ public function ajaxgetjoindate(Request $request){
 
         $trainerid = $request->get('trainerid');
          
- $reportmembers=DB::select( DB::raw("select distinct `member`.* from `member` left join `ptmember` on `ptmember`.`memberid` = `member`.`memberid` left join memberpackages on memberpackages.memberpackagesid = ptmember.packageid where `ptmember`.`trainerid` = '".$trainerid."'  And(`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending')"));
+ $reportmembers=DB::select( DB::raw("select distinct `member`.* from `member` left join `ptmember` on `ptmember`.`memberid` = `member`.`memberid` left join memberpackages on memberpackages.memberpackagesid = ptmember.packageid where `ptmember`.`trainerid` = '".$trainerid."'  And(`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Deactive' or `ptmember`.`status` = 'Pending')"));
 
   // $reportmembers=DB::select( DB::raw("select distinct `member`.* from `member` left join memberpackages on memberpackages.userid = member.userid left join `schemes` on `schemes`.`schemeid` = `memberpackages`.`schemeid` where `schemes`.`rootschemeid`= 2 and memberpackages.status=1"));
  return  json_encode($reportmembers);

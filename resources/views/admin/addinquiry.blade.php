@@ -9,6 +9,7 @@
    .modal-lg{
    width: 600px;
    }
+
 </style>
 <meta charset="utf-8">
 <title>Add Inquiry</title>
@@ -156,21 +157,24 @@
                <input type="button" name="next" class="next action-button" value="Next"id="next3"/>
             </fieldset>
             <fieldset>
-               <div class="col-lg-12">
-                  <h2 class="fs-title">Create your Inquiry</h2>
-                  <h3 class="fs-subtitle">Fill in your credentials</h3>
-                  <ul class="donate-now-change">
-                     <li>
+              <div class="col-lg-12">
+                <h2 class="fs-title">Create your Inquiry</h2>
+                <h3 class="fs-subtitle">Fill in your credentials</h3>
+                  <ul class="donate-now-change" style="float: center;"  style="display: none; ">
+                     <li style="display: none; ">
                         <input type="radio" id="Followup" name="readytomember" value="Followup" checked="" />
-                        <label for="Followup" style="margin-left: 5px;">Add Followup</label>
+                        <label for="Followup">Followup Details</label>
                      </li>
-                     <li>
-                        <input type="radio" id="member" name="readytomember" value="Member" />
+                     <li style="display: none; ">
+                        <input type="radio" id="member" name="readytomember" value="Member"  />
                         <label for="member" >Add Member</label>
                      </li>
                   </ul>
-                  <div id="Followupdetails" class="addfollowers">
-                     <div><b>Followup Date</b><input type="date" onkeypress="return false" name="FollowUpDays" value="{{Carbon\Carbon::today()->addDays(3)->format('Y-m-d')}}"></div>
+                  <br>
+                  <br>
+                  <br>
+                  <div id="Followupdetails">
+                    <div><b>Followup Date</b><input type="date" onkeypress="return false" name="FollowUpDays" value="{{Carbon\Carbon::today()->addDays(3)->format('Y-m-d')}}"></div>
                      <label>Followup Time</label>
                      <select name="ftime">
                         <option value="null">--Please Select Followup Time--</option>
@@ -183,7 +187,7 @@
                   </div>
                   <!--  <input type="password" name="pass" placeholder="Password"/>
                      <input type="password" name="cpass" placeholder="Confirm Password"/> -->
-               </div>
+              </div>
                <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
                <!--    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Small Modal</button> -->
                <input  type="button" value="Submit" class="action-button" data-toggle="modal"data-target="#myModal" id="submit"  />
