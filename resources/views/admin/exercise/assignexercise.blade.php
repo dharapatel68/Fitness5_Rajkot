@@ -344,7 +344,23 @@ var _token = $('input[name="_token"]').val();
                                      $('#workoutmodal').modal('show');
                                    $.each(data, function(i, item){
                                      
-                                        var wrktm='<tr class="workoutmember" style="border-bottom:3px;"><td>'+item.exerciseday+'</td><td>'+item.exercise.exercisename+'</td><td>';
+                                        var wrktm='<tr class="workoutmember" style="border-bottom:3px;">';
+                                        wrktm +='<th>';
+                                         if (item.exerciseday==1) 
+                                        wrktm+= ' Monday</th>';
+                                        if (item.exerciseday==2) 
+                                          wrktm+= ' Tuesday</th>';
+                                         if (item.exerciseday==3) 
+                                          wrktm+= ' Wednesday</th>';
+                                         if (item.exerciseday==4) 
+                                          wrktm+= ' Thursday</th>';
+                                         if (item.exerciseday==5) 
+                                          wrktm+= ' Friday</th>';
+                                         if (item.exerciseday==6) 
+                                          wrktm+= ' Saturday</th>';
+                                        if (item.exerciseday==7) 
+                                          wrktm+= ' Sunday</th>';
+                                          wrktm+='<td>'+item.exercise.exercisename+'</td><td>';
                                          if(item.memberexercisetime!=null){
                                            wrktm+= item.memberexercisetime;
                                         }

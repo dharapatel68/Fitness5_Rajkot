@@ -659,7 +659,6 @@ class InquiryOneController extends Controller
 
   public function create(Request $request){
 
-    // dd($request->toArray());
 
     if ($request->isMethod('post'))
     {
@@ -746,6 +745,7 @@ class InquiryOneController extends Controller
 
 
       if($request->input('readytomember') == 'Member'){
+
         $member = $request->all();
         $data = [
           $firstname = $request->input('firstname'),
@@ -770,7 +770,7 @@ class InquiryOneController extends Controller
 
         ];
 
-        // dd($data);
+        
 
         $emailsetting =  Emailsetting::where('status',1)->first();
 
