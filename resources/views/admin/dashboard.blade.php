@@ -644,7 +644,7 @@ $(document).ready( function () {
                               if(item.status==1){ userstatus='Active';}
                               else{ userstatus='Deactive'; }
                           // console.log(item.userid);
-                            return{
+                              return{
                                     label: item.username,
                                     value: item.userid,
                                      desc:userstatus,
@@ -675,7 +675,7 @@ $(document).ready( function () {
       }
     }).autocomplete( "instance" )._renderItem = function( ul, item ) {
       return $( "<li>" )
-        .append( "<div>" + item.label + "<br>" + item.desc + "</div>" )
+        .append( "<div style='overflow-y:auto;'>" + item.label + "<br>" + item.desc + "</div>" )
         .appendTo( ul );
     };
 

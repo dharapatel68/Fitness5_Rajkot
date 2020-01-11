@@ -242,7 +242,9 @@
                      <div class="form-group">
                         <div class="col-sm-offset-6">
                            <button type="button"   id="save" value="button" name="order_btn"  class="btn bg-green margin" disabled="">Next</button>
+                           
                            <button type="button" data-toggle="modal" data-target="#otpmodel"  id="next_otp" value="button" name="order_btn"  class="btn bg-orange margin" style="display: none;">Next</button>
+                          
                            <a disabled class="btn bg-orange" id="btnnew" style="display: none;">Submitting</a>
                            <a href="{{ url('packageupgrade') }}"class="btn bg-red margin">Cancel</a>
                         </div>
