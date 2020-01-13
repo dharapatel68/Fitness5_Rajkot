@@ -333,9 +333,7 @@
                    </div>
                    <div class="form-group">
                      <label>Finish Date</label>
-
                      <input placeholder="Finishing date"  id="finishdate" class="form-control" name="Expire_date" class="span11" readonly="" >
-
                    </div>
                     
 
