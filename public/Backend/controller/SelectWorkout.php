@@ -19,7 +19,7 @@ $mobileno = $obj['mobileno'];
 $currentDayNumber = $obj['currentDayNumber'];
 
 
-$Sql_Query = "SELECT memberexercise.memberexerciseid, memberexercise.memberexerciseins, memberexercise.memberexercisetime,memberexercise.memberexerciseset,memberexercise.memberexerciserep, exercise.exercisename FROM memberexercise ,exercise,member WHERE memberexercise.exerciseid=exercise.exerciseid AND memberexercise.memberid=member.memberid AND member.mobileno='".$mobileno."' AND memberexercise.assignday = '".$currentDayNumber."'";
+$Sql_Query = "SELECT memberexercise.memberexerciseid, memberexercise.memberexerciseins, memberexercise.memberexercisetime,memberexercise.memberexerciseset,memberexercise.memberexerciserep, exercise.exercisename FROM memberexercise ,exercise,member WHERE memberexercise.exerciseid=exercise.exerciseid AND memberexercise.memberid=member.memberid AND member.mobileno='".$mobileno."' AND memberexercise.status = '1' AND memberexercise.assignday = '".$currentDayNumber."'";
 
 $result=mysqli_query($con,$Sql_Query);
 $resultset=array();

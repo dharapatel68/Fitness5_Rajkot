@@ -399,6 +399,7 @@ if($memberpackage){
   }
   }
    $trainersession=Ptmember::where('trainerid', $trainerid)->leftjoin('member','member.memberid','ptmember.memberid')->leftjoin('schemes','schemes.schemeid','ptmember.schemeid')->whereIn('ptmember.status',['Active','Pending'])->select('member.memberid','member.firstname','member.lastname')->groupBy('member.memberid','member.firstname','member.lastname')->get()->all();
+   
     foreach ($trainersession as $key => $value) {
      # code...
       $activecount=Ptmember::where('trainerid', $trainerid)->where('ptmember.memberid',$value->memberid)->leftjoin('member','member.memberid','ptmember.memberid')->leftjoin('schemes','schemes.schemeid','ptmember.schemeid')->whereIn('ptmember.status',['Active','Pending'])->select('member.*','ptmember.*','ptmember.status as ptstatus','schemes.schemename')->get()->all();

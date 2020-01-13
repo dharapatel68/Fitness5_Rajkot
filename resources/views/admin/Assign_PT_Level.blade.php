@@ -354,7 +354,7 @@
   $('#example1').DataTable({
        stateSave: false,
        paging:  true,
-        "order": [[ 1, "desc" ]],
+        "order": [[ 0, "desc" ]],
        "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "All"]]
    });
 </script>

@@ -17,7 +17,7 @@ or die("An unexpected error has occurred in the database connection");
 $mobileno = $obj['mobileno'];
 
 //Applying User Login query with mobile number match.
-$Sql_Query = "select mobileno,memberpin,birthday,anniversary,firstname,lastname from member where mobileno = '$mobileno' ";
+$Sql_Query = "select mobileno,memberpin,birthday,anniversary,firstname,lastname,photo from member where mobileno = '$mobileno' ";
 
 // Executing SQL Query.
 $check = mysqli_fetch_array(mysqli_query($con,$Sql_Query));
