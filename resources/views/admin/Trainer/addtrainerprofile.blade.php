@@ -283,7 +283,34 @@ table td{
             </div>
     </section>
     </div>
+    @php $trainerid=session()->get('employeeid'); @endphp
 
+<script type="text/javascript">
+    $( document ).ready(function() {
+    console.log( "ready!" );
+});
+    $(document).ready(function(){
+        var trainerid='<?php echo $trainerid;?>';
+        
+        
+    var _token = $('input[name="_token"]').val();
+        $.ajax({
+          type : 'POST',
+          url : '{{ url('gettrainerdetail') }}',
+          data : {trainerid:trainerid, _token:'{{ csrf_token() }}'},
+          success : function(data){
+            if(data){
+              $('#city').val(data.city);
+    
+              $('#leveloftrainer').val(data.level);
+            }else{
+       
+            }
+          }
+        });
+    
+    });
+</script>
 <script type="text/javascript">
 var fileReader = new FileReader();
 var filterType = /^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i;
@@ -465,6 +492,7 @@ $('#file-input').on("change", previewImages);
           success : function(data){
             if(data){
               $('#city').val(data.city);
+
               $('#leveloftrainer').val(data.level);
             }else{
        

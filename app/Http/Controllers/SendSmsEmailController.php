@@ -126,36 +126,33 @@ class SendSmsEmailController extends Controller
     }
     public function emailafterpack(Request $request){
       $storagePath='';
-    	$invoice_no = $request->get('invoiceid');
-    	$userid=$request->get('userid');
-    	 $user = User::leftjoin('member', 'users.memid', 'member.memberid')->where('users.userid', $userid)->get()->first();
+      $invoice_no = $request->get('invoiceid');
+      $userid=$request->get('userid');
+      $user = User::leftjoin('member', 'users.memid', 'member.memberid')->where('users.userid', $userid)->get()->first();
 
-    	 $mobileno=$user->mobileno;
-    	$filename=Payment::where('invoiceno',$invoice_no)->where('receiptname','!=',null)->pluck('receiptname')->first();
-    	
-        $emailsetting =  Emailsetting::where('status',1)->first();
-        $email=$user->email;
-         $storagePath='mailpdf/'.$filename;
-        if ($emailsetting) {
+      $mobileno=$user->mobileno;
+      $filename=Payment::where('invoiceno',$invoice_no)->where('receiptname','!=',null)->pluck('receiptname')->first();
 
+      $emailsetting =  Emailsetting::where('status',1)->first();
+      $email=$user->email;
+      $storagePath='mailpdf/'.$filename;
+      if($emailsetting) {
         $data = [
                              //'data' => 'Rohit',
                'msg' => 'Your Invoice',
                'mail'=> $email,
                'subject' => $emailsetting->hearder,
                'senderemail'=> $emailsetting->senderemailid,
-            ];
+        ];
             // dd(public_path().'\mailpdf\\'.$filename.'');
-       	Mail::send('admin.name', ["data1"=>$data], function($message) use ($data, $filename){
-			$message->from($data['senderemail'], 'Payment Message');
-			$message->to($data['mail']);
-			$message->subject($data['subject']);
-			 $message->attach(public_path().'/mailpdf/'.$filename.'', ['mime' => 'application/pdf']);
+        Mail::send('admin.name', ["data1"=>$data], function($message) use ($data, $filename){
+          $message->from($data['senderemail'], 'Payment Message');
+          $message->to($data['mail']);
+          $message->subject($data['subject']);
+          $message->attach(public_path().'/mailpdf/'.$filename.'', ['mime' => 'application/pdf']);
 
-          });
+        });
 
-
-       
           $action = new Emailnotificationdetails();
           $action->user_id = session()->get('admin_id');
           $action->mobileno = $mobileno;
@@ -171,3 +168,6 @@ class SendSmsEmailController extends Controller
     }
 
 }
+http://vsms.vr4creativity.com/api/mt/SendSMS?number=$mobileno&text=$msg&user=feetness5b&password=five@feetb&senderid=FITFIV&channel=Trans&DCS=0&flashsms=0&route=6
+
+http://vsms.vr4creativity.com/api/mt/SendSMS?number=$mobileno&text=$msg&user=feetness5b&password=five@feetb&senderid=FITFIV&channel=Trans&DCS=0&flashsms=0&route=6

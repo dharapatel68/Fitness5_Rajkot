@@ -296,7 +296,7 @@ $first = $arr[1];
                             <div class="well well-lg">
                                 <div class="form-group">
                                     <label>Address</label>
-                                    <textarea rows="2" cols="20" name="Address" maxlength="60" wrap="soft" class="form-control" class="span11"><?php if(isset($_POST['CellPhoneNumber'])){echo$_POST['CellPhoneNumber'];}?>
+                                    <textarea name="Address" maxlength="255" class="form-control" ><?php if(isset($_POST['address'])){echo$_POST['address'];}?>
                                     </textarea>
                                 </div>
                                 <div class="form-group">
