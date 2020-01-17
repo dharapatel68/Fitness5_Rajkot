@@ -63,7 +63,7 @@ class SendSmsEmailController extends Controller
         $fname = ucfirst($user->firstname);
         $lname = ucfirst($user->lastname);
       }
-      $pdflink = url('/').'/transactionpaymentreceipt/'.$invoice_no;
+      $pdflink = url('/').'/transactionpaymentreceipt/'.$invoice_no.'/'.$mobileno;
       $pdflink = app('bitly')->getUrl($pdflink);
       //msg make 
       $msg=   DB::table('messages')->where('messagesid','13')->get()->first();
@@ -168,6 +168,3 @@ class SendSmsEmailController extends Controller
     }
 
 }
-http://vsms.vr4creativity.com/api/mt/SendSMS?number=$mobileno&text=$msg&user=feetness5b&password=five@feetb&senderid=FITFIV&channel=Trans&DCS=0&flashsms=0&route=6
-
-http://vsms.vr4creativity.com/api/mt/SendSMS?number=$mobileno&text=$msg&user=feetness5b&password=five@feetb&senderid=FITFIV&channel=Trans&DCS=0&flashsms=0&route=6

@@ -15,7 +15,7 @@ class DeviceUserSeed extends Seeder
         Deviceusers::create([
 
         	'deviceusersid' => 1,
-        	'userid' => 1;
+        	'userid' => 1,
         	'deviceusername' => 'admin',
         	'role' => 0,
         	'expirydate' => '2030-01-01',
@@ -25,3 +25,4 @@ class DeviceUserSeed extends Seeder
         ]);
     }
 }
+

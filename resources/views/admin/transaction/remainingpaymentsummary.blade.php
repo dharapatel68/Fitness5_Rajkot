@@ -434,7 +434,7 @@ textarea.input100 {
         </span>
 
     <div class="col-lg-8">   
-        <section class="content-header"><h3>Summary Report</h3></section>
+        <section class="content-header"><h3>Payment Summary</h3></section>
       
       </div>
 
@@ -460,11 +460,12 @@ textarea.input100 {
     <tr>  <td>Due Date</td> <td>@if($transactionremainingamount > 0) {{ $due_date }} @endif</td> </tr>
     <tr>  <td>Due Amount</td> <td>{{ $transactionremainingamount }}</td> </tr>
       </tr>
+  
     </thead>
     <tbody>
       <tr>
       
- </tr><td colspan="2" style="text-align: center;"><a href="{{url('transactionpaymentreceipt/'.$invoiceno)}}"><b style="font-size: 20px;">Print  <i class="fa fa-print" style="size: 20px;"></i></b></a></td></tr>
+ </tr><td colspan="2" style="text-align: center;"><a href="{{url('transactionpaymentreceipt/'.$invoiceno.'/'.$mobileno)}}"><b style="font-size: 20px;">Print  <i class="fa fa-print" style="size: 20px;"></i></b></a></td></tr>
  <tr>
  <td colspan="2" style="text-align: center;"><a href="{{url('dashboard')}}"><b style="font-size: 20px;"> Dashboard  <i class="fa fa-tachometer" style="size: 20px;"></i></b></a></td>
 </tr>
@@ -478,6 +479,31 @@ textarea.input100 {
   </section>
 
 </div>
+<button type="button" id="modal" class="btn btn-primary " data-toggle="modal" data-target="#exampleModal" style="display:none;">
+ Msg modal
+</button>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Are you sure want to send this SMS ? </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div class="msg">{{$msg2}}</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary hide" data-dismiss="modal">No</button>
+        <button type="button" id="sendsmsyes" class="btn btn-primary">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+@php 
+ $msg = urlencode($msg2);
+@endphp
 <script Language="javascript">
 
   /*window.onbeforeunload = function(e) {
@@ -494,11 +520,24 @@ textarea.input100 {
     function disableF5(e) { if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault(); };
 
 $(document).ready(function(){
-     $(document).on("keydown", disableF5);
+    // $(document).on("keydown", disableF5);
+    $('#modal').trigger('click');
 });
 
 
-
+$('#sendsmsyes').on('click',function(){
+  var mobileno = '<?php echo $mobileno ;?>';
+  var msg='<?php echo $msg ; ?>';
+  $.ajax({
+    url:"{{ url('remianingamount/sendsmsyes') }}",
+    method:"POST",
+    data:{mobileno:mobileno,msg:msg,"_token": "{{ csrf_token() }}"},
+    success: function (response) {
+      },
+    dataType:"json"
+  });
+  $('#exampleModal').modal('hide');
+});
 
 
  $(document).bind("contextmenu",function(e){

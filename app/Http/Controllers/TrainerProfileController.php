@@ -102,8 +102,17 @@ class TrainerProfileController extends Controller
     }
     public function gettrainerdetail(Request $request){
     	$trainerdetail=Employee::leftjoin('ptassignlevel','ptassignlevel.trainerid','employee.employeeid')->where('employeeid',$request->trainerid)->get()->first();
-    	$level=Ptlevel::where('id',$trainerdetail->levelid)->pluck('level')->first();
+    	$level=Ptlevel::where('id',$trainerdetail->levelid)->pluck('id')->first();
+    	$trainerfromprofil=TrainerProfile::where('employeeid',$request->trainerid)->get()->first();
     	$trainerdetail['level']=$level;
+    	if($trainerfromprofil){
+	    	$trainerdetail['exp']=$trainerfromprofil->exp;
+			$trainerdetail['achievments']=$trainerfromprofil->achievments;
+			$trainerdetail['freeslot']=$trainerfromprofil->freeslots;
+    	}
+    	else{
+    		$trainerdetail['nodata']='nodata';
+    	}
       	return $trainerdetail;
     }
 }

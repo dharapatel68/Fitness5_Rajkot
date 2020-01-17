@@ -178,25 +178,19 @@ $(document).ready( function () {
                     
                   <div class="box-body">
                  
-                    <div class="col-lg-10 col-sm-10">
-                      <div class="input-group">
-                <input type="text" class="form-control" id="project" autofocus=""  placeholder="Enter Username" >
-                <span class="input-group-addon"><i class="fa fa-search"></i></span>
-              </div>
-                      <!-- <input id="project" class="form-control" autofocus=""  placeholder="Enter Username" >--> <!-- small box --> 
-                     
-                        <input type="hidden" id="project-id"> 
-                         
-                        <p id="project-description" class="small-text"></p>
-             
-                      <div class="form-group open">
-                           <!-- <label class="control-label">Username</label> -->
-                            <!--  <input class="form-control"  placeholder="Enter Username"  autocomplete="off" onkeyup="userload();" id="typehead" autofocus="">
-                          <ul class="dropdown-menu" id="useroptions" style="display: none;">
-                          </ul> -->
-                      </div>
+                  <div class="col-lg-10 col-sm-10">
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="project" autofocus=""  placeholder="Enter Username" >
+                      <span class="input-group-addon"><i class="fa fa-search"></i></span>
                     </div>
-                    <div class="col-lg-4 col-sm-2"><button type="button" class="btn btn-primary" style="margin-top: 0px; display: none" data-toggle="modal" data-target="#exampleModalLong" id="checkuser" >Check</button></div>
+                    <input type="hidden" id="project-id"> 
+                    <p id="project-description" class="small-text"></p>
+                    <div class="form-group open">
+                    </div>
+                  </div>
+                    <div class="col-lg-4 col-sm-2">
+                      <button type="button" class="btn btn-primary" style="margin-top: 0px; display: none" data-toggle="modal" data-target="#exampleModalLong" id="checkuser" >Check</button>
+                    </div>
                     </div>
                 </div>
               </div>
@@ -357,23 +351,20 @@ $(document).ready( function () {
             
                <tr>
                   <td>{{$packageexpire->firstname}} {{$packageexpire->lastname}}</td>
-                 <td>{{$packageexpire->schemename}}</td>
-                 <td>{{date('d-m-Y', strtotime($packageexpire->expiredate))}}</td>
-                 <td @if($packageexpire->diff == "Expired") class='red'@endif><a href="{{url('assignPackageOrRenewalPackage/'.$packageexpire->userid)}}"><span class="label label-success">{{str_replace("+", "", $packageexpire->diff)}}</span> </a> </td>
-                
+                   <td>{{$packageexpire->schemename}}</td>
+                   <td>{{date('d-m-Y', strtotime($packageexpire->expiredate))}}</td>
+                   <td @if($packageexpire->diff == "Expired") class='red'@endif><a href="{{url('assignPackageOrRenewalPackage/'.$packageexpire->userid)}}"><span class="label label-success">{{str_replace("+", "", $packageexpire->diff)}}</span> </a> </td>
                </tr>
                @endforeach
                @endif
              </tbody>
             </table>
-                </div>
-
-               
-               </div>
+              </div>
+            </div>
           </div>
         </div>
-            <div class="col-lg-6">
-            <div class="box">
+        <div class="col-lg-6">
+          <div class="box">
               <div class="box-header with-border">
                 <h3 class="box-title">Today's Followup</h3>
                 <div class="box-tools pull-right">
@@ -384,56 +375,106 @@ $(document).ready( function () {
                 </div>
               </div>
               <div class="box-body table-responsive">
-               <table id="package" class="table">
+               
+              <table id="package" class="table">
                 <thead>
                   <tr>
- <th style="display:none;">ID</th>
                     <th>Name</th>
-                   
                     <th>MobileNo</th>
                     <th>FollowupTime</th>
                     <th>Rating</th>
-                  <th>Action</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-
                   @if($followup)
-     <?php $i=0; ?> 
-                  @foreach($followup as $key => $flup)
-
-                  <tr>
+                    <?php $i=0; ?> 
+                    @foreach($followup as $key => $flup)
+                      <tr>
                         <td style="display: none;">{{$flup->inquiriesid}}</td>
-
-                    <td>{{$flup->firstname}}   {{$flup->lastname}} </td>
-                    <td>{{$flup->mobileno}}</td>
-                    <td>{{$flup->followuptime}}</td>
-                     <td class="{{ $flup->rating == 'cold' || $flup->rating == 'notinterested' ? 'red' : 'green'}}">{{ ucfirst($flup->rating)}}</td>
-
-                         <td>
-                         
-                      
-                           <a href="{{url('viewfollowupprofile/'.$flup->inquiriesid)}}"class="Add" title="View Inquiry Profile" id="viewfollowupprofile{{$i}}"><i class="fa fa-eye"></i></a>
-                        
-                         
-                           <a href="{{ url('viewfollowup/'.$flup->inquiriesid) }}"class="call" id="addfollowup{{$i}}" title="Add Followup" onclick="call()"><i class="fa fa-phone"></i></a>
-
-                  </tr>
-                  @endforeach
+                        <td>{{$flup->firstname}}   {{$flup->lastname}} </td>
+                        <td>{{$flup->mobileno}}</td>
+                        <td>{{$flup->followuptime}}</td>
+                        <td class="{{ $flup->rating == 'cold' || $flup->rating == 'notinterested' ? 'red' : 'green'}}">{{ ucfirst($flup->rating)}}</td>
+                         <td><a href="{{url('viewfollowupprofile/'.$flup->inquiriesid)}}"class="Add" title="View Inquiry Profile" id="viewfollowupprofile{{$i}}"><i class="fa fa-eye"></i></a>
+                            <a href="{{ url('viewfollowup/'.$flup->inquiriesid) }}"class="call" id="addfollowup{{$i}}" title="Add Followup" onclick="call()"><i class="fa fa-phone"></i></a>
+                      </tr>
+                    @endforeach
                   @endif
                 </tbody>
-              </table><div class="datarender" style="text-align: center">
-               {{ $followup->links() }}  </div>
-
-
-               
+              </table>
              </div>
-           </div>
+          </div>
          </div>
-        
       </div>
- 
-     
+      <div class="row" style="display: block;">
+         <div class="col-lg-6">
+          <div class="box">
+              <div class="box-header with-border">
+                <h3 class="box-title">Today's Birthday</h3>
+                <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+              </div>
+              <div class="box-body table-responsive">
+              <table id="package" class="table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>MobileNo</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <?php $i=0; ?> 
+                    @foreach($data['todaybday'] as $key => $tbday)
+                      <tr>
+                        <td>{{$tbday->firstname}}   {{$tbday->lastname}} </td>
+                        <td>{{$tbday->mobileno}}</td>
+                        <td><a href="{{ url('memberProfile/'.$tbday->memberid) }}"<i class="fa fa-eye"></i></td>
+                      </tr>
+                    @endforeach
+                </tbody>
+              </table>
+             </div>
+          </div>
+         </div>
+         <div class="col-lg-6">
+          <div class="box">
+              <div class="box-header with-border">
+                <h3 class="box-title">Today's  Anniversary</h3>
+                <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+              </div>
+              <div class="box-body table-responsive">
+              <table id="package" class="table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>MobileNo</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <?php $i=0; ?> 
+                    @foreach($data['todayanniv'] as $key => $tanniv)
+                      <tr>
+                        <td>{{$tanniv->firstname}}   {{$tanniv->lastname}} </td>
+                        <td>{{$tanniv->mobileno}}</td>
+                        <td><a href="{{ url('memberProfile/'.$tanniv->memberid) }}"<i class="fa fa-eye"></i></td>
+                      </tr>
+                    @endforeach
+                </tbody>
+              </table>
+             </div>
+          </div>
+         </div>
+      </div>
       @endif
 
 
@@ -474,7 +515,6 @@ $(document).ready( function () {
                  <td>{{$packexpiretrainer1->schemename}}</td>
                  <td>{{date('d-m-Y', strtotime($packexpiretrainer1->expiredate))}}</td>
                  <td @if($packexpiretrainer1->diff == "Expired") class='red'@endif><span>{{str_replace("+", "", $packexpiretrainer1->diff)}}</span>  </td>
-                
                </tr>
                @endforeach
                @endif
@@ -785,7 +825,7 @@ function opendiv(userid,username){
               let formatted_date = current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear();
               let current = new Date(i.expiredate)
               let formatted = current.getDate() + "-" + (current.getMonth() + 1) + "-" + current.getFullYear();
-              userprofile+='<tr><td>'+i.schemename+'</td><td>'+formatted_date+'</td><td>'+formatted+'</td><td><a href="transactionpaymentreceipt/'+i.memberpackagesid+'")}}"><i class="fa fa-print margin"></i></a><a id="emailafterpack"    onclick="return emailafterpacsdck('+i.memberpackagesid+','+userid+');" class="red"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></td></tr>';
+              userprofile+='<tr><td>'+i.schemename+'</td><td>'+formatted_date+'</td><td>'+formatted+'</td><td><a href="transactionpaymentreceipt/'+i.memberpackagesid+'/'+userview.mobileno+'")}}"><i class="fa fa-print margin"></i></a><a id="emailafterpack"    onclick="return emailafterpacsdck('+i.memberpackagesid+','+userid+');" class="red"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></td></tr>';
 
             });
             userprofile+='</tbody></table></ul></div>';
@@ -822,7 +862,7 @@ function opendiv(userid,username){
           $('#search-bar').append(userprofile);
           $('#menus').empty(); 
           if(userview.status!=1){
-             $('.userprofile').after('<form action="Printconsentform" class="form-inline"><a href="assignPackageOrRenewalPackage/'+userid+'"class="btn bg-orange margin disabled"><i class="fa fa-users"></i>  Assign Package</a><a href="addMeasurement/'+userid+'"class="btn bg-orange margin disabled"><i class="fa fa-plus"></i>  Add Measurment</a><a href="assigndiettomember/'+userview.memberid+'"class="btn bg-orange margin disabled"><i class="fa fa-cutlery"></i>   Assign Diet</a><a href="assignExercise/'+userview.memberid+'"class="btn bg-orange margin disabled"><i class="fa fa-cutlery"></i>   Assign Workout</a><input type="hidden" name="firstname" value="'+userview.firstname+'" ><input type="hidden" name="lastname" value="'+userview.lastname+'" ><input type="hidden" name="memberid" value="'+userview.memberid+'" ><input type="hidden" name="phone" value="'+userview.mobileno+'" ><input type="hidden" name="email" value="'+userview.email+'" ><button type="submit" disabled class="btn bg-orange margin"><i class="fa fa-print"></i> Print consentform</button></form>');
+             $('.userprofile').after('<form action="Printconsentform" class="form-inline"><a href="assignPackageOrRenewalPackage/'+userid+'"class="btn bg-orange margin"><i class="fa fa-users"></i>  Assign Package</a><a href="addMeasurement/'+userid+'"class="btn bg-orange margin disabled"><i class="fa fa-plus"></i>  Add Measurment</a><a href="assigndiettomember/'+userview.memberid+'"class="btn bg-orange margin disabled"><i class="fa fa-cutlery"></i>   Assign Diet</a><a href="assignExercise/'+userview.memberid+'"class="btn bg-orange margin disabled"><i class="fa fa-cutlery"></i>   Assign Workout</a><input type="hidden" name="firstname" value="'+userview.firstname+'" ><input type="hidden" name="lastname" value="'+userview.lastname+'" ><input type="hidden" name="memberid" value="'+userview.memberid+'" ><input type="hidden" name="phone" value="'+userview.mobileno+'" ><input type="hidden" name="email" value="'+userview.email+'" ><button type="submit" disabled class="btn bg-orange margin"><i class="fa fa-print"></i> Print consentform</button></form>');
            }else{
              $('.userprofile').after('<form action="Printconsentform" class="form-inline"><a href="assignPackageOrRenewalPackage/'+userid+'"class="btn bg-orange margin"><i class="fa fa-users"></i>  Assign Package</a><a href="addMeasurement/'+userid+'"class="btn bg-orange margin"><i class="fa fa-plus"></i>  Add Measurment</a><a href="assigndiettomember/'+userview.memberid+'"class="btn bg-orange margin"><i class="fa fa-cutlery"></i>   Assign Diet</a><a href="assignExercise/'+userview.memberid+'"class="btn bg-orange margin"><i class="fa fa-cutlery"></i>  Assign Workout</a><input type="hidden" name="firstname" value="'+userview.firstname+'" ><input type="hidden" name="lastname" value="'+userview.lastname+'" ><input type="hidden" name="memberid" value="'+userview.memberid+'" ><input type="hidden" name="phone" value="'+userview.mobileno+'" ><input type="hidden" name="email" value="'+userview.email+'" ><button type="submit" class="btn bg-orange margin"><i class="fa fa-print"></i> Print consentform</button></form>');
            }
@@ -908,7 +948,4 @@ function opendiv(userid,username){
 
 
 </script>
-<script src="{{asset('/js/dashboard.js')}}"></script>
-  
-    
 @endsection

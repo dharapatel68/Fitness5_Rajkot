@@ -144,8 +144,7 @@ class Reminders extends Command
                     if ($emailsetting) {
                         if ($dndmpemail) {
                           if ($mp->email == 1) {
-
-                                 $data = [
+                                $data = [
                                          
                                                  'msg' => $package_expiry2,
                                                  'mail'=> $dndmpemail,
@@ -379,8 +378,8 @@ class Reminders extends Command
 
               
 
-                    if ($mb->email == 1) {
-
+                    if ($mb->email == 1) {      
+                        if ($emailsetting) {
                         $data = [
                                  //'data' => 'Rohit',
                                  'msg' => $bithday_msg_new2,
@@ -409,9 +408,8 @@ class Reminders extends Command
                         $action->save();
                         
                     }
-
+                }
             }
-               
         }
 
             
@@ -464,7 +462,7 @@ class Reminders extends Command
                   }
 
                     if ($ma->email == 1) {
-
+                        if ($emailsetting) {
                         $data = [
                              
                                  'msg' => $anniversary_msg_new2,
@@ -493,8 +491,8 @@ class Reminders extends Command
                         $action->messagefor = 'Anniversary Message By System';
                         $action->save();
 
+                       }
                     }
-
                 }
                
                } 
