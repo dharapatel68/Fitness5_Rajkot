@@ -1619,7 +1619,7 @@ textarea.input100 {
                         <td>{{ $payment->tax }}</td>
                         <td>{{ $payment->discountamount > 0 ? $payment->discountamount : '0' }}</td>
                         <td>{{ $payment->receiptno}}</td>
-                        <td><a href="{{url('transactionpaymentreceipt/'.$payment->invoiceno)}}"><i class="fa fa-print"></i></a>
+                        <td><a href="{{url('transactionpaymentreceipt/'.$payment->invoiceno.'/'.$member->mobileno)}}"><i class="fa fa-print"></i></a>
                         </td>
                         </td>
                       </tr>@endif @endforeach</tbody>
@@ -2053,11 +2053,11 @@ textarea.input100 {
                                   <div class="box-body" style="font-family: Calibri; display: none">
                                     <div class="wrap-contact100">
                                       <!-- style="background-image: url(/images/FITNESSFIVE-logo.jpg);" --> <span class="contact100-form-title-1">
-           <img src="{{ asset('/images/fitness5.png')}}" width="100" height="100"> 
-        </span>
-                                      <span class="contact100-form-title-2">
-          <h3>Consent Form</h3>
-        </span>
+                                    <img src="{{ asset('/images/fitness5.png')}}" width="100" height="100"> 
+                                  </span>
+                                                                <span class="contact100-form-title-2">
+                                    <h3>Consent Form</h3>
+                                  </span>
                                     </div>
                                     <form class="contact100-form validate-form" action="{{ url('Printconsentform')}}" method="get">
                                       <div class="wrap-input100 validate-input" data-validate="Name is required"> <span class="label-input100">Date</span>

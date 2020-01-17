@@ -110,6 +110,15 @@
             </ul>
             </div>
             @endif
+            @if(request()->route('id'))
+              @php 
+                $id=request()->route('id');
+              @endphp
+            @else
+              @php 
+                $id='';
+              @endphp
+            @endif
             <div class="box box-primary">
 
             <div class="box-header with-border">
@@ -1982,6 +1991,7 @@
     }
    });
       $('#trainerid').change(function(){
+                      var routeid='<?php echo $id; ?>';
                        var trainerid = $('#trainerid').val();
                   
                // $('#sessionreport').css('display','none');
@@ -2000,10 +2010,11 @@
                                        $("#memberid").append($("<option></option>").attr("value", item.memberid).text(item.firstname+' '+item.lastname));
 
                                       });
-                                    // $("#memberid option[value="+mid+"]").attr("selected", "selected");
-                                    //    $("#memberid").trigger('change');
+                                    $("#memberid option[value="+routeid+"]").attr("selected", "selected");
+                                       $("#memberid").trigger('change');
                                     }
                                    // alert(mid);
+                                   
                                       
 
                                     

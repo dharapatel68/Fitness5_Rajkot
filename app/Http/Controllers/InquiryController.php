@@ -203,7 +203,7 @@ class InquiryController extends Controller
 
             return view('admin.addinquiry',compact('packages','pocarray'));
  
-
+  }
   public function add_inquiry()
   {
 

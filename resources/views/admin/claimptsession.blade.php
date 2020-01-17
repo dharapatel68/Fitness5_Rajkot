@@ -2,7 +2,7 @@
  include('..///config/database.php');
  //include('..///config/session.php');
 ?>
-
+ 
 @extends('layouts.adminLayout.admin_design')
 @section('content')
 <!-- left column -->
@@ -440,7 +440,7 @@
                 
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 
-                <h4 class="modal-title" id="Label">PTP For Session <b id="ld"></b> <b id="lt" ></b></h4>
+                <h4 class="modal-title" id="Label">FITPIN For Session <b id="ld"></b> <b id="lt" ></b></h4>
             
             </div>
             

@@ -174,6 +174,18 @@ $first = $arr[1];
      background: white;
      color: black;
 }
+    textarea {
+    border: 1px solid #ddd;
+    background: #fff url(../img/input-shaddow.gif) no-repeat left top;
+    font: 11px Arial, Helvetica, sans-serif;
+    color: #000;
+    padding: 5px;
+    width: 262px;
+    float: left;
+    margin: 0 10px 0 0;
+    height: 50px;
+    overflow: hidden;
+}
  </style>
 <script type="text/javascript">
    $(document).ready (function(){

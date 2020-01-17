@@ -18,7 +18,7 @@ use App\Ptmember;
 
 class PersonalTrainerController extends Controller
 {
-  public function checkfromdateajax(Request $request){
+	public function checkfromdateajax(Request $request){
       DB::enableQueryLog();
      $fromdate=$request->get('fromdate');
      $memberpackagesid=$request->get('memberpackagesid');
@@ -32,7 +32,7 @@ class PersonalTrainerController extends Controller
        echo "invalid";
      }
      // echo  $memberid;
-    }
+  	}
    public function index(){
     echo "string";
    }
@@ -233,8 +233,8 @@ class PersonalTrainerController extends Controller
      // echo json_encode($percentage);
       // return view('admin.Assign_PT_Level');
    }
-  
-  public function editassignptlevel(Request $request){
+	
+	public function editassignptlevel(Request $request){
 
      $employee= $request->post('employee');
      $mobile_no= $request->post('mobileno');
@@ -255,7 +255,7 @@ class PersonalTrainerController extends Controller
      // echo json_encode($percentage);
       // return view('admin.Assign_PT_Level');
    }
-  
+	
    public function assignPTTime(Request $request){
     DB::enableQueryLog();
     $trainerid='';
@@ -328,7 +328,7 @@ class PersonalTrainerController extends Controller
      // echo json_encode($percentage);
       // return view('admin.Assign_PT_Level');
    }
-  
+	
   public function addassignptlevel(Request $request){
       $request->validate([
         'employee' => 'unique:ptassignlevel,trainerid',
@@ -497,7 +497,7 @@ public function ajaxgetjoindate(Request $request){
       {
         $member=DB::table('ptmember')->where(['ptmemberid'=>$request->ptid])->first();
         $trainer=DB::table('employee')->where('employeeid',$member->trainerid)->get()->first();
-       $member=DB::table('member')->where(['memberid'=>$member->memberid])->get();
+       $member=DB::table('member')->where(['memberid'=>$member->memberid])->get()->first();
         if($request->ptp==$trainer->fitpin)
         {
           // echo "hi";
@@ -559,8 +559,8 @@ public function ajaxgetjoindate(Request $request){
 
           $employee= DB::table('employee')->where('employeeid',$request->trainerid)->get()->first();
       
-          $member=DB::table('member')->where(['memberid'=>$request->memberid])->get();
-          if($request->ptp==$employee->fitpin)
+          $member=DB::table('member')->where(['memberid'=>$request->memberid])->get()->first();
+          if($request->ptp==$member->memberpin)
           {
             $query=DB::table('ptmember')->where(['trainerid'=>$request->trainerid,'memberid'=>$request->memberid,'status'=>'Active'])->where('hoursfrom','!=','')->orderBy('date','ASC')->first();
 
@@ -651,8 +651,8 @@ public function ajaxgetjoindate(Request $request){
     // echo $percentage;
      echo json_encode($members);
    }
-  
-   public function ajaxgetptslot(Request $request){
+	
+	 public function ajaxgetptslot(Request $request){
 
      $trainerid= $request->get('trainerid');
      $ptslots =  Ptslot::where(['trainerid' => $trainerid])->get();
@@ -665,7 +665,7 @@ public function ajaxgetjoindate(Request $request){
   public function assigntimeslotajax(Request $request){
           // DB::enableQueryLog();
           $trainerid = $request->get('trainerid');
-        $packageid = $request->get('packageid');
+	  	  $packageid = $request->get('packageid');
         $memberid = $request->get('memberid');
           // print_r($member);
         $q=array();
@@ -839,7 +839,7 @@ public function ajaxgetjoindate(Request $request){
 
     return redirect('personaltrainer/assignmembertotrainer');
    } 
-  public function editassignpttomember(Request $request){
+	public function editassignpttomember(Request $request){
           DB::enableQueryLog();
 
     if($request->isMethod('post'))
@@ -1109,8 +1109,10 @@ public function ajaxgetjoindate(Request $request){
         $trainerid = $request->get('trainerid');
          
  // $reportmembers=DB::select( DB::raw("select distinct `member`.* from `member` left join `ptmember` on `ptmember`.`memberid` = `member`.`memberid` left join memberpackages on memberpackages.memberpackagesid = ptmember.packageid where `ptmember`.`trainerid` = '".$trainerid."' and memberpackages.status=1 And(`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending')"));
-  $reportmembers=DB::select( DB::raw("select distinct `member`.* from `member` left join memberpackages on memberpackages.userid = member.userid left join `schemes` on `schemes`.`schemeid` = `memberpackages`.`schemeid` where `schemes`.`rootschemeid`= 2 and memberpackages.status=1"));
- return  json_encode($reportmembers);
+      $reportmembers=DB::select( DB::raw("select distinct `member`.* from `member` left join memberpackages on memberpackages.userid = member.userid left join `schemes` on `schemes`.`schemeid` = `memberpackages`.`schemeid` where `schemes`.`rootschemeid`= 2 and memberpackages.status=1"));
+  
+      return  json_encode($reportmembers);
+
     }
     public function  getsessiontrainermember(Request $request){
 

@@ -8,6 +8,10 @@ use App\TrainerProfile;
 use App\Notify;
 use App\Ptlevel;
 use App\BookTrainer;
+use App\Emailsetting;
+use Illuminate\Support\Facades\Mail;
+use App\Emailnotificationdetails;
+use DB;
 
 class TrainerProfileControllerApp extends Controller
 {
@@ -117,6 +121,50 @@ class TrainerProfileControllerApp extends Controller
 		$BookTrainer->membermobileno = $request->mobileno;
 		$BookTrainer->timingslot = json_encode($slot);
 		$BookTrainer->save();
+		$newresult='';
+		$emailsetting =  Emailsetting::where('status',1)->first();
+		if($slot){
+			// for ($i=0; $i < count($slot) ; $i++) { 
+			// 	$newresult .= $slot[$i];
+			// 	$newresult .= \r\n;
+			// }
+		}
+		
+		// dd($newresult);
+      	if ($emailsetting) {
+
+        $data = [
+                             //'data' => 'Rohit',
+               'msg' => implode("\r\n", $slot),
+               'mail'=> 'dharapatel61998@gmail.com',
+               'subject' => $emailsetting->hearder,
+               'senderemail'=> $emailsetting->senderemailid,
+            ];
+
+		
+			// dd($data);
+        Mail::send('admin.name', ["data1"=>$data], function($message) use ($data){
+
+                $message->from($data['senderemail'], 'Booking of Trainer');
+                $message->to($data['mail']);
+                $message->subject($data['subject']);
+                
+
+          });
+
+		$action = new Emailnotificationdetails();
+		$action->user_id = session()->get('admin_id');
+		$action->mobileno = $request->mobileno;
+		$action->message = $data['msg'];
+		$action->emailform = $data['senderemail'];
+		$action->emailto = $data['mail'];
+		$action->subject = $data['subject'];
+		$action->messagefor = 'Booking of Trainer';
+		
+		$action->save();
+
+        }
+
 		return "Your request is sent to the GYM, well get back to you shortly";
 	}
 }
