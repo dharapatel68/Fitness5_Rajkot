@@ -2,17 +2,17 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @section('content')
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
-      <link rel="stylesheet" href="{{ asset('bower_components/Ionicons/css/ionicons.min.css') }}">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{ asset('dist/css/AdminLTE.min.css') }}">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css') }}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+<link rel="stylesheet" href="{{ asset('bower_components/Ionicons/css/ionicons.min.css') }}">
+<!-- DataTables -->
+<link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+<!-- Theme style -->
+<link rel="stylesheet" href="{{ asset('dist/css/AdminLTE.min.css') }}">
+<!-- AdminLTE Skins. Choose a skin from the css/skins
+folder instead of downloading all of them to reduce the load. -->
+<link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css') }}">
 <script src="{{ asset('bower_components/datatables.net/js/jquery.js') }}"></script>
 <script data-require="datatables@*" data-semver="1.10.12" src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('bower_components/datatables.net/js/dataTables.bootstrap.min.js') }}"></script>
@@ -257,6 +257,11 @@
     left: 210px;
     opacity: 0;
   }
+}
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-clear-button {
+    display: none;
+    -webkit-appearance: none;
 }
 /*form styles*/
 
@@ -1619,7 +1624,8 @@ textarea.input100 {
                         <td>{{ $payment->tax }}</td>
                         <td>{{ $payment->discountamount > 0 ? $payment->discountamount : '0' }}</td>
                         <td>{{ $payment->receiptno}}</td>
-                        <td><a href="{{url('transactionpaymentreceipt/'.$payment->invoiceno)}}"><i class="fa fa-print"></i></a>
+                        
+                        <td> @if($payment->invoicetype == 'm') <a href="{{url('transactionpaymentreceipt/'.$payment->invoiceno.'/'.$member->mobileno)}}"><i class="fa fa-print"></i></a> @endif
                         </td>
                         </td>
                       </tr>@endif @endforeach</tbody>
@@ -2053,11 +2059,11 @@ textarea.input100 {
                                   <div class="box-body" style="font-family: Calibri; display: none">
                                     <div class="wrap-contact100">
                                       <!-- style="background-image: url(/images/FITNESSFIVE-logo.jpg);" --> <span class="contact100-form-title-1">
-           <img src="{{ asset('/images/fitness5.png')}}" width="100" height="100"> 
-        </span>
-                                      <span class="contact100-form-title-2">
-          <h3>Consent Form</h3>
-        </span>
+                                    <img src="{{ asset('/images/fitness5.png')}}" width="100" height="100"> 
+                                  </span>
+                                                                <span class="contact100-form-title-2">
+                                    <h3>Consent Form</h3>
+                                  </span>
                                     </div>
                                     <form class="contact100-form validate-form" action="{{ url('Printconsentform')}}" method="get">
                                       <div class="wrap-input100 validate-input" data-validate="Name is required"> <span class="label-input100">Date</span>

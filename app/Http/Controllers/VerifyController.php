@@ -11,18 +11,9 @@ class VerifyController extends Controller
    // {
    // 	return view('admin.verify');
    // }
-   // public function postVerify(Request $request)
-   // {
-   // 		if($user =User::where('code',$request->code)->first()){
-   // 			$user->active=1;
-   // 			$user->code=null;
-   // 			$user->save();
-   // 			return back()->withMessage('your account is activated');
-   // 		}
-   // 		else{
-   // 			return back()->withMessage('code is incorrect! please try again');
-   // 		}
-   // }
+   public function postVerify(Request $request)
+   {
+   
 
 	$mobileNumber = $request['mobileno'];
 	$rndno=rand(1000, 9999);
@@ -67,4 +58,5 @@ class VerifyController extends Controller
 	// echo $output;exit();
 	curl_close ( $ch );
 
+	}
 }

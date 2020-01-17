@@ -13,7 +13,7 @@ class Employee extends Model
          'roleid','username','first_name','last_name','role','email','address','city','department','salary','workinghourfrom1','workinghourto1','workinghourfrom2','workinghourto2','dob','gender','mobileno','password', 'photo','accountno','accountname','ifsccode','bankname','branchname','branchcode','status','userid','files','fitpin','workinghour'];
 
   public function Role()
-{
-  return $this->belongsTo('App\Role', 'roleid');
-}
+  {
+    return $this->belongsTo('App\Role', 'roleid');
+  }
 }

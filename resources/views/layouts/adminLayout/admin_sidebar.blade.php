@@ -205,6 +205,7 @@
                </ul>
             </li>
             @endif
+             
             <!--    @if(isset($permission["'add_device'"]) || isset($permission["'view_device'"]))
                <li class="treeview">
                  <a href="#">
@@ -390,6 +391,48 @@
                </a>
             </li>
             </li>
+            <li class="treeview">
+               <a href="#">
+               <i class="fa fa-file"></i>
+               <span>Reports</span>
+               <span class="pull-right-container">
+               <i class="fa fa-angle-left pull-right"></i>
+               </span>
+               </a>
+               <ul class="treeview-menu">
+               
+                  <li class="treeview">
+                     <a href="#">
+                     <i class="fa fa-key"></i>
+                     <span>
+                     <b>Password</b>
+                     </span>
+                     <span class="pull-right-container">
+                     <i class="fa fa-angle-left pull-right"></i>
+                     </span>
+                     </a>
+                     <ul class="treeview-menu">
+                    
+                        <li>
+                           <a  href="{{ url('addpassword') }}">
+                           <i class="fa fa-chevron-right"></i> Add Password
+                           </a>
+                        </li>
+                      
+                        <li>
+                           <a href="{{ url('viewpassword') }}">
+                           <i class="fa fa-chevron-right"></i> View Password
+                           </a>
+                        </li>
+                   
+                     </ul>
+                  </li>
+              
+                
+                
+                
+               </ul>
+            </li>    
             @endif
          </ul>
       </li>

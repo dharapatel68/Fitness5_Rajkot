@@ -8,6 +8,11 @@ use App\TrainerProfile;
 use App\Notify;
 use App\Ptlevel;
 use App\BookTrainer;
+use App\Emailsetting;
+use Illuminate\Support\Facades\Mail;
+use App\Emailnotificationdetails;
+use DB;
+use App\Admin;
 
 class TrainerProfileControllerApp extends Controller
 {
@@ -112,11 +117,56 @@ class TrainerProfileControllerApp extends Controller
 		$slot = request()->slots;
 		
 		$BookTrainer = new BookTrainer();
-                  
 		$BookTrainer->trainerprofileid = $request->trainerid;
 		$BookTrainer->membermobileno = $request->mobileno;
 		$BookTrainer->timingslot = json_encode($slot);
 		$BookTrainer->save();
+		$newresult='';
+		$emailsetting =  Emailsetting::where('status',1)->first();
+		$employeeid=TrainerProfile::where('trainerprofileid',$request->trainerid)->pluck('employeeid')->first();
+		$trainername=Employee::where('employeeid',$employeeid)->pluck('username')->first();
+	
+		if($slot){
+
+			$msg='';
+			$admins=Employee::whereIn('role',['admin','Admin'])->pluck('email')->all();
+
+				if ($emailsetting) {
+					
+					$msg.="<br> Today's booked slots for Trainer ".$trainername." : <br>";
+					$slots=implode("<br>", $slot);
+					$msg.=$slots;
+					
+
+					foreach ($admins as $key => $value) {
+						$data = [
+							'msg' => $msg,
+							'mail'=> $value,
+							'subject' => $emailsetting->hearder,
+							'senderemail'=> $emailsetting->senderemailid,
+						];
+						Mail::send(['html' =>'admin.name'], ["data1"=>$data], function($message) use ($data){
+
+								$message->from($data['senderemail'], 'Booking of Trainer');
+								$message->to($data['mail']);
+								$message->subject($data['subject']);
+								
+
+						});
+
+						$action = new Emailnotificationdetails();
+						$action->user_id = session()->get('admin_id');
+						$action->mobileno = $request->mobileno;
+						$action->message = $data['msg'];
+						$action->emailform = $data['senderemail'];
+						$action->emailto = $data['mail'];
+						$action->subject = $data['subject'];
+						$action->messagefor = 'Booking of Trainer';
+						$action->save();
+						echo $value;
+				}
+			}
+		}
 		return "Your request is sent to the GYM, well get back to you shortly";
 	}
 }

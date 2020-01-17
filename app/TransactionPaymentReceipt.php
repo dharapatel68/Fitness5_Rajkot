@@ -21,7 +21,7 @@ class TransactionPaymentReceipt
     public function __construct() {
         $this->pdf = new Dompdf;
     }
-    public function generate($request) {
+    public function generate($request,$memberid) {
       $oldpayment_data = '';
 
     $payment= Payment::where('invoiceno',$request)->where('mode','!=','total')->whereIn('invoicetype', ['m', 'o'])->get()->all();
@@ -29,19 +29,22 @@ class TransactionPaymentReceipt
       $payment= Payment::where('invoiceno',$request)->where('mode','!=','total')->where('invoicetype', 'o')->get()->all();
     }*/
     
-
-    $payment1 = Payment::where('invoiceno',$request)->where('mode','!=','total')->whereIn('invoicetype', ['m', 'o'])->get()->first();
-    /*if(empty($payment1)){
-      $payment1 = Payment::where('invoiceno',$request)->where('mode','!=','total')->where('invoicetype', 'o')->get()->first();
-    }*/
-
-    $schemeactualprice =$payment1->schemeactualprice;
-    $schemebaseprice =$payment1->schemebaseprice;
+  //   $payment1 = Payment::where('invoiceno', function($query){
+  //     $query->select('invoiceno')
+  //           ->from(with(new Payment)->getTable())
+  //           ->whereIn('invoicetype', ['m', 'o'])
+  //           ->where('mode','!=','total')
+  //           ->where('invoiceno',3);
+  // })->get()->first();
+ 
+     $payment1 = Payment::where('invoiceno',$request)->where('memberid',$memberid)->where('mode','!=','total')->whereIn('invoicetype', ['m', 'o'])->get()->first();
+    
+ 
+    // $schemeactualprice =$payment1->schemeactualprice;
+    // $schemebaseprice =$payment1->schemebaseprice;
 
     $total_payment = Payment::where('invoiceno',$request)->where('mode','!=','total')->whereIn('invoicetype', ['m', 'o'])->first();
-    /*if(empty($total_payment)){
-      $total_payment = Payment::where('invoiceno',$request)->where('mode','!=','total')->where('invoicetype', 'o')->first();
-    }*/
+ 
 
       $user= User::where('userid',$payment1->userid)->get()->first();
       
@@ -71,7 +74,7 @@ class TransactionPaymentReceipt
 
       $scheme=Scheme::where('schemeid',$payment1->schemeid)->get()->first();
       //echo $id;
-     
+      
       $memberpackage = MemberPackages::where('userid',$id)->where('schemeid',$payment1->schemeid)->where('memberpackagesid', $request)->get()->first();
       
       if(!empty($memberpackage)){
@@ -208,6 +211,7 @@ $request->replace(['paymentdate' => $today,'username' => $user->username]);
       $this->pdf->render();
      
       $this->pdf->stream(''.$member->firstname.' '.$member->lastname.'.pdf');
+      exit(0);
     
      }
 }

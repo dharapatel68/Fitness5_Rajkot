@@ -22,154 +22,154 @@ td{
 }
 </style>
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-     	 <h1 style="text-decoration: none;">Payment Report</h1>
-     </section>
-      <section class="content">
-      <!-- Info boxes -->
-     	 <div class="row">
-     	 	<div class="col-md-12">
-     	 		<div class="row">
-     	 			<div class="box box-info">
-     	 				 <div class="box-header with-border">
-			              <h3 class="box-title">Filters</h3>
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+      <h1 style="text-decoration: none;">Payment Report</h1>
+   </section>
+    <section class="content">
+    <!-- Info boxes -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="box box-info">
+               <div class="box-header with-border">
+                  <h3 class="box-title">Filters</h3>
 
-			              <div class="box-tools pull-right">
-			                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-			                </button>
-			                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-			              </div>
-			            </div>
-			            <!-- /.box-header -->
-			            <div class="box-body">
-			            	<form action="{{url('paymentreport')}}" method="post">
-			            		{{csrf_field()}}
-							<div class="table-responsive">
-							  <table class="table no-margin">
-							  <thead>
-							  <tr>
-							    <th>From :</th>
-							    <th>To :</th>
-							    <th>Mode</th>
-							    <th>Username</th>
-							 	<th>Amount</th>
-							    
-							  </tr>
-							</thead>
-							<tbody>
-					
-							<tr>
-							<td><input type="date" name="fdate" class="form-control" value="{{$query['fdate']}}"></td>
-							<td><input type="date" name="tdate" class="form-control" value="{{$query['tdate']}}"></td>
-							<td><select name="mode" class="form-control select2" id="mode" data-placeholder="Select a Mode" >
-								<option value="" selected="" disabled="">Select a Mode</option>
-								@foreach($modes as $mode)
-								<option value="{{$mode->paymenttype}}" @if(isset($query['mode'])) {{$query['mode'] == $mode->paymenttype ? 'selected':''}} @endif>
-									{{$mode->paymenttype}}
-									 </option>
-									@endforeach</select></td>
-
-
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <form action="{{url('paymentreport')}}" method="post">
+                    {{csrf_field()}}
+            <div class="table-responsive">
+              <table class="table no-margin">
+              <thead>
+              <tr>
+                <th>From :</th>
+                <th>To :</th>
+                <th>Mode</th>
+                <th>Username</th>
+               <th>Amount</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+        
+            <tr>
+            <td><input type="date" name="fdate" class="form-control" value="{{$query['fdate']}}"></td>
+            <td><input type="date" name="tdate" class="form-control" value="{{$query['tdate']}}"></td>
+            <td><select name="mode" class="form-control select2" id="mode" data-placeholder="Select a Mode" >
+              <option value="" selected="" disabled="">Select a Mode</option>
+              @foreach($modes as $mode)
+              <option value="{{$mode->paymenttype}}" @if(isset($query['mode'])) {{$query['mode'] == $mode->paymenttype ? 'selected':''}} @endif>
+                {{$mode->paymenttype}}
+                 </option>
+                @endforeach</select></td>
 
 
-							<td><select name="username" class="form-control select2 span8" data-placeholder="Select a Username" >
-								<option value="" selected="" disabled="">Select a Username</option>
-								@foreach($users as $user)
 
-								<option value="{{$user->userid}}"  @if(isset($query['username'])) {{$query['username'] == $user->userid ? 'selected':''}} @endif>
-									
-{{ $user->username }}              
-							
-									 </option>
-									@endforeach</select></td>
-									<td><input type="text" name="amount" class="form-control"value="{{$query['amount']}}"></td>
-							
-							
-							</tr>
-							<tr>
-								
-								<td><input type="text" name="keyword" placeholder="Search Keyword" class="form-control" value="{{$query['keyword']}}"></td>
-								<td style="text-align: left" colspan="4"><button type="submit" name="search" class="btn bg-orange"><i class="fa fa-filter"></i>   Filters</button><a href="{{ url('paymentreport') }}" class="btn bg-red">Clear</a></td>
-								
-							</tr>
-							
 
-							</tbody>
-							</table>
+            <td><select name="username" class="form-control select2 span8" data-placeholder="Select a Username" >
+              <option value="" selected="" disabled="">Select a Username</option>
+              @foreach($users as $user)
 
-							</div>
-						</form>
-			            </div>	
-     	 			</div>
-     	 			<div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title">All Payments</h3>
+              <option value="{{$user->userid}}"  @if(isset($query['username'])) {{$query['username'] == $user->userid ? 'selected':''}} @endif>
+                
+              {{ $user->username }}              
+            
+                 </option>
+                @endforeach</select></td>
+                <td><input type="text" name="amount" class="form-control"value="{{$query['amount']}}"></td>
+            
+            
+            </tr>
+            <tr>
+              
+              <td><input type="text" name="keyword" placeholder="Search Keyword" class="form-control" value="{{$query['keyword']}}"></td>
+              <td style="text-align: left" colspan="4"><button type="submit" name="search" class="btn bg-orange"><i class="fa fa-filter"></i>   Filters</button><a href="{{ url('paymentreport') }}" class="btn bg-red">Clear</a></td>
+              
+            </tr>
+            
 
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
+            </tbody>
+            </table>
+
             </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <div class="table-responsive">
-                <table class="table no-margin">
-                  <thead>
-                  <tr>
-                  	<th>Date</th>
-                    <th>Invoice ID</th>
-                    <th>Name</th>
-                    <th>Mode</th>
-                    <th>Amount</th>
-                    <th>TakenBy</th>
-                    <th>ReceiptNo</th>
-                    <th>Company Name</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-     					
-                  	@if(count($paymentdata)>0)
-
-                  	@foreach($paymentdata as $paymentreport)
-                  	<tr>
-                  		<td>{{date('d-m-Y',strtotime($paymentreport->date))}}</td>
-                  		<td>{{$paymentreport->invoiceno}}</td>
-						<td>
-							@if($paymentreport->firstname) {{ucwords( $paymentreport->firstname )}} {{ucwords($paymentreport->lastname)}}
-@else {{ ucwords( $paymentreport->rfirstname )}} {{ucwords($paymentreport->rlastname)}} @endif </td>
-                  		<td>{{$paymentreport->mode}}</td>
-                  		<td>{{$paymentreport->pamount}}</td>
-                  		<td>{{$paymentreport->name}}</td>
-                  		<td>{{$paymentreport->receiptno}}</td>
-                  		<td>{{$paymentreport->companyname}}</td>
-                  		
-                  	</tr>
-                  		@endforeach
-                  		@else
-                  		<tr><td colspan="8" style="text-align: center">{{ 'No Data Found'}}</td></tr>
-                  		@endif
-                  	
-                  </tbody>
-                </table>
-                    <div class="datarender" style="text-align: center">
-            {!! $paymentdata->render() !!}  </div>
-              </div>
-              <!-- /.table-responsive -->
+          </form>
+                </div>	
             </div>
-            <!-- /.box-body -->
-        <!--     <div class="box-footer clearfix">
-              <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
-              <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
-            </div> -->
-            <!-- /.box-footer -->
+            <div class="box box-info">
+          <div class="box-header with-border">
+            <h3 class="box-title">All Payments</h3>
+
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
           </div>
-     	 		</div>
-     	 	</div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <div class="table-responsive">
+              <table class="table no-margin">
+                <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Invoice ID</th>
+                  <th>Name</th>
+                  <th>Mode</th>
+                  <th>Amount</th>
+                  <th>TakenBy</th>
+                  <th>ReceiptNo</th>
+                  <th>Company Name</th>
+                </tr>
+                </thead>
+                <tbody>
+             
+                  @if(count($paymentdata)>0)
 
-      	 </div>
- 	  </section>
+                  @foreach($paymentdata as $paymentreport)
+                  <tr>
+                    <td>{{date('d-m-Y',strtotime($paymentreport->date))}}</td>
+                    <td>{{$paymentreport->invoiceno}}</td>
+          <td>
+            @if($paymentreport->firstname) {{ucwords( $paymentreport->firstname )}} {{ucwords($paymentreport->lastname)}}
+              @else {{ ucwords( $paymentreport->rfirstname )}} {{ucwords($paymentreport->rlastname)}} @endif </td>
+                    <td>{{$paymentreport->mode}}</td>
+                    <td>{{$paymentreport->pamount}}</td>
+                    <td>{{$paymentreport->name}}</td>
+                    <td>{{$paymentreport->receiptno}}</td>
+                    <td>{{$paymentreport->companyname}}</td>
+                    
+                  </tr>
+                    @endforeach
+                    @else
+                    <tr><td colspan="8" style="text-align: center">{{ 'No Data Found'}}</td></tr>
+                    @endif
+                  
+                </tbody>
+              </table>
+                  <div class="datarender" style="text-align: center">
+          {!! $paymentdata->render() !!}  </div>
+            </div>
+            <!-- /.table-responsive -->
+          </div>
+          <!-- /.box-body -->
+      <!--     <div class="box-footer clearfix">
+            <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+            <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
+          </div> -->
+          <!-- /.box-footer -->
+        </div>
+          </div>
+        </div>
+
+       </div>
+   </section>
 </div>
 <script type="text/javascript">
 

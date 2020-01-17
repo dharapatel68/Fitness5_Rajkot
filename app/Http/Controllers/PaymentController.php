@@ -531,18 +531,7 @@ $gstno='';
 
       // if memebr has already package start
 
-      /*$test = Memberpackages::where('userid',$userid)->where('schemeid', $schemeid)->get();*/
-          
-      // if(Memberpackages::where('userid',$userid)->where('schemeid', $schemeid)){
-      //     $memberpack = Memberpackages::where('userid',$userid)->where('schemeid', $request['SchemeID'])->where('status', 1)->get()->all();
-          
-      //     foreach($memberpack as $pack){
-      //       if( !( $joindate > $pack->expiredate)){
-      //           return redirect('memberProfile/'.$memberid)->with('message','You Cant  assign  same package untill its not completed');
-      //       }//end of if
-           
-      //     }//end of foreach
-      // } 
+      
       // if memebr has already package end
 
 
@@ -747,6 +736,7 @@ $gstno='';
         $scheme = Scheme::where('schemeid', $schemeid)->first();
         if(!empty($scheme)){
           $scheme_name = $scheme->schemename;
+          $rootschemeid = $scheme->rootschemeid;
         }
         $loginuser = session()->get('username');
         $actionbyid=session()->get('employeeid');
@@ -759,13 +749,18 @@ $gstno='';
         if(empty($amount_paid)){
           $amount_paid = 0;
         }
-
+          /*****for pt button in summry page****** */
+          $memberid=0;
+          if(Member::where('userid',$userid)->pluck('memberid')->first()){
+            $memberid = Member::where('userid',$userid)->pluck('memberid')->first();
+          }
+           /****End *for pt button in summry page****** */
         /*$summry = array("fullname"=>$fullname, "joindate"=>$joindate,
                  "enddate"=>$expiredate, "amount"=>$amount_paid,  "InvoiceID"=>$invoice_no, "TransactionType"=>$transaction_type, "duedate"=>$due_date,
                  "dueamnt"=>$remainingamount,"package"=>$scheme_name, "transactionid"=>$result_of_transaction, 'userid'=>$userid);*/
         $summry = array("fullname"=>$fullname, "joindate"=>$joindate,   
-                  "enddate"=>$expiredate, "amount"=>$amount_paid, 'mobileno'=>$mobileno, 'userid'=>$userid,  "InvoiceID"=>$invoice_no, "TransactionType"=>$transaction_type, "duedate"=>$due_date,  
-                  "dueamnt"=>$remainingamount,"package"=>$scheme_name, "transactionid"=>$result_of_transaction);
+                  "enddate"=>$expiredate, "amount"=>$amount_paid, 'mobileno'=>$mobileno, 'userid'=>$userid, 'memberid'=>$memberid,   "InvoiceID"=>$invoice_no, "TransactionType"=>$transaction_type, "duedate"=>$due_date,  
+                  "dueamnt"=>$remainingamount,"package"=>$scheme_name, "transactionid"=>$result_of_transaction ,"rootschemeid"=>$rootschemeid);
 
 
        
@@ -1170,6 +1165,7 @@ $gstno='';
         }
 
         $scheme=Scheme::where('schemeid',$payment1->schemeid)->get()->first();
+        $rootschemeid=$scheme->rootschemeid;
           //echo $id;
 
         $memberpackage = MemberPackages::where('userid',$id)->where('schemeid',$payment1->schemeid)->where('status',1)->where('memberpackagesid', $request)->get()->first();
@@ -1303,7 +1299,7 @@ $gstno='';
 
       /*dd($payment[0]);*/
       $filename = time().'invoice.pdf';
-      $pdflink = url('/').'/transactionpaymentreceipt/'.$invoice_no;
+      $pdflink = url('/').'/transactionpaymentreceipt/'.$invoice_no.'/'.$phoneno;
       $pdflink = app('bitly')->getUrl($pdflink);
 
       $tax = $payment_tax;
@@ -1357,23 +1353,23 @@ $gstno='';
 
       $smssetting = Smssetting::where('status',1)->where('smsonoff','Active')->first();
 
-      if($smssetting) {
+      // if($smssetting) {
          
-       $u = $smssetting->url;
-       $url= str_replace('$mobileno', $mobileno, $u);
-       $url=str_replace('$msg', $msg, $url);
+      //  $u = $smssetting->url;
+      //  $url= str_replace('$mobileno', $mobileno, $u);
+      //  $url=str_replace('$msg', $msg, $url);
 
-       $otpsend = Curl::to($url)->get();
+      //  $otpsend = Curl::to($url)->get();
 
-       $action = new Notificationmsgdetails();
-       $action->user_id = session()->get('admin_id');
-       $action->mobileno = $mobileno;
-       $action->smsmsg = $msg2;
-       $action->smsrequestid = $otpsend;
-       $action->subject = 'Payment Successfully';
-       $action->save();
+      //  $action = new Notificationmsgdetails();
+      //  $action->user_id = session()->get('admin_id');
+      //  $action->mobileno = $mobileno;
+      //  $action->smsmsg = $msg2;
+      //  $action->smsrequestid = $otpsend;
+      //  $action->subject = 'Payment Successfully';
+      //  $action->save();
 
-       }
+      //  }
 
       $tax = $payment_tax;
         $pdf = PDF::loadView('admin.paymenttransactionreceipt', compact('member','totalpay','request','payment','phoneno','scheme','memberpackage','word','companyName','Gstno','duedate','takenby','discount','tax', 'total_payment', 'oldpayment_data','payment1'));
@@ -1429,18 +1425,23 @@ $gstno='';
 
       $summry = array("fullname"=>$fullname, "joindate"=>$join_date,   
                   "enddate"=>$end_date, "amount"=>$amount_paid, 'mobileno'=>$mobileno, 'userid'=>$userid, "InvoiceID"=>$invoice_no, "TransactionType"=>$transaction_type, "duedate"=>$due_date,  
-                  "dueamnt"=>$remainingamount,"package"=>$scheme_name);
+                  "dueamnt"=>$remainingamount,"package"=>$scheme_name,"rootschemeid"=>$rootschemeid,"memberid"=>$member_id,"msg"=>$msg2);
 
       return view('admin.transaction.summry')->with('summry',$summry);
 
     }
 
 
-    public function transactionpaymentreceipt($id){
-
-      $pdf = new \App\TransactionPaymentReceipt;
-      $pdf->generate($id);
-
+    public function transactionpaymentreceipt($id,$code){
+      $payment= Payment::where('payments.invoiceno',$id)->whereIn('payments.mode',['total','no mode'])
+      ->leftjoin('member','member.memberid','payments.memberid')->where('member.mobileno',$code)
+      ->get()->first();
+      if($payment){
+        $pdf = new \App\TransactionPaymentReceipt;
+        $pdf->generate($id,$payment->memberid);
+      }else{
+        abort(404);
+      }
     }
       public function pdfStream(Request $request,$id){
 
@@ -1503,7 +1504,7 @@ $gstno='';
         $paid_amount = !empty($request->paid_amount) ? $request->paid_amount : 0;
         $payment_id = $request->payment_id;
         $remainingamount = $request->remainingamount;
-      $due_date = !empty($request->due_date) ? date('Y-m-d',strtotime($request->due_date)) : null;
+        $due_date = !empty($request->due_date) ? date('Y-m-d',strtotime($request->due_date)) : null;
       //dd($due_date);
         $member = Member::where('userid',$userid)->get()->first();
         //dd($request->toArray());
@@ -1680,7 +1681,7 @@ $gstno='';
 
           //DB::commit();
           //$Success =true;
-          return view('admin.transaction.remainingpaymentsummary')->with(compact('transactiontype','transaction_amount', 'invoiceno', 'fullname', 'transactionduedate', 'transactionremainingamount', 'scheme_name', 'start_date', 'end_date'));
+          return view('admin.transaction.remainingpaymentsummary')->with(compact('transactiontype','transaction_amount', 'invoiceno', 'mobileno', 'fullname', 'transactionduedate', 'transactionremainingamount', 'scheme_name', 'start_date', 'end_date'));
 
         }
 
@@ -1885,7 +1886,7 @@ $gstno='';
       }
 
       // sms start
-      $link_send = url('/').'/transactionpaymentreceipt/'.$invoiceno;
+      $link_send = url('/').'/transactionpaymentreceipt/'.$invoiceno.'/'.$mobileno;
       $pdflink = app('bitly')->getUrl($link_send);
 
       $today_date = date('d-m-Y');
@@ -1913,25 +1914,25 @@ $gstno='';
       $msg2 = $msg;
       $msg = urlencode($msg);
 
-       $smssetting = Smssetting::where('status',1)->where('smsonoff','Active')->first();
+      $smssetting = Smssetting::where('status',1)->where('smsonoff','Active')->first();
 
-       if ($smssetting) {
+      //  if ($smssetting) {
          
-       $u = $smssetting->url;
-       $url= str_replace('$mobileno', $mobileno, $u);
-       $url=str_replace('$msg', $msg, $url);
+      //  $u = $smssetting->url;
+      //  $url= str_replace('$mobileno', $mobileno, $u);
+      //  $url=str_replace('$msg', $msg, $url);
 
-      $otpsend = Curl::to($url)->get();
+      // $otpsend = Curl::to($url)->get();
 
-      $action = new Notificationmsgdetails();
-      $action->user_id = session()->get('admin_id');
-      $action->mobileno = $mobileno;
-      $action->smsmsg = $msg2;
-      $action->smsrequestid = $otpsend;
-      $action->subject = 'Remaing Payment';
-      $action->save();
-        # code...
-       }
+      // $action = new Notificationmsgdetails();
+      // $action->user_id = session()->get('admin_id');
+      // $action->mobileno = $mobileno;
+      // $action->smsmsg = $msg2;
+      // $action->smsrequestid = $otpsend;
+      // $action->subject = 'Remaing Payment';
+      // $action->save();
+      //   # code...
+      //  }
 
       $emailsetting =  Emailsetting::where('status',1)->first();
 
@@ -1979,7 +1980,7 @@ $gstno='';
       ]);  
       // sms end
 
-      return view('admin.transaction.remainingpaymentsummary')->with(compact('transactiontype','transaction_amount', 'invoiceno', 'fullname', 'transactionduedate', 'transactionremainingamount', 'scheme_name', 'start_date', 'end_date'));
+      return view('admin.transaction.remainingpaymentsummary')->with(compact('transactiontype','transaction_amount', 'mobileno', 'invoiceno', 'fullname', 'transactionduedate', 'transactionremainingamount', 'scheme_name', 'start_date', 'end_date','msg2'));
     
     }
 /**************************REG Payment*************************************************/

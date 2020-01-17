@@ -451,8 +451,8 @@ textarea.input100 {
          <!-- style="background-image: url(/images/Fitness5-logo.jpg);" -->
          </span>
          <div class="col-lg-8">
-            <section class="content-header">
-               <h3>Summarys Report</h3>
+            <section class="content-header"><center>
+               <h3>Payment Summary</h3></center>
             </section>
          </div>
          <table class="table">
@@ -496,18 +496,24 @@ textarea.input100 {
                   <td>Due Amount</td>
                   <td>{{ $summry['dueamnt'] }}</td>
                </tr>
-               </tr>
+           
+            
             </thead>
             <tbody>
               <tr>
-                <td  style="text-align: center;"><a id="smsafterpack"  class="green"><i class="fa fa-commenting"></i> Send SMS</a></td>
-                <td  colspan="2" style="text-align: center;"><a id="emailafterpack" class="red"><i class="fa fa-envelope-o" aria-hidden="true"></i> Send Email</a></td>
+                <td  style="text-align: left;"><a id="smsafterpack"  class="green"><i class="fa fa-commenting"></i> Send SMS</a></td>
+                <td  style="text-align: left;"><a id="emailafterpack" class="red margin"><i class="fa fa-envelope-o" aria-hidden="true"></i> Send Email</a>
+                @if($summry['rootschemeid'])
+                @if($summry['rootschemeid'] == 2)
+                <a href="{{ url('/personaltrainer/assignmembertotrainer/'.$summry['memberid']) }}" 
+                style="color: #8200ff;float:right"> <img src="{{ asset('images/icon/pt.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp;Assign Member To PT</a> 
+                @endif
+              @endif
+                </td>
               </tr>
                <tr>
-                  <td colspan="2" style="text-align: center;"><a href="{{url('transactionpaymentreceipt/'.$summry['InvoiceID'])}}"><b style="font-size: 20px;">Download Print  <i class="fa fa-print" style="size: 20px;"></i></b></a></td>
-               </tr>
-               <tr>
-                  <td colspan="2" style="text-align: center;"><a href="{{url('dashboard')}}"><b style="font-size: 20px;"> Dashboard  <i class="fa fa-tachometer" style="size: 20px;"></i></b></a></td>
+                  <td  style="text-align: left;"><a href="{{url('transactionpaymentreceipt/'.$summry['InvoiceID'].'/'.$summry['mobileno'])}}"><b style="font-size: 20px;">Download Print  <i class="fa fa-print" style="size: 20px;"></i></b></a></td>
+                  <td  style="text-align: left;"><a href="{{url('dashboard')}}"><b style="font-size: 20px;"> Dashboard  <i class="fa fa-tachometer" style="size: 20px;"></i></b></a></td>
                </tr>
                <tr>
                   <td colspan="2" style="text-align: center;display: none;" id="expiry_set"><button class="btn btn-success">Expiry Set</button></td>
@@ -535,6 +541,32 @@ textarea.input100 {
 </div>
 </section>
 </div>
+<button type="button" id="modal" class="btn btn-primary " data-toggle="modal" data-target="#exampleModal" style="display:none;">
+  Msg modal
+ </button>
+ <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLabel">Are you sure want to send this SMS ? </h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body">
+       <div class="msg">{{ $summry['msg']}}</div>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn bg-orange hide" data-dismiss="modal">No</button>
+         <button type="button" id="sendsmsyes" class="btn bg-orange">Yes</button>
+       </div>
+     </div>
+   </div>
+ </div>
+@php 
+ $msg = urlencode($summry['msg']);
+ $mobileno = $summry['mobileno'];
+@endphp
 <script Language="javascript">
 
   /*window.onbeforeunload = function(e) {
@@ -556,6 +588,25 @@ textarea.input100 {
 
 
 
+$(document).ready(function(){
+    //  $(document).on("keydown", disableF5);
+    $('#modal').trigger('click');
+});
+
+
+$('#sendsmsyes').on('click',function(){
+  var mobileno = '<?php echo $mobileno ;?>';
+  var msg='<?php echo $msg ; ?>';
+  $.ajax({
+    url:"{{ url('remianingamount/sendsmsyes') }}",
+    method:"POST",
+    data:{mobileno:mobileno,msg:msg,"_token": "{{ csrf_token() }}"},
+    success: function (response) {
+      },
+    dataType:"json"
+  });
+  $('#exampleModal').modal('hide');
+});
 
 
  $(document).bind("contextmenu",function(e){

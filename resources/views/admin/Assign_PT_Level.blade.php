@@ -3,22 +3,22 @@
 
 <link rel="stylesheet" href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{ asset('bower_components/font-awesome/css/font-awesome.min.css') }}">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="{{ asset('bower_components/Ionicons/css/ionicons.min.css') }}">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/Jquery.dataTables.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.responsive.css') }}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{ asset('dist/css/AdminLTE.min.css') }}">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css') }}">
+<link rel="stylesheet" href="{{ asset('bower_components/font-awesome/css/font-awesome.min.css') }}">
+<!-- Ionicons -->
+<link rel="stylesheet" href="{{ asset('bower_components/Ionicons/css/ionicons.min.css') }}">
+<!-- DataTables -->
+<link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/Jquery.dataTables.min.css') }}">
+<link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.responsive.css') }}">
+<!-- Theme style -->
+<link rel="stylesheet" href="{{ asset('dist/css/AdminLTE.min.css') }}">
+<!-- AdminLTE Skins. Choose a skin from the css/skins
+      folder instead of downloading all of them to reduce the load. -->
+<link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css') }}">
 
-   <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <!-- left column -->
   <div class="content-wrapper">
@@ -240,8 +240,8 @@
                     // console.log(x,y,z);
                    }
   
-             </script>
-           <script type="text/javascript">
+            </script>
+            <script type="text/javascript">
                    function setaddmodal(){
 
                    $('#id').val(''); 
@@ -256,10 +256,7 @@
                    }
   
              </script>
-              
-
-
-                </tbody>
+            </tbody>
                 <!-- <tfoot>
                 <tr>
                   <th>ID</th>

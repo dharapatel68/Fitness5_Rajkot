@@ -638,9 +638,7 @@ var _token = $('input[name="_token"]').val();
                var data=result;
                $.each(data, function(i,item){
                    // $('#scheme').append('<option value="'+item.id+'">'+item.SchemeName+'</option>');
-                   $('#scheme').append($("<option></option>").attr("value",item.schemeid).text(item.schemename));
-                  
-   
+                  $('#scheme').append($("<option></option>").attr("value",item.schemeid).text(item.schemename));
                })
 
              },

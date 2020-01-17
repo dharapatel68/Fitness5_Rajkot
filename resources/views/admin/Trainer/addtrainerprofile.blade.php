@@ -146,7 +146,7 @@ table td{
                                             <div class="form-group">
                                                 <label for="Exp" class="col-sm-4 control-label">Exp.</label>
                                                 <div class="col-sm-8">
-                                                    <textarea class="form-control" name="exp"></textarea>
+                                                    <textarea class="form-control" name="exp" id="exp"></textarea>
                                                     <!-- <input type="text" name="exp" class="form-control"> -->
 
                                                 </div>
@@ -154,7 +154,7 @@ table td{
                                             <div class="form-group">
                                                 <label for="Achievments" class="col-sm-4 control-label">Achievments</label>
                                                 <div class="col-sm-8">
-                                                    <textarea name="achievments" class="form-control"></textarea>
+                                                    <textarea name="achievments" class="form-control" id="achievments"></textarea>
                                                     <!-- <input type="text" name="achievments" class="form-control"> -->
 
                                                 </div>
@@ -167,8 +167,8 @@ table td{
                                                     <div class="col-sm-4">
                                      
                                                         <label class="btn btn-default margin">06:00 AM To 07:00 AM
-                                                            <input type="checkbox" name="slots[]" class="badgebox" value="06:00 AM To 07:00 AM">
-                                                            <span class="badge bg-orange">&check;</span>
+                                                            <input type="checkbox" name="slots[]" id="chkbx1" class="badgebox" value="06:00 AM To 07:00 AM">
+                                                             <span class="badge bg-orange">&check;</span>
                                                         </label>
 
                                                         <label class="btn btn-default margin">09:00 AM To 10:00 AM
@@ -243,11 +243,9 @@ table td{
                                             <div class="form-group">
                                                 <label for="results" class="col-sm-4 control-label">Photo</label>
                                                 <div class="col-sm-8">
-
                                                     <input type="file" name="photo" id="photo" class="form-control" accept="image/jpg, image/jpeg, image/png" onchange="loadImageFile()">
                                                     <span id="img_error"></span>
                                                     <img src="" id="img" height="100px">
-
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -262,7 +260,7 @@ table td{
                                             <br>
                                             <div class="form-group">
                                                 <div class="col-sm-offset-6 col-sm-6">
-                                                    <button name="add" type="submit" id="add" class="btn btn-success"><span class="fa fa-plus"></span> Add
+                                                    <button name="add" type="submit" id="submitbutton" class="btn btn-success"><span class="fa fa-plus"></span> Add
                                                     </button>
                                                     <button name="deduct" type="submit" id="deduct" class="btn btn-danger" style="display: none;">
                                                         <span class="fa fa-minus"></span> Deduct
@@ -286,25 +284,33 @@ table td{
     @php $trainerid=session()->get('employeeid'); @endphp
 
 <script type="text/javascript">
-    $( document ).ready(function() {
-    console.log( "ready!" );
-});
+
     $(document).ready(function(){
         var trainerid='<?php echo $trainerid;?>';
-        
-        
-    var _token = $('input[name="_token"]').val();
+        var _token = $('input[name="_token"]').val();
         $.ajax({
           type : 'POST',
           url : '{{ url('gettrainerdetail') }}',
           data : {trainerid:trainerid, _token:'{{ csrf_token() }}'},
           success : function(data){
-            if(data){
-              $('#city').val(data.city);
-    
-              $('#leveloftrainer').val(data.level);
-            }else{
-       
+            var result=data;
+            console.log(result);
+            if(result){
+
+                if(!result.nodata){
+                    $('#city').val(result.city);
+                    $('#exp').text(result.exp); 
+                    $('#achievments').text(result.achievments);
+                    $('#leveloftrainer').val(result.level);
+                    $('#submitbutton').attr('value','Update').text('Update');
+
+                }else{
+                    $('#city').val();
+                    $('#exp').text(''); 
+                    $('#achievments').text('');
+                    $('#leveloftrainer').val(result.level);
+                    $('#submitbutton').attr('value','Add').text('Add');
+                }
             }
           }
         });
@@ -482,6 +488,7 @@ $('#file-input').on("change", previewImages);
 });
 </script>
 <script type="text/javascript">
+    
   $('#trainerid').on('change',function(){
     var trainerid=$('#trainerid').val();
     var _token = $('input[name="_token"]').val();
@@ -490,15 +497,45 @@ $('#file-input').on("change", previewImages);
           url : '{{ url('gettrainerdetail') }}',
           data : {trainerid:trainerid, _token:'{{ csrf_token() }}'},
           success : function(data){
-            if(data){
-              $('#city').val(data.city);
+            var result=data;
+            if(result){
+                var i=0;
+                var arr =[];
+                       $('.badgebox').each(function () {
+                           arr.push($(this).val());
+                           $(this).prop('checked',false);
+                       }); 
+  
+                if(!result.nodata){
+                    $('#city').val(result.city);
+                    $('#exp').text(result.exp); 
+                    $('#achievments').text(result.achievments);
+                    $('#leveloftrainer').val(result.level);
+               
+                      array1=result.freeslot;
+                      var slotarray = array1.split(',');
+                      $.each(arr,function(item,i){
+                        for(var j=0;j<slotarray.length;j++){
+                          if(i == slotarray[j]){
+                            $("input[name='slots[]'][value='"+slotarray[j]+"']").prop('checked',true);
+                          }
+                        }
+                      })
+                      
+            
+                    $('#submitbutton').attr('value','Update').text('Update');
 
-              $('#leveloftrainer').val(data.level);
-            }else{
-       
+                }else{
+                    $('#city').val();
+                    $('#exp').text(''); 
+                    $('#achievments').text('');
+                    $('#leveloftrainer').val(result.level);
+                    $('#submitbutton').attr('value','Add').text('Add');
+                }
             }
           }
         });
+        
   })
 </script>
 <script type="text/javascript">
