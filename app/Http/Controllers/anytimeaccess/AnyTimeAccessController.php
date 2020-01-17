@@ -11,6 +11,8 @@ use App\ApiCronJob;
 use App\UserAssignedBelt;
 use DB;
 use App\Actionlog;
+use session;
+use App\notify;
 
 class AnyTimeAccessController extends Controller
 {
@@ -64,9 +66,7 @@ class AnyTimeAccessController extends Controller
 
      if ($request->setapistatus == 'Success') {
 
-       /* $enroll = app()->call('App\Http\Controllers\DeviceController@enrolluserfromsummary');
-
-            if ($request->enrollapistatus != '0') {*/
+       
 
              AnyTimeAccessBelt::create([
                     'beltno' => $request['beltno'],
@@ -84,15 +84,11 @@ class AnyTimeAccessController extends Controller
                   $action->action = 'Insert Belt InTo Device';
                   $action->save();
 
-            /* $enrollcard = app()->call('App\Http\Controllers\DeviceController@enrollcardcomman');*/
+          
 
              return redirect('viewanytimeaccesscard')->with('message','Card is succesfully Added');
 
-            /*}else{
 
-               return redirect()->back()->withErrors('Some Things Went Wrong ! Please Use Any Other Access Card');
-            }
-*/
          }else{
 
            return redirect()->back()->withErrors('Some Things Went Wrong ! Please Try Again');
@@ -111,12 +107,6 @@ class AnyTimeAccessController extends Controller
        
      
        $belt=AnyTimeAccessBelt::findOrFail($id);
-
-
-       // dd($beltdeviceusername);
-
-      
-
        
         if ($request->isMethod('post')){
 
@@ -182,6 +172,15 @@ class AnyTimeAccessController extends Controller
           $action->action_type = 'insert';
           $action->action = 'Assign Access Card';
           $action->save();
+
+          $loginuser = session()->get('username');
+          $actionbyid=Session::get('employeeid');
+
+          $notify=Notify::create([
+            'userid'=>session()->get('admin_id'),
+            'details'=> ''.$loginuser.''.'assign'.''.'card'.''.'no'.' '.$request['finalbeltno'].''.'to'.''.$request['userid'],
+            'actionby' =>$actionbyid,
+        ]);
          
 		   return redirect('atacardassigntomember')->with('message','Card is Assigned SuccessFully');
 	    }

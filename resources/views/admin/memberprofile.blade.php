@@ -1619,7 +1619,8 @@ textarea.input100 {
                         <td>{{ $payment->tax }}</td>
                         <td>{{ $payment->discountamount > 0 ? $payment->discountamount : '0' }}</td>
                         <td>{{ $payment->receiptno}}</td>
-                        <td><a href="{{url('transactionpaymentreceipt/'.$payment->invoiceno.'/'.$member->mobileno)}}"><i class="fa fa-print"></i></a>
+                        
+                        <td> @if($payment->invoicetype == 'm') <a href="{{url('transactionpaymentreceipt/'.$payment->invoiceno.'/'.$member->mobileno)}}"><i class="fa fa-print"></i></a> @endif
                         </td>
                         </td>
                       </tr>@endif @endforeach</tbody>

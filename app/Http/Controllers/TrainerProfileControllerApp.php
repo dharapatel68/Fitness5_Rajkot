@@ -129,13 +129,15 @@ class TrainerProfileControllerApp extends Controller
 			// 	$newresult .= \r\n;
 			// }
 		}
-		
+		$msg='';
 		// dd($newresult);
       	if ($emailsetting) {
-
+			$msg.="<br> Today's booked slot are : <br>";
+			$slots=implode("<br>", $slot);
+			$msg.=$slots;
         $data = [
                              //'data' => 'Rohit',
-               'msg' => implode("\r\n", $slot),
+               'msg' => $msg,
                'mail'=> 'dharapatel61998@gmail.com',
                'subject' => $emailsetting->hearder,
                'senderemail'=> $emailsetting->senderemailid,
@@ -143,7 +145,7 @@ class TrainerProfileControllerApp extends Controller
 
 		
 			// dd($data);
-        Mail::send('admin.name', ["data1"=>$data], function($message) use ($data){
+        Mail::send(['html' =>'admin.name'], ["data1"=>$data], function($message) use ($data){
 
                 $message->from($data['senderemail'], 'Booking of Trainer');
                 $message->to($data['mail']);

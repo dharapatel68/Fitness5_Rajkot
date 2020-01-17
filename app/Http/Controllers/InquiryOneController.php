@@ -24,6 +24,8 @@ use App\Emailnotificationdetails;
 use App\Smssetting;
 use App\Notificationmsgdetails;
 use App\Notification;
+use App\Notify;
+use Session;
 
 
 
@@ -872,6 +874,13 @@ class InquiryOneController extends Controller
           $followup->reason = 'Close Inquiry';
           $followup->save();
         }
+        $loginuser = session()->get('username');
+        $actionbyid=Session::get('employeeid');
+        $notify=Notify::create([  
+       'userid'=>session()->get('admin_id'),
+         'details'=> ''.$loginuser.' add an Inquiry No'.' '.$id.''.'at'.''. date('d-m-Y', strtotime($createddate)),
+          'actionby' =>$actionbyid,
+        ]);
 
         $exerciseprogram = DB::getSchemaBuilder()->getColumnListing('exerciseprogram');
         //dd($exerciseprogram);
@@ -960,6 +969,14 @@ class InquiryOneController extends Controller
 
       DB::table('followupcalldetails')->insert($followupcalldetails);               
       DB::table('followup')->insert($followup_table_data);
+
+         $loginuser = session()->get('username');
+        $actionbyid=Session::get('employeeid');
+        $notify=Notify::create([
+          'userid'=>session()->get('admin_id'),
+          'details'=> ''.$loginuser.' add an Inquiry No'.''.$id.''.'at'.''. date('d-m-Y', strtotime($createddate)),
+          'actionby' =>$actionbyid,
+        ]);
 
       $inquiry_mobile_no = DB::table('inquiries')->get()->last();
 

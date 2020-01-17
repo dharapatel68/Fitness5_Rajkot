@@ -7,7 +7,6 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Excel;
 use App\Company;
 use Illuminate\Pagination\LengthAwarePaginator;
-
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\expensemaster;
@@ -15,6 +14,8 @@ use App\Admin;
 use App\Employee;
 use App\expensepayment;
 use App\bankmaster;
+use App\notify;
+use Session;
 
 use DB;
 
@@ -437,6 +438,13 @@ $users=Employee::get()->all();
 
 
             ]);
+            $loginuser = session()->get('username');
+            $actionbyid=Session::get('employeeid');
+            $notify=Notify::create([
+              'userid'=>session()->get('admin_id'),
+              'details'=> ''.$loginuser.''.'add Expense '.''.$request['amount'].''.' on '.''.date('d-m-Y',strtotime($request['dte'])),
+              'actionby' =>$actionbyid,
+        ]);
             return redirect('viewexpenses')->withSuccess('Expense Succesfilly Added');
 
           }
