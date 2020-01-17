@@ -24,40 +24,37 @@ use App\Emailnotificationdetails;
 use App\Smssetting;
 use App\Notificationmsgdetails;
 use App\Notification;
-
-
+use App\Notify;
+use Session;
 
 class InquiryOneController extends Controller
 {
   public function index(Request $request)
   {
 
-       if($request->isMethod('post'))
-       {
-
-             $fdate = $request->get('inquirydatefrom');
-             $tdate = $request->get('inquirydateto');
-              $hearabout = $request->get('hearabout');
-              $rating=$request->get('rating');
-              $firstname=$request->get('firstname');
-
-              $mobileno=$request->get('mobileno');
-
-             $ffromdate = $request->get('followupdatefrom');
-             $ftodate = $request->get('followupdateto'); 
-             $smsmale = '';
-             $smsfemale = '';
-             $query=[];
-             $query['fdate']=$fdate ;
-             $query['tdate']=$tdate ;
-             $query['hearabout']=$hearabout;
-              $query['rating']=$rating;
-              $query['firstname']=$firstname;
-              $query['mobileno']=$mobileno;
-                $query['ffromdate']=$ffromdate;
-              $query['ftodate']=$ftodate;
+      if($request->isMethod('post'))
+      {
+        $fdate = $request->get('inquirydatefrom');
+        $tdate = $request->get('inquirydateto');
+        $hearabout = $request->get('hearabout');
+        $rating=$request->get('rating');
+        $firstname=$request->get('firstname');
+        $mobileno=$request->get('mobileno');
+        $ffromdate = $request->get('followupdatefrom');
+        $ftodate = $request->get('followupdateto'); 
+        $smsmale = '';
+        $smsfemale = '';
+        $query=[];
+        $query['fdate']=$fdate ;
+        $query['tdate']=$tdate ;
+        $query['hearabout']=$hearabout;
+        $query['rating']=$rating;
+        $query['firstname']=$firstname;
+        $query['mobileno']=$mobileno;
+        $query['ffromdate']=$ffromdate;
+        $query['ftodate']=$ftodate;
               
-           $inquiry=  Inquiry::leftJoin('followup','followup.inquiryid','=','inquiries.inquiriesid')->select(['followup.status as fstatus','followup.*','inquiries.*']);
+        $inquiry=  Inquiry::leftJoin('followup','followup.inquiryid','=','inquiries.inquiriesid')->select(['followup.status as fstatus','followup.*','inquiries.*']);
     
         // dd($request->input('rating'));
          if ($firstname != "") {
@@ -118,9 +115,9 @@ class InquiryOneController extends Controller
                     $inquiry->whereBetween('followup.followupdays',[$from,$to]);
        }
       
-        $members = $inquiry->orderBy('inquiriesid','desc')->paginate(8)->appends('query');
+       $members = $inquiry->orderBy('inquiriesid','desc')->paginate(8)->appends('query');
 
-         $users = Inquiry::where('status','1')->get()->all();
+       $users = Inquiry::where('status','1')->get()->all();
        return view('admin.viewinquiry',compact('members','users','query'));
       }
        $users = Inquiry::where('status','1')->get()->all();
@@ -872,6 +869,13 @@ class InquiryOneController extends Controller
           $followup->reason = 'Close Inquiry';
           $followup->save();
         }
+        $loginuser = session()->get('username');
+        $actionbyid=Session::get('employeeid');
+        $notify=Notify::create([  
+          'userid'=>session()->get('admin_id'),
+          'details'=> ''.$loginuser.' add an Inquiry No'.' '.$id.''.'at'.''. date('d-m-Y', strtotime($createddate)),
+          'actionby' =>$actionbyid,
+        ]);
 
         $exerciseprogram = DB::getSchemaBuilder()->getColumnListing('exerciseprogram');
         //dd($exerciseprogram);
@@ -960,6 +964,14 @@ class InquiryOneController extends Controller
 
       DB::table('followupcalldetails')->insert($followupcalldetails);               
       DB::table('followup')->insert($followup_table_data);
+
+         $loginuser = session()->get('username');
+        $actionbyid=Session::get('employeeid');
+        $notify=Notify::create([
+          'userid'=>session()->get('admin_id'),
+          'details'=> ''.$loginuser.' add an Inquiry No'.''.$id.''.'at'.''. date('d-m-Y', strtotime($createddate)),
+          'actionby' =>$actionbyid,
+        ]);
 
       $inquiry_mobile_no = DB::table('inquiries')->get()->last();
 
