@@ -338,16 +338,7 @@
                   </li>
                   @endif
                </ul>
-            <li>
-               <a  href="{{ url('gstreport') }}">
-               <i class="fa fa-chevron-right"></i><b>GST Report</b>
-               </a>
-            </li>
-            <li>
-               <a  href="{{ url('paymentreport') }}">
-               <i class="fa fa-chevron-right"></i><b>Payment Report</b>
-               </a>
-            </li>
+           
             </li>
             @endif
             @if(isset($permission["'add_tax'"]) || isset($permission["'view_tax'"]))
@@ -380,16 +371,7 @@
                      </a>
                      </li> -->
                </ul>
-            <li>
-               <a  href="{{ url('memberreport') }}">
-               <i class="fa fa-chevron-right"></i> Member Report
-               </a>
-            </li>
-            <li>
-               <a  href="{{ url('activityreport') }}">
-               <i class="fa fa-chevron-right"></i> Activity Report
-               </a>
-            </li>
+         
             </li>
             <li class="treeview">
                <a href="#">
@@ -405,6 +387,26 @@
                         <i class="fa fa-chevron-right"></i> Member Expire Report
                      </a>
                      
+                  </li>
+                  <li>
+                     <a  href="{{ url('memberreport') }}">
+                     <i class="fa fa-chevron-right"></i> Member Report
+                     </a>
+                  </li>
+                  <li>
+                     <a  href="{{ url('activityreport') }}">
+                     <i class="fa fa-chevron-right"></i> Activity Report
+                     </a>
+                  </li>
+                  <li>
+                     <a  href="{{ url('gstreport') }}">
+                     <i class="fa fa-chevron-right"></i><b>GST Report</b>
+                     </a>
+                  </li>
+                  <li>
+                     <a  href="{{ url('paymentreport') }}">
+                     <i class="fa fa-chevron-right"></i><b>Payment Report</b>
+                     </a>
                   </li>
                   <li class="treeview">
                      <a href="#">
