@@ -180,7 +180,11 @@ td{
    
                <div class="box-header with-border">
                <input type="hidden" name="excel" value="0" id="excel">
-                  <button id="getexcel" type="submit" class="btn bg-orange" style="float: right; margin-right: 15px;"><i class="fa fa-file-excel-o"></i>   getexcel </button>
+               <button type="button" class="btn btn-warning fa fa-file-excel-o" id="modalpopup" style="float: right; margin-right: 15px;"  data-toggle="modal" data-target="#exampleModalLong">
+                  Excel</button> 
+              <button type="button" class="btn btn-default" id="getexcel" style="display:none;" ><i class="fa fa-minus"></i>
+                 Get Excel</button> 
+                  {{-- <button id="getexcel" type="submit" class="btn bg-orange" style="float: right; margin-right: 15px;"><i class="fa fa-file-excel-o"></i>   getexcel </button> --}}
                   <h3 class="box-title">GST Report</h3>
                </div>
              
@@ -245,6 +249,31 @@ td{
    </div>
 </section>
 </div>
+
+<!-- Modal Code -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLongTitle">Password</h5>
+         <button type="button" class="close" id="closemodal" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body">
+          <label>Enter Excel Password</label>
+         <input type="text" class="form-control" name="pwd" id="pwd">
+         <span id="wrongpwd" style="color:red"></span>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+         <button type="button" class="btn btn-primary" id="checkpwd">Submit</button>
+       </div>
+     </div>
+   </div>
+</div>
+<!--End Modal Code -->
+
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script  src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('bower_components/datatables.net/js/dataTables.bootstrap.min.js') }}"></script>
@@ -253,6 +282,7 @@ td{
  $('#getexcel').click(function(e){
   e.preventDefault();
   $('#excel').val(1);
+
   $('#gstform').submit();
 
 });
@@ -263,7 +293,31 @@ $('#submitbutton').click(function(e){
 
 });
 
-   
+$('#checkpwd').on('click',function(){
+      var password=$('#pwd').val();
+
+      var pwdchecked='false';
+      $.ajax({
+            url:"{{ url('checkexcelpwd') }}",
+            method:"POST",
+            data:{excelpassword:password,"_token": "{{ csrf_token() }}"},
+            success: function (response) {
+              var res=response;
+               if(res == true){
+                  console.log('pwdcheck  :'+res);
+                  pwdchecked='true';
+                  $('#pwd').removeClass('error');
+                  $('#getexcel').trigger('click');
+                  $('#closemodal').trigger('click');
+               }else{
+                  $('#wrongpwd').html('wrong password');
+                  $('#pwd').addClass('error');
+               }
+            },
+            dataType:"json"
+      });
+  }); 
+
    $('#gstreport1').DataTable({
    stateSave: false,
    Sortable: true,

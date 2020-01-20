@@ -400,7 +400,12 @@
                </span>
                </a>
                <ul class="treeview-menu">
-               
+                  <li>
+                     <a  href="{{ url('expiredmemberreport') }}">
+                        <i class="fa fa-chevron-right"></i> Member Expire Report
+                     </a>
+                     
+                  </li>
                   <li class="treeview">
                      <a href="#">
                      <i class="fa fa-key"></i>

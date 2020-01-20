@@ -63,12 +63,12 @@ class ExpiredMemberReportController extends Controller
             // dd($paymentdata->paginate(5));
          
             if($day != ""){
-                $date=Carbon::now()->subDays($day);
+                $date=Carbon::now()->addDays($day);
                 $today=date('Y-m-d');
-                $grid->whereBetween('memberpackages.expiredate',[$date, $today])->get()->all();
+                $grid->whereBetween('memberpackages.expiredate',[$today, $date]);
             }
             // dd(DB::getQueryLog()); 
-            $paymentdata=$grid->paginate(100)->appends('query');
+            $paymentdata=$grid->orderBy('memberpackages.expiredate','asc')->get()->all();
             
             return view('admin.Reports.expiredmembershiplist',compact('query','paymentdata','users'));
         }else{
@@ -129,14 +129,14 @@ class ExpiredMemberReportController extends Controller
             // dd($paymentdata->paginate(5));
          
             if($day != "empty"){
-                $date=Carbon::now()->subDays($day);
+                $date=Carbon::now()->addDays($day);
                 $today=date('Y-m-d');
-                $grid->whereBetween('memberpackages.expiredate',[$date, $today])->get()->all();
+                $grid->whereBetween('memberpackages.expiredate',[$today, $date]);
 
             }
                
  
-               $gridexcel=$grid->get()->all();
+               $gridexcel=$grid->orderBy('memberpackages.expiredate','asc')->get()->all();
             
 
        
