@@ -238,12 +238,12 @@ $first = $arr[1];
                         <div class="form-group">
                            <label>Email<span style="color: red">*</span>
                            </label>
-                           <input type="email" maxlength="60" value="<?php if(isset($_POST['email'])){ echo $_POST['email'];}?>" id="email" name="email" class="form-control" placeholder="Email Id" class="span11" required />
+                           <input type="email" maxlength="60" value="<?php if(isset($_POST['email'])){ echo $_POST['email'];}?>" id="email" name="email" class="form-control" placeholder="Email Id" class="span11"/>
                         </div>
                         <div class="form-group">
                            <label>Cell Phone Number<span style="color: red">*</span>
                            </label>
-                           <input type="text" name="CellPhoneNumber" value="<?php if(isset($_POST['CellPhoneNumber'])){ echo $_POST['CellPhoneNumber'];}?>" id="MobileNo" minlength="10" maxlength="10" class="form-control number" placeholder="Cell Phone Number" required="" class="span11" /><span id="error_usermobile"></span>
+                           <input type="text" name="CellPhoneNumber" value="<?php if(isset($_POST['CellPhoneNumber'])){ echo $_POST['CellPhoneNumber'];}?>" id="MobileNo" class="form-control number" placeholder="Cell Phone Number"  class="span11" /><span id="error_usermobile"></span>
                         </div>
                         <div class="form-group">
                             <label>Birthdate</label>
@@ -556,6 +556,18 @@ function saveSnap(data_uri){
               $('#save_memberform').attr('disabled',false);
              return false;
           }
+          if( $('#email').val() == "" ) {
+             alert( "Please Provide Email!" );
+              $('#save_memberform').attr('disabled',false);
+             return false;
+          }
+          var mobileno=$('#MobileNo').val();
+          if( $('#MobileNo').val() == "" ||  mobileno.length < 10) {
+             alert( "Please Provide Valid CellPhone No!" );
+              $('#save_memberform').attr('disabled',false);
+             return false;
+          }
+
     var fromt = document.getElementById('fromtime').value;
    
 
