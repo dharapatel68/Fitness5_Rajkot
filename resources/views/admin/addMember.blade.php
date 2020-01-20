@@ -347,7 +347,7 @@
          <div class="well well-lg">
             <div class="form-group">
                <label>Address</label>
-               <textarea rows="2" cols="20" name="Address" maxlength="60" wrap="soft" class="form-control" placeholder="Address" class="span11">@if(!empty($memberdata->address)){{$memberdata->address }} @endif</textarea>
+               <textarea name="Address"  class="form-control" placeholder="Address" >@if(!empty($memberdata->address)){{$memberdata->address }} @endif</textarea>
             </div>
             <div class="form-group">
                <label>City</label>
@@ -980,7 +980,7 @@
      
       @if(isset($memberdata->photo))
          @if($memberdata->photo != "")
-            <img src="{{asset('files/'.$memberdata->photo)}}">
+            <img src="{{asset('files/'.$memberdata->photo)}}" height="100px" width="100px;">
             <input type="hidden"  name="filefrommember" value="{{$memberdata->photo}}">
          @endif
       @else
