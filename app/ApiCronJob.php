@@ -8,8 +8,6 @@ class ApiCronJob extends Model
 {
     protected $table = 'apicronjob';
     protected $primaryKey = 'apicronjobid';
-    protected $fillable = [
-        'api','response_code','status', 'apiuserid', 'apitype'];
 
     public function user(){
 

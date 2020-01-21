@@ -11,5 +11,5 @@ class DeviceEvent extends Model
      protected $primaryKey = 'deviceeventid';
    protected $fillable = [
    	
-        'rollovercount','seqno','date','time','eventid','detail1','detail2','detail3','detail4','detail5','status','created_at'];
+        'rollovercount','seqno','date','time','eventid','detail1','detail2','detail3','detail4','detail5','status','deviceid','created_at'];
 }

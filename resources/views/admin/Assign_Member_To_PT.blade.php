@@ -207,7 +207,7 @@
                               $.ajax({
                                    url:"{{ URL::route('assignptmemberpackage') }}",
                                    method:"GET",
-                                   data:{"_token": "{{ csrf_token() }}","memberid":member,'type':'package','schemeid':''},
+                                   data:{"_token": "{{ csrf_token() }}","memberid":member,'type':'memberpackageassign','schemeid':''},
                                    async:false,
                                   success:function(data) {
                                     // alert(data);
@@ -2010,8 +2010,11 @@
                                        $("#memberid").append($("<option></option>").attr("value", item.memberid).text(item.firstname+' '+item.lastname));
 
                                       });
-                                    $("#memberid option[value="+routeid+"]").attr("selected", "selected");
+                                      if(routeid){
+                                        $("#memberid option[value="+routeid+"]").attr("selected", "selected");
                                        $("#memberid").trigger('change');
+                                      }
+                                   
                                     }
                                    // alert(mid);
                                    

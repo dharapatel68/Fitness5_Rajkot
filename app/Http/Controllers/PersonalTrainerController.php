@@ -461,15 +461,30 @@ public function ajaxgetjoindate(Request $request){
    public function assignptpackageajax(Request $request){
 // DB::enableQueryLog();
           $member = $request->get('memberid');
+          $userid=Member::where('memberid',$member)->pluck('userid')->first();
           $type = $request->get('type');
           $schemeid = $request->get('schemeid');
+          
           // print_r($member);
           if($type=='package')
           {      
              $demo =  DB::table('member')->select('userid')->where('memberid', '=', $member)->get();
              
-             $package = DB::select( DB::raw("SELECT memberpackages.*,schemes.schemeid,schemes.schemename from memberpackages left Join schemes on memberpackages.schemeid=schemes.schemeid left Join schemeterms on schemeterms.schemeid=schemes.schemeid where memberpackages.userid='".$demo[0]->userid."' AND memberpackages.status='1' AND schemeterms.value != 0"));
-
+          // DB::enableQueryLog();
+          $package= Ptmember::where('memberid',$member)
+            ->leftjoin('memberpackages','memberpackages.memberpackagesid','ptmember.packageid')
+            ->leftjoin('schemes','schemes.schemeid' , 'ptmember.schemeid')
+            ->groupBy('ptmember.packageid')
+            ->get()->all();
+            // dd( DB::getQueryLog());
+            //  $package = DB::select( DB::raw("SELECT memberpackages.*,schemes.schemeid,schemes.schemename 
+            //                                   from memberpackages 
+            //                                   left Join schemes on memberpackages.schemeid=schemes.schemeid 
+            //                                   left Join schemeterms on schemeterms.schemeid=schemes.schemeid 
+            //                                   where memberpackages.userid='".$demo[0]->userid."' 
+            //                                   AND memberpackages.status='1' 
+            //                                   AND schemeterms.value != 0"));
+           
              echo json_encode($package);
           }
           if($type=='pthour')
@@ -480,6 +495,16 @@ public function ajaxgetjoindate(Request $request){
             // dd($demo);
              // dd( DB::getQueryLog());
              echo $demo[0]->value;
+          }
+          if($type=='memberpackageassign'){
+            $package = DB::select( DB::raw("SELECT memberpackages.*,schemes.schemeid,schemes.schemename 
+                                              from memberpackages 
+                                               left Join schemes on memberpackages.schemeid=schemes.schemeid 
+                                              left Join schemeterms on schemeterms.schemeid=schemes.schemeid 
+                                            where memberpackages.userid='".$userid."' AND schemes.rootschemeid = '2'
+                                               AND memberpackages.status='1' 
+                                             AND schemeterms.value != 0"));
+            echo json_encode($package);
           }
         // return response()->json($demo['mobileno']);
    }
@@ -524,14 +549,20 @@ public function ajaxgetjoindate(Request $request){
                
                return redirect('claimptsession')->withErrors(['msg' => $msg]);
              } 
-             $session =  DB::table('memberpackages')->leftJoin('schemeterms','memberpackages.schemeid','=','schemeterms.schemeid')->where('memberpackages.memberpackagesid', '=', $request->packageid)->where('schemeterms.termsid','2')->get();
+             dd($request->packageid);
+             $session =  DB::table('memberpackages')
+                        ->leftJoin('schemeterms','memberpackages.schemeid','=','schemeterms.schemeid')
+                        ->where('memberpackages.memberpackagesid', '=', $request->packageid)
+                        ->where('schemeterms.termsid','2')->get();
 
             $schemes =  DB::table('schemes')->leftJoin('memberpackages','memberpackages.schemeid','=','schemes.schemeid')->where('memberpackages.memberpackagesid', '=', $request->packageid)->get();
 
             $comission=$ptlevel[0]->percentage;
             $session=$session[0]->value;
             $baseprice=$schemes[0]->baseprice;
-            $persession = $baseprice/$session;
+            // dd($basezprice);
+            dd($session);
+            $persession =$baseprice/$session;
             $amount = ($persession*$comission)/100;
 
             $update=['status'=>'Pending','commision'=>$request->comission];
@@ -552,10 +583,12 @@ public function ajaxgetjoindate(Request $request){
                     ];
             $query=DB::table('claimptsession')->insert($insert);
             $msg="Claim is Skiped";
+        }elseif($request->has('mark_conduct')){
+            dd('sdfsdf');
         }
         else
         {
-          DB::enableQueryLog();
+      
 
           $employee= DB::table('employee')->where('employeeid',$request->trainerid)->get()->first();
       
