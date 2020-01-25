@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\ApiCronJob;
+use App\HRApiCronjob;
 use App\Employee;
 use App\Device_Employee;
 use App\EmployeeFinger;
-use App\DeviceInfo;
+use App\HRDeviceInfo;
 use App\HRDeviceFetchlogs;
 use DB;
 use Session;
@@ -17,7 +17,7 @@ class EnrollController extends Controller
     public function enrolldevice(){
 
     	$employee  = Employee::with('deviceuser')->where('status', 1)->get()->all();
-    	$device  = DeviceInfo::where('status', 1)->get()->all();
+    	$device  = HRDeviceInfo::where('status', 1)->get()->all();
 
     	if(empty($device)){
 
@@ -66,7 +66,7 @@ class EnrollController extends Controller
 
     public function devicelist(){
 
-    	$device  = DeviceInfo::all();
+    	$device  = HRDeviceInfo::all();
     	$devicename = [];
     	if(!empty($device)){
     		foreach($device as $key => $device_data){
@@ -103,7 +103,7 @@ class EnrollController extends Controller
     	$month = $date_explode[1];
     	$year = $date_explode[0];
 
-    	$device = DeviceInfo::where('deviceinfoid', $deviceid)->first();
+    	$device = HRDeviceInfo::where('deviceinfoid', $deviceid)->first();
     	if(!empty($device)){
     			
     			$deviceip = $device->ipaddress;
@@ -117,7 +117,7 @@ class EnrollController extends Controller
 
     			$upload_api = 'http://'.$deviceip.':'.$portno.'/device.cgi/users?action=set&user-id='.$empid.'&name='.$username_emp.'&ref-user-id='.$empid.'&user-active=1&validity-enable=1&validity-date-dd='.$day.'&validity-date-mm='.$month.'&validity-date-yyyy='.$year.'';
 
-    			$apicronjob = new ApiCronJob();
+    			$apicronjob = new HRApiCronjob();
     			$apicronjob->apiuserid = $empid;
     			$apicronjob->apitype = 'Employee Upload';
     			$apicronjob->api = $upload_api;
@@ -136,7 +136,7 @@ class EnrollController extends Controller
                     $response = curl_exec($ch);
                     $response = explode('=', $response);
 
-                    $apicronjob_update = ApiCronJob::findOrfail($apicronjoblastid);
+                    $apicronjob_update = HRApiCronjob::findOrfail($apicronjoblastid);
                     $apicronjob_update->response_code = $response[1];
                     $apicronjob_update->status = 1;
                     $apicronjob_update->save();
@@ -147,7 +147,7 @@ class EnrollController extends Controller
 
                         $deviceuser = Device_Employee::where('employeeid', $empid)->first();
                         if(empty($deviceuser)){
-                            $deviceuser = new Deviceuser();
+                            $deviceuser = new Device_Employee();
                     		$deviceuser->employeeid = $empid;
                     		$deviceuser->contractterm = date('Y-m-d', strtotime($contract_term));
                     		$deviceuser->enroll = 1;
@@ -187,7 +187,7 @@ class EnrollController extends Controller
 
         $empid = $request->empid;
 
-        $deviceinfo = DeviceInfo::where('main', 1)->first();
+        $deviceinfo = HRDeviceInfo::where('main', 1)->first();
 
         if(!empty($deviceinfo)){
 
@@ -219,7 +219,7 @@ class EnrollController extends Controller
 
         $empid = $request->empid;
 
-        $device = DeviceInfo::where('status', 1)->get()->all();
+        $device = HRDeviceInfo::where('status', 1)->get()->all();
 
         $deviceuser = Device_Employee::where('employeeid', $empid)->first();
 
@@ -312,7 +312,7 @@ class EnrollController extends Controller
 
     	$empid = $request->empid;
 
-    	$deviceinfo = DeviceInfo::where('status', 1)->where('main', 1)->first();
+    	$deviceinfo = HRDeviceInfo::where('status', 1)->where('main', 1)->first();
     
     	if(!empty($deviceinfo)){
 
@@ -324,7 +324,7 @@ class EnrollController extends Controller
 
     		$fingerupload_api = 'http://'.$deviceip.':'.$port.'/device.cgi/enrolluser?action=enroll&user-id='.$empid.'&type=2&finger-count=1';
     		
-           $apicronjob = new ApiCronJob();
+           $apicronjob = new HRApiCronjob();
            $apicronjob->apiuserid = $empid;
            $apicronjob->apitype = 'Upload Fingertemplate';
            $apicronjob->api = $fingerupload_api;
@@ -361,7 +361,7 @@ class EnrollController extends Controller
 
     	$empid = $request->empid;
     
-    	$deviceinfo = DeviceInfo::where('status', 1)->where('main', 1)->first();
+    	$deviceinfo = HRDeviceInfo::where('status', 1)->where('main', 1)->first();
     	if(!empty($deviceinfo)){
 
     		$deviceip = $deviceinfo->ipaddress;
@@ -419,7 +419,7 @@ class EnrollController extends Controller
         $empid = $request->empid;
 
 
-        $deviceinfo = DeviceInfo::where('status', 1)->where('main', 1)->first();
+        $deviceinfo = HRDeviceInfo::where('status', 1)->where('main', 1)->first();
         if(!empty($deviceinfo)){
 
             $deviceip = $deviceinfo->ipaddress;
@@ -451,8 +451,8 @@ class EnrollController extends Controller
 
         $empid = $request->empid;
 
-        $device = DeviceInfo::where('status', 1)->get()->all();
-        $maindevice = DeviceInfo::where('main', 1)->first();
+        $device = HRDeviceInfo::where('status', 1)->get()->all();
+        $maindevice = HRDeviceInfo::where('main', 1)->first();
 
         $main = 'device'.$maindevice->deviceinfoid.'finger';
 
@@ -608,7 +608,7 @@ class EnrollController extends Controller
         $empid = $request->empid;
         $deviceid = $request->deviceid;
 
-        $device_data = DeviceInfo::where('deviceinfoid', $deviceid)->first();
+        $device_data = HRDeviceInfo::where('deviceinfoid', $deviceid)->first();
 
         if(!empty($device_data)){
 
@@ -626,7 +626,7 @@ class EnrollController extends Controller
 
             $header = array('Content-Type: binary/octet-stream');
 
-            $apicronjob = new ApiCronJob();
+            $apicronjob = new HRApiCronjob();
             $apicronjob->apiuserid = $empid;
             $apicronjob->apitype = 'Upload Fingertemplate';
             $apicronjob->api = $upload_api;
@@ -649,7 +649,7 @@ class EnrollController extends Controller
                 $response = explode('=', $response);
 
 
-                $apicronjob = ApiCronJob::findOrfail($lastapicronjob);  
+                $apicronjob = HRApiCronjob::findOrfail($lastapicronjob);  
                 $apicronjob->response_code = $response[1];
                 $apicronjob->status = 1;
                 $apicronjob->save();
@@ -674,7 +674,7 @@ class EnrollController extends Controller
 
             } catch(\Exception $e){
 
-                $apicronjob = ApiCronJob::findOrfail($lastapicronjob);  
+                $apicronjob = HRApiCronjob::findOrfail($lastapicronjob);  
                 $apicronjob->response_code = 101;
                 $apicronjob->status = 1;
                 $apicronjob->save();
@@ -764,7 +764,7 @@ class EnrollController extends Controller
         $deviceid_update = 'device'.$deviceid;
         $devicestatus = 'device'.$deviceid.'status';
 
-        $device_data = DeviceInfo::where('deviceinfoid', $deviceid)->first();
+        $device_data = HRDeviceInfo::where('deviceinfoid', $deviceid)->first();
         if(!empty($device_data)){
 
             $deviceip = $device_data->ipaddress;
@@ -777,7 +777,7 @@ class EnrollController extends Controller
 
             $deactive_api = 'http://'.$deviceip.':'.$portno.'/device.cgi/users?action=set&user-id='.$empid.'&user-active=0';
 
-            $apicronjob = new ApiCronJob();
+            $apicronjob = new HRApiCronjob();
             $apicronjob->apiuserid = $empid;
             $apicronjob->apitype = 'Deactive user';
             $apicronjob->api = $deactive_api;
@@ -796,7 +796,7 @@ class EnrollController extends Controller
                 $response = curl_exec($ch);
                 $response = explode('=', $response);
 
-                $apicronjob = ApiCronJob::findOrfail($lastapicronjob);  
+                $apicronjob = HRApiCronjob::findOrfail($lastapicronjob);  
                 $apicronjob->response_code = $response[1];
                 $apicronjob->status = 1;
                 $apicronjob->save();
@@ -835,7 +835,7 @@ class EnrollController extends Controller
         $deviceid_update = 'device'.$deviceid;
         $devicestatus = 'device'.$deviceid.'status';
 
-        $device_data = DeviceInfo::where('deviceinfoid', $deviceid)->first();
+        $device_data = HRDeviceInfo::where('deviceinfoid', $deviceid)->first();
         if(!empty($device_data)){
 
             $deviceip = $device_data->ipaddress;
@@ -848,7 +848,7 @@ class EnrollController extends Controller
 
             $active_api = 'http://'.$deviceip.':'.$portno.'/device.cgi/users?action=set&user-id='.$empid.'&user-active=1';
 
-            $apicronjob = new ApiCronJob();
+            $apicronjob = new HRApiCronjob();
             $apicronjob->apiuserid = $empid;
             $apicronjob->apitype = 'Active user';
             $apicronjob->api = $active_api;
@@ -926,7 +926,7 @@ class EnrollController extends Controller
         $month = $date_explode[1];
         $year = $date_explode[0];
 
-        $device_data = DeviceInfo::where('status', 1)->get()->all();
+        $device_data = HRDeviceInfo::where('status', 1)->get()->all();
         if(!empty($device_data)){
 
             foreach($device_data as $device){
@@ -941,7 +941,7 @@ class EnrollController extends Controller
 
                 $upload_api = 'http://'.$deviceip.':'.$portno.'/device.cgi/users?action=set&user-id='.$empid.'&validity-date-dd='.$day.'&validity-date-mm='.$month.'&validity-date-yyyy='.$year.'';
 
-                $apicronjob = new ApiCronJob();
+                $apicronjob = new HRApiCronjob();
                 $apicronjob->apiuserid = $empid;
                 $apicronjob->apitype = 'Employee extend date';
                 $apicronjob->api = $upload_api;
@@ -1012,29 +1012,29 @@ class EnrollController extends Controller
             $query['fromdate']=$fromdate ;
             $query['todate']=$todate;*/
 
-            $fetchlog = HRDeviceFetchlogs::join('employee', 'devicefetchlogs.detail1', 'employee.employeeid');
+            $fetchlog = HRDeviceFetchlogs::join('employee', 'hr_devicefetchlogs.detail1', 'employee.employeeid');
 
             if($employeeid){
 
-                $fetchlog->where('devicefetchlogs.detail1','=',$employeeid);
+                $fetchlog->where('hr_devicefetchlogs.detail1','=',$employeeid);
 
             }
 
             if(!empty($fromdate)){
                 
-                $fetchlog->whereBetween('devicefetchlogs.date', [$fromdate, $todate]);
+                $fetchlog->whereBetween('hr_devicefetchlogs.date', [$fromdate, $todate]);
 
             }
 
             if(!empty($todate)){
             
 
-                $fetchlog->whereBetween('devicefetchlogs.date', [$fromdate, $todate]);
+                $fetchlog->whereBetween('hr_devicefetchlogs.date', [$fromdate, $todate]);
 
             }
       
 
-            $fetchlog = $fetchlog->where('eventid', 101)->select(DB::raw("CONCAT(employee.first_name,employee.last_name) AS fullname"), 'employee.mobileno', 'devicefetchlogs.date', 'devicefetchlogs.time')->orderBy('deviceeventid', 'desc')->get();
+            $fetchlog = $fetchlog->where('eventid', 101)->select(DB::raw("CONCAT(employee.first_name,employee.last_name) AS fullname"), 'employee.mobileno', 'hr_devicefetchlogs.date', 'hr_devicefetchlogs.time')->orderBy('deviceeventid', 'desc')->get();
 /*
             dd($fetchlog->count());*/
             

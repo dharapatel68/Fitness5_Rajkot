@@ -5,7 +5,7 @@
 @push('css')
 
  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
-
+ <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
 
 <style type="text/css">
 	.form-group{
@@ -18,6 +18,7 @@
 @endpush
 
 @section('content')
+
 <div class="wrapper">
     <div class="content-wrapper">
 		<section class="content-header">
@@ -86,7 +87,6 @@
 							</div>
 							<br/>
 							<div class="row">
-								
 								<div class="col-md-12">
 									<table class="table table-responsive table-hover" id="emp_table">
 										<thead>
@@ -108,17 +108,14 @@
 			</div>
 		</section>
 	</div>
-</div>											
-
-
-
-
-
-
+</div>		
+						
 @endsection
 
 @push('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>			
+
 
 
 

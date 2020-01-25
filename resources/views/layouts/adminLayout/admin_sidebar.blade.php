@@ -83,8 +83,8 @@
                      </span>
                      </a>
                      <ul class="treeview-menu">
-                        <li><a href="{{ route('adddevice') }}"><i class="fa fa-plus"></i> Add Device</a></li>
-                        <li><a href="{{ route('viewdevice') }}"><i class="fa fa-eye"></i> View Device</a></li>
+                        <li><a href="{{ route('hr_adddevice') }}"><i class="fa fa-plus"></i> Add Device</a></li>
+                        <li><a href="{{ route('hr_viewdevice') }}"><i class="fa fa-eye"></i> View Device</a></li>
                      </ul>
                   </li>
                   <li><a href="{{ route('enrolldevice') }}"><i class="fa fa-circle-o"></i> Enroll Device</a></li>

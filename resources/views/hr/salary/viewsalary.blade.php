@@ -2,9 +2,11 @@
 
 @section('title', 'View Salary')
 @section('content')
-
-
-
+<style>
+     .content-wrapper {
+    /* min-height: 100%;*/
+    }
+</style>
         @php
 
             $year = !empty($year) ? $year : '';

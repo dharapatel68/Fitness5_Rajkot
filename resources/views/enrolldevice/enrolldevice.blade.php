@@ -14,7 +14,7 @@
         @endphp
         <div id="loader" style="margin: 0px; padding: 0px; position: fixed; right: 0px; top: 0px; width: 100%; height: 100%; background-color: rgb(102, 102, 102); z-index: 30001; opacity: 0.8;display: none;">
             <p style="position: absolute; color: White; top: 50%; left: 45%;">
-                <img id="img" src="{{ asset('public/img/signal.gif') }}" style="height: 150px; width: 150px;margin-top: -140px;margin-left: -40px;">
+                <img id="img" src="{{ asset('images/signal.gif') }}" style="height: 150px; width: 150px;margin-top: -140px;margin-left: -40px;">
             </p>
         </div>
         
@@ -135,7 +135,7 @@
                         <h4 class="modal-title">Enroll Empolyee In Device</h4>
                     </div>
                     <div class="modal-body" style="display:none; text-align:center" id="">
-                     <img src="{{ asset('public/img/signal.gif') }}" alt="Loading..." / style="height: 150px; width: 150px;">
+                     <img src="{{ asset('images/signal.gif') }}" alt="Loading..." / style="height: 150px; width: 150px;">
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
@@ -419,7 +419,7 @@
         $('#fingertemplate_save').click(function(){
 
             let empid = $('#employeeid').val();
-            /*$('#img').attr('src', '{{ asset('public/img/fingerprocessing.gif') }}');
+            /*$('#img').attr('src', '{{ asset('images/fingerprocessing.gif') }}');
             $('#img').css('height', '1000px');
             $('#img').css('weight', '1000px');*/
             $('#loader').show();

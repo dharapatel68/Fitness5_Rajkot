@@ -8,17 +8,21 @@ use App\Leave;
 use App\EmployeeAccount;
 use App\Employee;
 use App\User_log;
-use App\EmployeeLog;
+use App\HREmployeeelog;
 use App\Salary;
 use App\EmployeeLeave;
 use App\MonthLeave;
-use App\Ptassignlevel;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Validation\Rule;
 use Helper;
 use DB;
 use Session;
 use Datatables;
+use App\Ptassignlevel;
+use App\Ptmember;
+use App\Member;
+use App\Claimptsession;
+use App\MemberPackages;
 
 class HRController extends Controller
 {
@@ -39,7 +43,7 @@ class HRController extends Controller
 			]);
 
 		DB::beginTransaction();
-		try {
+		 try {
 
 			$year = $request->year;
 			$month = $request->month;
@@ -593,7 +597,7 @@ class HRController extends Controller
 		
 		$searchparameter = ['employeeid' => $employeeid, 'month' => $month, 'year' => $year];
 
-		$employeelog = EmployeeLog::where('userid', $employeeid)->whereBetween('punchdate', [$fromdate, $todate])->orderBy('checkout', 'asc')->get();
+		$employeelog = HREmployeeelog::where('userid', $employeeid)->whereBetween('punchdate', [$fromdate, $todate])->orderBy('checkout', 'asc')->get();
 
 		return datatables()->of($employeelog)
 		->editColumn('checkout', function($employeelog){
@@ -626,7 +630,7 @@ class HRController extends Controller
 
 	public function addpunch($id, Request $request){
 
-		$log = EmployeeLog::findOrfail($id);
+		$log = HREmployeeelog::findOrfail($id);
 
 		if($request->isMethod('post')){
 
@@ -739,7 +743,7 @@ class HRController extends Controller
 		$employeeid = Input::get('employeeid');
 		$year = Input::get('year');
 		$month = Input::get('month');
-
+	
 		$if_exist = Salary::where('year', $year)->where('month', $month)->where('employeeid', $employeeid)->first();
 
 		if(!empty($if_exist)){
@@ -813,13 +817,13 @@ class HRController extends Controller
 		$checkintime = $emptime->workinghourfrom1;
 		$checkouttime = $emptime->workinghourto1;
 
-		$employeelog = EmployeeLog::where('userid', $employeeid)->whereBetween('punchdate', [$fromdate, $todate])->where('checkout', null)->select('hr_employeelog.punchdate', 'hr_employeelog.checkin', 'hr_employeelog.checkout', 'hr_employeelog.checkin', 'hr_employeelog.emplogid')->groupBy('hr_employeelog.punchdate')->get()->all();
-		/*dd($employeelog);*/
+		$employeelog = HREmployeeelog::where('userid', $employeeid)->whereBetween('punchdate', [$fromdate, $todate])->where('checkout', null)->select('hr_employeelog.punchdate', 'hr_employeelog.checkin', 'hr_employeelog.checkout', 'hr_employeelog.checkin', 'hr_employeelog.emplogid')->groupBy('punchdate')->get()->all();
+		
 
-		// $lateemployeelog = EmployeeLog::where('userid', $employeeid)->whereBetween('punchdate', [$fromdate, $todate])->where(function($query) use ($checkintime, $checkouttime){
-		// 	$query->where('checkin', '>', $checkintime)->orWhere('checkout', '<', $checkouttime);
-		// })->get()->all();
-			$lateemployeelog = [];
+		$lateemployeelog = HREmployeeelog::where('userid', $employeeid)->whereBetween('punchdate', [$fromdate, $todate])->where(function($query) use ($checkintime, $checkouttime){
+			$query->where('checkin', '>', $checkintime)->orWhere('checkout', '<', $checkouttime);
+		})->get()->all();
+
 		$error = 1;
 		/*if(!empty($employeelog)){
 
@@ -830,12 +834,12 @@ class HRController extends Controller
 
 		}*/
 
-		
-		// try {
+	
+		//  try {
 
-		$employeelog = EmployeeLog::where('userid', $employeeid)->whereBetween('punchdate', [$fromdate, $todate])->get()->all();
-			
-		$employeelog_days = EmployeeLog::where('userid', $employeeid)->whereBetween('punchdate', [$fromdate, $todate])->groupBy('punchdate')->select('punchdate')->get()->all();
+		$employeelog = HREmployeeelog::where('userid', $employeeid)->whereBetween('punchdate', [$fromdate, $todate])->get()->all();
+		
+		$employeelog_days = HREmployeeelog::where('userid', $employeeid)->whereBetween('punchdate', [$fromdate, $todate])->groupBy('punchdate')->select('punchdate')->get()->all();
 		
 
 		$attenddays = count($employeelog_days);
@@ -848,9 +852,6 @@ class HRController extends Controller
 		foreach($employeelog as $emplog){
 
 			$difference = ROUND(ABS(strtotime($emplog->checkout) - strtotime($emplog->checkin))/60);
-
-
-
 			$totalminute += abs($difference);
 
 		}
@@ -901,11 +902,12 @@ class HRController extends Controller
 			$Workindays = 0;
 			$holidays = 0;
 		}
-
-		$actualdays = $Workindays;
+		$actualdays = $Workindays- $workingdays_data->holidays ;
+		$leavedays_cal = $Workindays - $attenddays;
+		
 		//dd($actualdays);
 
-		$leavedays_cal = $Workindays - $attenddays;
+		
 
 		if($leavedays_cal < 0){
 			$leavedays_cal = 0;
@@ -938,7 +940,7 @@ class HRController extends Controller
 		$success = true;
 
 		$emploanamount = EmployeeAccount::where('employeeid', $employeeid)->orderBy('empaccountid', 'desc')->first();
-		
+
 		/*******************if trainer***************************** */
 		
 		if($empdata->role == 'trainer' || $empdata->role == 'Trainer' ){
@@ -947,14 +949,65 @@ class HRController extends Controller
 			if($trainerdata){
 				$trainerlevel=$trainerdata->level;
 				$trainerpercentage=$trainerdata->percentage;
-				$trainerscheme=Ptmember::where('trainerid')
+				$trainerschemes=[];
+
+				$trainersession=Claimptsession::where('trainerid',$empdata->employeeid)->where('status','Active')->whereMonth('actualdate',$cal_month)->whereYear('actualdate',$year)->get()->count();
+				$trainersessiondetail=Claimptsession::where('trainerid',$empdata->employeeid)->where('status','Active')->whereMonth('actualdate',$cal_month)->whereYear('actualdate',$year)->orderBy('actualdate','desc')->get()->all();
+				foreach ($trainersessiondetail as $key => $value) {
+					
+					$package=MemberPackages::where('memberpackagesid',$value->packageid)->leftjoin('schemes','memberpackages.schemeid','schemes.schemeid')->get()->first();
+					$member=Member::where('memberid',$value->memberid)->get(['member.firstname','member.lastname'])->first();
+					$value['schemename']=$package->schemename;
+					$value['firstname']=$member->firstname;
+					$value['lastname']=$member->lastname;
+					// $tsessiondetail = Ptmember::where('trainerid',$empdata->employeeid)
+					// 							->leftjoin('schemes','schemes.schemeid','ptmember.schemeid')
+					// 							->leftjoin('schemeterms','schemeterms.schemeid','ptmember.schemeid')
+					// 							->leftjoin('member','member.memberid','ptmember.memberid')
+					// 							->whereIn('ptmember.status',['Pending','Conducted','Marked'])
+					// 							->where('ptmember.date', $value->scheduledate)
+					// 							->where('ptmember.hoursfrom', $value->scheduletime)
+					// 							->get(['schemeterms.value as pthours','ptmember.schemeid','ptmember.memberid','schemes.schemename','schemes.baseprice','member.firstname','member.lastname'])->first();
+												// dd($tsessiondetail);
+									
+					//array_push($trainershemes,$tsessiondetail);
+				}
+				// foreach ($trainershemes as $trainersheme) {
+				// 	$memberid[]=$trainersheme['memberid'];
+				// }
+				// $totalsession=array_count_values($memberid);
+				
+				// dd($trainershemes);
+				// $trainershemes=Ptmember::where('trainerid',$empdata->employeeid)
+				// 	->leftjoin('schemes','schemes.schemeid','ptmember.schemeid')
+				// 	->leftjoin('schemeterms','schemeterms.schemeid','ptmember.schemeid')
+				// 	->leftjoin('member','member.memberid','ptmember.memberid')
+				// 	->whereIn('ptmember.status',['Pending','Conducted','Marked'])
+				// 	->where('schemeterms.termsid',2)
+				// 	->whereMonth('ptmember.date',$cal_month)
+				// 	->whereYear('ptmember.date',$year)
+				// 	->groupBy('ptmember.schemeid','schemes.schemename','schemes.baseprice')
+				// 	->select('ptmemberid', DB::raw('count(*) as totalsession'),'ptmember.schemeid','schemes.schemename','schemes.baseprice','member.firstname','member.lastname','schemeterms.value as pthours')
+				// 	->get()->first();
+			
+				$trainerdetail=[];
+				$trainerdetail['trainerlevel']=$trainerlevel;
+				$trainerdetail['trainerpercentage']=$trainerpercentage;
+				$trainerdetail['trainershemes']=$trainersessiondetail;
+				// $trainerdetail['totalsession']=COUNT($memberid);
+				
 			}else{
 				Session::flash('message', 'Please assign level to trainer ');
     			Session::flash('alert-type', 'error');
 				return redirect()->route('assignptlevel');
 			}
 			
+		}else{
+			$trainerdetail =[];
+			$trainersession =0;
+			$trainersessiondetail=[];
 		}
+		
 		/*******************for trainer session wise salary***************************** */
 
 
@@ -963,11 +1016,11 @@ class HRController extends Controller
 
 		/*******************end if trainer***************************** */
 
-		return view('hr.salary.calculatesalary')->with(compact('attenddays', 'totalminute', 'totalhour', 'totaldays', 'givenleave', 'takenleave', 'empdata', 'empsalary', 'empworkinghour', 'total_hour', 'year', 'month', 'Workindays', 'holidays', 'empworkingminute', 'current_salary', 'employeeid', 'takenleave_display', 'Workindays', 'leavedays_cal', 'totalworkinghour', 'employeelog', 'totalminute_dispaly', 'totalhour_dispaly_model', 'emploanamount', 'lateemployeelog', 'actualdays'));
+		return view('hr.salary.calculatesalary')->with(compact('attenddays', 'totalminute', 'totalhour', 'totaldays', 'givenleave', 'takenleave', 'empdata', 'empsalary', 'empworkinghour', 'total_hour', 'year', 'month','cal_month', 'Workindays', 'holidays', 'empworkingminute', 'current_salary', 'employeeid', 'takenleave_display', 'Workindays', 'leavedays_cal', 'totalworkinghour', 'employeelog', 'totalminute_dispaly', 'totalhour_dispaly_model', 'emploanamount', 'lateemployeelog', 'actualdays','trainersession','trainersessiondetail','trainerdetail'));
 
 	// }  catch(\Exception $e) {
 
-		// Helper::errormail('Hr', 'Calculate Salary', 'High');
+	// 	Helper::errormail('Hr', 'Calculate Salary', 'High');
 
 	// 	$success = false;
 	// }
@@ -1005,8 +1058,8 @@ class HRController extends Controller
 			return redirect()->route('viewlockedsalary');
 		}
 
-		DB::beginTransaction();
-		try {
+		// DB::beginTransaction();
+		// try {
 			
 			/*if($request->emi > 0){
 
@@ -1031,8 +1084,28 @@ class HRController extends Controller
 				}
 
 			}*/
+			$tsessionsalary=[];
+			$tsessionsalarystring='';
+			if($tsessionsalary > 0){
 
-
+				$trainersession=Claimptsession::where('trainerid',$request->employeeid)->where('status','Active')->whereMonth('actualdate', $request->cal_month)->whereYear('actualdate',$request->year)->get()->count();
+				$trainersessiondetail=Claimptsession::where('trainerid',$request->employeeid)->where('status','Active')->whereMonth('actualdate', $request->cal_month)->whereYear('actualdate',$request->year)->orderBy('actualdate','asc')->get()->all();
+				
+				foreach($trainersessiondetail as $tsession){
+					$tsession->status = "Paid";
+					$tsession->save();
+					$sessionpt=Ptmember::where('date',$tsession->scheduledate)->where('hoursfrom',$tsession->scheduletime)->get()->first();
+				
+					$sessionpt->status = "Paid";
+					$sessionpt->save();
+					array_push($tsessionsalary,$tsession->claimptsessionid);
+				}
+			}
+			if(count($tsessionsalary) > 0){
+				$tsessionsalarystring = implode (",", $tsessionsalary);
+			}
+			
+			
 			$salary = new Salary();
 			$salary->employeeid = $request->employeeid;
 			$salary->workingdays = $request->Workindays;
@@ -1052,6 +1125,8 @@ class HRController extends Controller
 			$salary->paidleave = !empty($request->paidleave) ? $request->paidleave : 0;
 			$salary->year = $request->year;
 			$salary->month = $request->month_display;
+			$salary->ptsessionid = $tsessionsalarystring;
+			$salary->ptsessionsalary = $request->totalsessionprice;
 			$salary->salaryemi = !empty($request->emi) ? $request->emi : 0;
 			$salary->salaryothercharges = !empty($request->otheramount) ? $request->otheramount : 0;
 			$salary->loanamount = !empty($request->loan) ? $request->loan : 0;
@@ -1068,17 +1143,17 @@ class HRController extends Controller
 
 			return redirect()->route('viewsalary');
 
-		} catch(\Exception $e) {
+		// } catch(\Exception $e) {
 
-			Helper::errormail('HR', 'Store Salary', 'High');
+		// 	Helper::errormail('HR', 'Store Salary', 'High');
 
-			DB::rollback();
-			$success = false;
-		}
+		// 	DB::rollback();
+		// 	$success = false;
+		// }
 
-		if($success == false){
-			return redirect('dashboard');
-		}
+		// if($success == false){
+		// 	return redirect('dashboard');
+		// }
 
 	}
 
@@ -1139,7 +1214,7 @@ class HRController extends Controller
 		$fromdate = date('Y-m-d',strtotime("$year-$cal_month-01"));
 		$todate = date('Y-m-d',strtotime("$year-$cal_month-$day_in_month"));
 		
-		$employeelog = EmployeeLog::where('userid', $employeeid)->whereBetween('punchdate', [$fromdate, $todate])->get()->all();
+		$employeelog = HREmployeeelog::where('userid', $employeeid)->whereBetween('punchdate', [$fromdate, $todate])->get()->all();
 
 
 		if($request->isMethod('POST')){
@@ -1253,10 +1328,11 @@ class HRController extends Controller
 		try {
 			$salary->status = 'Unlocked';
 			$salary->save();
-
+			DB::commit();
+			$success = true;
 			Session::flash('message', 'Employee Salary is Unlocked');
 			Session::flash('alert-type', 'success');
-
+			
 			return redirect()->route('viewsalary');
 
 		} catch(\Exception $e) {
@@ -1645,7 +1721,7 @@ class HRController extends Controller
 		
 		$searchparameter = ['employeeid' => $employeeid, 'month' => $month, 'year' => $year];
 
-		$employeelog = EmployeeLog::where('userid', $employeeid)->whereBetween('punchdate', [$fromdate, $todate])->orderBy('checkout', 'asc')->select('hr_employeelog.punchdate', 'hr_employeelog.checkin', 'hr_employeelog.checkout', 'hr_employeelog.emplogid', DB::raw('MIN(employeelog.checkin) as checkin'), DB::raw('MAX(hr_employeelog.checkout) as checkout'))->groupBy('punchdate')->get();
+		$employeelog = HREmployeeelog::where('userid', $employeeid)->whereBetween('punchdate', [$fromdate, $todate])->orderBy('checkout', 'asc')->select('hr_employeelog.punchdate', 'hr_employeelog.checkin', 'hr_employeelog.checkout', 'hr_employeelog.emplogid', DB::raw('MIN(hr_employeelog.checkin) as checkin'), DB::raw('MAX(hr_employeelog.checkout) as checkout'))->groupBy('punchdate')->get();
 
 		return datatables()->of($employeelog)
 		->editColumn('checkout', function($employeelog){

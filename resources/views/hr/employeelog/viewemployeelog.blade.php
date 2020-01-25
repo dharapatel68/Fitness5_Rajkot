@@ -1,17 +1,14 @@
 @extends('layouts.adminLayout.admin_design')
 
 @section('title', 'View Employee Log')
-
+<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
 @section('content')
         @php
-
             $year = !empty($year) ? $year : '';
             $month = !empty($month) ? $month : '';
             $employeeid = !empty($employeeid) ? $employeeid : '';
             $i = 0;
             $confirmdate = '';
-
-
         @endphp
 <div class="wrapper">
     <div class="content-wrapper">
@@ -43,7 +40,6 @@
                                             <div class="form-inline">
                                                 @csrf
                                                 <div class="form-group">
-                                                    
                                                         <select  class="form-control span11 select2"title="Select Employee" data-live-search="true" data-selected-text-format="count"  data-actions-box="true"  data-header="Select Employee" required="" name="employeeid" id="employeeid" data-sear>
                                                            @if(!empty($employee))
                                                            <option value="">--Please Select Employee--</option>
@@ -52,7 +48,6 @@
                                                            @endforeach
                                                            @endif
                                                         </select>
-                                               
                                                 </div>
                                                 <div class="form-group">
                                                    
@@ -159,6 +154,7 @@
 </div>            
 @endsection
 @push('script')
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>	
 <script type="text/javascript">
     $(document).ready(function(){
 
@@ -169,8 +165,6 @@
                $('#mobileno option[value='+empid+']').prop('selected', true);
            }
        });
-
-
         $('#submit').click(function(){
             $('#emplog').DataTable({
                 processing : true,
@@ -191,9 +185,6 @@
                 ]
             });
         });
-
-
-
     });
 </script>
 @endpush

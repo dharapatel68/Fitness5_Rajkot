@@ -274,7 +274,7 @@
             <div class="form-group">
                <label>Email<span style="color: red">*</span>
                </label>
-               <input type="email" maxlength="60" value="{{ old('email') }} @if(!empty($memberdata->email)){{$memberdata->email }} @endif" id="email" name="email" class="form-control" placeholder="Email Id" class="span11" required />
+               <input type="text" maxlength="60" value="{{ old('email') }} @if(!empty($memberdata->email)){{$memberdata->email }} @endif" id="email" name="email" class="form-control" placeholder="Email Id" class="span11"  />
             </div>
             <div class="form-group">
                <label>Cell Phone Number<span style="color: red">*</span>
@@ -384,7 +384,7 @@
       </div>
       <div class="form-group">
       <label>Emergancy Contact Number</label>
-      <input type="text" name="EmergancyPhoneNumber" class="form-control number" placeholder="EmergancyPhoneNumber" value="{{ old('EmergancyPhoneNumber') }} @if(!empty($memberdata->emergancyphonenumber)){{$memberdata->emergancyphonenumber }} @endif" id="EmergancyPhoneNumber" minlength="10" maxlength="10" class="span11" />&nbsp;<span class="errmsg"></span>
+      <input type="text" name="EmergancyPhoneNumber" class="form-control" placeholder="EmergancyPhoneNumber" value="{{ old('EmergancyPhoneNumber') }} @if(!empty($memberdata->emergancyphonenumber)){{$memberdata->emergancyphonenumber }} @endif" id="EmergancyPhoneNumber"  class="span11" />&nbsp;<span class="errmsg"></span>
       </div>
       </div>
       <!--/.accordion-content-->
@@ -1180,15 +1180,7 @@ function saveSnap(data_uri){
           return false; 
         }
       }
-      var lene = document.getElementById('EmergancyPhoneNumber').value;
   
-      
-        if(lene.length < 10){
-          alert ( "Please Enter valid Emergancy Phone Number" );
-           $('#save_memberform').attr('disabled',false);
-          return false; 
-      
-      }
 
   $('#save_memberform').attr('disabled',true);
       

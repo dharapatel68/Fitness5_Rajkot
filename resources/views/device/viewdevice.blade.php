@@ -17,7 +17,7 @@
 				<div class="col-md-12">
 				<ol class="breadcrumb">
 					<li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-					<li><a href="{{ route('viewdevice') }}">Device</a></li>
+					<li><a href="{{ route('hr_viewdevice') }}">Device</a></li>
 					<li class="active">View Device</li>
 				</ol>
 				</div>
@@ -30,7 +30,7 @@
 					<div class="box box-primary">
 						<div class="box-header with-border">
 							<h3 class="box-title">View Device</h3>
-							<a href="{{ route('adddevice') }}" class="btn btn-primary backbuttonheader"><i class="fa fa-plus"></i> Add Device</a>
+							<a href="{{ route('hr_adddevice') }}" class="btn btn-primary backbuttonheader"><i class="fa fa-plus"></i> Add Device</a>
 						</div>
 						<div class="box-body">
 							<div style="overflow-x:auto;">
@@ -61,11 +61,11 @@
 													@endif
 												</td>
 												<td>
-													<a href="{{ route('updatedevice', $device->deviceinfoid) }}"><i class="fa fa-edit"></i></a>
+													<a href="{{ route('hr_updatedevice', $device->deviceinfoid) }}"><i class="fa fa-edit"></i></a>
 													@if($device->status == 1)
-														<a href="{{ route('deactivedevice', $device->deviceinfoid) }}"><i class="fa fa-trash trash" ></i></a>
+														<a href="{{ route('hr_deactivedevice', $device->deviceinfoid) }}"><i class="fa fa-trash trash" ></i></a>
 													@else
-														<a href="{{ route('activedevice', $device->deviceinfoid) }}"><i class="fa fa-check check"></i></a>
+														<a href="{{ route('hr_activedevice', $device->deviceinfoid) }}"><i class="fa fa-check check"></i></a>
 
 													@endif
 												</td>

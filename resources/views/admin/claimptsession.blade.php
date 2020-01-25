@@ -104,7 +104,7 @@
         <strong>{{$msg}}</strong>
      </div>
      @endif
-     @if($msg=="Session is successfully Claimed" || $msg=="Claim is Skiped")
+     @if($msg=="Session is successfully Claimed" || $msg=="Claim is Skiped" || $msg=="Session is successfully Marked As Conducted")
      <div class="alert alert-success">
         <button type="button" class="close" data-dismiss="alert">×</button> 
         <strong>{{$msg}}</strong>

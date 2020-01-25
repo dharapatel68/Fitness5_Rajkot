@@ -231,8 +231,6 @@
            }
        });
 
-
-
     });
 </script>
 @endpush

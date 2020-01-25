@@ -162,6 +162,8 @@ Route::group(['middleware' => ['admin']], function() {
    Route::any('viewMeasurement','MeasurementController@viewMeasurement');
    Route::any('editMeasurement/{id}','MeasurementController@editMeasurement');
    Route::any('sessionreport/{tid?}/{mid?}/{pid?}', 'PersonalTrainerController@sessionreport')->name('sessionreport');
+  
+   Route::any('deletesession/{id}/{tid?}/{mid?}/{pid?}', 'PersonalTrainerController@deletesession')->name('deletesession'); 
    Route::any('checktime', 'PackageController@checktime')->name('checktime');
    Route::any('gettrainermember', 'PersonalTrainerController@gettrainermember')->name('gettrainermember');
    Route::any('getsessiontrainermember', 'PersonalTrainerController@getsessiontrainermember')->name('getsessiontrainermember');
@@ -325,7 +327,7 @@ Route::group(['middleware' => ['admin']], function() {
    Route::post('deactivedeviceemployee','DeviceController@deactivedeviceemployee');
    Route::post('activedeviceemployee','DeviceController@activedeviceemployee');
    Route::post('userfetchlogs','ProfileController@userfetchlogs');
-   Route::get('viewdevice','SettingController@viewdevice');
+   Route::get('viewdevice','SettingController@viewdevice')->name('viewdevice');
    Route::any('cardread','SettingController@cardread');
    Route::any('fetchlogs','DeviceController@fetchlogs');
    Route::any('vfl','DeviceController@test');
@@ -462,46 +464,7 @@ Route::group(['middleware' => ['admin']], function() {
    Route::any('monthlyreport', 'ExpenseController@monthlyreport');
    Route::any('/expensegstreport/excel', 'ExpenseController@expensegstreport')->name('expensegstreport.excel');
    /*********************End **Expense**********************************/
-   //////////////////////////////////////////// HR Module Start /////////////////////////////////////////////////////////
-   ////////////////////////// working Days ////////////////////////////////////////
-   Route::any('workingdays', 'HRController@workingdays')->name('workingdays');
-   Route::any('viewworkingdays', 'HRController@viewworkingdays')->name('viewworkingdays');
-   Route::any('searchyear', 'HRController@searchyear')->name('searchyear');
-   Route::any('editworkingdays/{id}', 'HRController@editworkingdays')->name('editworkingdays');
-   ////////////////////////// working Days end ////////////////////////////////////////
-   ////////////////////////// leave Days ////////////////////////////////////////
-   Route::any('leave', 'HRController@leave')->name('leave');
-   Route::any('viewleave', 'HRController@viewleave')->name('viewleave');
-   Route::any('searchleaveyear', 'HRController@searchleaveyear')->name('searchleaveyear');
-   Route::any('editleave/{id}', 'HRController@editleave')->name('editleave');
-   ////////////////////////// leave Days end ////////////////////////////////////////
-   ///////////////////////////// Employee account start /////////////////////////////////////
-   Route::any('employeeaccount', 'HRController@employeeaccount')->name('employeeaccount');
-   Route::any('viewemployeeaccount', 'HRController@viewemployeeaccount')->name('viewemployeeaccount');
-   Route::any('searchleaveyear', 'HRController@searchleaveyear')->name('searchleaveyear');
-   Route::any('searchemployeeaccount', 'HRController@searchemployeeaccount')->name('searchemployeeaccount');
-   ///////////////////////////// Employee account end   /////////////////////////////////////
-   ///////////////////////////// Employee log start /////////////////////////////////////
-   Route::any('employeelog', 'HRController@employeelog')->name('employeelog');
-   Route::any('searchemployeelog', 'HRController@searchemployeelog')->name('searchemployeelog');
-   Route::any('storelog', 'HRController@storelog')->name('storelog');
-   Route::any('addpunch/{id}', 'HRController@addpunch')->name('addpunch');
-   ///////////////////////////// Employee log end ///////////////////////////////////////
-   ///////////////////////////////////// Employee Leave start //////////////////////////////////////////////////////////////
-   Route::any('employeeleave', 'HRController@employeeleave')->name('employeeleave');
-   Route::any('viewemployeeleave', 'HRController@viewemployeeleave')->name('viewemployeeleave');
-   Route::any('empexpirydate', 'HRController@empexpirydate')->name('empexpirydate');
-   Route::any('searchemployeeleave', 'HRController@searchemployeeleave')->name('searchemployeeleave');
-   Route::any('editemployeeleave/{id}', 'HRController@editemployeeleave')->name('editemployeeleave');
-   Route::any('deleteemployeeleave/{id}', 'HRController@deleteemployeeleave')->name('deleteemployeeleave');
-   ///////////////////////////////////// Employee Leave end //////////////////////////////////////////////////////////////
-   /////////////////////////////////////////////// salary start ///////////////////////////////////////////////////////////
-   Route::any('salary', 'HRController@salary')->name('salary');
-   Route::any('empsalary', 'HRController@empsalary')->name('empsalary');
-   Route::any('viewsalary', 'HRController@viewsalary')->name('viewsalary');
-   Route::any('viewlockedsalary', 'HRController@viewlockedsalary')->name('viewlockedsalary');
-   Route::any('editsalary/{id}', 'HRController@editsalary')->name('editsalary');
-   /////////////////////////////////////////////// salary end   ///////////////////////////////////////////////////////////
+  
    /************************************start dashboard route****************************/
    Route::any('loaduserbytype','AdminController@loaduserbytype')->name('loaduserbytype');
    Route::any('loaduserprofile','AdminController@loaduserprofile')->name('loaduserprofile');
@@ -705,11 +668,11 @@ Route::any('searchsalary', 'HRController@searchsalary')->name('searchsalary');
 /////////////////////////////////////////////// salary end   ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////// Device Start ////////////////////////////////////////////////////
-Route::any('adddevice', 'DevicecController@adddevice')->name('adddevice');
-Route::any('viewdevice', 'DevicecController@viewdevice')->name('viewdevice');
-Route::any('updatedevice/{id}', 'DevicecController@updatedevice')->name('updatedevice');
-Route::any('deactivedevice/{id}', 'DevicecController@deactivedevice')->name('deactivedevice');
-Route::any('activedevice/{id}', 'DevicecController@activedevice')->name('activedevice');
+Route::any('hr_adddevice', 'HRDeviceController@adddevice')->name('hr_adddevice');
+Route::any('hr_viewdevice', 'HRDeviceController@viewdevice')->name('hr_viewdevice');
+Route::any('hr_updatedevice/{id}', 'HRDeviceController@updatedevice')->name('hr_updatedevice');
+Route::any('hr_deactivedevice/{id}', 'HRDeviceController@deactivedevice')->name('hr_deactivedevice');
+Route::any('hr_activedevice/{id}', 'HRDeviceController@activedevice')->name('hr_activedevice');
 ///////////////////////////////////////////////////// Device End ////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////// Cron job start ///////////////////////////////////////////////////

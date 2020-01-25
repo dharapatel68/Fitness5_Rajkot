@@ -13,7 +13,7 @@
           <div class="col-md-12">
           <ol class="breadcrumb">
             <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="{{ route('viewdevice') }}">Device</a></li>
+            <li><a href="{{ route('hr_viewdevice') }}">Device</a></li>
             <li class="active">Add Device</li>
           </ol>
         </div>
@@ -31,7 +31,7 @@
     <h3 class="box-title">Add Device</h3>
     </div>
        <div class="box-body"> <div class="col-lg-3"></div><div class="col-lg-6">
-              <form role="form" action="{{url('adddevice')}}" method="post" id="device_form">
+              <form role="form" action="{{route('hr_adddevice')}}" method="post" id="device_form">
                  {{ csrf_field() }}
                 <!-- text input -->
                 <div class="form-group">
@@ -144,7 +144,7 @@
 
 ​               <div class="row col-md-offset-4">
                 <button type="submit" class="btn bg-orange">Submit</button>&nbsp;
-                <a href="{{ route('viewdevice') }}" class="btn btn-danger">Cancel</a>
+                <a href="{{ route('hr_viewdevice') }}" class="btn btn-danger">Cancel</a>
 ​              </div>
 
               </form>
