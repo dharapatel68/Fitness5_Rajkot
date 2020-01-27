@@ -309,8 +309,10 @@
                       
                       $user1 =   DB::table('employee')->where('username',$us1)->get()->first();
               
-                    @endphp  
+                    @endphp 
+                    @if($user1) 
                   <a href="{{url('edituser/'.$user1->employeeid)}}" class="btn btn-default btn-flat">Profile</a>
+                  @endif
                 </div>
                 
                 <div class="pull-right">
