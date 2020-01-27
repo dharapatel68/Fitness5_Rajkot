@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Salary extends Model
 {
-    protected $table = 'salary';
+    protected $table = 'hr_salary';
     protected $primaryKey = 'salaryid';
 
     public function employee(){

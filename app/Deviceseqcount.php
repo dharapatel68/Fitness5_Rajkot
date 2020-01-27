@@ -11,5 +11,5 @@ class Deviceseqcount extends Model
      protected $primaryKey = 'deviceseqcountid';
    protected $fillable = [
    	
-        'rollovercount','seqno',];
+    'deviceid', 'rollovercount','seqno',];
 }

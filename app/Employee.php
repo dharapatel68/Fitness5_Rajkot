@@ -16,4 +16,10 @@ class Employee extends Model
   {
     return $this->belongsTo('App\Role', 'roleid');
   }
+  
+  public function deviceuser(){
+
+		return $this->hasOne('App\Device_Employee', 'employeeid', 'employeeid');
+
+	}
 }

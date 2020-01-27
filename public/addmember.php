@@ -216,34 +216,34 @@ $first = $arr[1];
                         <div class="form-group">
                            <label>First Name<span style="color: red">*</span>
                            </label>
-                           <input type="text" name="firstname" id="firstname" class="form-control" placeholder="Firstname" class="span11" required="" maxlength="60" value="<?php if(isset($_POST['firstname'])){ echo $_POST['firstname'];}?>" />
+                           <input type="text" name="firstname" id="firstname" class="form-control" placeholder="Firstname" class="span11"  maxlength="60" value="<?php if(isset($_POST['firstname'])){ echo $_POST['firstname'];}?>" />
                         </div>
                         <div class="form-group">
                             <label>LastName<span style="color: red">*</span>
                             </label>
-                            <input type="text" name="lastname" id="lastname" class="form-control inline-block" placeholder="LastName" class="span11" maxlength="60" value="<?php if(isset($_POST['lastname'])){ echo $_POST['lastname'];}?>" required="" />
+                            <input type="text" name="lastname" id="lastname" class="form-control inline-block" placeholder="LastName" class="span11" maxlength="60" value="<?php if(isset($_POST['lastname'])){ echo $_POST['lastname'];}?>"  />
                         </div>
                         <div class="form-group">
                             <label class="hide">User Name</label>
-                            <input type="text" name="username" id="username" class="form-control hide" placeholder="User Name" class="span11" required="" maxlength="60" value="<?php if(isset($_POST['username'])){ echo $_POST['username'];}?>" readonly /><span id="error_username"></span>
+                            <input type="text" name="username" id="username" class="form-control hide" placeholder="User Name" class="span11"  maxlength="60" value="<?php if(isset($_POST['username'])){ echo $_POST['username'];}?>" readonly /><span id="error_username"></span>
                         </div>
                         <div class="form-group">
                               <label>Gender<span style="color: red">*</span>
                               </label>
                               <label>
-                                  <input type="radio" name="gender" value="Female" required>Female</label>
+                                  <input type="radio" name="gender" value="Female">Female</label>
                               <label>
                                   <input type="radio" name="gender" value="Male">Male</label>
                         </div>
                         <div class="form-group">
                            <label>Email<span style="color: red">*</span>
                            </label>
-                           <input type="email" maxlength="60" value="<?php if(isset($_POST['email'])){ echo $_POST['email'];}?>" id="email" name="email" class="form-control" placeholder="Email Id" class="span11" required />
+                           <input type="text" maxlength="60" value="<?php if(isset($_POST['email'])){ echo $_POST['email'];}?>" id="email" name="email" class="form-control" placeholder="Email Id" class="span11"/>
                         </div>
                         <div class="form-group">
                            <label>Cell Phone Number<span style="color: red">*</span>
                            </label>
-                           <input type="text" name="CellPhoneNumber" value="<?php if(isset($_POST['CellPhoneNumber'])){ echo $_POST['CellPhoneNumber'];}?>" id="MobileNo" minlength="10" maxlength="10" class="form-control number" placeholder="Cell Phone Number" required="" class="span11" /><span id="error_usermobile"></span>
+                           <input type="text" name="CellPhoneNumber" value="<?php if(isset($_POST['CellPhoneNumber'])){ echo $_POST['CellPhoneNumber'];}?>" id="MobileNo" class="form-control number" placeholder="Cell Phone Number" minlength="10" maxlength="10" class="span11" /><span id="error_usermobile"></span>
                         </div>
                         <div class="form-group">
                             <label>Birthdate</label>
@@ -347,7 +347,7 @@ $first = $arr[1];
                                     </div>
                                     <div class="form-group">
                                         <label>Emergancy Contact Number</label>
-                                        <input type="text" name="EmergancyPhoneNumber" class="form-control number" placeholder="EmergancyPhoneNumber" value="<?php if(isset($_POST['EmergancyPhoneNumber'])){ echo $_POST['EmergancyPhoneNumber'];}?>" id="EmergancyPhoneNumber" minlength="10" maxlength="10" class="span11" />&nbsp;<span class="errmsg"></span>
+                                        <input type="text" name="EmergancyPhoneNumber" class="form-control" placeholder="EmergancyPhoneNumber" value="<?php if(isset($_POST['EmergancyPhoneNumber'])){ echo $_POST['EmergancyPhoneNumber'];}?>" id="EmergancyPhoneNumber"  class="span11" />&nbsp;<span class="errmsg"></span>
                                     </div>
                                 </div>
                                 <!--/.accordion-content-->
@@ -551,11 +551,24 @@ function saveSnap(data_uri){
        $('#save_memberform').attr('disabled',false);
       return false; 
    }
+   var mobileno=$('#MobileNo').val();
+          if( $('#MobileNo').val() == "" ||  mobileno.length < 10) {
+             alert( "Please Provide CellPhone No!" );
+              $('#save_memberform').attr('disabled',false);
+             return false;
+          }
        if( $('#birthday').val() == "" ) {
              alert( "Please Provide Birthdate!" );
               $('#save_memberform').attr('disabled',false);
              return false;
           }
+          if( $('#email').val() == "" ) {
+             alert( "Please Provide Email!" );
+              $('#save_memberform').attr('disabled',false);
+             return false;
+          }
+         
+
     var fromt = document.getElementById('fromtime').value;
    
 
@@ -630,16 +643,7 @@ function saveSnap(data_uri){
           return false; 
         }
       }
-      var lene = document.getElementById('EmergancyPhoneNumber').value;
-  
-      
-        if(lene.length < 10){
-          alert ( "Please Enter valid Emergancy Phone Number" );
-           $('#save_memberform').attr('disabled',false);
-          return false; 
-      
-      }
-
+    
   $('#save_memberform').attr('disabled',true);
       
       if (ErrorText= "") { return true; }

@@ -304,6 +304,7 @@
               </li>
               <li class="user-footer">
                 <div class="pull-left">
+       
                    @php $us1 = session('username');
                       
                       $user1 =   DB::table('employee')->where('username',$us1)->get()->first();

@@ -47,9 +47,6 @@
   <div class="box">
     <div class="box-header">
       <a href="{{ url('addfollowup/'.$id) }}" class="btn add-new bg-navy"><i class="fa fa-plus"></i>Add New</a>
-
-
-   
     </div>
     <!-- /.box-header -->
     <div class="box-body">

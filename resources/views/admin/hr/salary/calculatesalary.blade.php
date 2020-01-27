@@ -24,19 +24,15 @@
         @endphp
         <div class="table-wrapper">
             <div class="table-title">
-
                 <div class="box-header">
-
                 </div>
                 <section class="content">
                     <div class="row">
                         <div class="col-xs-12">
-
                             <div class="box">
                                 <div class="box-header">
                                     <h3 class="box-title">Salary Detail #<b>{{ ucfirst($empdata->first_name) }} {{ ucfirst($empdata->last_name) }}</b></h3>
                                 </div>
-
                                 <!-- /.box-header -->
                                 <div class="box-body">
                                     <div class="row">
@@ -62,7 +58,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
@@ -76,10 +71,7 @@
                                                             <input type="text" name="year_display" class="form-control" value="{{ $year }}" readonly="">
                                                         </div>
                                                     </div>
-
                                                 </div>
-
-
                                                 <div class="row">
                                                    {{--  <div class="col-md-6">
                                                         <div class="form-group">
