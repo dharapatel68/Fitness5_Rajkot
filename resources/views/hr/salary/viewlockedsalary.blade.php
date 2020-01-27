@@ -180,34 +180,33 @@
         </section>
     </div>
 </div>
-        <div class="modal fade" id="accountmodel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
+<div class="modal fade" id="accountmodel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Confirm Salary</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-                <label>Employee Name</label>
-                <input type="hidden" name="empid" id="empid">
-                <input type="hidden" name="salaryid" id="salaryid">
-                <input type="text" name="empname" id="empname" class="form-control" readonly="">
+                <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-
-            <div class="form-group">
-                <label>Account No</label>
-                <input type="text" name="accountno" id="accountno" class="form-control" readonly="">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Employee Name</label>
+                    <input type="hidden" name="empid" id="empid">
+                    <input type="hidden" name="salaryid" id="salaryid">
+                    <input type="text" name="empname" id="empname" class="form-control" readonly="">
+                </div>
+                <div class="form-group">
+                    <label>Account No</label>
+                    <input type="text" name="accountno" id="accountno" class="form-control" readonly="">
+                </div>
             </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="pay_emp">Pay</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="pay_emp">Pay</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 @endsection

@@ -53,9 +53,19 @@ $confirmdate = '';
                   <input type="hidden" name="holidays" value="{{ $salary->holidays }}">
                   <input type="hidden" name="totalworkinghour" value="{{ $salary->totalworkinghour }}">
                   <input type="hidden" name="empworkingminute" value="{{ $salary->empworkingminute }}">
+                  <input type="hidden" name="workingminute" value="{{ $salary->totalminute }}">
+                  <input type="hidden" name="totalworkinghour_display" value="{{ $salary->totalhour }}">
+
+                  
+                  
                   <input type="hidden" name="empsalary" value="{{ $salary->empsalary }}">
                   <input type="hidden" name="givenleave" value="{{ $salary->givenleave }}">
                   <input type="hidden" name="store" value="1">
+               <input type="hidden" name="month_display" value="{{ $salary->month}}">
+               <input type="hidden" name="" class="form-control number" value="{{ $salary->empworkingminute }}" readonly="">
+               <input type="hidden" name="monthlyworking_hour_display" class="form-control" value="{{ $salary->empworkinghour }}" readonly="">
+
+
                 @csrf
              <div class="row">
                 <div class="col-lg-12 col-md-8">
@@ -71,7 +81,7 @@ $confirmdate = '';
                                <div class="col-md-2 col-lg-2 col-xs-6">
                                   <div class="form-group">
                                      <label>Total Days</label>
-                                     <input type="text" class="form-control" id="workingdays" value="{{ $salary->workingdays + $salary->holidays}}" name="workingdays_display" readonly>
+                                     <input type="text" class="form-control" id="workingdays" value="{{ $salary->actualdays + $salary->holidays}}" name="workingdays_display" readonly>
                                   </div>
                                </div>
                                <div class="col-md-2 col-lg-2 col-xs-6 ">
@@ -293,12 +303,12 @@ $confirmdate = '';
                                      <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label">Loan Amount</label>
                                      <input type="hidden" name="loan"  class="form-control" value="{{ $loanamount }}">
                                      <div class="col-sm-4 col-lg-3">
-                                        <input type="text" class="form-control" id="loan" placeholder="PT" name="loan" value="{{ $salary->salaryemi }}" readonly="">
+                                        <input type="text" class="form-control" id="loan" placeholder="PT" name="loan" value="{{ $emploanamount }}" readonly="">
                                      </div>
                                      <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label">EMI</label>
                                      {{-- <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label"></label> --}}
                                      <div class="col-sm-4 col-lg-3">
-                                        <input type="number" name="emi" class="form-control" value="{{ $salary->salaryemi > 0 ? $salary->salaryemi : 0 }}" min="0" id="emi">
+                                        <input type="number" name="emi" class="form-control" value="{{ $salary->salaryemi > 0 ? $salary->salaryemi : 0 }}" min="0" id="emi" readonly>
                                      </div>
                                   </div>
                                </div>
@@ -335,7 +345,7 @@ $confirmdate = '';
                             </div>
                             <center>
                                 <div class="form-row" style="margin-top: 35px; margin-left: 15px;">
-                                    <button type="submit" class="btn btn-primary bg-orange" id="submit">Lock Salary</button>
+                                    <button type="submit" class="btn btn-primary bg-orange" id="submit">Update Salary</button>
                                     <a href="{{ route('viewsalary') }}" class="btn btn-danger">cancel</a>
                                 </div>
                             </center>

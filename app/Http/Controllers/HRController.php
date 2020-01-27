@@ -960,41 +960,13 @@ class HRController extends Controller
 					$value['schemename']=$package->schemename;
 					$value['firstname']=$member->firstname;
 					$value['lastname']=$member->lastname;
-					// $tsessiondetail = Ptmember::where('trainerid',$empdata->employeeid)
-					// 							->leftjoin('schemes','schemes.schemeid','ptmember.schemeid')
-					// 							->leftjoin('schemeterms','schemeterms.schemeid','ptmember.schemeid')
-					// 							->leftjoin('member','member.memberid','ptmember.memberid')
-					// 							->whereIn('ptmember.status',['Pending','Conducted','Marked'])
-					// 							->where('ptmember.date', $value->scheduledate)
-					// 							->where('ptmember.hoursfrom', $value->scheduletime)
-					// 							->get(['schemeterms.value as pthours','ptmember.schemeid','ptmember.memberid','schemes.schemename','schemes.baseprice','member.firstname','member.lastname'])->first();
-												// dd($tsessiondetail);
-									
-					//array_push($trainershemes,$tsessiondetail);
+
 				}
-				// foreach ($trainershemes as $trainersheme) {
-				// 	$memberid[]=$trainersheme['memberid'];
-				// }
-				// $totalsession=array_count_values($memberid);
-				
-				// dd($trainershemes);
-				// $trainershemes=Ptmember::where('trainerid',$empdata->employeeid)
-				// 	->leftjoin('schemes','schemes.schemeid','ptmember.schemeid')
-				// 	->leftjoin('schemeterms','schemeterms.schemeid','ptmember.schemeid')
-				// 	->leftjoin('member','member.memberid','ptmember.memberid')
-				// 	->whereIn('ptmember.status',['Pending','Conducted','Marked'])
-				// 	->where('schemeterms.termsid',2)
-				// 	->whereMonth('ptmember.date',$cal_month)
-				// 	->whereYear('ptmember.date',$year)
-				// 	->groupBy('ptmember.schemeid','schemes.schemename','schemes.baseprice')
-				// 	->select('ptmemberid', DB::raw('count(*) as totalsession'),'ptmember.schemeid','schemes.schemename','schemes.baseprice','member.firstname','member.lastname','schemeterms.value as pthours')
-				// 	->get()->first();
 			
 				$trainerdetail=[];
 				$trainerdetail['trainerlevel']=$trainerlevel;
 				$trainerdetail['trainerpercentage']=$trainerpercentage;
 				$trainerdetail['trainershemes']=$trainersessiondetail;
-				// $trainerdetail['totalsession']=COUNT($memberid);
 				
 			}else{
 				Session::flash('message', 'Please assign level to trainer ');
@@ -1058,10 +1030,10 @@ class HRController extends Controller
 			return redirect()->route('viewlockedsalary');
 		}
 
-		// DB::beginTransaction();
-		// try {
+		DB::beginTransaction();
+		try {
 			
-			/*if($request->emi > 0){
+			if($request->emi > 0){
 
 				$empaccount = EmployeeAccount::where('employeeid', $request->employeeid)->orderBy('empaccountid', 'desc')->first();
 				
@@ -1083,7 +1055,7 @@ class HRController extends Controller
 
 				}
 
-			}*/
+			}
 			$tsessionsalary=[];
 			$tsessionsalarystring='';
 			if($tsessionsalary > 0){
@@ -1143,17 +1115,17 @@ class HRController extends Controller
 
 			return redirect()->route('viewsalary');
 
-		// } catch(\Exception $e) {
+		} catch(\Exception $e) {
 
-		// 	Helper::errormail('HR', 'Store Salary', 'High');
+			Helper::errormail('HR', 'Store Salary', 'High');
 
-		// 	DB::rollback();
-		// 	$success = false;
-		// }
+			DB::rollback();
+			$success = false;
+		}
 
-		// if($success == false){
-		// 	return redirect('dashboard');
-		// }
+		if($success == false){
+			return redirect('dashboard');
+		}
 
 	}
 
@@ -1215,10 +1187,10 @@ class HRController extends Controller
 		$todate = date('Y-m-d',strtotime("$year-$cal_month-$day_in_month"));
 		
 		$employeelog = HREmployeeelog::where('userid', $employeeid)->whereBetween('punchdate', [$fromdate, $todate])->get()->all();
-
+		$emploanamount = EmployeeAccount::where('employeeid', $employeeid)->orderBy('empaccountid', 'desc')->pluck('amount')->first();
 
 		if($request->isMethod('POST')){
-
+	
 			$request->validate([
 
 				'attenddays_display' => 'required|numeric',
@@ -1283,7 +1255,7 @@ class HRController extends Controller
 		}
 
 
-		return view('hr.salary.editsalary')->with(compact('salary', 'employeelog'));
+		return view('hr.salary.editsalary')->with(compact('salary', 'employeelog','emploanamount'));
 
 	}
 

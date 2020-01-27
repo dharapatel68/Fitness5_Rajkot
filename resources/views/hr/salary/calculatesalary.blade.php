@@ -345,7 +345,7 @@ $confirmdate = '';
                             </div>
                             <center>
                                 <div class="form-row" style="margin-top: 35px; margin-left: 15px;">
-                                    <button type="submit" class="btn btn-primary bg-orange" id="submit">Lock Salary</button>
+                                    <button type="submit" class="btn btn-primary bg-orange" id="submit">Save Salary</button>
                                     <a href="{{ route('viewsalary') }}" class="btn btn-danger">cancel</a>
                                 </div>
                             </center>
