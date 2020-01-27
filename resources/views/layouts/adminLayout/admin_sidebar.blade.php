@@ -1374,8 +1374,20 @@
                <i class="fa fa-chevron-right"></i>View Trainer Profile
                </a>
             </li>
+            <li>
+               <a href="{{ url('trialform') }}">
+               <i class="fa fa-chevron-right"></i>Add Trial Form Details</a>
+            </li>
+            <li>
+               <a href="{{ url('viewtrialform') }}">
+               <i class="fa fa-chevron-right"></i>View Trial Form Details</a>
+            </li>
          </ul>
+         
       </li>
+     
+         
+   
    </section>
    <!-- /.sidebar -->
 </aside>

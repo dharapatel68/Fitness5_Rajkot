@@ -94,21 +94,19 @@ $confirmdate = '';
                                <div class="col-md-2 col-lg-2 col-xs-6">
                                   <div class="form-group">
                                      <label>Present Days</label>
-                                     <input type="text" class="form-control" id="attenddays" name="attenddays_display"  value="{{ $attenddays }}" oninput="caldays('pday', this.value)">
+                                     <input type="text" class="form-control" id="attenddays" name="attenddays_display"  value="{{ $attenddays }}" oninput="caldays('pday', this.value)" readonly>
                                   </div>
                                </div>
                                <div class="col-md-2 col-lg-2 col-xs-6">
                                   <div class="form-group">
                                      <label>Absent Days</label>
-                                     <input type="text" class="form-control" id="takenleave" name="takenleave_display" value="{{ $leavedays_cal }}" oninput="caldays('takenleave', this.value)"
-                                        required="" autocomplete="off">
+                                     <input type="text" class="form-control" id="takenleave" name="takenleave_display" value="{{ $leavedays_cal }}" oninput="caldays('takenleave', this.value)" readonly      required="" autocomplete="off">
                                   </div>
                                </div>
                                <div class="col-md-2 col-lg-2 col-xs-6">
-                                  {{-- <div class="form-group">
-                                     <label>Monthly </label>
-                                     <input type="text" class="form-control">
-                                  </div> --}}
+                                  <div class="form-group">
+                                    <button type="button" id="editallow" class="btn btn-default" style="margin-top:23px;" for="edit">Edit</button>
+                                  </div>
                                </div>
                             </div>
                          </div>
@@ -238,7 +236,7 @@ $confirmdate = '';
                                <div class="col-md-2 col-lg-2 col-xs-6">
                                  <div class="form-group hide">
                                     <label>Extra</label>
-                                    <input type="text" class="form-control" id="attenddays23" value="0">
+                                    <input type="text" class="form-control" id="attenddays23" value="0" >
                                  </div>
                               </div>
                                <div class="col-md-2 col-lg-2 col-xs-6 ">
@@ -308,7 +306,7 @@ $confirmdate = '';
                                      <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label">EMI</label>
                                      {{-- <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label"></label> --}}
                                      <div class="col-sm-4 col-lg-3">
-                                        <input type="number" name="emi" class="form-control" max="{{ $loanamount }}" min="0" id="emi">
+                                        <input type="number" name="emi" onfocusOut="calemi()" class="form-control" max="{{ $loanamount }}"  id="emi">
                                      </div>
                                   </div>
                                </div>
@@ -323,7 +321,7 @@ $confirmdate = '';
                                      <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label">Other Deduction</label>
                                      {{-- <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label"></label> --}}
                                      <div class="col-sm-4 col-lg-3">
-                                        <input type="number" name="otheramount" class="form-control" min="0" id="otheramount">
+                                        <input type="number" name="otheramount" class="form-control" min="0" id="otheramount" onfocusOut="calotheramount()" onfocusIn="storeotheramt()">
                                      </div>
                                   </div>
                                </div>
@@ -426,13 +424,11 @@ $confirmdate = '';
                             @if(count($trainerdetail['trainershemes']) > 0)
                                 @foreach($trainerdetail['trainershemes'] as $tsession)
                                 <tr>
-                                    
                                     <td>{{date('d-m-Y',strtotime($tsession->actualdate))}}</td>
                                     <td>{{$tsession->firstname}} {{$tsession->lastname}}</td>
                                     <td>{{$tsession->schemename}}</td>
                                     <td>{{$tsession->actualtime}}</td>
                                     <td>{{$tsession->amount}}</td>
-                                    
                                 </tr>
                                 @endforeach
                             @endif
@@ -449,26 +445,28 @@ $confirmdate = '';
   </div>
 @push('script')
 <script type="text/javascript">
-   // $(document).ready(function(){
+   $(document).ready(function(){
    
-   //     var leavetakencount = {{ $leavedays_cal }};
-   
-   
-   //     if(leavetakencount > 0){
-   //         $('#submit').attr('disabled', 'true');
-   //     }
-   
-   //     $('#employeeid').change(function(){
-   
-   //         let empid = $(this).val();
-   //         if(empid){
-   //            $('#mobileno option[value='+empid+']').prop('selected', true);
-   //        }
-   //    });
-   
-   // });
+       var leavetakencount = {{ $leavedays_cal }};
    
    
+       if(leavetakencount > 0){
+           $('#submit').attr('disabled', 'true');
+       }
+   
+   
+    });
+   
+   $("#editallow").on('click',function(){
+      if($('#attenddays').prop('readonly')){
+         $("#attenddays").prop('readonly',false);
+         $("#takenleave").prop('readonly',false); 
+       }
+       else{
+         $("#attenddays").prop('readonly',true);
+         $("#takenleave").prop('readonly',true); 
+       }
+   });
    $('#casualleave').on('input', function(){
        //calculatesalary();
        calsal();
@@ -484,17 +482,6 @@ $confirmdate = '';
        calsal();
    });
    
-   $('#emi').on('input', function(){
-     
-       //calculatesalary();
-       calsal();
-   });
-   
-   $('#otheramount').on('input', function(){
-       //calculatesalary();
-       calsal();
-   });
-   
    $('#takenleave').change(function(){
        $('#casualleave').val(0);
        $('#medicalleave').val(0);
@@ -505,30 +492,30 @@ $confirmdate = '';
    function caldays(type,val)
    {
    
-   let actualdays = $('#actualdays').val();
-   let current_salary_disp = {{ $current_salary }};
-   let attenddays_disp = {{ $attenddays }};
-   let takenleave_disp = {{ $leavedays_cal }};
-   let salary = $('#salary').val();
-   let workingdays = $('#workingdays').val();
-   let current_salary = $('#current_salary').val();
-   let perdaysalary = monthlysalary/workingdays;
-   let casualleave = $('#casualleave').val();
-   let medicalleave = $('#medicalleave').val();
-   let paidleave = $('#paidleave').val();
-   let emi = $('#emi').val();
-   let otheramount = $('#otheramount').val();
-   let loanamount = $('#loan').val();
-   let totalleave= 0;
-   
-   let leftdays = Number(actualdays) - Number(val);
-   
-   let totaldays = Number(leftdays) + Number(val);
-   $('#casualleave').val('');
-   $('#medicalleave').val('');
-   $('#paidleave').val('');
-   $('#emi').val('');
-   $('#otheramount').val('');
+      let actualdays = $('#actualdays').val();
+      let current_salary_disp = {{ $current_salary }};
+      let attenddays_disp = {{ $attenddays }};
+      let takenleave_disp = {{ $leavedays_cal }};
+      let salary = $('#salary').val();
+      let workingdays = $('#workingdays').val();
+      let current_salary = $('#current_salary').val();
+      let perdaysalary = monthlysalary/workingdays;
+      let casualleave = $('#casualleave').val();
+      let medicalleave = $('#medicalleave').val();
+      let paidleave = $('#paidleave').val();
+      let emi = $('#emi').val();
+      let otheramount = $('#otheramount').val();
+      let loanamount = $('#loan').val();
+      let totalleave= 0;
+      
+      let leftdays = Number(actualdays) - Number(val);
+      
+      let totaldays = Number(leftdays) + Number(val);
+      $('#casualleave').val('');
+      $('#medicalleave').val('');
+      $('#paidleave').val('');
+      $('#emi').val('');
+      $('#otheramount').val('');
    
    
    if(leftdays < 0){
@@ -562,7 +549,7 @@ $confirmdate = '';
    }
    }
    
-   function calsal(){
+   function calsal(type){
    
         let salary = $('#salary').val();
         let workingdays = $('#workingdays').val();
@@ -592,8 +579,9 @@ $confirmdate = '';
         if(!otheramount){
             otheramount = 0;
         }
-        
+        console.log('dsemi'+emi);
         if(!emi){
+           console.log('emi'+emi);
             emi = 0;
         }
         
@@ -607,7 +595,7 @@ $confirmdate = '';
         console.log('commsalary '+commsalary);
 
         if(Number(workingdays) == 0){
-
+            alert(workingdays);
             $('#current_salary').val(0);
             $('#subtotal').val(0);
             $('#emi').val(0);
@@ -648,28 +636,6 @@ $confirmdate = '';
                 $('#subtotal').val(Number(commsalary));
                 
             }
-            if(Number(emi) > Number(loanamount) || Number(emi) > Number(commsalary))
-            {
-                alert('Please enter valid EMI');
-                $('#emi').val('');
-                
-        
-            }else{
-            
-                    commsalary = commsalary - Number(emi);
-                    commsalary=commsalary.toFixed(2);
-                $('#current_salary').val(Number(commsalary));
-                
-            }
-                if(Number(otheramount) > Number(commsalary)){
-                    alert('Please enter valid deduction amount');
-                    $('#otheramount').val('');
-                }else{
-                    commsalary = commsalary - Number(otheramount);
-                }
-            
-        
-            commsalary=commsalary.toFixed(2);
             
                 $('#current_salary').val(Number(commsalary)); 
         
@@ -701,6 +667,48 @@ $confirmdate = '';
             
         }
    }
+   function calemi(){
+      let emi = $('#emi').val();
+      if(emi > 0 ){
+         emi=emi;
+      }else{
+         emi=0;
+      }
+      let loanamount = $('#loan').val();
+      var  commsalary= $('#current_salary').val();
+      console.log('before1'+commsalary);
+      console.log('emi1'+emi);
+      if(Number(emi) > Number(loanamount) || Number(emi) > Number(commsalary))
+      {
+         $('#emi').val('');
    
+      }else{
+         commsalary = commsalary - Number(emi);
+         commsalary=commsalary.toFixed(2);
+         $('#current_salary').val(Number(commsalary));
+         console.log('afteremi'+commsalary);
+      console.log('emi2'+emi);
+            
+      }
+   }
+   function calotheramount(){
+      
+      let otheramount = $('#otheramount').val();
+      var  commsalary= $('#current_salary').val();
+
+      if(Number(otheramount) > Number(commsalary)){
+                    alert('Please enter valid deduction amount');
+                    $('#otheramount').val('');
+                }else{
+                    commsalary = commsalary - Number(otheramount);
+                     $('#current_salary').val(Number(commsalary));
+                     console.log('after2'+commsalary);
+                }
+            
+   }
+   function storeotheramt(){
+
+      var commsalary= $('#current_salary').val();
+   }
 </script>
 @endpush
