@@ -101,7 +101,10 @@
           min-width: 100% !important;
 }
   </style>
+
+  
   @php
+ 
   if(isset($_POST['trainerid'])){
      $tid=$_POST['trainerid'];
      $employee=\App\Employee::where('employeeid',$tid)->where('status',1)->get()->first();
@@ -131,7 +134,22 @@
     $pid=0;
   }
 @endphp
+@if(request()->route('tid'))
+@php 
+  $tid=request()->route('tid');
+@endphp
+@endif
+@if(request()->route('mid'))
+@php 
+  $mid=request()->route('mid');
+@endphp
+@endif
+@if(request()->route('pid'))
+@php 
+ $pid=request()->route('pid');
+@endphp
 
+@endif
   <div class="content-wrapper">
    
      
@@ -148,6 +166,12 @@
             </ul>
             </div>
             @endif
+            @if(session('success'))
+            <div class="alert alert-success">
+              <li>{{session('success')}}</li>
+          </div>
+           
+          @endif
             <div class="box box-primary">
 
             <div class="box-header with-border">
@@ -172,7 +196,7 @@
                   @else
                       <select name="trainerid" class="form-control select2" id="trainerid" title="Select Trainer" data-header="Select Trainer" required data-placeholder="Select Trainer">
                    
-                    
+                    <option></option>
                     @foreach ($employees as $employee)
                       <option value="{{$employee->employeeid}}" {{ $tid == $employee->employeeid ? 'selected':''}}>{{$employee->username}}</option>
                     @endforeach
@@ -180,15 +204,13 @@
                   @endif
                 </div>
               </div>
-
                 <div class="col-md-3">
-                <div class="form-group">
-                  <label>Member</label>
-                   <select name="memberid" class="form-control" id="memberid" required>
-                    <option value="">--Select Member--</option>
-                 
-                  </select>
-                </div>
+                  <div class="form-group">
+                    <label>Member</label>
+                    <select name="memberid" class="form-control" id="memberid" required>
+                      <option value="">--Select Member--</option>
+                    </select>
+                  </div>
               </div>
               <div class="col-md-3">
                   <div class="form-group">
@@ -210,7 +232,6 @@
               </div>
                <div class="form-group">
                     <button name="view" type="submit" id="view" class="btn bg-green margin" style="margin-top: 25px">View</button>   <a href="{{ URL::route('sessionreport') }}"class="btn btn-danger margin" style="margin-top: 25px">Cancel</a>
-                
                 </div>
                 <!-- Select multiple-->
                </form>
@@ -226,6 +247,7 @@
      <table id="measurement" class="table table-bordered table-striped" width="100%" >
                 <thead>
                 <tr>
+                  <th>Action</th>
                 <th>Trainer</th>
                 <th>Member</th>
                 <th>Day</th>
@@ -239,8 +261,8 @@
                 <th>Packageid</th>
                 <th>Schemeid</th>
                 <th>Commision</th>
-                <th>Persessioncommision</th>
-                <th>Persessionamount</th>
+                {{-- <th>Persessioncommision</th>
+                <th>Persessionamount</th> --}}
                 <th>Paymentstatus</th>
                 
                 
@@ -249,7 +271,7 @@
                 <tbody>
                @foreach($grid as $key=>$g)
                 <tr>
-    
+                <td><a href="{{ url('deletesession/'.$g->ptmemberid.'/'.$tid.'/'.$mid.'/'.$pid) }}"class="text-danger"  title="Delete"><i class="fa fa-close "></i></a></td>
                 <td>{{$employeename !== '' ?$employeename: $g->ptrainerid}}</td>
                 <td>{{ucwords($membername !== '' ? $membername : $g->pmemberid)}} </td>
                 <td>{{$g->day}} </td>
@@ -267,8 +289,8 @@
                 
                 
                 <td>{{$g->commision}} </td>
-                <td>{{$g->persessioncommision}}</td>
-                <td> {{$g->persessionamount}}</td>
+                {{-- <td>{{$g->persessioncommision}}</td>
+                <td> {{$g->persessionamount}}</td> --}}
                 <td>{{$g->paymentstatus}} </td>
               
                           
@@ -369,10 +391,12 @@
   var tid=<?php echo $tid;?>;
       var mid=<?php echo $mid;?>;
       var pid=<?php echo $pid;?>;
+ 
  $( document ).ready(function() {
      var tid=<?php echo $tid;?>;
       var mid=<?php echo $mid;?>;
       var pid=<?php echo $pid;?>;
+
       if(trainerid == 0 && memberid == 0 && packageid ==0){
         $('#sessionreport').css('display','none');
       }
@@ -467,13 +491,7 @@
     });
   });
 </script>
-<script type="text/javascript">
-  $(document).ready( function (){
-  $('#measurement').DataTable({
-    "lengthMenu": [[7, 10, 15, -1], [7, 10, 15, "All"]]
-  });
-});
-</script>
+
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 @endsection

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class EmployeeAccount extends Model
 {
-    protected $table = 'employeeaccount';
+    protected $table = 'hr_employeeaccount';
     protected $primaryKey = 'empaccountid';
 
     public function employeename(){

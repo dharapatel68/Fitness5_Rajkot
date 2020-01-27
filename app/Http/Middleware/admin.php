@@ -39,15 +39,5 @@ class admin
         }else{
                    return redirect('adminloginpage');
                 }
-      
-         
-            
-       /* $role=['admin','receptionist','manager','trainer','employee'];
-        if (!in_array($this->auth, $role)) {
-            // return abort(403, "No access here, sorry!");
-            return redirect('adminloginpage');
-        }*/
-
-        /*return $next($request);*/
     }
 }

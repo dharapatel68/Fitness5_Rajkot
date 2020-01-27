@@ -16,4 +16,7 @@ class DeviceFetchlogs extends Model
     public function user(){
     	return $this->hasOne('App\User', 'userid', 'detail1');
     }
+    public function emp(){	
+    	return $this->hasOne('App\Employee', 'employeeid', 'detail1')->select(array('first_name', 'last_name', 'mobileno'));	
+    }
 }

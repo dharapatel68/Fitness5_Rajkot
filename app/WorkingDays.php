@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class WorkingDays extends Model
 {
-    protected $table = 'workingcalander'; 
+    protected $table = 'hr_workingcalander'; 
     protected $primaryKey = 'workingcalid';
+
+    public function nonworkingdays(){
+
+    	return $this->hasMany('App\MonthLeave', 'workingcalanderid', 'workingcalid');
+
+    }
 }
