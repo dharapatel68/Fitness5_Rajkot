@@ -308,8 +308,7 @@ $first = $arr[1];
                             <div class="well well-lg">
                                 <div class="form-group">
                                     <label>Address</label>
-                                    <textarea name="Address" maxlength="255" class="form-control" ><?php if(isset($_POST['address'])){echo$_POST['address'];}?>
-                                    </textarea>
+                                    <textarea name="Address" maxlength="255" class="form-control" ><?php if(isset($_POST['address'])){echo$_POST['address'];}?></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label>City</label>
@@ -342,8 +341,7 @@ $first = $arr[1];
                                     </div>
                                     <div class="form-group">
                                         <label>Emergancy Contact Address</label>
-                                        <textarea rows="2" cols="20" name="emergancyaddress" maxlength="60" wrap="soft" class="form-control"  class="span11"><?php if(isset($_POST['emergancyaddress'])){ echo $_POST['emergancyaddress'];}?>
-                                        </textarea>
+                                        <textarea rows="2" cols="20" name="emergancyaddress" maxlength="60" wrap="soft" class="form-control"  class="span11"><?php if(isset($_POST['emergancyaddress'])){ echo $_POST['emergancyaddress'];}?></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label>Emergancy Contact Number</label>

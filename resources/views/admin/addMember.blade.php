@@ -274,7 +274,7 @@
             <div class="form-group">
                <label>Email<span style="color: red">*</span>
                </label>
-               <input type="text" maxlength="60" value="{{ old('email') }} @if(!empty($memberdata->email)){{$memberdata->email }} @endif" id="email" name="email" class="form-control" placeholder="Email Id" class="span11"  />
+               <input type="text" maxlength="60" value="@if(!empty($memberdata->email)){{$memberdata->email}}@endif" id="email" name="email" class="form-control" placeholder="Email Id" class="span11"  />
             </div>
             <div class="form-group">
                <label>Cell Phone Number<span style="color: red">*</span>
@@ -380,7 +380,7 @@
       </div>
       <div class="form-group">
       <label>Emergancy Contact Address</label>
-      <textarea rows="2" cols="20" name="emergancyaddress" maxlength="60" wrap="soft" class="form-control" placeholder="Emergancy Address" class="span11">{{ old('emergancyaddress') }} @if(!empty($memberdata->emergancyaddress)){{$memberdata->emergancyaddress }} @endif</textarea>
+      <textarea rows="2" cols="20" name="emergancyaddress" maxlength="60" wrap="soft" class="form-control" placeholder="Emergancy Address" class="span11">{{ old('emergancyaddress') }} @if(!empty($memberdata->emergancyaddress)){{$memberdata->emergancyaddress }}@endif</textarea>
       </div>
       <div class="form-group">
       <label>Emergancy Contact Number</label>
