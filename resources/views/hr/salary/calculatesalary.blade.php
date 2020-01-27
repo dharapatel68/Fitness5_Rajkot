@@ -445,6 +445,9 @@ $confirmdate = '';
   </div>
 @push('script')
 <script type="text/javascript">
+let globalemi=$('#emi').val();
+let globalotheramout=$('#otheramount').val();
+
    $(document).ready(function(){
    
        var leavetakencount = {{ $leavedays_cal }};
@@ -675,19 +678,24 @@ $confirmdate = '';
          emi=0;
       }
       let loanamount = $('#loan').val();
-      var  commsalary= $('#current_salary').val();
+      var  commsalary= $('#subtotal').val();
       console.log('before1'+commsalary);
       console.log('emi1'+emi);
       if(Number(emi) > Number(loanamount) || Number(emi) > Number(commsalary))
       {
+         
          $('#emi').val('');
    
       }else{
-         commsalary = commsalary - Number(emi);
-         commsalary=commsalary.toFixed(2);
-         $('#current_salary').val(Number(commsalary));
-         console.log('afteremi'+commsalary);
-      console.log('emi2'+emi);
+         if(globalemi != emi){
+            commsalary = commsalary - Number(emi);
+               commsalary=commsalary.toFixed(2);
+               $('#current_salary').val(Number(commsalary));
+               globalemi=emi;
+               console.log('afteremi'+commsalary);
+            console.log('emi2'+emi);
+         }
+         
             
       }
    }
@@ -700,9 +708,13 @@ $confirmdate = '';
                     alert('Please enter valid deduction amount');
                     $('#otheramount').val('');
                 }else{
-                    commsalary = commsalary - Number(otheramount);
+                   if(globalotheramout != otheramount){
+                     commsalary = commsalary - Number(otheramount);
                      $('#current_salary').val(Number(commsalary));
+                     globalotheramout=otheramount;
                      console.log('after2'+commsalary);
+                   }
+                    
                 }
             
    }
