@@ -722,5 +722,9 @@ Route::any('searchemployeelogdaywise', 'HRController@searchemployeelogdaywise')-
 Route::any('empdashboard', 'EmployeePortal@empdashboard')->name('empdashboard');
 Route::any('empprofile', 'EmployeePortal@empprofile')->name('empprofile');
 Route::any('emplogemp', 'EmployeePortal@emplogemp')->name('emplogemp');
+////////////////////////trial form routes///////////////////////////////////////
+Route::any('trialform','TrialformController@trialform');
+Route::any('viewtrialform','TrialformController@viewtrialform');
+Route::any('edittrialform/{trailformid}','TrialformController@edittrialform');
 
-
+////////////////////////////end trial form routs///////////////////////////////////
