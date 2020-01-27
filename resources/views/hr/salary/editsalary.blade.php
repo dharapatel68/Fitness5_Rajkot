@@ -292,7 +292,7 @@ $confirmdate = '';
                                      <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label">Sub Total</label>
                                      <div class="col-sm-4 col-lg-3">
                                         <input type="text" class="form-control"placeholder="PT"  id="subtotal"
-                                        value="{{ $currentsalary }}" >
+                                        value="{{ $currentsalary }}" readonly>
                                      </div>
                                   </div>
                                </div>
@@ -303,7 +303,7 @@ $confirmdate = '';
                                      <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label">Loan Amount</label>
                                      <input type="hidden" name="loan"  class="form-control" value="{{ $loanamount }}">
                                      <div class="col-sm-4 col-lg-3">
-                                        <input type="text" class="form-control" id="loan" placeholder="PT" name="loan" value="{{ $emploanamount }}" readonly="">
+                                        <input type="text" class="form-control" id="loan" placeholder="PT" name="loan" value="{{ $loanamount }}" readonly="">
                                      </div>
                                      <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label">EMI</label>
                                      {{-- <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label"></label> --}}
