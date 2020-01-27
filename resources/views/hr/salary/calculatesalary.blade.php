@@ -292,7 +292,7 @@ $confirmdate = '';
                                      <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label">Sub Total</label>
                                      <div class="col-sm-4 col-lg-3">
                                         <input type="text" class="form-control"placeholder="PT"  id="subtotal"
-                                        value="{{ $current_salary }}" >
+                                        value="{{ $current_salary }}" readonly >
                                      </div>
                                   </div>
                                </div>
@@ -418,18 +418,20 @@ $confirmdate = '';
                         <th>Member</th>
                         <th>Scheme</th>
                         <th>Session Time</th>
+                        <th>Session Amount</th>
                     </thead>
                     <tbody>
-                        {{-- {{dd($trainersessiondetail)}} --}}
-                        @if(!empty($trainersessiondetail))
-                            @if(count($trainersessiondetail) > 0)
-                                @foreach($trainersessiondetail as $tsession)
+                 
+                        @if(!empty($trainerdetail['trainershemes']))
+                            @if(count($trainerdetail['trainershemes']) > 0)
+                                @foreach($trainerdetail['trainershemes'] as $tsession)
                                 <tr>
                                     
                                     <td>{{date('d-m-Y',strtotime($tsession->actualdate))}}</td>
                                     <td>{{$tsession->firstname}} {{$tsession->lastname}}</td>
                                     <td>{{$tsession->schemename}}</td>
                                     <td>{{$tsession->actualtime}}</td>
+                                    <td>{{$tsession->amount}}</td>
                                     
                                 </tr>
                                 @endforeach
