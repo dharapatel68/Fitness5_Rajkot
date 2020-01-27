@@ -18,7 +18,7 @@
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
-   <h1 style="text-decoration: none;">Edit Trail Form</h1>
+   <h1 style="text-decoration: none;">Edit Trial Form</h1>
 </section>
 <section class="content">
    @if($errors->any())
@@ -33,7 +33,7 @@
          <div class="row">
             <div class="box box-info">
                <div class="box-header with-border">
-                  <h3 class="box-title">Edit Trail Form</h3>
+                  <h3 class="box-title">Edit Trial Form</h3>
                </div>
                <div class="box-body">
                   <div class="box-body">
@@ -100,9 +100,7 @@
                               <div class="form-group">
                                  <label class="col-sm-4 control-label" for="Remarks">Remarks</label>
                                  <div class="col-sm-8">
-                                    <input  name="rating"  value="rating" type="text" <?php if ($trialform->rating=='rating') {
-                                       echo "checked";
-                                       } ?> class="rating" data-min=0 data-max=5 data-step=1 data-size="sm"
+                                    <input  name="rating" value="{{$trialform->remarks}}" type="text"  class="rating" data-min=0 data-max=5 data-step=1 data-size="sm"
                                        title="" >
                                  </div>
                               </div>

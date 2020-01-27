@@ -73,7 +73,7 @@
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
-   <h1 style="text-decoration: none;">Trail Form</h1>
+   <h1 style="text-decoration: none;">Trial Form</h1>
 </section>
 <section class="content">
    @if($errors->any())
@@ -88,7 +88,7 @@
          <div class="row">
             <div class="box box-info">
                <div class="box-header with-border">
-                  <h3 class="box-title">Trail Form</h3>
+                  <h3 class="box-title">Trial Form</h3>
                </div>
                <div class="box-body">
                   <div class="box-body">

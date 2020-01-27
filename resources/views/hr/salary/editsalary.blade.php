@@ -485,12 +485,12 @@ $confirmdate = '';
    $('#emi').on('input', function(){
      
        //calculatesalary();
-       calsal();
+       calemi();
    });
    
    $('#otheramount').on('input', function(){
        //calculatesalary();
-       calsal();
+       calotheramount();
    });
    
    $('#takenleave').change(function(){
@@ -707,6 +707,41 @@ $confirmdate = '';
         else{
             
         }
+   }
+   function calemi(){
+      let emi = $('#emi').val();
+      if(emi > 0 ){
+         emi=emi;
+      }else{
+         emi=0;
+      }
+      let loanamount = $('#loan').val();
+      var  commsalary= $('#subtotal').val();
+      if(Number(emi) > Number(loanamount) || Number(emi) > Number(commsalary))
+      {
+         $('#emi').val('');
+   
+      }else{
+         commsalary = commsalary - Number(emi);
+         commsalary=commsalary.toFixed(2);
+         $('#current_salary').val(Number(commsalary));
+            
+      }
+   }
+   function calotheramount(){
+      console.log('before1'+commsalary);
+      let otheramount = $('#otheramount').val();
+      var  commsalary= $('#subtotal').val();
+      if(Number(otheramount) > Number(commsalary)){
+                    alert('Please enter valid deduction amount');
+                    $('#otheramount').val('');
+                }else{
+                    commsalary = commsalary - Number(otheramount);
+                
+                     $('#current_salary').val(Number(commsalary));
+                     console.log('after2'+commsalary);
+                }
+            
    }
    
 </script>

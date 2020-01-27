@@ -306,7 +306,7 @@ $confirmdate = '';
                                      <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label">EMI</label>
                                      {{-- <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label"></label> --}}
                                      <div class="col-sm-4 col-lg-3">
-                                        <input type="number" name="emi" class="form-control" max="{{ $loanamount }}"  id="emi">
+                                        <input type="number" name="emi" onfocusOut="calemi()" class="form-control" max="{{ $loanamount }}"  id="emi">
                                      </div>
                                   </div>
                                </div>
@@ -321,7 +321,7 @@ $confirmdate = '';
                                      <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label">Other Deduction</label>
                                      {{-- <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label"></label> --}}
                                      <div class="col-sm-4 col-lg-3">
-                                        <input type="number" name="otheramount" class="form-control" min="0" id="otheramount">
+                                        <input type="number" name="otheramount" class="form-control" min="0" id="otheramount" onfocusOut="calotheramount()" onfocusIn="storeotheramt()">
                                      </div>
                                   </div>
                                </div>
@@ -424,13 +424,11 @@ $confirmdate = '';
                             @if(count($trainerdetail['trainershemes']) > 0)
                                 @foreach($trainerdetail['trainershemes'] as $tsession)
                                 <tr>
-                                    
                                     <td>{{date('d-m-Y',strtotime($tsession->actualdate))}}</td>
                                     <td>{{$tsession->firstname}} {{$tsession->lastname}}</td>
                                     <td>{{$tsession->schemename}}</td>
                                     <td>{{$tsession->actualtime}}</td>
                                     <td>{{$tsession->amount}}</td>
-                                    
                                 </tr>
                                 @endforeach
                             @endif
@@ -482,17 +480,6 @@ $confirmdate = '';
    $('#paidleave').on('input', function(){
        //calculatesalary();
        calsal();
-   });
-   
-   $('#emi').on('input', function(){
-     
-       //calculatesalary();
-       calemi();
-   });
-   
-   $('#otheramount').on('input', function(){
-       //calculatesalary();
-       calotheramount();
    });
    
    $('#takenleave').change(function(){
@@ -649,32 +636,6 @@ $confirmdate = '';
                 $('#subtotal').val(Number(commsalary));
                 
             }
-          
-            if(Number(emi) > Number(loanamount) || Number(emi) > Number(commsalary))
-            {
-               console.log('afteremi: '+commsalary);
-               //  alert('Please enter valid EMI');
-                $('#emi').val('');
-                commsalary=commsalary.toFixed(2);
-                $('#current_salary').val(Number(commsalary));
-                
-        
-            }else{
-            
-                    commsalary = commsalary - Number(emi);
-                    commsalary=commsalary.toFixed(2);
-                $('#current_salary').val(Number(commsalary));
-                
-            }
-                if(Number(otheramount) > Number(commsalary)){
-                    alert('Please enter valid deduction amount');
-                    $('#otheramount').val('');
-                }else{
-                    commsalary = commsalary - Number(otheramount);
-                }
-            
-        
-            commsalary=commsalary.toFixed(2);
             
                 $('#current_salary').val(Number(commsalary)); 
         
@@ -707,7 +668,47 @@ $confirmdate = '';
         }
    }
    function calemi(){
+      let emi = $('#emi').val();
+      if(emi > 0 ){
+         emi=emi;
+      }else{
+         emi=0;
+      }
+      let loanamount = $('#loan').val();
+      var  commsalary= $('#current_salary').val();
+      console.log('before1'+commsalary);
+      console.log('emi1'+emi);
+      if(Number(emi) > Number(loanamount) || Number(emi) > Number(commsalary))
+      {
+         $('#emi').val('');
+   
+      }else{
+         commsalary = commsalary - Number(emi);
+         commsalary=commsalary.toFixed(2);
+         $('#current_salary').val(Number(commsalary));
+         console.log('afteremi'+commsalary);
+      console.log('emi2'+emi);
+            
+      }
+   }
+   function calotheramount(){
       
+      let otheramount = $('#otheramount').val();
+      var  commsalary= $('#current_salary').val();
+
+      if(Number(otheramount) > Number(commsalary)){
+                    alert('Please enter valid deduction amount');
+                    $('#otheramount').val('');
+                }else{
+                    commsalary = commsalary - Number(otheramount);
+                     $('#current_salary').val(Number(commsalary));
+                     console.log('after2'+commsalary);
+                }
+            
+   }
+   function storeotheramt(){
+
+      var commsalary= $('#current_salary').val();
    }
 </script>
 @endpush
