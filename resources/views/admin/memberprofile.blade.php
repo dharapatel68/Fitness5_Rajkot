@@ -1559,7 +1559,7 @@ textarea.input100 {
                           <table id="paymenthistorytable" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
                             <thead>
                               <tr>
-                                <th>PackageId</th>
+                                <th>Invoice No</th>
                                 <th>Scheme Name</th>
                                 <th>Current Status</th>
                                 <th>JoinDate</th>
