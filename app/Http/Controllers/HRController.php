@@ -292,7 +292,7 @@ class HRController extends Controller
 
 			$request->validate([
 
-				'employeeid' => 'required|unique:leave,employeeid',
+				'employeeid' => 'required|unique:hr_leave,employeeid',
 				'noofleave' => 'required|integer',
 				'expirydate' => 'required|date',
 
@@ -363,7 +363,7 @@ class HRController extends Controller
 
 			$request->validate([
 
-				'employeeid' => ['required', Rule::unique('leave')->ignore($id, 'leaveid')],
+				'employeeid' => ['required', Rule::unique('hr_leave')->ignore($id, 'leaveid')],
 				'noofleave' => 'required|integer',
 				'expirydate' => 'required|date',
 
@@ -519,10 +519,7 @@ class HRController extends Controller
 
 		$account = EmployeeAccount::with('employeename')->paginate(10);
 		$employee = Employee::where('status', 1)->get()->all();
-
-
 		return view('hr.account.viewemployeeamount')->with(compact('account', 'employee'));
-
 
 	}
 
@@ -538,10 +535,6 @@ class HRController extends Controller
 
 
 	}
-
-
-
-
 
 	//////////////////////////////////////////// Employee Acoount End   /////////////////////////////////////////////
 
@@ -697,7 +690,7 @@ class HRController extends Controller
 
 			]);
 
-			$emppunch = new EmployeeLog();
+			$emppunch = new HREmployeeLog();
 			$emppunch->userid = $request->employeeid;
 			$emppunch->punchdate = $request->punchdate;
 			$emppunch->checkin = $request->checkin;

@@ -419,7 +419,6 @@ $confirmdate = '';
                         <th>Session Amount</th>
                     </thead>
                     <tbody>
-                 
                         @if(!empty($trainerdetail['trainershemes']))
                             @if(count($trainerdetail['trainershemes']) > 0)
                                 @foreach($trainerdetail['trainershemes'] as $tsession)
@@ -465,7 +464,7 @@ $confirmdate = '';
      var otheramount=$('#otheramount').val();
      var emi=$('#emi').val();
          if(otheramount > 0){
-            alert('otheramount');
+           
            let subtotal = $('#subtotal').val();
            subtotal = subtotal - Number(otheramount);
            subtotal = subtotal.toFixed(2);
@@ -477,7 +476,7 @@ $confirmdate = '';
          }
        
          if(emi > 0){
-           alert('emi');
+   
            let subtotal = $('#current_salary').val();
            subtotal = subtotal - Number(emi);
            subtotal = subtotal.toFixed(2);
@@ -614,9 +613,7 @@ $confirmdate = '';
         if(!otheramount){
             otheramount = 0;
         }
-        console.log('dsemi'+emi);
         if(!emi){
-           console.log('emi'+emi);
             emi = 0;
         }
         
@@ -627,10 +624,9 @@ $confirmdate = '';
         commsalary =  commsalary - (Number(takenleave)) * Number(perdaysalary);
         
         calleave();
-        console.log('commsalary '+commsalary);
 
         if(Number(workingdays) == 0){
-            alert('dsfs'+workingdays);
+           
             $('#current_salary').val(0);
             $('#subtotal').val(0);
             $('#emi').val(0);
@@ -711,8 +707,7 @@ $confirmdate = '';
       }
       let loanamount = $('#loan').val();
       var  commsalary= $('#subtotal').val();
-      console.log('before1'+commsalary);
-      console.log('emi1'+emi);
+     
       if(Number(emi) > Number(loanamount) || Number(emi) > Number(commsalary))
       {
          
@@ -724,8 +719,7 @@ $confirmdate = '';
                commsalary=commsalary.toFixed(2);
                $('#current_salary').val(Number(commsalary));
                globalemi=emi;
-               console.log('afteremi'+commsalary);
-            console.log('emi2'+emi);
+             
          }
          
             
@@ -745,7 +739,7 @@ $confirmdate = '';
                      commsalary=commsalary.toFixed(2);
                      $('#current_salary').val(Number(commsalary));
                      globalotheramout=otheramount;
-                     console.log('after2'+commsalary);
+                    
                    }
                     
                 }
