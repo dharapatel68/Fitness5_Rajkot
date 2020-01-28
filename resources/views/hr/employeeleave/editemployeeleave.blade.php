@@ -1,4 +1,4 @@
-@extends('layout.mainlayout') 
+@extends('layouts.adminLayout.admin_design') 
 
 @section('title', 'Edit Employee Leave')
 
@@ -14,20 +14,19 @@
 
 
         @endphp
-
-        <section class="content-header">
-           <div class="row">
-            <div class="col-md-12">
-              <ol class="breadcrumb">
-                <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                <li><a href="{{ route('viewemployeeleave') }}">Employee Leave</a></li>
-                <li class="active">Edit Employee Leave</li>
-            </ol>
-        </div>
-    </div>
-</section>
-
-    
+        <div class="wrapper">
+            <div class="content-wrapper">
+                <section class="content-header">
+                <div class="row">
+                    <div class="col-md-12">
+                    <ol class="breadcrumb">
+                        <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                        <li><a href="{{ route('viewemployeeleave') }}">Employee Leave</a></li>
+                        <li class="active">Edit Employee Leave</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
                 <section class="content">
                     <div class="row">
                         <div class="col-xs-12">
@@ -107,6 +106,8 @@
                     </div>
                     <!-- /.row -->
                 </section>
+    </div>
+</div>
 @endsection
 @push('script')
 <script type="text/javascript">
