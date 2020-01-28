@@ -445,8 +445,8 @@ $confirmdate = '';
   </div>
 @push('script')
 <script type="text/javascript">
-let globalemi=$('#emi').val();
-let globalotheramout=$('#otheramount').val();
+   let globalemi=$('#emi').val();
+   let globalotheramout=$('#otheramount').val();
 
    $(document).ready(function(){
    
@@ -520,7 +520,8 @@ let globalotheramout=$('#otheramount').val();
       $('#emi').val('');
       $('#otheramount').val('');
    
-   
+      calemi();
+      calotheramount();
    if(leftdays < 0){
        alert('Pease Enter valid days');
        $('#attenddays').val(attenddays_disp);
@@ -710,6 +711,7 @@ let globalotheramout=$('#otheramount').val();
                 }else{
                    if(globalotheramout != otheramount){
                      commsalary = commsalary - Number(otheramount);
+                     commsalary=commsalary.toFixed(2);
                      $('#current_salary').val(Number(commsalary));
                      globalotheramout=otheramount;
                      console.log('after2'+commsalary);

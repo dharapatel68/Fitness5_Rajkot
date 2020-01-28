@@ -59,133 +59,136 @@
       <?php $permission = unserialize(session()->get('permission'));
          ?>
       {{-- HR Module Sidebar --}}
-      <li class="treeview {{ $menu ==  'membership' ? 'active' : ''  }}">
-         <a href="#" id="hrmodulemenuopen">
-         <i class="fa fa-users"></i>
-         <span>HR Module</span>
-         <span class="pull-right-container">
-         <i class="fa fa-angle-left pull-right"></i>
-         </span>
-         </a>
-         <ul class="treeview-menu">
+         @if(isset($permission["'hr_module'"]) || isset($permission["'hr_device'"]) )
             <li class="treeview">
-               <a href="#">
-               <img src="{{ asset('images/icon/device.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp; <span>Device</span>
+               <a href="#" id="hrmodulemenuopen">
+               <i class="fa fa-users"></i>
+               <span>HR Module</span>
                <span class="pull-right-container">
                <i class="fa fa-angle-left pull-right"></i>
                </span>
                </a>
                <ul class="treeview-menu">
                   <li class="treeview">
-                     <a href="#"><i class="fa fa-circle-o"></i> Device
+                     <a href="#">
+                     <img src="{{ asset('images/icon/device.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp; <span>Device</span>
                      <span class="pull-right-container">
                      <i class="fa fa-angle-left pull-right"></i>
                      </span>
                      </a>
                      <ul class="treeview-menu">
-                        <li><a href="{{ route('hr_adddevice') }}"><i class="fa fa-plus"></i> Add Device</a></li>
-                        <li><a href="{{ route('hr_viewdevice') }}"><i class="fa fa-eye"></i> View Device</a></li>
-                     </ul>
-                  </li>
-                  <li><a href="{{ route('enrolldevice') }}"><i class="fa fa-circle-o"></i> Enroll Device</a></li>
-                  <li><a href="{{ route('emplog') }}"><i class="fa fa-circle-o"></i> Employee Log</a></li>
-               </ul>
-            </li>
-            <li class="treeview">
-               <a href="#">
-               <img src="{{ asset('images/icon/hr.png') }}" style="height: 22px; width: 22px;margin-left: -3px;">&nbsp;&nbsp; <span>HR</span>
-               <span class="pull-right-container">
-               <i class="fa fa-angle-left pull-right"></i>
-               </span>
-               </a>
-               <ul class="treeview-menu">
-                  <li class="treeview">
-                     <a href="#"><img src="{{ asset('images/icon/workinghour.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp; Working Days
-                     <span class="pull-right-container">
-                     <i class="fa fa-angle-left pull-right"></i>
-                     </span>
-                     </a>
-                     <ul class="treeview-menu">
-                        <li><a href="{{ route('workingdays') }}"><i class="fa fa-plus"></i> Add Working Days</a></li>
-                        <li><a href="{{ route('viewworkingdays') }}"><i class="fa fa-eye"></i> View Working Days</a></li>
-                     </ul>
-                  </li>
-                  <li class="treeview">
-                     <a href="#"><img src="{{ asset('images/icon/leave.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp; Leave
-                     <span class="pull-right-container">
-                     <i class="fa fa-angle-left pull-right"></i>
-                     </span>
-                     </a>
-                     <ul class="treeview-menu">
-                        <li><a href="{{ route('leave') }}"><i class="fa fa-plus"></i> Add Leave</a></li>
-                        <li><a href="{{ route('viewleave') }}"><i class="fa fa-eye"></i> View Leave</a></li>
+                        <li class="treeview">
+                           <a href="#"><i class="fa fa-circle-o"></i> Device
+                           <span class="pull-right-container">
+                           <i class="fa fa-angle-left pull-right"></i>
+                           </span>
+                           </a>
+                           <ul class="treeview-menu">
+                              <li><a href="{{ route('hr_adddevice') }}"><i class="fa fa-plus"></i> Add Device</a></li>
+                              <li><a href="{{ route('hr_viewdevice') }}"><i class="fa fa-eye"></i> View Device</a></li>
+                           </ul>
+                        </li>
+                        <li><a href="{{ route('enrolldevice') }}"><i class="fa fa-circle-o"></i> Enroll Device</a></li>
+                        <li><a href="{{ route('emplog') }}"><i class="fa fa-circle-o"></i> Employee Log</a></li>
                      </ul>
                   </li>
                   <li class="treeview">
                      <a href="#">
-                     <img src="{{ asset('images/icon/employeeleave.png') }}" style="height: 23px; width: 23px;margin-left: -3px;">&nbsp;&nbsp;
-                     <span>
-                     Employee Leave
-                     </span>
+                     <img src="{{ asset('images/icon/hr.png') }}" style="height: 22px; width: 22px;margin-left: -3px;">&nbsp;&nbsp; <span>HR</span>
                      <span class="pull-right-container">
                      <i class="fa fa-angle-left pull-right"></i>
                      </span>
                      </a>
                      <ul class="treeview-menu">
-                        <li>
-                           <a href="{{ route('employeeleave') }}">
-                           <i class="fa fa-plus"></i>Add Employee Leave
+                        <li class="treeview">
+                           <a href="#"><img src="{{ asset('images/icon/workinghour.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp; Working Days
+                           <span class="pull-right-container">
+                           <i class="fa fa-angle-left pull-right"></i>
+                           </span>
                            </a>
+                           <ul class="treeview-menu">
+                              <li><a href="{{ route('workingdays') }}"><i class="fa fa-plus"></i> Add Working Days</a></li>
+                              <li><a href="{{ route('viewworkingdays') }}"><i class="fa fa-eye"></i> View Working Days</a></li>
+                           </ul>
                         </li>
-                        <li>
-                           <a href="{{ route('viewemployeeleave') }}">
-                           <i class="fa fa-eye"></i>View Employee Leave
+                        <li class="treeview">
+                           <a href="#"><img src="{{ asset('images/icon/leave.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp; Leave
+                           <span class="pull-right-container">
+                           <i class="fa fa-angle-left pull-right"></i>
+                           </span>
                            </a>
+                           <ul class="treeview-menu">
+                              <li><a href="{{ route('leave') }}"><i class="fa fa-plus"></i> Add Leave</a></li>
+                              <li><a href="{{ route('viewleave') }}"><i class="fa fa-eye"></i> View Leave</a></li>
+                           </ul>
                         </li>
-                     </ul>
-                  </li>
-                  <li class="treeview">
-                     <a href="#"> <img src="{{ asset('images/icon/account.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp; Employee Account
-                     <span class="pull-right-container">
-                     <i class="fa fa-angle-left pull-right"></i>
-                     </span>
-                     </a>
-                     <ul class="treeview-menu">
-                        <li><a href="{{ route('employeeaccount') }}"><i class="fa fa-plus"></i> Add Amount</a></li>
-                        <li><a href="{{ route('viewemployeeaccount') }}"><i class="fa fa-eye"></i> View Amount</a></li>
-                     </ul>
-                  </li>
-                  <li class="treeview">
-                     <a href="#"><img src="{{ asset('images/icon/employeelog.png') }}" style="height: 23px; width: 23px;margin-left: -3px;">&nbsp;&nbsp; Employee Log
-                     <span class="pull-right-container">
-                     <i class="fa fa-angle-left pull-right"></i>
-                     </span>
-                     </a>
-                     <ul class="treeview-menu">
-                        <li><a href="{{ route('employeelog') }}"><i class="fa fa-plus"></i> View Log</a></li>
-                        <li><a href="{{ route('employeelogdaywise') }}"><i class="fa fa-plus"></i> View Log Daywise</a></li>
-                        <li><a href="{{ route('addemppunch') }}"><i class="fa fa-plus"></i> Add Punch</a></li>
-                     </ul>
-                  </li>
-                  <li class="treeview">
-                     <a href="#"><img src="{{ asset('images/icon/salary.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp; Employee Salary
-                     <span class="pull-right-container">
-                     <i class="fa fa-angle-left pull-right"></i>
-                     </span>
-                     </a>
-                     <ul class="treeview-menu">
-                        <li><a href="{{ route('salary') }}"><i class="fa fa-plus"></i>Count Salary</a></li>
-                        <li><a href="{{ route('viewsalary') }}"><i class="fa fa-eye"></i> View Salary</a></li>
-                        <li><a href="{{ route('viewlockedsalary') }}"><i class="fa fa-eye"></i> View Locked Salary</a></li>
+                        <li class="treeview">
+                           <a href="#">
+                           <img src="{{ asset('images/icon/employeeleave.png') }}" style="height: 23px; width: 23px;margin-left: -3px;">&nbsp;&nbsp;
+                           <span>
+                           Employee Leave
+                           </span>
+                           <span class="pull-right-container">
+                           <i class="fa fa-angle-left pull-right"></i>
+                           </span>
+                           </a>
+                           <ul class="treeview-menu">
+                              <li>
+                                 <a href="{{ route('employeeleave') }}">
+                                 <i class="fa fa-plus"></i>Add Employee Leave
+                                 </a>
+                              </li>
+                              <li>
+                                 <a href="{{ route('viewemployeeleave') }}">
+                                 <i class="fa fa-eye"></i>View Employee Leave
+                                 </a>
+                              </li>
+                           </ul>
+                        </li>
+                        <li class="treeview">
+                           <a href="#"> <img src="{{ asset('images/icon/account.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp; Employee Account
+                           <span class="pull-right-container">
+                           <i class="fa fa-angle-left pull-right"></i>
+                           </span>
+                           </a>
+                           <ul class="treeview-menu">
+                              <li><a href="{{ route('employeeaccount') }}"><i class="fa fa-plus"></i> Add Amount</a></li>
+                              <li><a href="{{ route('viewemployeeaccount') }}"><i class="fa fa-eye"></i> View Amount</a></li>
+                           </ul>
+                        </li>
+                        <li class="treeview">
+                           <a href="#"><img src="{{ asset('images/icon/employeelog.png') }}" style="height: 23px; width: 23px;margin-left: -3px;">&nbsp;&nbsp; Employee Log
+                           <span class="pull-right-container">
+                           <i class="fa fa-angle-left pull-right"></i>
+                           </span>
+                           </a>
+                           <ul class="treeview-menu">
+                              <li><a href="{{ route('employeelog') }}"><i class="fa fa-plus"></i> View Log</a></li>
+                              <li><a href="{{ route('employeelogdaywise') }}"><i class="fa fa-plus"></i> View Log Daywise</a></li>
+                              <li><a href="{{ route('addemppunch') }}"><i class="fa fa-plus"></i> Add Punch</a></li>
+                           </ul>
+                        </li>
+                        <li class="treeview">
+                           <a href="#"><img src="{{ asset('images/icon/salary.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp; Employee Salary
+                           <span class="pull-right-container">
+                           <i class="fa fa-angle-left pull-right"></i>
+                           </span>
+                           </a>
+                           <ul class="treeview-menu">
+                              <li><a href="{{ route('salary') }}"><i class="fa fa-plus"></i>Count Salary</a></li>
+                              <li><a href="{{ route('viewsalary') }}"><i class="fa fa-eye"></i> View Salary</a></li>
+                              <li><a href="{{ route('viewlockedsalary') }}"><i class="fa fa-eye"></i> View Locked Salary</a></li>
+                           </ul>
+                        </li>
                      </ul>
                   </li>
                </ul>
             </li>
-         </ul>
-
-         {{--End  HR Module Sidebar --}}
+         @endif
+         {{--End HR Module Sidebar --}}
          @if(isset($permission["'add_registration'"]) || isset($permission["'view_registration'"]) )
-      <li class="treeview">
+      
+         <li class="treeview">
          <a href="#" id="registrationmenuopen">
          <img src="{{ asset('images/icon/registration.jpg') }}" style="height: 14px; width: 14px;margin-left: -3px;">&nbsp;&nbsp;
          <span>
@@ -212,12 +215,6 @@
             <li>
                <a href="{{url('deletedregstration')}}">
                <img src="{{ asset('images/icon/delete.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp;Deleted Registration
-               </a>
-            </li>
-            <li>
-               <a href="{{ url('addregpaymenttype') }}">
-               <i class="fa fa-book"></i>
-               <span>Add Type</span>
                </a>
             </li>
             <li>
@@ -272,11 +269,11 @@
             <li><a  href="{{ url('apilist') }}"><i class="fa fa-chevron-right"></i>Device Operation</a></li>
             <li><a  href="{{ url('internetstatus') }}"><i class="fa fa-chevron-right"></i>Device On/Off Status</a></li>
             @if(isset($permission["'add_device'"]))
-            <li>
+            {{-- <li>
                <a  href="{{ url('adddevice') }}">
                <i class="fa fa-chevron-right"></i>Add Device
                </a>
-            </li>
+            </li> --}}
             @endif
             @if(isset($permission["'view_device'"]))
             <li>
@@ -313,11 +310,11 @@
                </a>
                <ul class="treeview-menu ">
                   @if(isset($permission["'add_role'"]))
-                  <li>
+                  {{-- <li>
                      <a  href="{{ url('addrole') }}">
                      <i class="fa fa-chevron-right"></i> Add Role
                      </a>
-                  </li>
+                  </li> --}}
                   @endif
                   @if(isset($permission["'view_role'"]))
                   <li>
@@ -666,7 +663,7 @@
          </ul>
       </li>
       @endif
-      @if(isset($permission["'add_inquiry'"]) || isset($permission["'view_inquiry'"]))
+      @if(isset($permission["'add_inquiry'"]) || isset($permission["'view_inquiry'"]) || isset($permission["'add_trial_form_all'"]))
       <li class="treeview {{ $menu ==  'inquiry' ? 'active' : ''  }}">
          <a href="#" id="inquirymenuopen">
          <i class="fa fa-files-o"></i>
@@ -702,6 +699,12 @@
                <a href="{{ url('followup') }}">
                <img src="{{ asset('images/icon/manage.png') }}" style="height: 13px; width: 13px;margin-left: -3px;">&nbsp;&nbsp; Manage followup
                </a>
+            </li>
+            @endif
+            @if(isset($permission["'add_trial_form'"]) || isset($permission["'view_trial_form'"]))
+            <li>
+               <a href="{{ url('viewtrialform') }}">
+               <i class="fa fa-chevron-right"></i>View Trial Form Details</a>
             </li>
             @endif
          </ul>
@@ -1363,7 +1366,7 @@
          <i class="fa fa-angle-left pull-right"></i>
          </span>
          </a>
-         <ul class="treeview-menu ">
+         <ul class="treeview-menu">
             <li>
                <a href="{{ url('addtrainerprofile') }}">
                <i class="fa fa-chevron-right"></i>Add Trainer Profile
@@ -1383,11 +1386,7 @@
                <i class="fa fa-chevron-right"></i>View Trial Form Details</a>
             </li>
          </ul>
-         
       </li>
-     
-         
-   
    </section>
    <!-- /.sidebar -->
 </aside>

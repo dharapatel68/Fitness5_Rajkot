@@ -1753,8 +1753,8 @@ public function schemeActualPrice(Request $request)
           'lastname' => 'required|max:255',
           'firstname' => 'required',
           'gender' =>'required',
-          'file' => 'mimes:jpeg,bmp,png|max:2000',
-          'attachments.*' => 'mimes:jpeg,bmp,png|max:2000',
+          'file' => 'mimes:jpeg,bmp,png|max:5000',
+          'attachments.*' => 'mimes:jpeg,bmp,png|max:5000',
         ]);
 
 

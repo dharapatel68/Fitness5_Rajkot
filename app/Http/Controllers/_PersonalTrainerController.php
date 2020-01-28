@@ -1229,7 +1229,9 @@ $packageid=$request->packageid;
           $traineridgen=$request->trainerid;
           $memberidgen=$request->memberid;
 
-     $grid = DB::select( DB::raw("select `ptmember`.*,claimptsession.*,ptmember.memberid AS 'pmemberid',ptmember.trainerid AS 'ptrainerid',ptmember.packageid AS 'ppackageid',ptmember.status AS 'ptmemberstatus', `employee`.`username`, `employee`.`employeeid` from `ptmember` left join `employee` on `employee`.`employeeid` = `ptmember`.`trainerid` left join claimptsession on ptmember.trainerid=claimptsession.trainerid AND ptmember.memberid=claimptsession.memberid AND ptmember.date=claimptsession.scheduledate  where `ptmember`.`memberid` = '".$memberidgen."' and `ptmember`.`packageid` = '".$packageid."' and `ptmember`.`trainerid` = '".$traineridgen."' and `ptmember`.`hoursfrom` is  and (`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending' or `ptmember`.`status` = 'Conducted' or `ptmember`.`status` = 'Marked')"));
+     $grid = DB::select( DB::raw("select `ptmember`.*,claimptsession.*,ptmember.memberid AS 'pmemberid',ptmember.trainerid AS 'ptrainerid',ptmember.packageid AS 'ppackageid',ptmember.status AS 'ptmemberstatus', `employee`.`username`, `employee`.`employeeid` 
+     from `ptmember` left join `employee` on `employee`.`employeeid` = `ptmember`.`trainerid` left join claimptsession on ptmember.trainerid=claimptsession.trainerid AND ptmember.memberid=claimptsession.memberid 
+     AND ptmember.date=claimptsession.scheduledate  where `ptmember`.`memberid` = '".$memberidgen."' and `ptmember`.`packageid` = '".$packageid."' and `ptmember`.`trainerid` = '".$traineridgen."' and `ptmember`.`hoursfrom` is NOT NULL and (`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending' or `ptmember`.`status` = 'Conducted' or `ptmember`.`status` = 'Marked')"));
 $employee=Employee::where('employeeid',$traineridgen)->where('status',1)->get()->first();
 $employeename=$employee->username;
 $member=Member::where('memberid',$memberidgen)->where('status',1)->get()->first();
@@ -1322,7 +1324,7 @@ public function getqueryresultforexcel(Request $request){
                         ->where('scheduletime',$ptmember->hoursfrom)
                         ->first();
         $claimptsession->status = "Deleted";
-         $claimptsession->save();
+        $claimptsession->save();
 
         
          return redirect()->to('sessionreport/'.$tid.'/'.$mid.'/'.$pid)->withSuccess('Succesfully Deleted');
