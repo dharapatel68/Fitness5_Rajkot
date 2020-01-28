@@ -76,7 +76,7 @@ Mo. : 0281 2583005/2587005 <br></font>
 
                 <thead>
                     <tr><th style="border:none;"><font size="3">Package Information</font></th></tr>
-                    <tr style=" border-left: thick solid; border-top: thick solid;border-bottom:bold solid; border:1px; border-color: #CACFD2:">
+                    <tr style="border-left: thick solid; border-top: thick solid;border-bottom:bold solid; border:1px; border-color: #CACFD2:">
                         
                     <th style="border-color: #CACFD2;border-left:thick solid; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Package</th>
                 <th style="border-color: #CACFD2; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Duration</th>

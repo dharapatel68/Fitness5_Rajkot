@@ -99,13 +99,13 @@ $confirmdate = '';
                                <div class="col-md-2 col-lg-2 col-xs-6">
                                   <div class="form-group">
                                      <label>Present Days</label>
-                                     <input type="text" class="form-control" id="attenddays" name="attenddays_display"  value="{{ $salary->attenddays }}" onfocusOut="caldays('pday', this.value)">
+                                     <input type="text" class="form-control" id="attenddays" name="attenddays_display"  value="{{ $salary->attenddays }}" oninput="caldays('pday', this.value)">
                                   </div>
                                </div>
                                <div class="col-md-2 col-lg-2 col-xs-6">
                                   <div class="form-group">
                                      <label>Absent Days</label>
-                                     <input type="text" class="form-control" id="takenleave" name="takenleave_display" value="{{$salary->takenleave }}" onfocusOut="caldays('takenleave', this.value)"
+                                     <input type="text" class="form-control" id="takenleave" name="takenleave_display" value="{{$salary->takenleave }}" oninput="caldays('takenleave', this.value)"
                                         required="" autocomplete="off">
                                   </div>
                                </div>
@@ -558,28 +558,7 @@ $confirmdate = '';
            $('#absday').val(leftdays);
            $('#takenleave12').val(leftdays);
            calsal();
-           var otheramountf=$('#otheramount').val();
-            var emif=$('#emi').val();
-            if(otheramountf > 0){
-                  let subtotal = $('#subtotal').val();
-                  subtotal = subtotal - Number(otheramountf);
-                  subtotal = subtotal.toFixed(2);
-                  globalotheramout = otheramountf;
-                  $('#current_salary').val(Number(subtotal));
-               }
-               else{
-                  otheramountf = 0;
-               }
-            
-               if(emif > 0){
-                  alert('emi');
-                  subtotal = subtotal - Number(emif);
-                  subtotal = subtotal.toFixed(2);
-                  globalemi = emif;
-                  $('#current_salary').val(Number(commsalary));
-               }else{
-                  emi = 0;
-               }
+           deductioncalculate();
        }
        
    }
@@ -749,6 +728,7 @@ $confirmdate = '';
       var otheramount=$('#otheramount').val();
       var emi=$('#emi').val();
       if(otheramount > 0){
+         console.log('otheramountfor dedduct'+otheramount);
             let subtotal = $('#subtotal').val();
             subtotal = subtotal - Number(otheramount);
             subtotal = subtotal.toFixed(2);
@@ -760,7 +740,8 @@ $confirmdate = '';
          }
         
          if(emi > 0){
-            alert('emi');
+            console.log('emi for dedduct'+emi);
+            let subtotal = $('#subtotal').val();
             subtotal = subtotal - Number(emi);
             subtotal = subtotal.toFixed(2);
             globalemi = emi;
