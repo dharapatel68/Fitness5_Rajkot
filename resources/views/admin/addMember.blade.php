@@ -346,8 +346,9 @@
          <br/>
          <div class="well well-lg">
             <div class="form-group">
+              @if(!empty($memberdata->address)) @php $address=$memberdata->address; @endphp @else @php $address=''; @endphp  @endif
                <label>Address</label>
-               <textarea name="Address"  class="form-control" placeholder="Address" >@if(!empty($memberdata->address)){{$memberdata->address }} @endif</textarea>
+               <textarea name="Address"  class="form-control" placeholder="Address"></textarea>
             </div>
             <div class="form-group">
                <label>City</label>
@@ -379,8 +380,9 @@
       <input type="text" name="emergancyrelation" value="{{ old('emergancyrelation') }} @if(!empty($memberdata->emergancyrelation)){{$memberdata->emergancyrelation }} @endif " maxlength="60" class="form-control" placeholder="EmergancyRelation" class="span11" id="emergancyrelation"/>
       </div>
       <div class="form-group">
-      <label>Emergancy Contact Address</label>
-      <textarea rows="2" cols="20" name="emergancyaddress" maxlength="60" wrap="soft" class="form-control" placeholder="Emergancy Address" class="span11">{{ old('emergancyaddress') }} @if(!empty($memberdata->emergancyaddress)){{$memberdata->emergancyaddress }}@endif</textarea>
+        @if(!empty($memberdata->emergancyaddress)) @php $emeraddress=$memberdata->emergancyaddress; @endphp @else @php $emeraddress=''; @endphp  @endif
+        <label>Emergancy Contact Address</label>
+      <textarea rows="2" cols="20" name="emergancyaddress" maxlength="60" wrap="soft" class="form-control" placeholder="Emergancy Address" class="span11">{{ $emeraddress}}</textarea>
       </div>
       <div class="form-group">
       <label>Emergancy Contact Number</label>
@@ -460,548 +462,290 @@
       </div>
       <!--/.accordion-content-->
       </article>
-      <!-- 
-         <div class="row">
-         -->
-      <!--  <div class="col-md-8 col-sm-5">    
-         <label for="happy">Have You Suffering From Heart Problem, High Blood Pressure, Diabetes Or Thyroid?</label>
-         </div>  -->
-      <!-- 
-         <div class="col-md-4 col-sm-4">
-           <div class="input-group">
-             <div id="radioBtn" class="btn-group">
-               <a class="btn btn-success btn-sm notActive showSingle" data-toggle="2"  data-title="Y" id="Problemyes" target="2">YES</a>
-               <a class="btn btn-success btn-sm active showno" data-toggle="2" data-title="N"  id="Problemeno" target="2">NO</a>
-             </div>
-             <input type="hidden" name="2" id="2">
-           </div>
-         </div>
-         </div><br/>
-         
-         <div class="row">
-         <div id="div2" class="targetDiv">
-         <textarea placeholder="Please Specify Your Problem..." rows="4" cols="50"></textarea>
-         </div>
-         </div><br/>
-         
-         
-         
-         <div class="row">
-         
-         <div class="col-md-8 col-sm-5">    
-             <label for="happy">Have You Suffering From Fever Or Any Diseases ?</label>
-         </div> 
-         
-         <div class="col-md-4 col-sm-4">
-           <div class="input-group">
-             <div id="radioBtn" class="btn-group">
-               <a class="btn btn-success btn-sm notActive showSingle" data-toggle="3" target="3" data-title="Y">YES</a>
-               <a class="btn btn-success btn-sm active showno" data-toggle="3" target="3" data-title="N">NO</a>
-             </div>
-             <input type="hidden" name="3" id="3">
-           </div>
-         </div>
-         </div><br/>
-         
-         <div class="row">
-         <div id="div3" class="targetDiv">
-         <textarea placeholder="Please Specify Your Problem..." rows="4" cols="50"></textarea>
-         </div>
-         </div><br/>
-         
-         <div class="row">
-         
-         <div class="col-md-8 col-sm-5">    
-             <label for="happy">Are You Taking Any Medicine ?</label>
-         </div> 
-         
-         <div class="col-md-4 col-sm-4">
-           <div class="input-group">
-             <div id="radioBtn" class="btn-group">
-               <a class="btn btn-success btn-sm notActive showSingle" data-toggle="4" target="4" data-title="Y">YES</a>
-               <a class="btn btn-success btn-sm active showno" data-toggle="4" target="4" data-title="N">NO</a>
-             </div>
-             <input type="hidden" name="4" id="4">
-           </div>
-         </div>
-         </div><br/>
-         
-         <div class="row">
-         <div id="div4" class="targetDiv">
-         <textarea placeholder="Please Specify Your Problem..." rows="4" cols="50"></textarea>
-         </div>
-         </div><br/>
-         
-         <div class="row">
-         
-         <div class="col-md-8 col-sm-5">    
-             <label for="happy">Are You Suffering From Back Pain, Neck Pain,Knee Pain Or Any Other Orthopadedic Problems ?</label>
-         </div> 
-         
-         <div class="col-md-4 col-sm-4">
-           <div class="input-group">
-             <div id="radioBtn" class="btn-group">
-               <a class="btn btn-success btn-sm notActive showSingle" data-toggle="5" target="5" data-title="Y">YES</a>
-               <a class="btn btn-success btn-sm active showno" data-toggle="5" target="5" data-title="N">NO</a>
-             </div>
-             <input type="hidden" name="5" id="5">
-           </div>
-         </div>
-         </div><br/>
-         
-         <div class="row">
-         <div id="div5" class="targetDiv">
-         <textarea placeholder="Please Specify Your Problem..." rows="4" cols="50"></textarea>
-         </div>
-         </div><br/>
-         
-         <div class="row">
-         
-         <div class="col-md-8 col-sm-5">    
-             <label for="happy">Are You OverWeight Or UnderWeight ?</label>
-         </div> 
-         
-         <div class="col-md-4 col-sm-4">
-           <div class="input-group">
-             <div id="radioBtn" class="btn-group">
-               <a class="btn btn-success btn-sm notActive" data-toggle="6"  data-title="Y">YES</a>
-               <a class="btn btn-success btn-sm active" data-toggle="6" data-title="N">NO</a>
-             </div>
-             <input type="hidden" name="6" id="6">
-           </div>
-         </div>
-         </div><br/>
-         
-         
-         <div class="row">
-         
-         <div class="col-md-8 col-sm-5">    
-             <label for="happy">Have You Gain Or Loss Weight In Last 3 Month ?</label>
-         </div> 
-         
-         <div class="col-md-4 col-sm-4">
-           <div class="input-group">
-             <div id="radioBtn" class="btn-group">
-               <a class="btn btn-success btn-sm notActive showSingle" data-toggle="7" target="7" data-title="Y">YES</a>
-               <a class="btn btn-success btn-sm active showno" data-toggle="7" target="7" data-title="N">NO</a>
-             </div>
-             <input type="hidden" name="7" id="7">
-           </div>
-         </div>
-         </div><br/>
-         
-         <div class="row">
-         <div id="div7" class="targetDiv">
-         <textarea placeholder="Please Specify Your Problem..." rows="4" cols="50"></textarea>
-         </div>
-         </div><br/>
-         
-         <div class="row">
-         
-         <div class="col-md-8 col-sm-5">    
-             <label for="happy">Any member Of Your Family is OverWeight ?</label>
-         </div> 
-         
-         <div class="col-md-4 col-sm-4">
-           <div class="input-group">
-             <div id="radioBtn" class="btn-group">
-               <a class="btn btn-success btn-sm notActive" data-toggle="8"  data-title="Y">YES</a>
-               <a class="btn btn-success btn-sm active" data-toggle="8" data-title="N">NO</a>
-             </div>
-             <input type="hidden" name="8" id="8">
-           </div>
-         </div>
-         </div><br/>
-         
-         
-         
-         <div class="row">
-         
-         <div class="col-md-8 col-sm-5">    
-             <label for="happy">Do You Smoke ?</label>
-         </div> 
-         
-         <div class="col-md-4 col-sm-4">
-           <div class="input-group">
-             <div id="radioBtn" class="btn-group">
-               <a class="btn btn-success btn-sm notActive" data-toggle="9"  data-title="Y">YES</a>
-               <a class="btn btn-success btn-sm active" data-toggle="9" data-title="N">NO</a>
-             </div>
-             <input type="hidden" name="9" id="9">
-           </div>
-         </div>
-         </div><br/>
-         
-         <div class="row">
-         
-         <div class="col-md-8 col-sm-5">    
-             <label for="happy">Are You Tacking Tobacco Or Alcohol ?</label>
-         </div> 
-         
-         <div class="col-md-4 col-sm-4">
-           <div class="input-group">
-             <div id="radioBtn" class="btn-group">
-               <a class="btn btn-success btn-sm notActive" data-toggle="10"  data-title="Y">YES</a>
-               <a class="btn btn-success btn-sm active" data-toggle="10" data-title="N">NO</a>
-             </div>
-             <input type="hidden" name="10" id="10">
-           </div>
-         </div>
-         </div><br/>
-         -->
-      <!--  <div class="row">
-         <h4><b><u>For Female</u></b></h4>
-         </div><br/>
-         
-          <div class="row">
-         
-                <div class="col-md-8 col-sm-5">    
-                     <label for="happy">Are You Pregnant ?</label>
-                </div> 
-         
-                 <div class="col-md-4 col-sm-4">
-                   <div class="input-group">
-                     <div id="radioBtn" class="btn-group">
-                       <a class="btn btn-success btn-sm notActive" data-toggle="11"  data-title="Y">YES</a>
-                       <a class="btn btn-success btn-sm active" data-toggle="11" data-title="N">NO</a>
-                     </div>
-                     <input type="hidden" name="11" id="11">
-                   </div>
-               </div>
-             </div><br/> -->
-      <!--   <div class="row">
-         <div class="col-md-8 col-sm-5">    
-              <label for="happy">Have You Given Child Birth Since Last 6 Weeks ?</label>
-         </div> 
-         
-          <div class="col-md-4 col-sm-4">
-            <div class="input-group">
-              <div id="radioBtn" class="btn-group">
-                <a class="btn btn-success btn-sm notActive" data-toggle="12"  data-title="Y">YES</a>
-                <a class="btn btn-success btn-sm active" data-toggle="12" data-title="N">NO</a>
-              </div>
-              <input type="hidden" name="12" id="12">
-            </div>
-         </div>
-         </div><br/>
-         
-         <div class="row">
-         
-         <div class="col-md-8 col-sm-5">    
-              <label for="happy">Are You Suffering From Thyroid, Pcod, Irreguler Menses Or Any Hormonal Issues ?</label>
-         </div> 
-         
-          <div class="col-md-4 col-sm-4">
-            <div class="input-group">
-              <div id="radioBtn" class="btn-group">
-                <a class="btn btn-success btn-sm notActive showSingle" data-toggle="13" target="13" data-title="Y">YES</a>
-                <a class="btn btn-success btn-sm active showno" data-toggle="13" target="13" data-title="N">NO</a>
-              </div>
-              <input type="hidden" name="13" id="13">
-            </div>
-         </div>
-         </div><br/>
-         
-         <div class="row">
-         <div id="div13" class="targetDiv">
-         <textarea placeholder="Please Specify Your Problem..." rows="4" cols="50"></textarea>
-         </div> -->
-      <!-- </div> -->
-      <!-- </div -->
-      <!-- 
-         </div> -->
-      <!--/.accordion-content-->
+
       <article class="content-entry">
-      <h4 class="article-title"><i></i>Fitness Goals & Exercise Program</h4>
-      <div class="accordion-content">
-      <br/>
-      <div class="well well-lg">
-      <label>FitnessGoals</label>
-      <table class="table" aria-describedby="example1_info">
-      <tr>
-      <td>
-      <label>LoseBodyFat
-      <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="1"><span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      <td>
-      <label>DevelopMuscle
-      <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="2"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      </tr>
-      <tr>
-      <td>
-      <label>ImproveBalance
-      <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="4"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      <td>
-      <label>RehabilitateAnInjury
-      <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="3"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      </tr>
-      <tr></tr>
-      <td>
-      <label>ImproveFlexibility
-      <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="5"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      <td>
-      <label>NutritionalEducation
-      <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="6"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      </tr>
-      <tr>
-      <td>
-      <label>DesignBeginnersProgram
-      <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="7"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      <td>
-      <label>DesignAdvancedProgram
-      <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="8"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      </tr>
-      <tr>
-      <td>
-      <label>TrainSpecific
-      <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="9"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      <td>
-      <label>Safety
-      <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="10"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      </tr>
-      <tr>
-      <td>
-      <label>MakeExerciseFun
-      <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="11"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      <td>
-      <label>Motivation
-      <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="12"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      </tr>
-      <tr>
-      <td>
-      <label>Other
-      <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="1"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      <td>
-      <textarea name="OtherHelp" placeholder="OtherHelp" class="span2"></textarea>
-      </td>
-      </tr>
-      </table>
-      <div class="form-group">
-      <label>What activities interest you ?</label>
-      <br>
-      <table class="table table-bordered table-striped dataTable table-wrapper" role="grid" aria-describedby="example1_info">
-      <tr>
-      <td>
-      <label>Baseball
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="1"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      <td>
-      <label>Basketball
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="2"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      <td>
-      <label>Boxing
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="3"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      </tr>
-      <tr>
-      <td>
-      <label>KickBoxing
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="4"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      <td>
-      <label>Skiing
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="5"><span class="badge bg-orange">&check;</span> 
-      </label>
-      </td>
-      <td>
-      <label> <span class="checkmark"></span> Football
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="6"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      </tr>
-      <tr>
-      <td>
-      <label>Golf
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="7"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      <td>
-      <label>Hiking
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="8"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      <td>
-      <label>Pilates
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="9"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      </tr>
-      <tr>
-      <td>
-      <label>Racquetball
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="10"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      <td>
-      <label>IndoorCycling
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="11"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      <td>
-      <label>Kayaking
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="12"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      </tr>
-      <tr>
-      <td>
-      <label>RockClimbing
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="13"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      <td>
-      <label>Running
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="14"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      <td>
-      <label>Soccer
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="15"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      </tr>
-      <tr>
-      <td>
-      <label>Swimming
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="16"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      <td>
-      <label>Tennis
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="17"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      <td>
-      <label>Triathlon
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="18"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      </tr>
-      <tr>
-      <td>
-      <label>Walking
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="19"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      <td>
-      <label>WeightTrainning
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="20"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      <td>
-      <label>Yoga
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="21"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      </tr>
-      <tr>
-      <td>
-      <label>Stretching
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="22"><span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      <td>
-      <label>Other
-      <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="23"> <span class="badge bg-orange">&check;</span>
-      </label>
-      </td>
-      <td>
-      <textarea name="OtherActivity" placeholder="OtherActivity" class="span2"></textarea>
-      </td>
-      </tr>
-      </table>
-      </div>
-      <div class="form-group">
-      <label>How often a week whould you like to exercise ?</label>
-      <input type="text" name="OftenWeekExercise" class="form-control number" placeholder="Often Week Exercise" class="span11" />
-      </div>
-      <div class="form-group">
-      <label>Where do you rank in health in your life ?</label>
-      <br>
-      <label>
-      <input type="radio" name="rank" value="h1">HighPriority</label>
-      <label>
-      <input type="radio" name="rank" value="m1">MediumPriority</label>
-      <label>
-      <input type="radio" name="rank" value="l1">LowPriority</label>
-      </div>
-      <div class="form-group">
-      <label>How commited are you towards reaching your goals ?</label>
-      <br>
-      <label>
-      <input type="radio" name="goal" value="v1">Very</label>
-      <label>
-      <input type="radio" name="goal" value="s1">Semi</label>
-      <label>
-      <input type="radio" name="goal" value="b1">Barely</label>
-      </div>
-      </div>
-      </div>
-      <!--/.accordion-content-->
-      </article>
+        <h4 class="article-title"><i></i>Fitness Goals & Exercise Program</h4>
+        <div class="accordion-content">
+           <br/>
+           <div class="well well-lg">
+              <label>FitnessGoals</label>
+              <table class="table" aria-describedby="example1_info">
+                 <tr>
+                    <td>
+                       <label>LoseBodyFat
+                       <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="1"><span class="badge bg-orange">&check;</span>
+                       </label>
+                    </td>
+                    <td>
+                       <label>DevelopMuscle
+                       <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="2"> <span class="badge bg-orange">&check;</span>
+                       </label>
+                    </td>
+                 </tr>
+                 <tr>
+                    <td>
+                       <label>ImproveBalance
+                       <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="4"> <span class="badge bg-orange">&check;</span>
+                       </label>
+                    </td>
+                    <td>
+                       <label>RehabilitateAnInjury
+                       <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="3"> <span class="badge bg-orange">&check;</span>
+                       </label>
+                    </td>
+                 </tr>
+                 <tr></tr>
+                 <td>
+                    <label>ImproveFlexibility
+                    <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="5"> <span class="badge bg-orange">&check;</span>
+                    </label>
+                 </td>
+                 <td>
+                    <label>NutritionalEducation
+                    <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="6"> <span class="badge bg-orange">&check;</span>
+                    </label>
+                 </td>
+                 </tr>
+                 <tr>
+                    <td>
+                       <label>DesignBeginnersProgram
+                       <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="7"> <span class="badge bg-orange">&check;</span>
+                       </label>
+                    </td>
+                    <td>
+                       <label>DesignAdvancedProgram
+                       <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="8"> <span class="badge bg-orange">&check;</span>
+                       </label>
+                    </td>
+                 </tr>
+                 <tr>
+                    <td>
+                       <label>TrainSpecific
+                       <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="9"> <span class="badge bg-orange">&check;</span>
+                       </label>
+                    </td>
+                    <td>
+                       <label>Safety
+                       <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="10"> <span class="badge bg-orange">&check;</span>
+                       </label>
+                    </td>
+                 </tr>
+                 <tr>
+                    <td>
+                       <label>MakeExerciseFun
+                       <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="11"> <span class="badge bg-orange">&check;</span>
+                       </label>
+                    </td>
+                    <td>
+                       <label>Motivation
+                       <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="12"> <span class="badge bg-orange">&check;</span>
+                       </label>
+                    </td>
+                 </tr>
+                 <tr>
+                    <td>
+                       <label>Other
+                       <input type="checkbox" name="fitnessgoals[]" class="badgebox" value="1"> <span class="badge bg-orange">&check;</span>
+                       </label>
+                    </td>
+                    <td>
+                       <textarea name="OtherHelp" placeholder="OtherHelp" class="span2"></textarea>
+                    </td>
+                 </tr>
+              </table>
+              <div class="form-group">
+                 <label>What activities interest you ?</label>
+                 <br>
+                 <table class="table table-bordered table-striped dataTable table-wrapper" role="grid" aria-describedby="example1_info">
+                    <tr>
+                       <td>
+                          <label>Baseball
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="1"> <span class="badge bg-orange">&check;</span>
+                          </label>
+                       </td>
+                       <td>
+                          <label>Basketball
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="2"> <span class="badge bg-orange">&check;</span>
+                          </label>
+                       </td>
+                       <td>
+                          <label>Boxing
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="3"> <span class="badge bg-orange">&check;</span>
+                          </label>
+                       </td>
+                    </tr>
+                    <tr>
+                       <td>
+                          <label>KickBoxing
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="4"> <span class="badge bg-orange">&check;</span>
+                          </label>
+                       </td>
+                       <td>
+                          <label>Skiing
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="5"><span class="badge bg-orange">&check;</span> 
+                          </label>
+                       </td>
+                       <td>
+                          <label> <span class="checkmark"></span> Football
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="6"> <span class="badge bg-orange">&check;</span>
+                          </label>
+                       </td>
+                    </tr>
+                    <tr>
+                       <td>
+                          <label>Golf
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="7"> <span class="badge bg-orange">&check;</span>
+                          </label>
+                       </td>
+                       <td>
+                          <label>Hiking
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="8"> <span class="badge bg-orange">&check;</span>
+                          </label>
+                       </td>
+                       <td>
+                          <label>Pilates
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="9"> <span class="badge bg-orange">&check;</span>
+                          </label>
+                       </td>
+                    </tr>
+                    <tr>
+                       <td>
+                          <label>Racquetball
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="10"> <span class="badge bg-orange">&check;</span>
+                          </label>
+                       </td>
+                       <td>
+                          <label>IndoorCycling
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="11"> <span class="badge bg-orange">&check;</span>
+                          </label>
+                       </td>
+                       <td>
+                          <label>Kayaking
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="12"> <span class="badge bg-orange">&check;</span>
+                          </label>
+                       </td>
+                    </tr>
+                    <tr>
+                       <td>
+                          <label>RockClimbing
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="13"> <span class="badge bg-orange">&check;</span>
+                          </label>
+                       </td>
+                       <td>
+                          <label>Running
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="14"> <span class="badge bg-orange">&check;</span>
+                          </label>
+                       </td>
+                       <td>
+                          <label>Soccer
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="15"> <span class="badge bg-orange">&check;</span>
+                          </label>
+                       </td>
+                    </tr>
+                    <tr>
+                       <td>
+                          <label>Swimming
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="16"> <span class="badge bg-orange">&check;</span>
+                          </label>
+                       </td>
+                       <td>
+                          <label>Tennis
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="17"> <span class="badge bg-orange">&check;</span>
+                          </label>
+                       </td>
+                       <td>
+                          <label>Triathlon
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="18"> <span class="badge bg-orange">&check;</span>
+                          </label>
+                       </td>
+                    </tr>
+                    <tr>
+                       <td>
+                          <label>Walking
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="19"> <span class="badge bg-orange">&check;</span>
+                          </label>
+                       </td>
+                       <td>
+                          <label>WeightTrainning
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="20"> <span class="badge bg-orange">&check;</span>
+                          </label>
+                       </td>
+                       <td>
+                          <label>Yoga
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="21"> <span class="badge bg-orange">&check;</span>
+                          </label>
+                       </td>
+                    </tr>
+                    <tr>
+                       <td>
+                          <label>Stretching
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="22"><span class="badge bg-orange">&check;</span>
+                          </label>
+                       </td>
+                       <td>
+                          <label>Other
+                          <input type="checkbox" name="exerciseprograms[]" class="badgebox" value="23"> <span class="badge bg-orange">&check;</span>
+                          </label>
+                       </td>
+                       <td>
+                          <textarea name="OtherActivity" placeholder="OtherActivity" class="span2"></textarea>
+                       </td>
+                    </tr>
+                 </table>
+              </div>
+              <div class="form-group">
+                 <label>How often a week whould you like to exercise ?</label>
+                 <input type="text" name="OftenWeekExercise" class="form-control number" placeholder="Often Week Exercise" class="span11" />
+              </div>
+              <div class="form-group">
+                 <label>Where do you rank in health in your life ?</label>
+                 <br>
+                 <label>
+                 <input type="radio" name="rank" value="h1">HighPriority</label>
+                 <label>
+                 <input type="radio" name="rank" value="m1">MediumPriority</label>
+                 <label>
+                 <input type="radio" name="rank" value="l1">LowPriority</label>
+              </div>
+              <div class="form-group">
+                 <label>How commited are you towards reaching your goals ?</label>
+                 <br>
+                 <label>
+                 <input type="radio" name="goal" value="v1">Very</label>
+                 <label>
+                 <input type="radio" name="goal" value="s1">Semi</label>
+                 <label>
+                 <input type="radio" name="goal" value="b1">Barely</label>
+              </div>
+           </div>
+        </div>
+        <!--/.accordion-content-->
+      </article> 
       <article class="content-entry">
-      <h4 class="article-title"><i></i>Profile Photo</h4>
-      <div class="accordion-content">
-      <div class="well well-lg">
-      <div class="form-group">
-      <label>Photo</label>
-     
-   
-     
-      @if(isset($memberdata->photo))
-         @if($memberdata->photo != "")
-            <img src="{{asset('files/'.$memberdata->photo)}}" height="100px" width="100px;">
-            <input type="hidden"  name="filefrommember" value="{{$memberdata->photo}}">
-         @endif
-      @else
-          <input type="file" name="file" class="form-control" id="profileimage" accept="image/jpg, image/jpeg, image/png" class="span11" />
-      @endif
-
-      <img src="" id="img" height="100px">
-       <input type="hidden" name="base64image" class="image-tag">
-         <div id="my_camera"></div>
-
- <input type=button class="btn bg-orange margin" value="Start Camera" onClick="configure()">
- <input type=button class="btn bg-orange margin" value="Capture" onClick="take_snapshot()">
-
- 
- <div id="results"></div>
-
-  <input type=button value="Save image" id="profileimagesave" class="btn bg-orange margin" onClick="saveSnap()" style="display: none;">
-      </div>
-      </div>
-      </div>
-      <!-- /.accordion-content -->
+        <h4 class="article-title"><i></i>Profile Photo</h4>
+        <div class="accordion-content">
+          <div class="well well-lg">
+              <div class="form-group">
+                <label>Photo</label>
+                @if(isset($memberdata->photo))
+                @if($memberdata->photo != "")
+                <img src="{{asset('files/'.$memberdata->photo)}}" height="100px" width="100px;">
+                <input type="hidden"  name="filefrommember" value="{{$memberdata->photo}}">
+                @endif
+                @else
+                <input type="file" name="file" class="form-control" id="profileimage" accept="image/jpg, image/jpeg, image/png" class="span11" />
+                @endif
+                <img src="" id="img" height="100px">
+                <input type="hidden" name="base64image" class="image-tag">
+                <div id="my_camera"></div>
+                <input type=button class="btn bg-orange margin" value="Start Camera" onClick="configure()">
+                <input type=button class="btn bg-orange margin" value="Capture" onClick="take_snapshot()">
+                <div id="results"></div>
+                <input type=button value="Save image" id="profileimagesave" class="btn bg-orange margin" onClick="saveSnap()" style="display: none;">
+              </div>
+          </div>
+        </div>
+        <!-- /.accordion-content -->
       </article>
       <article class="content-entry">
       <h4 class="article-title"><i></i>ID Proof</h4>
@@ -1187,215 +931,7 @@ function saveSnap(data_uri){
       if (ErrorText= "") { return true; }
       }
    </script>
-   <!--/.accordion-content
-      </article>-->
-   <!-- 
-      <article class="content-entry">
-          <h4 class="article-title"><i></i>Vitals</h4>
-          <div class="accordion-content">
-              <div class="well well-lg">
-      
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="col-md-3"><label>RHR</label></div>
-                     <div class="col-md-6"><input type="number" name="" class="form-control" ></div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="col-md-3"><label>MHR</label></div>
-                     <div class="col-md-6"><input type="number" name="" class="form-control"></div>
-                  </div>
-                </div><br/>
-      
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="col-md-3"><label>HRR</label></div>
-                     <div class="col-md-6"><input type="number" name="" class="form-control" ></div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="col-md-3"><label>RBP</label></div>
-                     <div class="col-md-6"><input type="number" name="" class="form-control"></div>
-                  </div>
-                </div>
-      
-      
-              </div>
-          </div>
-          /.accordion-content-->
-   <!-- </article> -->
-   <!--      <article class="content-entry">
-      <h4 class="article-title"><i></i>Body Details</h4>
-      <div class="accordion-content"><br/>
-         <div class="well well-lg">
-          <div>
-          <div class="row">
-            <h4><b><u>Body Composition :</u></b></h4>
-          </div><br/>
-      
-             <div class="row">
-              <div class="col-md-6">
-                <div class="col-md-3"><label>Height</label></div>
-                 <div class="col-md-6"><input type="number" name="" min="1" class="form-control" placeholder="Height"></div>
-              </div>
-              <div class="col-md-6">
-                <div class="col-md-3"><label>Body Fat %</label></div>
-                 <div class="col-md-6"><input type="number" name="" min="1" class="form-control" placeholder="Body Fat %"></div>
-              </div>
-            </div>
-      
-              <div class="row">
-              <div class="col-md-6">
-                <div class="col-md-3"><label>Weight</label></div>
-                 <div class="col-md-6"><input type="number" name="" min="1" class="form-control" placeholder="Weight"></div>
-              </div>
-              <div class="col-md-6">
-                <div class="col-md-3"><label>VISC Fat %</label></div>
-                 <div class="col-md-6"><input type="number" name="" min="1" class="form-control" placeholder="VISC Fat %"></div>
-              </div>
-            </div>
-      
-              <div class="row">
-              <div class="col-md-6">
-                <div class="col-md-3"><label>BMI</label></div>
-                 <div class="col-md-6"><input type="number" name="" min="1" class="form-control" placeholder="BMI" ></div>
-              </div>
-              <div class="col-md-6">
-                <div class="col-md-3"><label>BMR</label></div>
-                 <div class="col-md-6"><input type="number" name="" min="1" class="form-control" placeholder="BMR"></div>
-              </div>
-            </div>
-      
-            <div class="row">
-            <h4><b><u>Body Circumference :</u></b></h4>
-          </div><br/>
-      
-             <div class="row">
-               <div class="col-md-6"><label>Upper Arm </label></div>
-               <div class="col-md-3"><input type="number" name="" placeholder="Left Upper Arm" min="1" class="form-control"></div>
-                <div class="col-md-3"><input type="number" name="" placeholder="Right Upper Arm" min="1" class="form-control"></div>
-             </div><br/>
-      
-             <div class="row">
-               <div class="col-md-6"><label>Chest</label></div>
-                <div class="col-md-6"><input type="number" name="" class="form-control" placeholder="Chest"></div>
-             </div><br/>
-      
-          <div class="row" >
-              <div class="col-md-6">
-              <label>Waist</label>
-              </div>
-              <div class="col-md-6">
-              <select class="form-control">
-                <option> -- Select --</option>
-                <option value="">ATUMBI</option>
-                <option value="">A/V 3 CM</option>
-                <option value="">A/V 5 CM</option>
-                <option value="">B/W 3 CM</option>
-                <option value="">B/W 5 CM</option>
-              </select>
-              </div>
-          </div><br/>
-      
-           <div class="row">
-               <div class="col-md-6"><label>Hips</label></div>
-                <div class="col-md-6"><input type="number" name="" min="1" class="form-control" placeholder="Hips" ></div>
-             </div><br/>
-      
-             <div class="row">
-               <div class="col-md-6"><label>Thigh</label></div>
-               <div class="col-md-3"><input type="number" name="" min="1" placeholder="Left Thigh" class="form-control"></div>
-                <div class="col-md-3"><input type="number" name=""  min="1" placeholder="Right Thigh" class="form-control"></div>
-             </div><br/>
-      
-             <div class="row">
-            <h4><b><u>Strength Test:</u></b></h4>
-          </div><br/>
-      
-          <div class="row">
-            <div class="col-md-6"><label>Bench Press</label></div>
-            <div class="col-md-6"><input type="number" min="1" name="" class="form-control" placeholder="Bench Press"></div>
-          </div><br/>
-      
-          <div class="row">
-            <div class="col-md-6"><label>Squat</label></div>
-            <div class="col-md-6"><input type="number" name="" min="1" class="form-control" placeholder="Squat"></div>
-          </div><br/>
-      
-          <div class="row">
-            <div class="col-md-6"><label>O/H Press</label></div>
-            <div class="col-md-6"><input type="number" name="" min="1" class="form-control" placeholder="O/H Press"></div>
-          </div><br/>
-      
-            <div class="row">
-            <h4><b><u>Strength Endurance Test:</u></b></h4>
-          </div><br/>
-      
-          <div class="row">
-            <div class="col-md-6"><label>Push UPS</label></div>
-            <div class="col-md-6"><input type="number" name="" min="1" class="form-control" placeholder="Push UPS"></div>
-          </div><br/>
-      
-          <div class="row">
-            <div class="col-md-6"><label>Crul UPS</label></div>
-            <div class="col-md-6"><input type="number" name="" min="1" class="form-control" placeholder="Crul UPS"></div>
-          </div><br/>
-      
-          <div class="row">
-            <div class="col-md-6"><label>Plank Hold</label></div>
-            <div class="col-md-6"><input type="number" name="" min="1" class="form-control" placeholder="Plank Hold"></div>
-          </div><br/>
-      
-            <div class="row">
-            <h4><b><u>Flexibility :</u></b></h4>
-          </div><br/>
-      
-          <div class="row">
-            <div class="col-md-6"><label>Sitand Reach</label></div>
-            <div class="col-md-6"><input type="number" name="" min="1" class="form-control" placeholder="Sitand Reach"></div>
-          </div><br/>
-      
-          <div class="row">
-            <div class="col-md-6"><label>Mobility</label></div>
-            <div class="col-md-6"><input type="number" name="" min="1" class="form-control" placeholder="Mobility"></div>
-          </div><br/>
-      
-          <div class="row">
-            <div class="col-md-6"><label>Other</label></div>
-            <div class="col-md-6"><input type="number" name="" min="1" class="form-control" placeholder="Other"></div>
-          </div><br/>
-         </div>
-      </div>
-      <!--/.accordion-content-->
-   <!--      </article> -->
-   <!-- <article class="content-entry"> -->
-   <!-- <h4 class="article-title"><i></i>Static Postural Assessment</h4>
-      <div class="accordion-content">
-        <div class="row"> -->
-   <!--   <form method="get">
-      <div class="form-group">  
-      <div class="col-md-2 box"><label class="btn btn-primary"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Running.png" alt="..." class="img-thumbnail img-check"><input type="radio" name="chk1" id="item4" value="val1" class="hidden" autocomplete="off"></label></div>
-      <div class="col-md-2 box"><label class="btn btn-primary"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Basketball.png" alt="..." class="img-thumbnail img-check"><input type="radio" name="chk1" id="item4" value="val2" class="hidden" autocomplete="off"></label></div>
-      <div class="col-md-2 box"><label class="btn btn-primary"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Football.png" alt="..." class="img-thumbnail img-check"><input type="radio" name="chk1" id="item4" value="val3" class="hidden" autocomplete="off"></label></div>
-      <div class="col-md-2 box"><label class="btn btn-primary"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Soccer.png" alt="..." class="img-thumbnail img-check"><input type="radio" name="chk1" id="item4" value="val4" class="hidden" autocomplete="off"></label></div>
-      <div class="col-md-2 box"><label class="btn btn-primary"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Soccer.png" alt="..." class="img-thumbnail img-check"><input type="radio" name="chk1" id="item4" value="val4" class="hidden" autocomplete="off"></label></div>
-      </div>
-      <div class="clearfix"></div>
-      
-      
-      
-      </form> -->
-   <!--  </div>
-      </div>
-      /.accordion-content
-      </article> -->
-   <!-- article class="content-entry">
-      <h4 class="article-title"><i></i>Dynamic Postural Assessment</h4>
-      <div class="accordion-content">
-          <p>Accordion content 4</p>
-        </div> -->
-   <!--/.accordion-content
-      </article> -->
-   <!-- </div> -->
-   <!--/#accordion-->
+  
 </section>
 <!--/#content-->
 <script type="text/javascript">
@@ -1869,7 +1405,9 @@ color: black;
        }
      })
        });
-</script>@endsection @push('script')
+</script>
+@endsection 
+@push('script')
 <script type="text/javascript">
    $(document).ready(function(){
          $('#member_form').validate({

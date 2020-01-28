@@ -75,6 +75,14 @@
                       <th>Delete</th>
                     </thead>
                     <tbody>
+                      <tr>
+                        <th>HR Module</th>
+                        <td><input type="checkbox" class="check addall" name="permission['hr_module_all']" ></td>
+                        <td><input type="checkbox" class="check" name="permission['hr_module']" ></td>
+                        <td><input type="checkbox" class="check" name="permission['hr_device']"  ></td>
+                        <td><input type="checkbox" class="check" name="permission['edit_module']" ></td>
+                        <td><input type="checkbox" class="check" name="permission['delete_module']"  ></td>
+                      </tr>
                      <tr>
                         <th>Registration</th>
                         <td><input type="checkbox" class="check addall" name="permission['add_registration_all']"></td>
@@ -178,6 +186,14 @@
                         <td><input type="checkbox" class="check" name="permission['view_confirminquiry']" ></td>
                         <td><input type="checkbox" class="check" name="permission['edit_confirminquiry']" ></td>
                         <td><input type="checkbox" class="check" name="permission['delete_confirminquiry']" ></td>
+                      </tr>
+                      <tr>
+                        <th>PT Trail Form</th>
+                        <td><input type="checkbox" class="check addall" name="permission['add_trial_form_all']" ></td>
+                        <td><input type="checkbox" class="check" name="permission['add_trial_form']" ></td>
+                        <td><input type="checkbox" class="check" name="permission['view_trial_form']" ></td>
+                        <td><input type="checkbox" class="check" name="permission['edit_trial_form']" ></td>
+                        <td><input type="checkbox" class="check" name="permission['delete_trial_form']" ></td>
                       </tr>
                        <tr>
                         <th>Member</th>

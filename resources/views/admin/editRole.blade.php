@@ -53,6 +53,14 @@
                     </thead>
                     <tbody>
                        <tbody>
+                        <tr>
+                          <th>HR Module</th>
+                          <td><input type="checkbox" class="check addall" name="permission['hr_module_all']" @if(isset($permission["'hr_module_all'"])) checked @endif></td>
+                          <td><input type="checkbox" class="check" name="permission['hr_module']" @if(isset($permission["'hr_module'"])) checked @endif ></td>
+                          <td><input type="checkbox" class="check" name="permission['hr_device']" @if(isset($permission["'hr_device'"])) checked @endif ></td>
+                          <td><input type="checkbox" class="check" name="permission['edit_hr_module']" @if(isset($permission["'edit_hr_module'"])) checked @endif ></td>
+                          <td><input type="checkbox" class="check" name="permission['delete_hr_module']" @if(isset($permission["'delete_hr_module'"])) checked @endif ></td>
+                        </tr>
                        <tr>
                         <th>Registration</th>
                         <td><input type="checkbox" class="check addall" name="permission['add_registration_all']" @if(isset($permission["'add_registration_all'"])) checked @endif></td>
@@ -156,6 +164,14 @@
                         <td><input type="checkbox" class="check" name="permission['view_confirminquiry']" @if(isset($permission["'view_confirminquiry'"])) checked @endif ></td>
                         <td><input type="checkbox" class="check" name="permission['edit_confirminquiry']" @if(isset($permission["'edit_confirminquiry'"])) checked @endif ></td>
                         <td><input type="checkbox" class="check" name="permission['delete_confirminquiry']" @if(isset($permission["'delete_confirminquiry'"])) checked @endif ></td>
+                      </tr>
+                      <tr>
+                        <th>PT Trail Form</th>
+                        <td><input type="checkbox" class="check addall" name="permission['add_trial_form_all']" @if(isset($permission["'add_trial_form_all'"])) checked @endif></td>
+                        <td><input type="checkbox" class="check" name="permission['add_trial_form']" @if(isset($permission["'add_trial_form'"])) checked @endif></td>
+                        <td><input type="checkbox" class="check" name="permission['view_trial_form']" @if(isset($permission["'view_trial_form'"])) checked @endif></td>
+                        <td><input type="checkbox" class="check" name="permission['edit_trial_form']" @if(isset($permission["'edit_trial_form'"])) checked @endif></td>
+                        <td><input type="checkbox" class="check" name="permission['delete_trial_form']" @if(isset($permission["'delete_trial_form'"])) checked @endif></td>
                       </tr>
                        <tr>
                         <th>Member</th>

@@ -444,9 +444,10 @@ $confirmdate = '';
     </div>
   </div>
 @push('script')
+
 <script type="text/javascript">
-let globalemi=$('#emi').val();
-let globalotheramout=$('#otheramount').val();
+   let globalemi=$('#emi').val();
+   let globalotheramout=$('#otheramount').val();
 
    $(document).ready(function(){
    
@@ -459,7 +460,33 @@ let globalotheramout=$('#otheramount').val();
    
    
     });
-   
+    function deductioncalculate(){
+     
+     var otheramount=$('#otheramount').val();
+     var emi=$('#emi').val();
+         if(otheramount > 0){
+            alert('otheramount');
+           let subtotal = $('#subtotal').val();
+           subtotal = subtotal - Number(otheramount);
+           subtotal = subtotal.toFixed(2);
+           globalotheramout = otheramount;
+           $('#current_salary').val(Number(subtotal));
+         }
+         else{
+            otheramount = 0;
+         }
+       
+         if(emi > 0){
+           alert('emi');
+           let subtotal = $('#current_salary').val();
+           subtotal = subtotal - Number(emi);
+           subtotal = subtotal.toFixed(2);
+           globalemi = emi;
+           $('#current_salary').val(Number(subtotal));
+         }else{
+            emi = 0;
+         }
+  }
    $("#editallow").on('click',function(){
       if($('#attenddays').prop('readonly')){
          $("#attenddays").prop('readonly',false);
@@ -473,16 +500,19 @@ let globalotheramout=$('#otheramount').val();
    $('#casualleave').on('input', function(){
        //calculatesalary();
        calsal();
+       deductioncalculate();
    });
    
    $('#medicalleave').on('input', function(){
        //calculatesalary();
        calsal();
+       deductioncalculate();
    });
    
    $('#paidleave').on('input', function(){
        //calculatesalary();
        calsal();
+       deductioncalculate();
    });
    
    $('#takenleave').change(function(){
@@ -520,7 +550,7 @@ let globalotheramout=$('#otheramount').val();
       $('#emi').val('');
       $('#otheramount').val('');
    
-   
+    
    if(leftdays < 0){
        alert('Pease Enter valid days');
        $('#attenddays').val(attenddays_disp);
@@ -541,6 +571,7 @@ let globalotheramout=$('#otheramount').val();
            $('#absday').val(leftdays);
            $('#takenleave12').val(leftdays);
            calsal();
+           deductioncalculate();
        }
        else
        {
@@ -548,11 +579,12 @@ let globalotheramout=$('#otheramount').val();
            $('#absday').val(leftdays);
            $('#takenleave12').val(leftdays);
            calsal();
+           deductioncalculate();
        }
    }
    }
    
-   function calsal(type){
+   function calsal(){
    
         let salary = $('#salary').val();
         let workingdays = $('#workingdays').val();
@@ -588,7 +620,7 @@ let globalotheramout=$('#otheramount').val();
             emi = 0;
         }
         
-        console.log('perdaysalary'+perdaysalary);
+       
         
         let totalleave = Number(casualleave) + Number(medicalleave) + Number(paidleave);
         let commsalary = (Number(workingdays)) * Number(perdaysalary);
@@ -598,7 +630,7 @@ let globalotheramout=$('#otheramount').val();
         console.log('commsalary '+commsalary);
 
         if(Number(workingdays) == 0){
-            alert(workingdays);
+            alert('dsfs'+workingdays);
             $('#current_salary').val(0);
             $('#subtotal').val(0);
             $('#emi').val(0);
@@ -710,6 +742,7 @@ let globalotheramout=$('#otheramount').val();
                 }else{
                    if(globalotheramout != otheramount){
                      commsalary = commsalary - Number(otheramount);
+                     commsalary=commsalary.toFixed(2);
                      $('#current_salary').val(Number(commsalary));
                      globalotheramout=otheramount;
                      console.log('after2'+commsalary);
@@ -722,5 +755,6 @@ let globalotheramout=$('#otheramount').val();
 
       var commsalary= $('#current_salary').val();
    }
+
 </script>
 @endpush

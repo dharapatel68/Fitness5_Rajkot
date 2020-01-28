@@ -281,7 +281,7 @@ $confirmdate = '';
                          </div>
                          <!-- /.box-header -->
                          <div class="box-body">
-                            <?php $loanamount = !empty($emploanamount->amount) ? $emploanamount->amount : 0; ?>
+                           <?php $loanamount = !empty($emploanamount->amount) ? $emploanamount->amount : 0; ?>
                             <div class="row">
                                <div class="">
                                   <div class="form-group">
@@ -323,7 +323,7 @@ $confirmdate = '';
                                      <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label">Other Deduction</label>
                                      {{-- <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label"></label> --}}
                                      <div class="col-sm-4 col-lg-3">
-                                        <input type="number" name="otheramount" class="form-control" min="0" id="otheramount" value="{{ $salary->salaryothercharges > 0 ? $salary->salaryothercharges : 0 }}">
+                                        <input type="number" name="otheramount" class="form-control" min="0" id="otheramount" onfocusOut="calotheramount()" value="{{ $salary->salaryothercharges > 0 ? $salary->salaryothercharges : 0 }}">
                                      </div>
                                   </div>
                                </div>
@@ -446,7 +446,10 @@ $confirmdate = '';
     </div>
   </div>
 @push('script')
+
 <script type="text/javascript">
+   let globalemi=$('#emi').val();
+   let globalotheramout=$('#otheramount').val();
    // $(document).ready(function(){
    
    //     var leavetakencount = {{ $salary->takenleave }};
@@ -470,28 +473,22 @@ $confirmdate = '';
    $('#casualleave').on('input', function(){
        //calculatesalary();
        calsal();
+       deductioncalculate();
    });
    
    $('#medicalleave').on('input', function(){
        //calculatesalary();
        calsal();
+       deductioncalculate();
    });
    
    $('#paidleave').on('input', function(){
        //calculatesalary();
        calsal();
+       deductioncalculate();
    });
    
-   $('#emi').on('input', function(){
-     
-       //calculatesalary();
-       calemi();
-   });
-   
-   $('#otheramount').on('input', function(){
-       //calculatesalary();
-       calotheramount();
-   });
+
    
    $('#takenleave').change(function(){
        $('#casualleave').val(0);
@@ -504,7 +501,6 @@ $confirmdate = '';
    {
 
    let actualdays = $('#actualdays').val();
-
    let attenddays_disp = {{ $salary->attenddays }};
    let takenleave_disp = {{ $salary->takenleave }};
    let salary = $('#salary').val();
@@ -518,7 +514,8 @@ $confirmdate = '';
    let otheramount = $('#otheramount').val();
    let loanamount = $('#loan').val();
    let totalleave= 0;
-   
+   let commsalary=$('#current_salary').val();
+
    let leftdays = Number(actualdays) - Number(val);
    console.log('leftdays:::'+leftdays);
    let totaldays = Number(leftdays) + Number(val);
@@ -530,13 +527,15 @@ $confirmdate = '';
         emi = 0;
     }
 
-   
+
+      
+
    if(leftdays < 0){
        alert('Pease Enter valid days');
        $('#attenddays').val(attenddays_disp);
        $('#takenleave').val(takenleave_disp);
-       $('#current_salary').val(current_salary_disp);
-        $('#subtotal').val(current_salary_disp);
+       $('#current_salary').val(current_salary);
+        $('#subtotal').val(current_salary);
    
        $('#casualleave').val('');
        $('#medicalleave').val('');
@@ -546,12 +545,12 @@ $confirmdate = '';
    
        if(type=='takenleave')
       { 
-       
-           $('#attenddays').val(leftdays);
-           $('#absday').val(leftdays);
-           $('#takenleave12').val(leftdays);
-           calsal();
-       }
+         $('#attenddays').val(leftdays);
+         $('#absday').val(leftdays);
+         $('#takenleave12').val(leftdays);
+         calsal();
+         deductioncalculate();
+      }
        else
        {
        
@@ -559,6 +558,7 @@ $confirmdate = '';
            $('#absday').val(leftdays);
            $('#takenleave12').val(leftdays);
            calsal();
+           deductioncalculate();
        }
        
    }
@@ -591,13 +591,7 @@ $confirmdate = '';
         let totalsessionprice = $('#totalsessionprice').val();
         
             
-        if(!otheramount){
-            otheramount = 0;
-        }
         
-        if(!emi){
-            emi = 0;
-        }
       
          let totalleave = Number(casualleave) + Number(medicalleave) + Number(paidleave);
          let commsalary = (Number(workingdays)) * Number(perdaysalary);
@@ -606,8 +600,7 @@ $confirmdate = '';
         
        
          calleave();
-      
-      
+         
         
 
         if(Number(attenddays) == 0){
@@ -641,7 +634,7 @@ $confirmdate = '';
             commsalary=commsalary.toFixed(2);
            
             $('#subtotal').val(Number(commsalary));
-            
+            deductioncalculate();
             if(totalsession > 0 )
             {
                
@@ -654,27 +647,6 @@ $confirmdate = '';
                 $('#subtotal').val(Number(commsalary));
                 
             }
-            if(Number(emi) > Number(loanamount) || Number(emi) > Number(commsalary))
-            {
-                alert('Please enter valid EMI');
-                $('#emi').val('');
-                
-        
-            }else{
-           
-                    commsalary = commsalary - Number(emi);
-                   // commsalary=commsalary.toFixed(2);
-                  //   console.log(commsalary);
-                $('#current_salary').val(Number(commsalary));
-                
-            }
-                if(Number(otheramount) > Number(commsalary)){
-                    alert('Please enter valid deduction amount');
-                    $('#otheramount').val('');
-                }else{
-                    commsalary = commsalary - Number(otheramount);
-                }
-            
         
                // commsalary=commsalary.toFixed(2);
            
@@ -709,6 +681,7 @@ $confirmdate = '';
         }
    }
    function calemi(){
+      
       let emi = $('#emi').val();
       if(emi > 0 ){
          emi=emi;
@@ -722,27 +695,60 @@ $confirmdate = '';
          $('#emi').val('');
    
       }else{
+         if(globalemi != emi){
          commsalary = commsalary - Number(emi);
          commsalary=commsalary.toFixed(2);
+         globalemi = emi;
          $('#current_salary').val(Number(commsalary));
-            
+         }  
       }
    }
    function calotheramount(){
-      console.log('before1'+commsalary);
+      
       let otheramount = $('#otheramount').val();
+      console.log("Entyer "+otheramount);
       var  commsalary= $('#subtotal').val();
       if(Number(otheramount) > Number(commsalary)){
                     alert('Please enter valid deduction amount');
                     $('#otheramount').val('');
                 }else{
-                    commsalary = commsalary - Number(otheramount);
-                
+                  if(globalotheramout != otheramount){
+                     console.log("bbEntyer "+otheramount);
+                     commsalary = commsalary - Number(otheramount);
+                     commsalary=commsalary.toFixed(2);
+                     globalotheramout=otheramount;
                      $('#current_salary').val(Number(commsalary));
                      console.log('after2'+commsalary);
-                }
+                  }
+               }
             
    }
-   
+   function deductioncalculate(){
+     
+      var otheramount=$('#otheramount').val();
+      var emi=$('#emi').val();
+      if(otheramount > 0){
+         console.log('otheramountfor dedduct'+otheramount);
+            let subtotal = $('#subtotal').val();
+            subtotal = subtotal - Number(otheramount);
+            subtotal = subtotal.toFixed(2);
+            globalotheramout = otheramount;
+            $('#current_salary').val(Number(subtotal));
+         }
+         else{
+            otheramount = 0;
+         }
+        
+         if(emi > 0){
+            console.log('emi for dedduct'+emi);
+            let subtotal = $('#subtotal').val();
+            subtotal = subtotal - Number(emi);
+            subtotal = subtotal.toFixed(2);
+            globalemi = emi;
+            $('#current_salary').val(Number(commsalary));
+         }else{
+            emi = 0;
+         }
+   }
 </script>
 @endpush
