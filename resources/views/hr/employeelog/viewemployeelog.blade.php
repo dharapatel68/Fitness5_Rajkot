@@ -40,7 +40,7 @@
                                             <div class="form-inline">
                                                 @csrf
                                                 <div class="form-group">
-                                                        <select  class="form-control span11 select2"title="Select Employee" data-live-search="true" data-selected-text-format="count"  data-actions-box="true"  data-header="Select Employee" required="" name="employeeid" id="employeeid" data-sear>
+                                                        <select class="form-control span11 select2"title="Select Employee" data-live-search="true" data-selected-text-format="count"  data-actions-box="true"  data-header="Select Employee" required="" name="employeeid" id="employeeid" data-sear>
                                                            @if(!empty($employee))
                                                            <option value="">--Please Select Employee--</option>
                                                            @foreach($employee as $emp)
@@ -114,7 +114,6 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    
                                                     {{-- @if(!empty($employeelog))
                                                         @foreach($employeelog as $log)
                                                             <tr>
@@ -133,7 +132,6 @@
                                                         </tr>
                                                     @endif --}}
                                                 </tbody>
-
                                             </table>
                                         </div>
                                              @if(!empty($employeelog))

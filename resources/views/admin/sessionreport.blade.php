@@ -247,7 +247,9 @@
      <table id="measurement" class="table table-bordered table-striped" width="100%" >
                 <thead>
                 <tr>
+                  @if(Session::get('role') == 'admin' || Session::get('role') == 'Admin')
                   <th>Action</th>
+                  @endif
                 <th>Trainer</th>
                 <th>Member</th>
                 <th>Day</th>
@@ -271,7 +273,9 @@
                 <tbody>
                @foreach($grid as $key=>$g)
                 <tr>
+                  @if(Session::get('role') == 'admin' || Session::get('role') == 'Admin')
                 <td><a href="{{ url('deletesession/'.$g->ptmemberid.'/'.$tid.'/'.$mid.'/'.$pid) }}"class="text-danger"  title="Delete"><i class="fa fa-close "></i></a></td>
+                  @endif
                 <td>{{$employeename !== '' ?$employeename: $g->ptrainerid}}</td>
                 <td>{{ucwords($membername !== '' ? $membername : $g->pmemberid)}} </td>
                 <td>{{$g->day}} </td>

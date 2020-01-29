@@ -46,7 +46,7 @@
                                     <th>Client Name</th>
                                     <th>Mobile No</th>
                                     <th>Trainer Name</th>
-                                    <th>Level</th>
+                                    
                                     <th>Remarks</th>
                                     <th>Action</th>
                                  </tr>
@@ -58,7 +58,7 @@
                                     <td>{{$trialform->clientname}}</td>
                                     <td>{{$trialform->mobileno}}</td>
                                     <td>{{ucwords($trialform->first_name)}} {{ucwords($trialform->last_name)}}</td>
-                                    <td>{{$trialform->level}}</td>
+                                    
                                     <td>{{$trialform->remarks2}}</td>
                                     <td>
                                        <a href="{{url('edittrialform/'.$trialform->trailformid)}}"class="edit" title="Edit"><i class="fa fa-edit"></i></a> 

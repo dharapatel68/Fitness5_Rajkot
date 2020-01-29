@@ -1,5 +1,4 @@
 @extends('layouts.adminLayout.admin_design')
-<link rel="stylesheet" href="{{ asset('dist/css/star-rating.min.css') }}">
 @section('content')
 <style type="text/css">
    input.trial {
@@ -103,7 +102,7 @@
                               <div class="form-group">
                                  <label class="col-sm-4 control-label" for="date">Date<span style="color: red">*</span></label>
                                  <div class="col-sm-8">
-                                    <input class="form-control" type="date" autocomplete="off" id="date" onkeypress="return false"  name="date"  required="">
+                                    <input class="form-control" type="date" autocomplete="off" id="date" onkeypress="return false"  value="<?php echo date('Y-m-d'); ?>"  name="date"  required="">
                                  </div>
                               </div>
                               <div class="form-group">
@@ -147,18 +146,18 @@
                                     <input class="form-control" type="time" id="time" name="timing" >
                                  </div>
                               </div>
-                              <div class="form-group">
+                          <!--     <div class="form-group">
                                  <label for="level" class="col-sm-4 control-label">Level Of Trainer</label>
                                  <div class="col-sm-8">
-                                    <select name="level" class="form-control" id="leveloftrainer">
+                                    <select name="level" class="form-control" id="leveloftrainer" disabled="">
                                        <option value="">--Please Select--</option>
                                        @foreach($levels as $lvl)
                                        <option value="{{$lvl->id}}">{{$lvl->level}}</option>
                                        @endforeach
                                     </select>
-                                    <!-- <input type="text" name="level" class="form-control" id="leveloftrainer" readonly=""> -->
+                              
                                  </div>
-                              </div>
+                              </div> -->
                               <div class="form-group">
                                  <label class="col-sm-4 control-label" for="PT">PT</label>
                                  <div class="col-sm-8">
@@ -203,7 +202,6 @@
 </section>
 </div>
 @php $trainerid=session()->get('employeeid'); @endphp
-<script src="{{ asset('dist/js/star-rating.min.js') }}"></script>
 <script type="text/javascript">
    $(document).ready(function(){
        var trainerid='<?php echo $trainerid;?>';

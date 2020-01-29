@@ -87,12 +87,12 @@ class MeasurementController extends Controller
           $measurement=[];
           $usersall= Ptmember::where('trainerid', Session::get('employeeid'))->leftjoin('member','member.memberid','ptmember.memberid')->groupBy('ptmember.memberid')->pluck('ptmember.memberid')->all();
           foreach ($usersall as $key => $value) {
-            $val= Member::where('memberid',$value)->where('status',1)->join('users', 'member.userid', '=', 'users.userid')->first();
+            $val= Member::where('memberid',$value)->join('users', 'member.userid', '=', 'users.userid')->first();
               if($val){
           array_push($users, $val);
         }
        
-          $measurement1=Measurement::with('Member')->where('memberid',$value)->get()->first();
+          $measurement1=Measurement::leftjoin('member','member.memberid','measurement.memberid')->where('memberid',$value)->get()->first();
           if($measurement1){
             array_push($measurement, $measurement1);    
           }
@@ -100,7 +100,7 @@ class MeasurementController extends Controller
         }
        
         else{
-          $measurement=Measurement::with('Member')->get()->all();
+          $measurement=Measurement::leftjoin('member','member.memberid','measurement.memberid')->get()->all();
           $users= DB::table('member')->join('users', 'member.userid', '=', 'users.userid')->get()->all();
         }
         
@@ -116,10 +116,11 @@ class MeasurementController extends Controller
           array_push($users, $val);
         }
 
-            $measurement = Measurement::whereIn('memberid' ,$usersall);
+            $measurement = Measurement::whereIn('memberid' ,$usersall)->get()->all();
           }
-        }
-        if($request->get('from')!="")
+        }else{
+          $measurement = Measurement::where('memberid','>','0');
+          if($request->get('from')!="")
         {
           $from = date($request->get('from'));
           if($request->get('to')){
@@ -130,7 +131,7 @@ class MeasurementController extends Controller
           }
           $measurement->whereBetween('todaydate', [$from, $to]);
         }
-        else if($request->get('to')!="")
+        if($request->get('to')!="")
         {
         
           $to = date($request->get('to'));
@@ -142,13 +143,17 @@ class MeasurementController extends Controller
           }
           $measurement->whereBetween('todaydate', [$from, $to]);
       }
-      else if($request->get('selectusername')!="")
+       if($request->get('selectusername')!="")
       {
         $id=$request->get('selectusername');
 
-        $measurement->where('memberid',$id);
+        //$measurement->where('memberid',$id);
       }
+     
        $measurement=$measurement->get()->all();
+      
+        }
+        
      
      // dd(DB::getQueryLog());
 
@@ -156,7 +161,7 @@ class MeasurementController extends Controller
         return view('admin.measurement.viewMeasurement',compact('users','measurement'));
       }
         
-         // dd($measurement);
+          
 
         return view('admin.measurement.viewMeasurement',compact('users','measurement'));
      }
