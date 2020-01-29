@@ -105,9 +105,7 @@
                                         </tbody>
 
                                     </table>
-                                    @if(!empty($account))
-                                        <center>{{ $account->render() }}</center>
-                                    @endif
+                                   
                                 </div>
                                 <!-- /.box-body -->
                             </div>

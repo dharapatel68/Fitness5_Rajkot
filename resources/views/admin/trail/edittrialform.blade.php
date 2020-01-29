@@ -1,5 +1,4 @@
 @extends('layouts.adminLayout.admin_design')
-<link rel="stylesheet" href="{{ asset('dist/css/star-rating.min.css') }}">
 @section('content')
 <style type="text/css">
    input.trial {
@@ -76,12 +75,7 @@
                                     <input class="form-control" type="time" id="time" name="timing" value="{{$trialform->timing}}">
                                  </div>
                               </div>
-                              <div class="form-group">
-                                 <label class="col-sm-4 control-label" for="level">Level<span style="color: red">*</span></label>
-                                 <div class="col-sm-8">
-                                    <input class="form-control" type="text" onchange="valid()" id="level"  name="level" value="{{$trialform->level}}"  placeholder="Enter Level" required="" disabled=""> 
-                                 </div>
-                              </div>
+                            
                               <div class="form-group">
                                  <label class="col-sm-4 control-label" for="PT">PT</label>
                                  <div class="col-sm-8">
@@ -100,7 +94,7 @@
                               <div class="form-group">
                                  <label class="col-sm-4 control-label" for="Remarks">Remarks</label>
                                  <div class="col-sm-8">
-                                    <input  name="rating" value="{{$trialform->remarks}}" type="text"  class="rating" data-min=0 data-max=5 data-step=1 data-size="sm"
+                                   <input  name="rating" value="{{$trialform->remarks}}" type="text"  class="rating" data-min=0 data-max=5 data-step=1 data-size="sm"
                                        title="" >
                                  </div>
                               </div>
@@ -130,7 +124,6 @@
 </section>
 </div>
 @php $trainerid=session()->get('employeeid'); @endphp
-<script src="{{ asset('dist/js/star-rating.min.js') }}"></script>
 <script type="text/javascript">
    $(document).ready(function(){
      $('#edititemform').validate({

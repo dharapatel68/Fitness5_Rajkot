@@ -175,7 +175,7 @@
                            </span>
                            </a>
                            <ul class="treeview-menu">
-                              <li><a href="{{ route('salary') }}"><i class="fa fa-plus"></i>Count Salary</a></li>
+                              <li><a href="{{ route('salary') }}"><i class="fa fa-plus"></i>Calculate Salary</a></li>
                               <li><a href="{{ route('viewsalary') }}"><i class="fa fa-eye"></i> View Salary</a></li>
                               <li><a href="{{ route('viewlockedsalary') }}"><i class="fa fa-eye"></i> View Locked Salary</a></li>
                            </ul>

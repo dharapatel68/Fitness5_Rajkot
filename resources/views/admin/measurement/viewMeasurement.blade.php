@@ -17,7 +17,7 @@
 <script data-require="datatables@*" data-semver="1.10.12" src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('bower_components/datatables.net/js/dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ asset('bower_components/datatables.net/js/dataTables.responsive.js') }}"></script>
-<style type="text/css">
+
 <!-- left column -->
 <style type="text/css">
 
@@ -169,7 +169,7 @@
                 @foreach($measurement as $mm)
           
                 <tr>
-                <td>{{ ucwords( $mm->Member->firstname) }} {{ ucwords($mm->Member->lastname) }}</td>
+                <td>{{ ucwords( $mm->firstname) }} {{ ucwords($mm->lastname) }}</td>
           <td> {{ date('d-m-Y', strtotime($mm->todaydate)) }}</td>
                 <td> {{ $mm->weight }}</td>
                 <td> {{ $mm->height }}</td>
