@@ -67,6 +67,17 @@
     content: "";
     position: absolute;
     display: none;
+} .select2{
+  width: 100% !important;
+  
+}
+.select2-container--default .select2-selection--single{
+  border-radius: 2px !important;
+  max-height: 100% !important;
+      border-color: #d2d6de !important;
+          height: 32px;
+          max-width: 100%;
+          min-width: 100% !important;
 }
 
 /* Show the checkmark when checked */
@@ -88,6 +99,54 @@
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
   </style>
+
+  @php
+ 
+  if(isset($_POST['trainerid'])){
+     $tid=$_POST['trainerid'];
+     $employee=\App\Employee::where('employeeid',$tid)->where('status',1)->get()->first();
+     $employeename=$employee->username;
+  }
+  else{
+    $tid=0;
+  }
+  if(isset($_POST['memberid'])){
+
+    $mid=$_POST['memberid'];
+    $membername=\App\Member::where(['memberid' => $mid])->get(['firstname','lastname'])->first();
+    $membername=$membername->firstname.' '.$membername->lastname;
+    
+  }
+  else{
+    $mid=0;
+  }
+  if(isset($_POST['packageid'])){
+    $pid=$_POST['packageid'];
+    $package=\App\MemberPackages::where('memberpackagesid',$pid)->get()->first();
+    $schemeid=$package->schemeid;
+    $scheme= \App\Scheme::where('schemeid',$schemeid)->where('status',1)->get()->first();
+    $schemename=$scheme->schemename;
+  }
+  else{
+    $pid=0;
+  }
+@endphp
+@if(request()->route('tid'))
+@php 
+  $tid=request()->route('tid');
+@endphp
+@endif
+@if(request()->route('mid'))
+@php 
+  $mid=request()->route('mid');
+@endphp
+@endif
+@if(request()->route('pid'))
+@php 
+ $pid=request()->route('pid');
+@endphp
+
+@endif
   <div class="content-wrapper">
    
      
@@ -117,30 +176,32 @@
                 <div class="col-md-3">
                 <div class="form-group">
                   <label>Trainer</label>
-                  <?php if(Session::get('role')=="admin"){ ?>
-                  <select name="trainerid" class="form-control selectpicker" id="trainerid" title="Select Trainer" data-live-search="true" data-selected-text-format="count"  data-actions-box="true" data-count-selected-text="{0} Trainer Selected" data-header="Select Trainer" required>
+                  @if(Session::get('role')=="trainer")
+                  
+                    @php
+                    $trainerid=Session::get('employeeid');
+                    $trainername=Session::get('username');
+                    @endphp 
+                    <input type="text" class="form-control" name="trainername" id="trainername" readonly="" value="{{$trainername}}">
+                     <input type="hidden" name="trainerid" id="trainerid"  value="{{$trainerid}}">
+                  @else
+                      <select name="trainerid" class="form-control select2" id="trainerid" title="Select Trainer" data-header="Select Trainer" required data-placeholder="Select Trainer">
+                   
+                    <option></option>
                     @foreach ($employees as $employee)
-                      <option value="{{$employee->employeeid}}" <?php if(isset($trainerid) && $trainerid==$employee->employeeid){ echo 'selected'; }?>>{{$employee->username}}</option>
+                      <option value="{{$employee->employeeid}}" {{ $tid == $employee->employeeid ? 'selected':''}}>{{$employee->username}}</option>
                     @endforeach
                   </select>
-                <?php }else{ ?>
-                  <input type="text" name="trainername" class="form-control" value="{{$trainername}}" readonly>
-                  <input type="hidden" name="trainerid" value="{{$trainerid}}">
-                <?php } ?>
+                  @endif
                 </div>
               </div>
 
                 <div class="col-md-3">
                 <div class="form-group">
                   <label>Member</label>
-                   <select name="memberid" class="form-control" id="memberid" title="Select Memeber"  >
-                    <option value="">--Select Member--</option>
-                    @foreach ($members as $member)
-                      <option value="{{$member->memberid}}" <?php if(isset($memberid) && $memberid==$member->memberid){ echo 'selected'; }?>>{{$member->firstname .' '. $member->lastname}}</option>
-                    @endforeach
-                   
-                    
-                  </select>
+                   <select name="memberid" class="form-control" id="memberid" required>
+                      <option value="">--Select Member--</option>
+                    </select>
                 </div>
               </div>
               <div class="col-md-3">
@@ -150,7 +211,7 @@
                   <!-- </select> -->
                 </div>
               </div>
-                <script type="text/javascript">
+<!--                 <script type="text/javascript">
                   $('#memberid').change(function(){
                        var member = $('#memberid').val();
                     // alert(member);
@@ -193,16 +254,17 @@
 
                               });
                   });
-                </script>
+                </script> -->
                 <div class="col-md-3">
                 <div class="form-group">
                   <label>Package</label>
-                   <select name="packageid" class="form-control" id="packageid" title="Select Package" data-live-search="true" >
-                    <option value="">--Select Member Package--</option>
+                 <select name="packageid" class="form-control" id="packageid" title="Select Package"  required>
+               <option value="">--Select Package--</option>
+   
                   </select>
                 </div>
               </div>
-                <script type="text/javascript">
+              <!--   <script type="text/javascript">
                   $('#memberid').change(function(){
                       $('#pthour').val('');
                        $('#packageid').find('option:not(:first)').remove();
@@ -260,7 +322,7 @@
 
                               });
                   });
-                </script>
+                </script> -->
                  <div class="col-md-3">
                 <div class="form-group">
                   <label>Training Hours</label>
@@ -501,6 +563,8 @@
 
 </div>
 <script type="text/javascript">
+      $('.select2').select2()
+
   $('#checkptp').click(function(){
     $.ajax({
           url:"{{ URL::route('claimptsession') }}",
@@ -525,7 +589,7 @@
   });
 </script>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
   $('#trainerid').on('change',function(){
 
 
@@ -554,36 +618,84 @@
           });
    });
 </script>
-  <!-- <script type="text/javascript">
-    function listenForDoubleClickedit(i) {
-      // alert(element);
-      $('#time'+i).removeAttr('disabled');
-      $('#tid'+i).removeAttr('disabled');
-      $('#ok'+i).show();
-      $('#edit'+i).hide();
-      // $('#2td16').contentEditable = true;
-    }
-     function listenForDoubleClickok(i) {
-      // alert(element);
-      $('#time'+i).attr('disabled',true);
-      $('#tid'+i).attr('disabled',true);
-      $('#ok'+i).hide();
-      $('#edit'+i).show();
-      // alert($('#mid'+i).val());
-      $.ajax({
-                url:"{{ URL::route('edittimeofmember') }}",
-                method:"GET",
-                data:{"_token": "{{ csrf_token() }}","ptmemberid":$('#mid'+i).val(),"trainerid":$('#tid'+i).val(),"time":$('#time'+i).val()},
-                success:function(data) {
-                  // alert(data);
-                 // swal(data,"Successfully",'success');
+   -->
+<script type="text/javascript">
+  var tid=<?php echo $tid;?>;
+      var mid=<?php echo $mid;?>;
+      var pid=<?php echo $pid;?>;
+ 
+ $( document ).ready(function() {
+     var tid=<?php echo $tid;?>;
+      var mid=<?php echo $mid;?>;
+      var pid=<?php echo $pid;?>;
 
-                },
+      if(trainerid == 0 && memberid == 0 && packageid ==0){
+        $('#sessionreport').css('display','none');
+      }
+      if(trainerid !== 0){
+        
+      }
+      if(memberid !== 0){
+       
+      }
+    $('#trainerid').trigger('change');
+ // $('#memberid').trigger('change'); 
 
-              });
-      // $('#2td16').contentEditable = true;
-    }
-  </script> -->
+     
+});
+
+ $('#view').on('click',function(){
+ 
+ })
+</script>
+<script type="text/javascript">
+  
+  $('#trainerid').change(function(){
+    var trainerid = $('#trainerid').val();
+    $('#memberid').find('option:not(:first)').remove();
+    $.ajax({
+      url:"{{ url('getsessiontrainermember') }}",
+      method:"GET",
+      data:{"_token": "{{ csrf_token() }}","trainerid":trainerid},
+      success:function(data) {
+       var  result=data;
+        if(result){
+          $.each(result, function(i, item){
+          $("#memberid").append($("<option></option>").attr("value", item.memberid).text(item.firstname+' '+item.lastname));
+          });
+          $("#memberid option[value="+mid+"]").attr("selected", "selected");
+          if(mid){
+            $("#memberid").trigger('change');
+          }
+        }
+      },
+      dataType:'json',
+    });
+  });
+</script>
+<script type="text/javascript">
+  $('#memberid').change(function(){
+    var member1 = $('#memberid').val();
+    $.ajax({
+      url:"{{ URL::route('getpackage') }}",
+      method:"GET",
+      data:{"_token": "{{ csrf_token() }}","memberid":member1},
+      async:false,
+      success:function(data) {
+        if(data){
+          $('#packageid').find('option:not(:first)').remove();
+          $.each(data, function(i, item){
+            $('#mobileno').val(item.mobileno);
+            $("#packageid").append($("<option></option>").attr("value", item.memberpackagesid).text(item.schemename));
+          });
+          $("#packageid option[value="+pid+"]").attr("selected", "selected");
+        }
+      },
+      dataType:'json',
+    });
+  });
+</script>
+
 <script type="text/javascript">
   $(document).ready( function (){
   $('#example1').DataTable({

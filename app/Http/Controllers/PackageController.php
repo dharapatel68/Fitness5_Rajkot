@@ -34,12 +34,31 @@ class PackageController extends Controller
      return view('admin.packageEdit',compact('packages','pa'));
     }
 
-   public function changeStatus(Request $request, $id){
+   public function changeStatus(Request $request,$id)
+   {
 
         $memberdata=MemberPackages::where('memberpackagesid',$id)->get()->first();
         $memberdata->status=0;
+       $schemeid = $memberdata->schemeid;
+     $userid=$memberdata->userid;  
         $memberdata->save();
+             $loginuser = session()->get('username');
+              
+              $scheme = Scheme::where('schemeid', $schemeid)->first();
+
+        if(!empty($scheme)){
+          $scheme_name = $scheme->schemename;
+          $rootschemeid = $scheme->rootschemeid;
+        }
+        $actionbyid=session()->get('employeeid');
+          $notify=Notify::create([
+           'userid'=> $userid,
+           'details'=> ''.$loginuser.' deactivate package '.$scheme_name,
+           'actionby'=>$actionbyid,
+         ]);
+
         return redirect()->back()->withSuccess('Package Deactivated');
+
       
     }
 
