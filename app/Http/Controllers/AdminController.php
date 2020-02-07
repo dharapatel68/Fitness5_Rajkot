@@ -386,6 +386,14 @@ class AdminController extends Controller
 
             }
         }
+        $trainersession2 = Ptmember::leftjoin('member', 'member.memberid', 'ptmember.memberid')
+            ->leftjoin('schemes', 'schemes.schemeid', 'ptmember.schemeid')
+            ->whereIn('ptmember.status', ['Active', 'Pending'])
+            ->select('member.memberid', 'member.firstname', 'member.lastname')
+            ->groupBy('member.memberid', 'member.firstname', 'member.lastname')
+            ->get()
+            ->all();
+
         $trainersession = Ptmember::where('trainerid', $trainerid)->leftjoin('member', 'member.memberid', 'ptmember.memberid')
             ->leftjoin('schemes', 'schemes.schemeid', 'ptmember.schemeid')
             ->whereIn('ptmember.status', ['Active', 'Pending'])
@@ -393,6 +401,31 @@ class AdminController extends Controller
             ->groupBy('member.memberid', 'member.firstname', 'member.lastname')
             ->get()
             ->all();
+
+
+        foreach ($trainersession2 as $key => $value)
+        {
+            # code...
+            $activecount = Ptmember::where('ptmember.memberid', $value->memberid)
+                ->leftjoin('member', 'member.memberid', 'ptmember.memberid')
+                ->leftjoin('schemes', 'schemes.schemeid', 'ptmember.schemeid')
+                ->whereIn('ptmember.status', ['Active', 'Pending'])
+                ->select('member.*', 'ptmember.*', 'ptmember.status as ptstatus', 'schemes.schemename')
+                ->get()
+                ->all();
+
+            $value['schemenameprint'] = $activecount[0]->schemename;
+            $activecount = count($activecount);
+            $deductedcount = Ptmember::where('ptmember.memberid', $value->memberid)
+                ->leftjoin('member', 'member.memberid', 'ptmember.memberid')
+                ->leftjoin('schemes', 'schemes.schemeid', 'ptmember.schemeid')
+                ->whereIn('ptmember.status', ['Conducted'])
+                ->select('member.*', 'ptmember.*', 'ptmember.status as ptstatus', 'schemes.schemename')
+                ->count();
+
+            $value['activecount'] = $activecount;
+            $value['deductedcount'] = $deductedcount;
+        }
 
         foreach ($trainersession as $key => $value)
         {
@@ -436,7 +469,7 @@ class AdminController extends Controller
         $todayanniv=Member::whereDate('anniversary',$today)->get()->all();
         $data['todaybday']=$todaybday;
         $data['todayanniv']=$todayanniv;
-        return view('admin.dashboard', compact('data', 'collection', 'payment', 'duepayment', 'packageexpirenearly', 'followup', 'packexpiretrainer', 'trainersession', 'measurements'));
+        return view('admin.dashboard', compact('data', 'collection', 'payment', 'duepayment', 'packageexpirenearly', 'followup', 'packexpiretrainer', 'trainersession', 'trainersession2','measurements'));
     }
     public function loaduserbytype(Request $request)
     {

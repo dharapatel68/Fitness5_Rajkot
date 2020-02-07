@@ -41,16 +41,12 @@ class ExercisePlanController extends Controller
        $workoutname = WorkOut::create([
        'workoutname'=>$request['workout'],
        ]);
-
-      
           $tags=$request['exerciselevel'];
-
           $i=0;
           $count=0;
           for ($i=1; $i <=7 ; $i++) { 
 
             if($request['tab'.$i.'mycount']>0){
-            
 
               $count=$request['tab'.$i.'mycount'];
                $tags=$request['exerciselevel'];
@@ -62,16 +58,15 @@ class ExercisePlanController extends Controller
 
                   if($request['tab'.$i.'exercisename'.$k.'']){
                 
-             $exercise =    ExercisePlan::create([
-                   'workoutid' => $workoutname->workoutid,
-                     'exerciseplanlevel' => $commaSeparated ,
-                      'exerciseplanday' =>$i,
-                      'exerciseid' =>$request['tab'.$i.'exercisename'.$k.''],
-                      'exerciseplantime'=>$request['tab'.$i.'time'.$k.''],
-                      'exerciseplanset'=>$request['tab'.$i.'set'.$k.''],
-                      'exerciseplanins'=>$request['tab'.$i.'instruction'.$k.''],
-                      'exerciseplanlevelrep'=>$request['tab'.$i.'rep'.$k.''],
-
+                  $exercise =    ExercisePlan::create([
+                    'workoutid' => $workoutname->workoutid,
+                    'exerciseplanlevel' => $commaSeparated ,
+                    'exerciseplanday' =>$i,
+                    'exerciseid' =>$request['tab'.$i.'exercisename'.$k.''],
+                    'exerciseplantime'=>$request['tab'.$i.'time'.$k.''],
+                    'exerciseplanset'=>$request['tab'.$i.'set'.$k.''],
+                    'exerciseplanins'=>$request['tab'.$i.'instruction'.$k.''],
+                    'exerciseplanlevelrep'=>$request['tab'.$i.'rep'.$k.''],
                   ]);
 
               }
@@ -233,7 +228,7 @@ Workouttag::create([
 
 // $exercisefinal = DB::select(DB::raw("select * from exerciseplan where exerciseplanid In ($ex)"));
 // print_r($exercisefinal);
-  $exercise= ExercisePlan::where('workoutid',$exerciseplan)->get()->all();
+  $exercise= ExercisePlan::where('workoutid',$exerciseplan)->orderBy('exerciseplanday','desc')->get()->all();
 
 echo json_encode($exercise);
 
@@ -259,10 +254,8 @@ echo json_encode($exercise);
         $workout=null;
         if(MemberWorkout::where('memberid',$member)->get()->all()){
             $workout=MemberWorkout::where('memberid',$member)->with('Workout')->get()->all();
-
         }
         echo json_encode($workout);
-
     }
     public function workoutmemberload(Request $request){
       $workoutid=$request->get('workoutid');

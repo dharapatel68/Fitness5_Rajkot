@@ -14,440 +14,430 @@
 
 
 
-  <div class="content-wrapper">
-   
-     
-         <section class="content-header"><h2>All Users</h2></section>
-          <!-- general form elements -->
-        
-
-<div class="content">
-  <hr> 
-  @if ($message = Session::get('message'))
-<div class="alert alert-success alert-block">
-  <button type="button" class="close" data-dismiss="alert">×</button> 
+<div class="content-wrapper">
+  <section class="content-header">
+     <h2>All Users</h2>
+  </section>
+  <!-- general form elements -->
+  <div class="content">
+     <hr>
+     @if ($message = Session::get('message'))
+     <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button> 
         <strong>{{ $message }}</strong>
-</div>
-@endif 
-<div class="table-wrapper">
-  <div class="table-title">
-
-       <div class="box">
-    <div class="box-header">
-       <?php $permission = unserialize(session()->get('permission')); ?>
-        @if(isset($permission["'add_employee'"]))
-      <a href="{{ url('addUser') }}" class="btn add-new bg-navy"><i class="fa fa-plus"></i> Add New</a>
-      @endif
-
-    <h3 class="box-title">All Users</h3>
-    </div>
-    <!-- /.box-header -->
-    <div class="box-body">
-      <div class="table-responsive" >
-      
-        <table id="example12"class="table no-margin">
-          <thead>
-             <tr>
-              <th>FirstName</th>
-               <th>LastName</th>
-                        <th>UserName</th>
-                        <th>Role</th>
-                        <th>Email id</th>
-                        <!-- <th>Address</th> -->
-                        <th>City</th>
-                        <th>Department</th>
-                        <th>Salary</th>
-                        <!-- <th colspan="2">Working Hour</th> -->
-                       <!--  <th>Birthdate</th> -->
-                        <!-- <th>Gender</th>
-                        <th>Mobile No</th> -->
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                  
-                  @if($users)
-                  @foreach($users as $user)
-                    <tr>
-                       <td> {{ ucwords($user->first_name) }}</td>
-                        <td> {{ucwords( $user->last_name )}}</td>
-                        <td> {{ $user->username }}</td>
-                        <td>{{$user->employeerole}} </td>
-                        <td> {{ $user->email }}</td>
-                        <!-- <td> {{ $user->address }}</td> -->
-                        <td> {{ $user->city }}</td>
-                        <td> {{ $user->department }}</td>
-                        <td> {{ $user->salary }}</td>
-                       
-                        <td>
-                          @if(isset($permission["'edit_employee'"]))
-                            <a href="{{ url('edituser/'.$user->employeeid) }}"class="edit" title="Edit"><i class="fa fa-edit"></i></a>
-                          @endif
-                          @if($user->enroll == 1)
-                            <a id="setuser" title="Device Asscess"><i class="fa fa-universal-access" style="color: red;"></i>
-                          @else
-                            <a href="#" id="setuser" title="Device Asscess" data-toggle="modal" data-target="#modal-default" onclick="da('{{$user->employeeid}}','{{$user->username}}','{{ $user->mobileno }}')"><i class="fa fa-universal-access"></i>
-                          @endif
-                            <input type="hidden" name="deviceaccess" id="deviceaccess" value="{{$user->employeeid}}">
-                          </a>
-                          <a href="#" class="" id="userfetchlogs" data-toggle="modal" onclick="fetchlogs('{{$user->mobileno}}')" data-target="#fetchlogs" title="Logs"><i class="fa fa-history"></i></a>
-
-
-                            @if($user->status == 1)
-                            <a href="#" class="" id="deactiveuserq" data-toggle="modal" data-target="#deactiveuser" onclick="deactiveuser('{{$user->mobileno}}')"  title="Deactive User"><i class="fa fa-user"></i></a>
-                            @else
-                            <a href="#" data-toggle="modal" id="activeuserq" data-target="#activedeviceuser" onclick="activeuser('{{$user->mobileno}}')" title="Active User"><i class="fa fa-user" style="color: #B49168;"></i></a>
-                            @endif
-
-                           <!-- <a href="#" class="btn-xs delete" id="userfetchlogs" onclick="" title="Delete User"><i class="fa fa-times"></i></a> -->
-
-                           <!--  <a href="{{ url('deleteuser/'.$user->id) }}"class="delete" title="Delete"><i class="fa fa-trash"></i></a> -->
-                        </td>
-                    </tr>
-              @endforeach
-                  </table>
+     </div>
+     @endif 
+     <div class="table-wrapper">
+        <div class="table-title">
+           <div class="box">
+              <div class="box-header">
+                 <?php $permission = unserialize(session()->get('permission')); ?>
+                 @if(isset($permission["'add_employee'"]))
+                 <a href="{{ url('addUser') }}" class="btn add-new bg-navy"><i class="fa fa-plus"></i> Add New</a>
+                 @endif
+                 <h3 class="box-title">All Users</h3>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                 <div class="table-responsive" >
+                    <table id="example12"class="table no-margin">
+                       <thead>
+                          <tr>
+                             <th>FirstName</th>
+                             <th>LastName</th>
+                             <th>UserName</th>
+                             <th>Role</th>
+                             <th>Email id</th>
+                             <!-- <th>Address</th> -->
+                             <th>City</th>
+                             <th>Department</th>
+                             <th>Salary</th>
+                             <!-- <th colspan="2">Working Hour</th> -->
+                             <!--  <th>Birthdate</th> -->
+                             <!-- <th>Gender</th>
+                                <th>Mobile No</th> -->
+                             <th>Actions</th>
+                          </tr>
+                       </thead>
+                       <tbody>
+                          @if($users)
+                          @foreach($users as $user)
+                          <tr>
+                             <td> {{ ucwords($user->first_name) }}</td>
+                             <td> {{ucwords( $user->last_name )}}</td>
+                             <td> {{ $user->username }}</td>
+                             <td>{{$user->employeerole}} </td>
+                             <td> {{ $user->email }}</td>
+                             <!-- <td> {{ $user->address }}</td> -->
+                             <td> {{ $user->city }}</td>
+                             <td> {{ $user->department }}</td>
+                             <td> {{ $user->salary }}</td>
+                             <td>
+                                @if(isset($permission["'edit_employee'"]))
+                                <a href="{{ url('edituser/'.$user->employeeid) }}"class="edit" title="Edit"><i class="fa fa-edit"></i></a>
+                                @endif
+                                @if($user->enroll == 1)
+                                <a id="setuser" title="Device Asscess"><i class="fa fa-universal-access" style="color: red;"></i>
+                                @else
+                                <a href="#" id="setuser" title="Device Asscess" data-toggle="modal" data-target="#modal-default" onclick="da('{{$user->employeeid}}','{{$user->username}}','{{ $user->mobileno }}')"><i class="fa fa-universal-access"></i>
+                                @endif
+                                <input type="hidden" name="deviceaccess" id="deviceaccess" value="{{$user->employeeid}}">
+                                </a>
+                                <a href="#" class="" id="userfetchlogs" data-toggle="modal" onclick="fetchlogs('{{$user->mobileno}}')" data-target="#fetchlogs" title="Logs"><i class="fa fa-history"></i></a>
+                                @if($user->status == 1)
+                                <a href="#" class="" id="deactiveuserq" data-toggle="modal" data-target="#deactiveuser" onclick="deactiveuser('{{$user->mobileno}}')"  title="Deactive User"><i class="fa fa-user"></i></a>
+                                @else
+                                <a href="#" data-toggle="modal" id="activeuserq" data-target="#activedeviceuser" onclick="activeuser('{{$user->mobileno}}')" title="Active User"><i class="fa fa-user" style="color: #B49168;"></i></a>
+                                @endif
+                                <!-- <a href="#" class="btn-xs delete" id="userfetchlogs" onclick="" title="Delete User"><i class="fa fa-times"></i></a> -->
+                                <!--  <a href="{{ url('deleteuser/'.$user->id) }}"class="delete" title="Delete"><i class="fa fa-trash"></i></a> -->
+                                <a href="#" data-toggle="modal" id="activeuserq"class="delete" data-target="#extendsexpiry" onclick="extendexpiry('{{$user->employeeid}}')" title="Extend Expiry"><i class="fa fa-plus" ></i></a>
+                             </td>
+                          </tr>
+                          @endforeach
+                    </table>
                     <div class="datarender" style="text-align: center">  {!! $users->render() !!} </div>
-                  @else
-
-              @endif
-        
-        
-         
-          </div>
-<!-- /.box-body -->
-</div>
-        </div>
-
-         <div class="modal fade" id="fetchlogs">
-
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <button type="button" class="close close1"  data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title"><b>Users Punch In/Out Time</b></h4>
-                              </div>
-                              <div class="modal-body">
-                                  
-                                <div class="table-wrapper">
-                                <div class="table-title">
-
-                                     <div class="box">
-                                 
-                                  
-                                  <div class="box-body">
-                                    <div class="col-lg-12">
-                                    <div class="row">
-                                      <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
-                                        <thead>
-                                           <tr>
-                                              <th>date</th>
-                                              <th>Check IN Time</th>
-                                              <th>Check Out Time</th>                      
-                                            </tr>
+                    @else
+                    @endif
+                 </div>
+                 <!-- /.box-body -->
+              </div>
+           </div>
+           <div class="modal fade" id="fetchlogs">
+              <div class="modal-dialog">
+                 <div class="modal-content">
+                    <div class="modal-header">
+                       <button type="button" class="close close1"  data-dismiss="modal" aria-label="Close">
+                       <span aria-hidden="true">&times;</span></button>
+                       <h4 class="modal-title"><b>Users Punch In/Out Time</b></h4>
+                    </div>
+                    <div class="modal-body">
+                       <div class="table-wrapper">
+                          <div class="table-title">
+                             <div class="box">
+                                <div class="box-body">
+                                   <div class="col-lg-12">
+                                      <div class="row">
+                                         <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                                            <thead>
+                                               <tr>
+                                                  <th>date</th>
+                                                  <th>Check IN Time</th>
+                                                  <th>Check Out Time</th>
+                                               </tr>
                                             </thead>
                                             <tbody id="tbody">
-                                            <tr>
-                                              <td id="t1"></td>
-                                              <td></td>
-                                              <td></td>
-                                            </tr>
-                                            
-                                            
-                                          </tbody>
-                                          </table>
-                             
-                              </div>
-                                  </div>
+                                               <tr>
+                                                  <td id="t1"></td>
+                                                  <td></td>
+                                                  <td></td>
+                                               </tr>
+                                            </tbody>
+                                         </table>
+                                      </div>
+                                   </div>
                                 </div>
-                              </div>
-                              </div>
-                              </div>
-
-
-
-                              </div>
-                            
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-danger close1"  data-dismiss="modal">Close</button>
-                                <!-- <a type="submit" id="setusersave" data-dismiss="modal"  class="btn  bg-green">Save</a> -->
-                              </div>
-                            </div>
-                            <!-- /.modal-content -->
+                             </div>
                           </div>
-                          <!-- /.modal-dialog -->                        
-         </div>
-
-         <div class="modal fade" id="deactiveuser">
-
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <button type="button" class="close close1"  data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title"><b>Deactive User</b></h4>
-                              </div>
-                              <div class="modal-body">
-                                <h4>Are You Sure To Deactive User From Device!</h4>
-                              </div>
-                            
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-danger close1"  data-dismiss="modal">No</button>
-                                <a  id="deactiveusersave" data-dismiss="modal" class="btn bg-green">Yes</a>
-                              </div>
-                            </div>
-                            <!-- /.modal-content -->
-                          </div>
-                          <!-- /.modal-dialog -->                        
-         </div>
-
-         <div class="modal fade" id="modal-default"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Enroll Card</h5>
-        </div>
-        <div class="modal-body">
-          <div id="firststage">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="empexpiry">
-
-                  <!-- first stage start -->
-                  <div class="row">
-                    <div class="col-md-12">
-                      <input type="hidden"  id="setuserid" class="form-control" name="deviceuserid" value="{{$user->employeeid}}" disabled="">
-                      <input type="hidden" id="setuserrefid" name="deviceuserreferenceid" class="form-control" value="{{$user->employeeid}}" disabled="">
-                      <input type="hidden" id="devicemobileno" name="devicemobileno" class="form-control" value="{{$user->mobileno}}">
+                       </div>
                     </div>
-                    <div class="row">
-                      <div class="form-group">
-                        <div class="col-md-10 col-md-offset-1">
-                          <label>User Name</label>
-                          <input type="text" class="form-control" name="username" placeholder="Enter User Name" id="setusername" disabled="">
-                        </div>
-                      </div>
+                    <div class="modal-footer">
+                       <button type="button" class="btn btn-danger close1"  data-dismiss="modal">Close</button>
+                       <!-- <a type="submit" id="setusersave" data-dismiss="modal"  class="btn  bg-green">Save</a> -->
                     </div>
-                    <br/>
-
-                    <div class="row">
-                      <div class="col-md-6 col-md-offset-1">
-                        <label>Set User Expiry</label>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-6 col-md-offset-1">
-                        <input type="date" class="form-control" onkeypress="return false" name="" id="setuserexpiry" required="" value="<?php echo date('Y-m-d', strtotime('+3 years'))?>" min="<?php echo date('Y-m-d') ?>">
-                      </div>
-                    </div>
-                  </div>
-                <center><button id="firststage_next" class="btn btn-success" style="margin-top: 15px;">Next</button></center>
-                </div>
-                <!-- first stage end -->
-
-                <!-- second stage start -->
-                <div class="cardcheckform" style="display: none;">
-                    <input type="hidden" name="cardunique" id="cardunique">
-                    <label>Scan card to verify</label>
-                    <input type="text" name="cardno" id="cardno" style="height: 0;width: 0;"><br/>
-                    <span id="scanning mt-3"><button class="btn btn-danger" style="margin-top: 5px;margin-bottom: 10px;
-                    ">Scanning...</button></span><br/>
-                    <span style="color: red;">Please do not click anywhere on screen</span><br/>
-                    <div class="row" style="display: none;" id="card_detail">
-                      <center>
-                        <label>Card Detail</label>
-                        <div class="col-md-12">
-                          <span><img id="img_card" src="" style="height: 100px;width: 100px;" alt="User Image"></span>
-                        </div>
-                        <div class="col-md-12" style="margin-top: 5px;">
-                          <center><h3><span id="fullname_card"></span></h3></center>
-                        </div>
-                      </center>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12" style="margin-top: 10px;">
-                        <span style="color: red;display: none;" id="card_err">Card is already in device. Please change  other card.</span>
-                      </div>
-                    </div>
-                    <center><button id="secondtage_next" class="btn btn-success" style="display: none;">Next</button></center>
-                </div>
-                <!-- second stage end -->
-
-                <!-- third stage start -->
-                <div class="secondstageform" style="display: none;">
-                 
-                    <label>Scan a card to enroll</label>
-                    <input type="text" name="cardno" id="finalcardno" style="height: 0;width: 0;">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <span id="scanning_second"><button class="btn btn-danger">Scanning...</button></span><br/>  
-                      </div>
-                    </div>
-                 
-                </div>
-                <center><button  style="display: none;" class="btn btn-success">Next</button></center>
+                 </div>
+                 <!-- /.modal-content -->
               </div>
-            </div>
-          </div>
-          <!-- third stage end -->
-
-        </div>
-        <div class="modal-footer">
-          <a href="{{ url('users') }}" class="btn btn-danger">Close</a>
-        </div>
-      </div>
-    </div>
-  </div>
- 
-      <div class="modal fade" id="modal-defaultpon" aria-hidden="true">
-
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <button type="button" class="close" id="modelclose" data-dismiss="modal" aria-label="Close"> 
-                                  <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title"><b>Set User To device</b></h4>
-                              </div>
-                              <div class="modal-body">
-                                    <form id="msform" action="#encard" method="post">
-                                          <!-- <form id="msform" action="{{url('addinquirydata')}}" method="post"> -->
-                                          {{ csrf_field() }}
-                                          <!-- progressbar -->
-                                          <ul id="progressbar">
-                                             <li class="active"><b>Set User</b></li>
-                                             <li><b>Enroll User</b></li>
-                                             <li><b>Enroll in to System</b></li>
-                                          </ul>
-                                          <!-- fieldsets -->
-                                          <fieldset>
-                                           
-                                             <h2 class="fs-title">Set User</h2>
-                                             <h3 class="fs-subtitle">Tell us something about you</h3>
-                                                            <div class="row">
-                                                                <div class="form-group">
-                                                                  <div class="col-md-5 col-md-offset-1">
-                                                                    <!-- <label>User id</label> -->
-                                                                    
-                                                                    <input type="hidden"  id="setuserid" class="form-control" name="deviceuserid" value="{{$user->employeeid}}" disabled="">
-                                                                    
-                                                                  </div>
-                                                                  <div class="col-md-5">
-                                                                    <!-- <label>User Reference id</label> -->
-                                                                    <input type="hidden" id="setuserrefid" name="deviceuserreferenceid" class="form-control" value="{{$user->employeeid}}" disabled="">
-
-                                                                     <input type="hidden" id="devicemobileno" name="devicemobileno" class="form-control" value="{{$user->mobileno}}">
-                                                                  </div>
-
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="row">
-                                                                <div class="form-group">
-                                                                  <div class="col-md-10 col-md-offset-1">
-                                                                    <label>User Name</label>
-                                                                    <input type="text" class="form-control" name="username" placeholder="Enter User Name" id="setusername" disabled="">
-                                                                  </div>
-                                                                </div>
-                                                            </div>
-                                                            <br/>
-
-                                                            <div class="row">
-                                                              <div class="col-md-6 col-md-offset-1">
-                                                                <label>Set User Expiry</label>
-                                                              </div>
-                                                            </div>
-
-                                                            <div class="row">
-                                                              <div class="col-md-6 col-md-offset-1">
-                                                                  <input type="date" onkeypress="return false" name="" id="setuserexpiry" required="" value="<?php echo date('Y-m-d', strtotime('+3 years'))?>" min="<?php echo date('Y-m-d') ?>">
-                                                              </div>
-                                                            </div>
-
-                                                            <!-- <div class="form-group">
-
-                                                              <div class="row"> 
-                                                                   <div class="col-md-3 col-md-offset-1">
-                                                                    <label>Status</label>
-                                                              </div>
-
-                                                                  <div class="col-md-6">
-                                                                    <select class="form-control" name="status" id="setuserstatus" required="">
-                                                                      <option value="1">Active</option>
-                                                                      <option value="0">Deactive</option>
-                                                                    </select>
-                                                                  </div>
-                                                                </div>
-
-                                                              </div> -->
-                                                              <br/>
-                                                      
-                                             <input type="button" name="next" class="next action-button" value="Next" id="setusersave" onclick="setuser();" />
-                                          </fieldset>
-                                          <fieldset>
-                                             <h2 class="fs-title">Enroll User</h2>
-                                             <h3 class="fs-subtitle">Tell us something more about you</h3>
-                                               <a href="#" class="btn bg-orange" id="enrolluser" style="padding: 50px;" onclick="enroll();">Enroll User</a>
-                                             <input type="button" name="next" class="next action-button" value="Next"id="next2" />
-                                          </fieldset>
-                                           <fieldset>
-                                             <h2 class="fs-title">Enroll card</h2>
-                                             <h3 class="fs-subtitle">Tell us something more about you</h3>
-                                            
-                                             <a  name="submit" style="padding: 50px;color: #FFA233;" title="Enroll Card"  value="EnrollCard" onclick="enrollcard();" id="enrolluser"><i class="fa fa-id-card fa-5x"></i></a>
-                                           
-                                          </fieldset>
-
-                                 </form>
-                                 </div>
-                                 </div>
-                                  </div>
+              <!-- /.modal-dialog -->                        
+           </div>
+           <div class="modal fade" id="deactiveuser">
+              <div class="modal-dialog">
+                 <div class="modal-content">
+                    <div class="modal-header">
+                       <button type="button" class="close close1"  data-dismiss="modal" aria-label="Close">
+                       <span aria-hidden="true">&times;</span></button>
+                       <h4 class="modal-title"><b>Deactive User</b></h4>
+                    </div>
+                    <div class="modal-body">
+                       <h4>Are You Sure To Deactive User From Device!</h4>
+                    </div>
+                    <div class="modal-footer">
+                       <button type="button" class="btn btn-danger close1"  data-dismiss="modal">No</button>
+                       <a  id="deactiveusersave" data-dismiss="modal" class="btn bg-green">Yes</a>
+                    </div>
+                 </div>
+                 <!-- /.modal-content -->
+              </div>
+              <!-- /.modal-dialog -->                        
+           </div>
+           <div class="modal fade" id="modal-default"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                    <div class="modal-header">
+                       <h5 class="modal-title" id="exampleModalLabel">Enroll Card</h5>
+                    </div>
+                    <div class="modal-body">
+                       <div id="firststage">
+                          <div class="row">
+                             <div class="col-md-12">
+                                <div class="empexpiry">
+                                   <!-- first stage start -->
+                                   <div class="row">
+                                      <div class="col-md-12">
+                                         <input type="hidden"  id="setuserid" class="form-control" name="deviceuserid" value="{{$user->employeeid}}" disabled="">
+                                         <input type="hidden" id="setuserrefid" name="deviceuserreferenceid" class="form-control" value="{{$user->employeeid}}" disabled="">
+                                         <input type="hidden" id="devicemobileno" name="devicemobileno" class="form-control" value="{{$user->mobileno}}">
+                                      </div>
+                                      <div class="row">
+                                         <div class="form-group">
+                                            <div class="col-md-10 col-md-offset-1">
+                                               <label>User Name</label>
+                                               <input type="text" class="form-control" name="username" placeholder="Enter User Name" id="setusername" disabled="">
+                                            </div>
+                                         </div>
+                                      </div>
+                                      <br/>
+                                      <div class="row">
+                                         <div class="col-md-6 col-md-offset-1">
+                                            <label>Set User Expiry</label>
+                                         </div>
+                                      </div>
+                                      <div class="row">
+                                         <div class="col-md-6 col-md-offset-1">
+                                            <input type="date" class="form-control" onkeypress="return false" name="" id="setuserexpiry" required="" value="<?php echo date('Y-m-d', strtotime('+3 years'))?>" min="<?php echo date('Y-m-d') ?>">
+                                         </div>
+                                      </div>
+                                   </div>
+                                   <center><button id="firststage_next" class="btn btn-success" style="margin-top: 15px;">Next</button></center>
                                 </div>
-                                <br/>  
-                                 <script type="text/javascript">
-                                            function enrollcard(){
-                                              var did =  $('#deviceaccess').val();
-                                              // alert('{{ url("enrollemployeecard")}}'+'/'+did);
-                                              $('#msform').attr('action','{{ url("enrollemployeecard")}}'+'/'+did);
-                                              $('#msform').submit();
-                                            }
-                                          </script>
-      </div>
-
-      <div class="modal fade" id="activedeviceuser">
-
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title"><b>Active User</b></h4>
-                              </div>
-                              <div class="modal-body">
-                                <div class="row">
-                                  <div class="col-md-4">
-                                    <label>Set User Expiry date</label>
-                                  </div>
-                                  <div class="col-md-8">
-                                    <input type="date" name="activationdate" id="activationdate" min="<?php echo date('Y-m-d')?>" value="<?php echo date('Y-m-d')?>">
-                                  </div>
+                                <!-- first stage end -->
+                                <!-- second stage start -->
+                                <div class="cardcheckform" style="display: none;">
+                                   <input type="hidden" name="cardunique" id="cardunique">
+                                   <label>Scan card to verify</label>
+                                   <input type="text" name="cardno" id="cardno" style="height: 0;width: 0;"><br/>
+                                   <span id="scanning mt-3"><button class="btn btn-danger" style="margin-top: 5px;margin-bottom: 10px;
+                                      ">Scanning...</button></span><br/>
+                                   <span style="color: red;">Please do not click anywhere on screen</span><br/>
+                                   <div class="row" style="display: none;" id="card_detail">
+                                      <center>
+                                         <label>Card Detail</label>
+                                         <div class="col-md-12">
+                                            <span><img id="img_card" src="" style="height: 100px;width: 100px;" alt="User Image"></span>
+                                         </div>
+                                         <div class="col-md-12" style="margin-top: 5px;">
+                                            <center>
+                                               <h3><span id="fullname_card"></span></h3>
+                                            </center>
+                                         </div>
+                                      </center>
+                                   </div>
+                                   <div class="row">
+                                      <div class="col-md-12" style="margin-top: 10px;">
+                                         <span style="color: red;display: none;" id="card_err">Card is already in device. Please change  other card.</span>
+                                      </div>
+                                   </div>
+                                   <center><button id="secondtage_next" class="btn btn-success" style="display: none;">Next</button></center>
                                 </div>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn  btn-danger" data-dismiss="modal">Close</button>
-                                <a href="#" class="btn bg-green" id="activeuser">Active</a>
-                              </div>
-                            </div>
-                          </div>                                
-      </div>
-   
-    </div>
-
-    </div>
-
+                                <!-- second stage end -->
+                                <!-- third stage start -->
+                                <div class="secondstageform" style="display: none;">
+                                   <label>Scan a card to enroll</label>
+                                   <input type="text" name="cardno" id="finalcardno" style="height: 0;width: 0;">
+                                   <div class="row">
+                                      <div class="col-md-12">
+                                         <span id="scanning_second"><button class="btn btn-danger">Scanning...</button></span><br/>  
+                                      </div>
+                                   </div>
+                                </div>
+                                <center><button  style="display: none;" class="btn btn-success">Next</button></center>
+                             </div>
+                          </div>
+                       </div>
+                       <!-- third stage end -->
+                    </div>
+                    <div class="modal-footer">
+                       <a href="{{ url('users') }}" class="btn btn-danger">Close</a>
+                    </div>
+                 </div>
+              </div>
+           </div>
+           <div class="modal fade" id="modal-defaultpon" aria-hidden="true">
+              <div class="modal-dialog">
+                 <div class="modal-content">
+                    <div class="modal-header">
+                       <button type="button" class="close" id="modelclose" data-dismiss="modal" aria-label="Close"> 
+                       <span aria-hidden="true">&times;</span></button>
+                       <h4 class="modal-title"><b>Set User To device</b></h4>
+                    </div>
+                    <div class="modal-body">
+                       <form id="msform" action="#encard" method="post">
+                          <!-- <form id="msform" action="{{url('addinquirydata')}}" method="post"> -->
+                          {{ csrf_field() }}
+                          <!-- progressbar -->
+                          <ul id="progressbar">
+                             <li class="active"><b>Set User</b></li>
+                             <li><b>Enroll User</b></li>
+                             <li><b>Enroll in to System</b></li>
+                          </ul>
+                          <!-- fieldsets -->
+                          <fieldset>
+                             <h2 class="fs-title">Set User</h2>
+                             <h3 class="fs-subtitle">Tell us something about you</h3>
+                             <div class="row">
+                                <div class="form-group">
+                                   <div class="col-md-5 col-md-offset-1">
+                                      <!-- <label>User id</label> -->
+                                      <input type="hidden"  id="setuserid" class="form-control" name="deviceuserid" value="{{$user->employeeid}}" disabled="">
+                                   </div>
+                                   <div class="col-md-5">
+                                      <!-- <label>User Reference id</label> -->
+                                      <input type="hidden" id="setuserrefid" name="deviceuserreferenceid" class="form-control" value="{{$user->employeeid}}" disabled="">
+                                      <input type="hidden" id="devicemobileno" name="devicemobileno" class="form-control" value="{{$user->mobileno}}">
+                                   </div>
+                                </div>
+                             </div>
+                             <div class="row">
+                                <div class="form-group">
+                                   <div class="col-md-10 col-md-offset-1">
+                                      <label>User Name</label>
+                                      <input type="text" class="form-control" name="username" placeholder="Enter User Name" id="setusername" disabled="">
+                                   </div>
+                                </div>
+                             </div>
+                             <br/>
+                             <div class="row">
+                                <div class="col-md-6 col-md-offset-1">
+                                   <label>Set User Expiry</label>
+                                </div>
+                             </div>
+                             <div class="row">
+                                <div class="col-md-6 col-md-offset-1">
+                                   <input type="date" onkeypress="return false" name="" id="setuserexpiry" required="" value="<?php echo date('Y-m-d', strtotime('+3 years'))?>" min="<?php echo date('Y-m-d') ?>">
+                                </div>
+                             </div>
+                             <!-- <div class="form-group">
+                                <div class="row"> 
+                                     <div class="col-md-3 col-md-offset-1">
+                                      <label>Status</label>
+                                </div>
+                                
+                                    <div class="col-md-6">
+                                      <select class="form-control" name="status" id="setuserstatus" required="">
+                                        <option value="1">Active</option>
+                                        <option value="0">Deactive</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                
+                                </div> -->
+                             <br/>
+                             <input type="button" name="next" class="next action-button" value="Next" id="setusersave" onclick="setuser();" />
+                          </fieldset>
+                          <fieldset>
+                             <h2 class="fs-title">Enroll User</h2>
+                             <h3 class="fs-subtitle">Tell us something more about you</h3>
+                             <a href="#" class="btn bg-orange" id="enrolluser" style="padding: 50px;" onclick="enroll();">Enroll User</a>
+                             <input type="button" name="next" class="next action-button" value="Next"id="next2" />
+                          </fieldset>
+                          <fieldset>
+                             <h2 class="fs-title">Enroll card</h2>
+                             <h3 class="fs-subtitle">Tell us something more about you</h3>
+                             <a  name="submit" style="padding: 50px;color: #FFA233;" title="Enroll Card"  value="EnrollCard" onclick="enrollcard();" id="enrolluser"><i class="fa fa-id-card fa-5x"></i></a>
+                          </fieldset>
+                       </form>
+                    </div>
+                 </div>
+              </div>
+           </div>
+           <br/>  
+           <script type="text/javascript">
+              function enrollcard(){
+                var did =  $('#deviceaccess').val();
+                // alert('{{ url("enrollemployeecard")}}'+'/'+did);
+                $('#msform').attr('action','{{ url("enrollemployeecard")}}'+'/'+did);
+                $('#msform').submit();
+              }
+           </script>
+        </div>
+        <div class="modal fade" id="activedeviceuser">
+           <div class="modal-dialog">
+              <div class="modal-content">
+                 <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><b>Active User</b></h4>
+                 </div>
+                 <div class="modal-body">
+                    <div class="row">
+                       <div class="col-md-4">
+                          <label>Set User Expiry date</label>
+                       </div>
+                       <div class="col-md-8">
+                          <input type="date" name="activationdate" id="activationdate" min="<?php echo date('Y-m-d')?>" value="<?php echo date('Y-m-d')?>">
+                       </div>
+                    </div>
+                 </div>
+                 <div class="modal-footer">
+                    <button type="button" class="btn  btn-danger" data-dismiss="modal">Close</button>
+                    <a href="#" class="btn bg-green" id="activeuser">Active</a>
+                 </div>
+              </div>
+           </div>
+        </div>
+        <div class="modal fade" id="extendsexpiry">
+           <div class="modal-dialog">
+              <div class="modal-content">
+                 <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><b>Extend Expiry</b></h4>
+                 </div>
+                 <div class="modal-body">
+                    <div class="row">
+                       <div class="col-md-4">
+                          <label>Extend Expiry Date</label>
+                       </div>
+                       <div class="col-md-8">
+                         <input type="hidden" id="employeeid">
+                       <input type="date" onkeypress="return false" value="{{ date('Y-m-d') }}" id="setuserexpiry" class="form-control" name="sdate" required="" min="<?php echo date('Y-m-d') ?>">
+                       </div>
+                    </div>
+                 </div>
+                 <div class="modal-footer">
+                    <button type="button" class="btn  btn-danger" data-dismiss="modal">Close</button>
+                    <button  type="button"  class="btn bg-green" id="extends">Extend</button>
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div>
   </div>
-
+</div>
 </div></div>
+<script>
+  $('#extends').on('click',function(){
+
+    let setuserexpiry = $('#setuserexpiry').val();
+    let employeeid=$('#employeeid').val();
+    $.ajax({
+          url: "{{ url('extendemployee') }}",
+          method: "POST",
+          data: {
+            date: setuserexpiry,
+            employeeid:employeeid,
+            _token: '{{ csrf_token() }}'
+          },
+          success: function (data) {
+            if(data == 200){
+              alert('Expiry extend successfully');
+              location.reload();
+            }
+            // 
+          },
+      });
+    });
+</script>
 <script type="text/javascript">
 
                   function deactiveuser(mobileno){
@@ -733,5 +723,9 @@
 
   });
 
+  function extendexpiry(empid){
+    console.log(empid);
+    $('#extendsexpiry #employeeid').val(empid);
+  }
 </script>
 @endpush

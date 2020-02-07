@@ -1,5 +1,6 @@
 @extends('layouts.adminLayout.admin_design')
 @section('content')
+<link rel="stylesheet" href="{{ asset('dist/css/star-rating.min.css') }}">
 <style type="text/css">
    input.trial {
    width: 20px; 
@@ -124,6 +125,7 @@
 </section>
 </div>
 @php $trainerid=session()->get('employeeid'); @endphp
+<script src="{{ asset('dist/js/star-rating.min.js') }}"></script>
 <script type="text/javascript">
    $(document).ready(function(){
      $('#edititemform').validate({
