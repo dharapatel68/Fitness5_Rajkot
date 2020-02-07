@@ -685,7 +685,7 @@ class InquiryOneController extends Controller
       $firstname = $request->input('firstname');
       $lastname = $request->input('lastname');
 
-      if($request['nextstep'] == '3'){
+      if($request['nextstep'] == '3' || $request['nextstep'] == '2'){
         $msg=   DB::table('messages')->where('messagesid','1')->get()->first();
         $msg =$msg->message;
         $msg = str_replace("[FirstName]",$firstname,$msg);
@@ -702,7 +702,7 @@ class InquiryOneController extends Controller
         $msg = urlencode($msg);
          $otpsend='';
         $smssetting = Smssetting::where('status',1)->where('smsonoff','Active')->first();
-        
+  
         if ($smssetting) {
          
            $u = $smssetting->url;
@@ -710,7 +710,7 @@ class InquiryOneController extends Controller
            $url=str_replace('$msg', $msg, $url);
  
           $otpsend = Curl::to($url)->get();
-
+         
            
         }
 

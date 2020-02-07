@@ -1566,6 +1566,9 @@ textarea.input100 {
                                 <th>EndDate</th>
                                 <th>Assigned date</th>
                                 <th>Remaining Amount</th>
+                                 @if(Session::get('role')  == 'admin' || Session::get('role')  == 'Admin')
+                                <th>Deactive  Package</th>
+                                @endif
                                 <!-- <th>Actions</th> -->
                               </tr>
                             </thead>
@@ -1587,6 +1590,12 @@ textarea.input100 {
                                 <td>@if($package->remainingamount > 0) <a class="btn bg-light-navy" href="{{url('remainingplaceorder/'.$package->invoiceno)}}">{{$package->remainingamount}}</a>
                                   @else {{$package->remainingamount}} @endif</td>
                                 </td>
+                                @if($package->status == 1)
+                                @if(Session::get('role')  == 'admin' || Session::get('role')  == 'Admin')
+                                  <td> <a href="{{url('changeStatus/'.$package->memberpackagesid )}}"  zclass="btn bg-light-navy"  > <span class="label label-warning" >Deactive</a></span> </td>
+                                  @endif
+                                    @endif                       
+
                               </tr>@endforeach</tbody>
                           </table>
                         </div>

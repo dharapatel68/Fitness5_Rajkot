@@ -157,6 +157,33 @@
    .has-error{
       border-color: red;
    }
+
+input[type="file"] {
+display: block;
+}
+.imageThumb {
+max-height: 75px;
+border: 2px solid;
+padding: 1px;
+cursor: pointer;
+}
+.pip {
+display: inline-block;
+margin: 10px 10px 0 0;
+}
+.remove {
+display: block;
+background: #444;
+border: 1px solid black;
+color: white;
+text-align: center;
+cursor: pointer;
+}
+.remove:hover {
+background: white;
+color: black;
+}
+
 </style>
 <div class="content-wrapper">
 <section class="content-header">
@@ -205,44 +232,9 @@
          });
 </script>
 <section id="content">
-
-   <form action="{{ url('verify') }}" method="post" enctype="multipart/form-data" enctype="multipart/formdata" id="member_form" onsubmit = "return ValidateForm();">
+   <form action="{{ url('verify') }}" method="post" enctype="multipart/form-data" id="member_form" >
       {{ csrf_field() }}
       <div id="accordion" class="accordion-container">
-      <!--  <article class="content-entry">
-         <h4 class="article-title"><i></i>Personal Details</h4>
-         <div class="accordion-content"><br/>
-            <div class="well well-lg">
-             <div class="row">
-               <div class="col-md-6">
-         
-                 <label for="1" class="btn btn-success">Body Building <input type="checkbox" onclick="" id="1" class="badgebox"><span class="badge">&check;</span></label>        
-               </div>
-               <div class="col-md-6">
-                 <label for="2" class="btn btn-success">Weight Gain <input type="checkbox" id="2" class="badgebox"><span class="badge">&check;</span></label>
-                 
-               </div>
-             </div><br/>
-             <div class="row">
-               <div class="col-md-6">
-                  <label for="3" class="btn btn-success">Weight Loss <input type="checkbox" id="3" class="badgebox"><span class="badge">&check;</span></label>
-               </div>
-               <div class="col-md-6">
-                 <label for="4" class="btn btn-success">Height <input type="checkbox" id="4" class="badgebox"><span class="badge">&check;</span></label>  
-               </div>
-             </div><br/>
-             <div class="row">
-               <div class="col-md-6">
-                  <label for="5" class="btn btn-success">Others, Specify<input type="checkbox" id="5" class="badgebox"><span class="badge">&check;</span></label>
-               </div>
-             </div>
-             
-         
-         
-            </div>
-         </div>
-         /.accordion-content-->
-      <!--         </article> -->
 
       <article class="content-entry open">
          <h4 class="article-title"><i></i>Registration Details</h4>
@@ -252,22 +244,22 @@
             <div class="form-group">
                <label>First Name<span style="color: red">*</span>
                </label>
-               <input type="text" name="firstname" id="firstname" class="form-control" placeholder="Firstname" class="span11" required="" maxlength="60" value="{{old('firstname')}}@if(!empty($memberdata->firstname)){{$memberdata->firstname}}@endif" />
+               <input type="text" name="firstname" id="firstname" class="form-control" placeholder="Firstname" class="span11"  maxlength="60" value="{{old('firstname')}}@if(!empty($memberdata->firstname)){{$memberdata->firstname}}@endif" />
             </div>
             <div class="form-group">
                <label>LastName<span style="color: red">*</span>
                </label>
-               <input type="text" name="lastname" id="lastname" class="form-control inline-block" placeholder="LastName" class="span11" maxlength="60" value="{{old('lastname')}}@if(!empty($memberdata->lastname)){{$memberdata->lastname}}@endif" required="" />
+               <input type="text" name="lastname" id="lastname" class="form-control inline-block" placeholder="LastName" class="span11" maxlength="60" value="{{old('lastname')}}@if(!empty($memberdata->lastname)){{$memberdata->lastname}}@endif"  />
             </div>
             <div class="form-group">
                <label>User Name</label>
-               <input type="text" name="username" id="username" class="form-control" placeholder="User Name" class="span11" required="" maxlength="60" value="@if(!empty($memberdata->username)){{$memberdata->username}}@endif" /><span id="error_username"></span>
+               <input type="text" name="username" id="username" class="form-control" placeholder="User Name" class="span11"  maxlength="60" value="@if(!empty($memberdata->username)){{$memberdata->username}}@endif" /><span id="error_username"></span>
             </div>
             <div class="form-group">
                <label>Gender<span style="color: red">*</span>
                </label>
                <label>
-               <input type="radio" name="gender" value="Female" required   @if(!empty($memberdata->gender)){{$memberdata->gender  == 'Female' ? 'checked' : ''}} @endif >Female</label>
+               <input type="radio" name="gender" value="Female"    @if(!empty($memberdata->gender)){{$memberdata->gender  == 'Female' ? 'checked' : ''}} @endif >Female</label>
                <label>
                <input type="radio" name="gender" value="Male"  @if(!empty($memberdata->gender)){{ $memberdata->gender  == 'Male' ? 'checked' : ''}} @endif>Male</label>
             </div>
@@ -279,7 +271,15 @@
             <div class="form-group">
                <label>Cell Phone Number<span style="color: red">*</span>
                </label>
-               <input type="text" name="CellPhoneNumber" value="{{old('mobileno')}}@if(!empty($memberdata->mobileno)){{$memberdata->mobileno}}@endif" id="MobileNo" minlength="10" maxlength="10" class="form-control number" placeholder="Cell Phone Number" required="" class="span11" /><span id="error_usermobile"></span>
+               <input type="text" name="CellPhoneNumber" value="{{old('mobileno')}}@if(!empty($memberdata->mobileno)){{$memberdata->mobileno}}@endif" id="MobileNo" minlength="10" maxlength="10" class="form-control number" placeholder="Cell Phone Number"  class="span11" /><span id="error_usermobile"></span>
+            </div>
+            <div class="form-group">
+               <label>Birthdate</label>
+               <input placeholder="Birthdate" value="{{old('birthday')}}" type="date"  class="form-control" max="<?php echo date('Y-m-d');?>" name="birthday" class="span11" id="birthday">
+               </div>
+            <div class="form-group">
+               <label>Anniversary</label>
+               <input placeholder="Anniversary" value="{{ old('anniversary') }}" type="date" onkeypress="return false" class="form-control" max="<?php echo date('Y-m-d');?>" name="anniversary" class="span11">
             </div>
             <div class="form-group">
                <label>Preferred Timing</label>
@@ -298,7 +298,7 @@
                       @php  $memberdata->workinghourto='00:00'; @endphp
                @endif
             
-               <select type="time" class="form-control" name="working_hour_from_1" id="fromtime" required="">
+               <select type="time" class="form-control" name="working_hour_from_1" id="fromtime" >
                 <option value="06:00" @if(old( 'working_hour_from_1')=='06:00' ) selected @endif {{$memberdata->workinghourfrom=='06:00' ? 'selected' : ''}}>06:00 AM</option>
                <option value="07:00" @if(old( 'working_hour_from_1')=='07:00' ) selected @endif {{$memberdata->workinghourfrom == '07:00' ? 'selected': ''}}>07:00 AM</option>
                <option value="08:00" @if(old( 'working_hour_from_1')=='08:00' ) selected @endif {{$memberdata->workinghourfrom == '08:00' ? 'selected': ''}}>08:00 AM</option>
@@ -318,7 +318,7 @@
                <option value="22:00" @if(old( 'working_hour_from_1')=='22:00' ) selected @endif {{$memberdata->workinghourfrom == '22:00' ? 'selected': ''}}>10:00 PM</option>
                </select>
                <label>To</label>
-               <select type="time" class="form-control" id="totime" name="working_hour_to_1" required="">
+               <select type="time" class="form-control" id="totime" name="working_hour_to_1" >
                <option value="07:00" @if(old( 'working_hour_to_1')=='07:00' ) selected @endif {{$memberdata->workinghourto == '07:00' ? 'selected': ''}}>07:00 AM</option>
                <option value="08:00" @if(old( 'working_hour_to_1')=='08:00' ) selected @endif {{$memberdata->workinghourto == '08:00' ? 'selected': ''}}>08:00 AM</option>
                <option value="09:00" @if(old( 'working_hour_to_1')=='09:00' ) selected @endif {{$memberdata->workinghourto == '09:00' ? 'selected': ''}}>09:00 AM</option>
@@ -348,15 +348,15 @@
             <div class="form-group">
               @if(!empty($memberdata->address)) @php $address=$memberdata->address; @endphp @else @php $address=''; @endphp  @endif
                <label>Address</label>
-               <textarea name="Address"  class="form-control" placeholder="Address"></textarea>
+            <textarea name="Address" class="form-control" placeholder="Address" id="address">{{$address}}</textarea>
             </div>
             <div class="form-group">
                <label>City</label>
-               <input type="text" name="City" value="{{ old('City') }} @if(!empty($memberdata->city)){{$memberdata->city }} @endif" maxlength="60" class="form-control" placeholder="City" class="span11" />
+               <input type="text" name="City" value="{{old('City')}}@if(!empty($memberdata->city)){{$memberdata->city }}@endif" maxlength="60" class="form-control" placeholder="City" class="span11" />
             </div>
             <div class="form-group">
                <label>Home Phone Number</label>
-               <input type="text" name="HomePhoneNumber" class="form-control number" id="HomePhoneNumber" placeholder="Home Phone Number" minlength="10" maxlength="10" value="{{old('HomePhoneNumber')}}@if(!empty($memberdata->homephonenumber)){{$memberdata->homephonenumber}} @endif" class="span11" /> <span class="errmsg"></span>
+               <input type="text" name="HomePhoneNumber" class="form-control number" id="HomePhoneNumber" placeholder="Home Phone Number" minlength="10" maxlength="10" value="{{old('HomePhoneNumber')}}@if(!empty($memberdata->homephonenumber)){{$memberdata->homephonenumber}}@endif" class="span11" /> <span class="errmsg"></span>
             </div>
             <div class="form-group">
                <label>Office Phone Number</label>
@@ -373,11 +373,11 @@
       <div class="well well-lg">
       <div class="form-group">
       <label>Emergancy Contact Name</label>
-      <input type="text" name="emergancyname" value="{{ old('emergancyname') }} @if(!empty($memberdata->emergancyname)){{$memberdata->emergancyname }} @endif " maxlength="60" class="form-control" placeholder="EmergancyName" class="span11" id="emergancyname" />
+      <input type="text" name="emergancyname" value="{{old('emergancyname')}}@if(!empty($memberdata->emergancyname)){{$memberdata->emergancyname }}@endif" maxlength="60"class="form-control" placeholder="EmergancyName"class="span11"id="emergancyname"/>
       </div>
       <div class="form-group">
       <label>Emergancy Contact Relation</label>
-      <input type="text" name="emergancyrelation" value="{{ old('emergancyrelation') }} @if(!empty($memberdata->emergancyrelation)){{$memberdata->emergancyrelation }} @endif " maxlength="60" class="form-control" placeholder="EmergancyRelation" class="span11" id="emergancyrelation"/>
+      <input type="text" name="emergancyrelation" value="{{old('emergancyrelation')}}@if(!empty($memberdata->emergancyrelation)){{$memberdata->emergancyrelation }}@endif" maxlength="60" class="form-control" placeholder="EmergancyRelation" class="span11" id="emergancyrelation"/>
       </div>
       <div class="form-group">
         @if(!empty($memberdata->emergancyaddress)) @php $emeraddress=$memberdata->emergancyaddress; @endphp @else @php $emeraddress=''; @endphp  @endif
@@ -386,7 +386,7 @@
       </div>
       <div class="form-group">
       <label>Emergancy Contact Number</label>
-      <input type="text" name="EmergancyPhoneNumber" class="form-control" placeholder="EmergancyPhoneNumber" value="{{ old('EmergancyPhoneNumber') }} @if(!empty($memberdata->emergancyphonenumber)){{$memberdata->emergancyphonenumber }} @endif" id="EmergancyPhoneNumber"  class="span11" />&nbsp;<span class="errmsg"></span>
+      <input type="text" name="EmergancyPhoneNumber" class="form-control" placeholder="EmergancyPhoneNumber" value="{{old('EmergancyPhoneNumber')}}@if(!empty($memberdata->emergancyphonenumber)){{$memberdata->emergancyphonenumber}}@endif" id="EmergancyPhoneNumber"  class="span11" />&nbsp;<span class="errmsg"></span>
       </div>
       </div>
       <!--/.accordion-content-->
@@ -439,14 +439,7 @@
       <label>Profession</label>
       <input type="text" maxlength="60" value="{{ old('profession') }}" class="form-control" name="profession" placeholder="Profession" class="span11" />
       </div>
-      <div class="form-group">
-      <label>Birthdate</label>
-      <input placeholder="Birthdate" value="{{ old('birthday') }}" type="date"  class="form-control" max="<?php echo date('Y-m-d');?>" name="birthday" class="span11">
-      </div>
-      <div class="form-group">
-      <label>Anniversary</label>
-      <input placeholder="Anniversary" value="{{ old('anniversary') }}" type="date" onkeypress="return false" class="form-control" max="<?php echo date('Y-m-d');?>" name="anniversary" class="span11">
-      </div>
+    
          <div class="form-group">
              <label>Are you coming from any company?</label>
              (if Yes than select)
@@ -835,71 +828,41 @@ function saveSnap(data_uri){
 }
 </script>
 <script type="text/javascript">
-   function ValidateForm(){
-
-                                                                            
-   ErrorText= "";
+  $('#save_memberform').on('click',function(){
   
-     if( $('#emergancyname').val() == "" ) {
-       alert( "Please Provide Emergancy Name!" );
-            $('#save_memberform').attr('disabled',false);
-       return false;
-
-    }
-     if( $('#emergancyrelation').val() == "" ) {
-       alert( "Please Provide Emergancy Relation!" );
-        $('#save_memberform').attr('disabled',false);
-       return false;
-    }
-      if( $('#EmergancyPhoneNumber').val() == "" ) {
-       alert( "Please Provide Emergancy PhoneNumber!" );
-        $('#save_memberform').attr('disabled',false);
-       return false;
-    }
-
-
-   var fname = document.getElementById('firstname').value;
-   if(!fname){
-      alert ( "Please Enter Firstname" );
-       $('#save_memberform').attr('disabled',false);
-      return false; 
-   }
-   var fromt = document.getElementById('fromtime').value;
-   if(!fromt){
-       $('#save_memberform').attr('disabled',false);
-      alert ( "Please Enter From Time" );
-      return false; 
-   }
-   var tot = document.getElementById('totime').value;
-   if(!tot){
-      alert ( "Please Enter To Time" );
-       $('#save_memberform').attr('disabled',false);
-      return false; 
-   }
-   var lname = document.getElementById('lastname').value;
-   if(!lname){
-      alert ( "Please Enter LastName" );
-       $('#save_memberform').attr('disabled',false);
-      return false; 
-   }
-   var checked_gender = document.querySelector('input[name = "gender"]:checked');
-      
-      if(checked_gender != null){  //Test if something was checked
-       //Alert the value of the checked.
-      } else {
-          $('#save_memberform').attr('disabled',false);
-        alert('Please select gender'); 
-      return false;//Alert, nothing was checked.
-      }
       var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-      var email = document.getElementById('email').value;
+      var email = $('#email').val();
+     var checked_gender = document.querySelector('input[name = "gender"]:checked');
+     var len = $('#MobileNo').val();
+     if($('#firstname').val().length < 0  || ($('#firstname').val().length == 0)){
+      alert('Please Enter Firstname !'); 
+      $('#save_memberform').attr('disabled',false);
+      return false;
+     }
+     if($('#lastname').val().length < 0 || ($('#lastname').val().length == 0)){
+      alert('Please Enter Lastname !'); 
+      $('#save_memberform').attr('disabled',false);
+      return false;
+     }
+     if($('#username').val().length < 0 || ($('#username').val().length == 0)){
+      alert('Please Select Gender'); 
+      $('#save_memberform').attr('disabled',false);
+      return false;
+     }
+     if(checked_gender != null){  //Test if something was checked
+     } else {
+       $('#save_memberform').attr('disabled',false);
+      alert('Please select gender'); 
+         return false;
+      }
+     
       if (reg.test(email) == false) 
       {
         alert('Invalid Email Address');
          $('#save_memberform').attr('disabled',false);
         return false;
       }
-      var len = document.getElementById('MobileNo').value;
+     
       if(len.length < 10){
 
         alert ( "Please Enter valid Phone number" );
@@ -907,29 +870,50 @@ function saveSnap(data_uri){
         return false; 
       }
       
-      var lenh = document.getElementById('HomePhoneNumber').value;
-      if(lenh){
-        if(lenh.length < 10){
-          alert ( "Please Enter valid Home Phone Number" );
-           $('#save_memberform').attr('disabled',false);
-          return false; 
-        }
-      }
-      
-      var leno = document.getElementById('OfficePhoneNumber').value;
-      if(leno){
-        if(leno.length < 10){
-          alert ( "Please Enter valid Office Phone Number" );
-           $('#save_memberform').attr('disabled',false);
-          return false; 
-        }
-      }
-  
 
-  $('#save_memberform').attr('disabled',true);
-      
-      if (ErrorText= "") { return true; }
-      }
+      // alert($('#emergancyname').val().length);
+     if( $('#emergancyname').val().length < 0  || $('#emergancyname').val().length == 0) {
+       alert( "Please Provide Emergancy Name!" );
+            //$('#save_memberform').attr('disabled',false);
+       return false;
+
+    }
+     if( $('#emergancyrelation').val().length < 0 || $('#emergancyrelation').val().length == 0) {
+       alert( "Please Provide Emergancy Relation!" );
+        $('#save_memberform').attr('disabled',false);
+       return false;
+    }
+      if( $('#EmergancyPhoneNumber').val().length < 0  || $('#EmergancyPhoneNumber').val().length == 0) {
+       alert( "Please Provide Emergancy PhoneNumber!" );
+        $('#save_memberform').attr('disabled',false);
+       return false;
+    }
+    if( $('#address').val().length < 0  || $('#address').val().length == 0) {
+       alert( "Please Provide Address !" );
+        $('#save_memberform').attr('disabled',false);
+       return false;
+    }
+    if( $('#birthday').val().length < 0  || $('#birthday').val().length == 0) {
+       alert( "Please Provide Birthdate !" );
+        $('#save_memberform').attr('disabled',false);
+       return false;
+    }
+    var fromt = $('#fromtime').val();
+   if(!fromt){
+       $('#save_memberform').attr('disabled',false);
+      alert ( "Please Enter From Time" );
+      return false; 
+   }
+   var tot =$('#totime').val();
+   if(!tot){
+      alert ( "Please Enter To Time" );
+       $('#save_memberform').attr('disabled',false);
+      return false; 
+   }
+    $('#save_memberform').trigger('click');
+    $('#save_memberform').attr('disabled',true);
+                                                                            
+   });
    </script>
   
 </section>
@@ -941,19 +925,26 @@ function saveSnap(data_uri){
                    var input = this;
                    var url = $(this).val();
                    var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-                   if (input.files && input.files[0]&& (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) 
-                   {
-                     var reader = new FileReader();
-   
-                     reader.onload = function (e) {
-                      $('#img').attr('src', e.target.result);
-                    }
-                    reader.readAsDataURL(input.files[0]);
-                  }
-                  else
-                  {
-                   $('#img').attr('src', '/assets/no_preview.png');
-                 }
+                   if(this.files[0].size > 3000000){
+                           alert('Profile Picture size is too Big');
+                           $('#profileimage').val('');
+                        }
+                        else{
+                           if (input.files && input.files[0]&& (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) 
+                              {
+                                 var reader = new FileReader();
+               
+                                 reader.onload = function (e) {
+                                 $('#img').attr('src', e.target.result);
+                              }
+                              reader.readAsDataURL(input.files[0]);
+                              }
+                              else
+                              {
+                                 $('#img').attr('src', '/assets/no_preview.png');
+                              }
+                        }
+                   
                });
    
                });
@@ -1015,58 +1006,10 @@ function saveSnap(data_uri){
                });
 </script>
 <!-- left column -->
-<style type="text/css">
-input[type="file"] {
-display: block;
-}
-.imageThumb {
-max-height: 75px;
-border: 2px solid;
-padding: 1px;
-cursor: pointer;
-}
-.pip {
-display: inline-block;
-margin: 10px 10px 0 0;
-}
-.remove {
-display: block;
-background: #444;
-border: 1px solid black;
-color: white;
-text-align: center;
-cursor: pointer;
-}
-.remove:hover {
-background: white;
-color: black;
-}
-</style>
-<!--  </div>
-   </div>-->
-<!-- /.box-body -->
-<!-- </form>  
-   </div>
-   </div>
-   <div class="modal fade" id="modal-default" style="display: none">
-           <div class="modal-dialog">
-             <div class="modal-content">
-               <div class="modal-header">
-                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                   <span aria-hidden="true">&times;</span></button>
-                 <h4 class="modal-title">Default Modal</h4>
-               </div>
-               <div class="modal-body">
-                 <p>One fine body&hellip;</p>
-               </div>
-               <div class="modal-footer">
-                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                 <button type="button" class="btn btn-primary">Save changes</button>
-               </div>
-             </div>-->
-<!-- /.modal-content -->
+
+
 </div>
-<!-- /.modal-dialog -->
+
 </div>
 </section>
 <script type="text/javascript">
@@ -1408,7 +1351,7 @@ color: black;
 </script>
 @endsection 
 @push('script')
-<script type="text/javascript">
+{{-- <script type="text/javascript">
    $(document).ready(function(){
          $('#member_form').validate({
            rules: {
@@ -1435,4 +1378,4 @@ color: black;
  /* $('#member_form').on('submit',function(){
   });*/
 
-</script>@endpush
+</script>@endpush --}}

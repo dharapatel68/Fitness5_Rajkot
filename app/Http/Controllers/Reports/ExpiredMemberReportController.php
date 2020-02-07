@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Reports;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
-use App\Memberpackages;
+use App\MemberPackages;
 use DB;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -29,7 +29,7 @@ class ExpiredMemberReportController extends Controller
         $query['keyword']=$request->keyword;
         $users= DB::table('users')->Join('member', 'member.userid', '=', 'users.userid')->get()->all();
         DB::enableQueryLog();
-        $grid=Memberpackages::leftjoin('users','users.userid','memberpackages.userid')->leftjoin('schemes','schemes.schemeid','memberpackages.schemeid');
+        $grid=MemberPackages::leftjoin('users','users.userid','memberpackages.userid')->leftjoin('schemes','schemes.schemeid','memberpackages.schemeid');
 
         if ($request->isMethod('post')){
 
@@ -95,7 +95,7 @@ class ExpiredMemberReportController extends Controller
                   $query['day']= $day;
                   $query['keyword']= $keyword;
    
-                  $grid=Memberpackages::leftjoin('users','users.userid','memberpackages.userid')->leftjoin('schemes','schemes.schemeid','memberpackages.schemeid');
+                  $grid=MemberPackages::leftjoin('users','users.userid','memberpackages.userid')->leftjoin('schemes','schemes.schemeid','memberpackages.schemeid');
       
       
                  if ($fdate != "empty") {
