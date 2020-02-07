@@ -34,6 +34,16 @@ class PackageController extends Controller
      return view('admin.packageEdit',compact('packages','pa'));
     }
 
+   public function changeStatus(Request $request, $id){
+
+        $memberdata=MemberPackages::where('memberpackagesid',$id)->get()->first();
+        $memberdata->status=0;
+        $memberdata->save();
+        return redirect()->back()->withSuccess('Package Deactivated');
+      
+    }
+
+
    public function changedate(Request $request){
         $loginuser = Session::get('username');
 

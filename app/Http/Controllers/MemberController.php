@@ -523,8 +523,24 @@ public function otpverify(Request $request){
     if($file = $request->file('file')){
       $file_name = $file->getClientOriginalName();
       $file_size = $file->getClientSize();
-      $file->move(public_path().'/files/', $file_name);
-
+      /******************************* */
+      $file_size = $file->getClientSize();
+      /******************************** */
+      $filename = public_path('/files/' . $file_name);
+      if ($file_size > 2000000)
+      {
+          $img = Image::make($file->getRealPath())
+              ->fit(400, 300)
+              ->save($filename, 80);
+         
+      }
+      else
+      {
+          $file->move(public_path() . '/files/', $file_name);
+         
+      }
+     
+      /****************************** */
       $photo = $file_name;
       $usermember->photo= $photo;
       $usermember->save();
@@ -570,8 +586,19 @@ public function otpverify(Request $request){
       foreach($request->file('attachments') as $file)
       {
         $name=$file->getClientOriginalName();
-         $name= $name.'_'.$request['username'];
-        $file->move(public_path().'/files/', $name);  
+        $name= $name.'_'.$request['username'];
+
+        if ($file_size > 2000000)
+        {
+          $filename =public_path('/files/'.$name);
+            $img = Image::make($file->getRealPath())
+                ->fit(400, 300)
+                ->save($filename, 80);
+        }
+        else
+        {
+          $file->move(public_path().'/files/', $name);  
+        }
         $data[] = $name;  
       }
       $file = new Files();

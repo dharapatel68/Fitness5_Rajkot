@@ -728,3 +728,4 @@ Route::any('viewtrialform','TrialformController@viewtrialform');
 Route::any('edittrialform/{trailformid}','TrialformController@edittrialform');
 
 ////////////////////////////end trial form routs///////////////////////////////////
+Route::any('extendemployee','UserController@extendemployeeexpiry');

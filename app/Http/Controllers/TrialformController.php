@@ -12,26 +12,26 @@ class TrialformController extends Controller
 {
 public function edittrialform($trailformid,Request $request)
 { 
-$trialform= trialform::select('trialform.*','employee.first_name as first_name','employee.last_name as last_name')->leftjoin('employee','trialform.employeeid','employee.employeeid')-> where('trialform.status','Active')->where('trialform.trailformid',$trailformid)->first();
-// $trialform=trialform::findOrFail($trailformid);
-$method = $request->method();
-if ($request->isMethod('post')){
-$trialform->remarks=$request->rating;
-$trialform->remarks2=$request->remarks2;
-$trialform->timing=$request->timing;
-$trialform->date=$request->date;
-$trialform->clientname=$request->clientname;
-$trialform->mobileno=$request->mobileno;
-$trialform->employeeid=$request->trainerid;
-$trialform->level=$request->level;
-$trialform->pt=$request->pt;
-$trialform->gt=$request->gt;
-$trialform->save();
-return redirect('viewtrialform')->withSuccess('Details Succesfilly Edited');
-}
-$trainer=Employee::where('roleid',4)->get()->all();
-$levels=Ptlevel::get()->all();
-return view('admin.edittrialform',compact('trialform','trainer','levels'));
+	$trialform= trialform::select('trialform.*','employee.first_name as first_name','employee.last_name as last_name')->leftjoin('employee','trialform.employeeid','employee.employeeid')-> where('trialform.status','Active')->where('trialform.trailformid',$trailformid)->first();
+	// $trialform=trialform::findOrFail($trailformid);
+	$method = $request->method();
+	if ($request->isMethod('post')){
+		$trialform->remarks=$request->rating;
+		$trialform->remarks2=$request->remarks2;
+		$trialform->timing=$request->timing;
+		$trialform->date=$request->date;
+		$trialform->clientname=$request->clientname;
+		$trialform->mobileno=$request->mobileno;
+		$trialform->employeeid=$request->trainerid;
+		$trialform->level=$request->level;
+		$trialform->pt=$request->pt;
+		$trialform->gt=$request->gt;
+		$trialform->save();
+	return redirect('viewtrialform')->withSuccess('Details Succesfilly Edited');
+	}
+	$trainer=Employee::where('roleid',4)->get()->all();
+	$levels=Ptlevel::get()->all();
+return view('admin.trail.edittrialform',compact('trialform','trainer','levels'));
 }
 public function viewtrialform(Request $request)
 {
@@ -81,14 +81,14 @@ public function viewtrialform(Request $request)
 	       
 	        $data=$data->paginate(8)->appends('query');
    		 	
-   		 	return view('admin.viewtrialform',compact('query','data','trialform1'));
+   		 	return view('admin.trail.viewtrialform',compact('query','data','trialform1'));
    		 }
    		 else
    		 {
    		 	
 	$data=trialform::select('trialform.*','employee.first_name','employee.last_name')->join('employee', 'employee.employeeid', '=', 'trialform.employeeid')->where('trialform.status', '=','Active')->orderBy('trailformid','desc')->paginate(8);
 	$trialform1=trialform::where('status','Active')->orderBy('trailformid','desc')->paginate(8);
-   		 	return view('admin.viewtrialform',compact('query','data','trialform1'));
+   		 	return view('admin.trail.viewtrialform',compact('query','data','trialform1'));
    		 }
 
 }
@@ -116,7 +116,7 @@ else
 $trainer=Employee::where('roleid',4)->get()->all();
 $levels=Ptlevel::get()->all();
 $ptassignlevel = DB::table('ptassignlevel')->leftJoin('employee', 'ptassignlevel.trainerid', '=', 'employee.employeeid')->OrderBy('ptassignlevelid','desc')->get();
-return view('admin.trialform',compact('trainer','levels','ptassignlevel'));
+return view('admin.trail.trialform',compact('trainer','levels','ptassignlevel'));
 }
 }
 }

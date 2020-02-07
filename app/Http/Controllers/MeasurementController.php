@@ -119,7 +119,13 @@ class MeasurementController extends Controller
             $measurement = Measurement::whereIn('memberid' ,$usersall)->get()->all();
           }
         }else{
-          $measurement = Measurement::where('memberid','>','0');
+          $measurement = Measurement::where('measurement.memberid','>','0')->leftjoin('member','member.memberid','measurement.memberid');
+          if($request->get('selectusername')!="")
+          {
+            $id=$request->get('selectusername');
+    
+            $measurement->where('measurement.memberid',$id);
+          }
           if($request->get('from')!="")
         {
           $from = date($request->get('from'));
@@ -143,12 +149,7 @@ class MeasurementController extends Controller
           }
           $measurement->whereBetween('todaydate', [$from, $to]);
       }
-       if($request->get('selectusername')!="")
-      {
-        $id=$request->get('selectusername');
-
-        //$measurement->where('memberid',$id);
-      }
+     
      
        $measurement=$measurement->get()->all();
       

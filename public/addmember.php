@@ -537,6 +537,7 @@ function saveSnap(data_uri){
                                                                             
    ErrorText= "";
     var fname = document.getElementById('firstname').value;
+  
    if(!fname){
       alert ( "Please Enter Firstname" );
        $('#save_memberform').attr('disabled',false);
@@ -644,8 +645,7 @@ function saveSnap(data_uri){
     
   $('#save_memberform').attr('disabled',true);
       
-      if (ErrorText= "") { return true; }
-      }
+   
    </script>
  
 </section>
