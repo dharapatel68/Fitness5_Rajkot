@@ -23,6 +23,10 @@ use App\Ptmember;
 use App\Member;
 use App\Claimptsession;
 use App\MemberPackages;
+use App\ExcelExport;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Events\AfterSheet;
+use Maatwebsite\Excel\Facades\Excel;
 
 class HRController extends Controller
 {
@@ -1724,6 +1728,233 @@ class HRController extends Controller
 ///////////////////////////////////// Employee Leave End ////////////////////////////////////////////////////////////////
 
 
+////////////////////////////////////////// import punch /////////////////////////////////////////////////////////////
+public function importpunch(Request $request){
+
+
+	$employee = Employee::where('status', 1)->get()->all();
+	
+	return view('hr.employeelog.importpunch')->with(compact('employee'));
+
+}
+
+
+public function downloaddemosheet(Request $request){
+	
+
+	if($request->isMethod('POST')){
+
+
+		$employeeid = $request->employeeid;
+		$month = $request->month;
+		$year = $request->year;
+		
+		ExcelExport::truncate();
+		/*$excel = ExcelExport::all();
+		if(!empty($excel)){
+			foreach($excel as $e){
+				ExcelExport::where('excelexportid', $e->excelexportid)->delete();
+			}
+		}*/
+		
+		$fullname = '';
+
+		if($employeeid && $month && $year){
+
+			$empdetail = Employee::where('employeeid', $employeeid)->first();
+			if(!empty($empdetail)){
+
+				$fullname = ucfirst($empdetail->first_name).' '.ucfirst($empdetail->last_name);
+			}
+
+			if($request->month == 'Janaury'){
+				$cal_month = 1;
+			}else if($request->month == 'February'){
+				$cal_month = 2;
+			}else if($request->month == 'March'){
+				$cal_month = 3;
+			}else if($request->month == 'April'){
+				$cal_month = 4;
+			}else if($request->month == 'May'){
+				$cal_month = 5;
+			}else if($request->month == 'June'){
+				$cal_month = 6;
+			}else if($request->month == 'July'){
+				$cal_month = 7;
+			}else if($request->month == 'August'){
+				$cal_month = 8;
+			}else if($request->month == 'September'){
+				$cal_month = 9;
+			}else if($request->month == 'October'){
+				$cal_month = 10;
+			}else if($request->month == 'November'){
+				$cal_month = 11;
+			}else{
+				$cal_month = 12;
+			}
+
+			$day_in_month = cal_days_in_month(CAL_GREGORIAN,$cal_month,$year);
+			$fromdate = date('Y-m-d',strtotime("$year-$cal_month-01"));
+			$todate = date('Y-m-d',strtotime("$year-$cal_month-$day_in_month"));
+
+			$export_array = [];
+
+			for($i = 1; $i<= $day_in_month; $i++){
+
+				$current_date = date('Y-m-d',strtotime("$year-$cal_month-$i"));
+				//dd($current_date);
+				$excel = new ExcelExport();
+				$excel->employeeid = $employeeid;
+				$excel->employeename = ucfirst($empdetail->first_name).' '.ucfirst($empdetail->last_name);
+				$excel->date = $current_date;
+				$excel->checkin = '';
+				$excel->checkout = '';
+				$excel->save();
+
+				$excel = new ExcelExport();
+				$excel->employeeid = $employeeid;
+				$excel->employeename = ucfirst($empdetail->first_name).' '.ucfirst($empdetail->last_name);
+				$excel->date = $current_date;
+				$excel->checkin = '';
+				$excel->checkout = '';
+				$excel->save();
+				
+
+
+			}
+			
+			
+		$isexport = 1;
+		$employee = Employee::where('status', 1)->get()->all();
+		$employee_name = $fullname.'-'.$request->month.'-'.$request->year.'.csv';
+
+		Session::flash('downloadexcel', 'downloadexcel');
+		Session::put('empname', $employee_name);
+
+		Session::flash('message', 'Employee sheet will download shortly');
+		Session::flash('alert-type', 'success');
+
+		//return Excel::download(new EmployeeExport(),'user.csv');
+
+		//return view('hr.employeelog.importpunch')->with(compact('employee', 'employeeid', 'month', 'year', 'isexport'));
+
+		return redirect()->route('importpunch');
+
+		}
+	}
+
+}
+
+public function downloadexcel(){
+
+	$empname = session()->get('empname');
+	$grid=ExcelExport::get()->all();
+	$employeename='';
+	if($grid){
+		$student_array[] = array('Id','EmoployeeName','Date','Check In','Check Out');
+ 
+	 foreach ($grid as $student)
+	 {
+	   
+		 $student_array[] = array(
+			 'Id' =>$student->employeeid,
+			 'EmoployeeName' =>$student->employeename,
+			 'Date' => $student->date,
+			 'Check In' => $student->checkin,
+			 'Check Out' => $student->checkout,
+		 );
+	 }
+	 $employeename=$student->employeename;
+ Excel::create($employeename, function($excel) use ($student_array) {
+					 $excel->sheet('mySheet', function($sheet) use ($student_array)
+					 {
+ 
+						$sheet->fromArray($student_array);
+ 
+					 });
+				})->export('csv');;
+				
+			}		
+
+}
+
+
+
+public function importemppunchcsv(Request $request){
+
+	$request->validate([
+
+		'file' => 'required'
+
+	]);
+
+	$file = $request->file('file');
+
+	 // File Details 
+	$filename = $file->getClientOriginalName();
+	$extension = $file->getClientOriginalExtension();
+	$path = $file->getRealPath();
+	$fileSize = $file->getSize();
+	$mimeType = $file->getMimeType();
+
+	$valid_extension = array("csv");
+
+	$maxFileSize = 2097152; 
+
+	// Check file extension
+	  if(in_array(strtolower($extension),$valid_extension)){
+
+		  // Check file size
+		  if($fileSize <= $maxFileSize){
+
+			  $data = array_map('str_getcsv', file($path));
+			  //dd($data);
+			  foreach($data as $key => $csv_data){
+				  if($key != 0){
+
+					  $empid = $csv_data[0];
+					  $empname = $csv_data[1];
+					  $empdate = $csv_data[2];
+					  $empcheckin = $csv_data[3];
+					  $empcheckout = $csv_data[4];
+					  echo $empid.'<br/>';
+					  echo $empname.'<br/>';
+					  echo $empdate.'<br/>';
+					  echo $empcheckin.'<br/>';
+					  echo $empcheckout.'<br/>';
+					  //dd('stop');
+
+					  if(!empty($empid) && is_numeric($empid) && !empty($empdate) && strtotime($empdate) && !empty($empcheckin) &&  !empty($empcheckout)){
+
+						  $employeelog_exist = HREmployeeelog::where('userid', $empid)->where('punchdate', date('Y-m-d', strtotime($empdate)))->where('checkin', 'like' , $empcheckin.'%')->where('checkout', 'like' , $empcheckout.'%')->first();
+
+						  if(empty($employeelog_exist)){
+
+							  $employeelog = new HREmployeeelog();
+							  $employeelog->userid = $empid;
+							  $employeelog->punchdate = date('Y-m-d', strtotime($empdate));
+							  $employeelog->checkin = $empcheckin;
+							  $employeelog->checkout = $empcheckout;
+							  $employeelog->save();
+
+						  }
+					  }
+
+
+				  }
+			  }
+
+			  Session::flash('message', 'Employee punch is added successfully');
+			  Session::flash('alert-type', 'success');
+
+			  return redirect()->back();
+
+		  }
+
+	  }
+
+	}
+	////////////////////////////////////////// import punch end/////////////////////////////////////////////////////////////
 
 
 }

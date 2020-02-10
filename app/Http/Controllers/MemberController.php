@@ -314,8 +314,8 @@ public function otpverify(Request $request){
         'lastname' => 'required|max:255',
         'firstname' => 'required',
         'gender' =>'required',
-        'file' => 'mimes:jpeg,bmp,png|max:2000',
-        'attachments.*' => 'mimes:jpeg,bmp,png|max:2000',
+        'file' => 'mimes:jpeg,bmp,png|max:5000',
+        'attachments.*' => 'mimes:jpeg,bmp,png|max:5000',
         
       ]);
        $photo='';
@@ -522,12 +522,12 @@ public function otpverify(Request $request){
     }
     if($file = $request->file('file')){
       $file_name = $file->getClientOriginalName();
-      $file_size = $file->getClientSize();
+      $file_size = $file->getSize();
       /******************************* */
-      $file_size = $file->getClientSize();
+      $file_size = $file->getSize();
       /******************************** */
       $filename = public_path('/files/' . $file_name);
-      if ($file_size > 2000000)
+      if ($file_size > 5000000)
       {
           $img = Image::make($file->getRealPath())
               ->fit(400, 300)
@@ -588,7 +588,7 @@ public function otpverify(Request $request){
         $name=$file->getClientOriginalName();
         $name= $name.'_'.$request['username'];
 
-        if ($file_size > 2000000)
+        if ($file_size > 5000000)
         {
           $filename =public_path('/files/'.$name);
             $img = Image::make($file->getRealPath())

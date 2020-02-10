@@ -925,7 +925,7 @@ function saveSnap(data_uri){
                    var input = this;
                    var url = $(this).val();
                    var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-                   if(this.files[0].size > 3000000){
+                   if(this.files[0].size > 8000000){
                            alert('Profile Picture size is too Big');
                            $('#profileimage').val('');
                         }
