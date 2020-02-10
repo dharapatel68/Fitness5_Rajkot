@@ -243,7 +243,7 @@ $first = $arr[1];
                         <div class="form-group">
                            <label>Cell Phone Number<span style="color: red">*</span>
                            </label>
-                           <input type="text" name="CellPhoneNumber" value="<?php if(isset($_POST['CellPhoneNumber'])){ echo $_POST['CellPhoneNumber'];}?>" id="MobileNo" class="form-control number" placeholder="Cell Phone Number" minlength="10" maxlength="10" class="span11" /><span id="error_usermobile"></span>
+                           <input type="text" name="CellPhoneNumber" value="<?php if(isset($_POST['CellPhoneNumber'])){ echo $_POST['CellPhoneNumber'];}?>" id="MobileNo" class="form-control number" placeholder="Cell Phone Number"  maxlength="15" class="span11" /><span id="error_usermobile"></span>
                         </div>
                         <div class="form-group">
                             <label>Birthdate</label>
@@ -316,11 +316,11 @@ $first = $arr[1];
                                 </div>
                                 <div class="form-group">
                                     <label>Home Phone Number</label>
-                                    <input type="text" name="HomePhoneNumber" class="form-control number" id="HomePhoneNumber" placeholder="Home Phone Number" minlength="10" maxlength="10" value="<?php if(isset($_POST['HomePhoneNumber'])){ echo $_POST['HomePhoneNumber'];}?>" class="span11" /> <span class="errmsg"></span>
+                                    <input type="text" name="HomePhoneNumber" class="form-control number" id="HomePhoneNumber" placeholder="Home Phone Number"  maxlength="15" value="<?php if(isset($_POST['HomePhoneNumber'])){ echo $_POST['HomePhoneNumber'];}?>" class="span11" /> <span class="errmsg"></span>
                                 </div>
                                 <div class="form-group">
                                     <label>Office Phone Number</label>
-                                    <input type="text" name="OfficePhoneNumber" class="form-control number" id="OfficePhoneNumber" placeholder="Office Phone Number" minlength="10" maxlength="10" class="span11" value="<?php if(isset($_POST['OfficePhoneNumber'])){ echo $_POST['OfficePhoneNumber'];}?>" /> <span class="errmsg"></span>
+                                    <input type="text" name="OfficePhoneNumber" class="form-control number" id="OfficePhoneNumber" placeholder="Office Phone Number" maxlength="15" class="span11" value="<?php if(isset($_POST['OfficePhoneNumber'])){ echo $_POST['OfficePhoneNumber'];}?>" /> <span class="errmsg"></span>
                                 </div>
                                 <!--/.accordion-content-->
                     </article>
@@ -532,92 +532,37 @@ function saveSnap(data_uri){
 }
 </script>
 <script type="text/javascript">
-   function ValidateForm(){
-
-                                                                            
-   ErrorText= "";
-    var fname = document.getElementById('firstname').value;
+  $('#save_memberform').on('click',function(){
   
-   if(!fname){
-      alert ( "Please Enter Firstname" );
-       $('#save_memberform').attr('disabled',false);
-      return false; 
-   }
-   
-   var lname = document.getElementById('lastname').value;
-   if(!lname){
-      alert ( "Please Enter LastName" );
-       $('#save_memberform').attr('disabled',false);
-      return false; 
-   }
-   var mobileno=$('#MobileNo').val();
-          if( $('#MobileNo').val() == "" ||  mobileno.length < 10) {
-             alert( "Please Provide CellPhone No!" );
-              $('#save_memberform').attr('disabled',false);
-             return false;
-          }
-       if( $('#birthday').val() == "" ) {
-             alert( "Please Provide Birthdate!" );
-              $('#save_memberform').attr('disabled',false);
-             return false;
-          }
-          if( $('#email').val() == "" ) {
-             alert( "Please Provide Email!" );
-              $('#save_memberform').attr('disabled',false);
-             return false;
-          }
-         
-
-    var fromt = document.getElementById('fromtime').value;
-   
-
-   if(!fromt){
-       $('#save_memberform').attr('disabled',false);
-      alert ( "Please Enter From Time" );
-      return false; 
-   }
-   var tot = document.getElementById('totime').value;
-   if(!tot){
-      alert ( "Please Enter To Time" );
-       $('#save_memberform').attr('disabled',false);
-      return false; 
-   }
-     if( $('#emergancyname').val() == "" ) {
-       alert( "Please Provide Emergancy Name!" );
-            $('#save_memberform').attr('disabled',false);
-       return false;
-
-    }
-     if( $('#emergancyrelation').val() == "" ) {
-       alert( "Please Provide Emergancy Relation!" );
-        $('#save_memberform').attr('disabled',false);
-       return false;
-    }
-      if( $('#EmergancyPhoneNumber').val() == "" ) {
-       alert( "Please Provide Emergancy PhoneNumber!" );
-        $('#save_memberform').attr('disabled',false);
-       return false;
-    }
-   
-  
-   var checked_gender = document.querySelector('input[name = "gender"]:checked');
-      
-      if(checked_gender != null){  //Test if something was checked
-       //Alert the value of the checked.
-      } else {
-          $('#save_memberform').attr('disabled',false);
-        alert('Please select gender'); 
-      return false;//Alert, nothing was checked.
-      }
       var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-      var email = document.getElementById('email').value;
+      var email = $('#email').val();
+     var checked_gender = document.querySelector('input[name = "gender"]:checked');
+     var len = $('#MobileNo').val();
+     if($('#firstname').val().length < 0  || ($('#firstname').val().length == 0)){
+      alert('Please Enter Firstname !'); 
+      $('#save_memberform').attr('disabled',false);
+      return false;
+     }
+     if($('#lastname').val().length < 0 || ($('#lastname').val().length == 0)){
+      alert('Please Enter Lastname !'); 
+      $('#save_memberform').attr('disabled',false);
+      return false;
+     }
+  
+     if(checked_gender != null){  //Test if something was checked
+     } else {
+       $('#save_memberform').attr('disabled',false);
+      alert('Please select gender'); 
+         return false;
+      }
+     
       if (reg.test(email) == false) 
       {
         alert('Invalid Email Address');
          $('#save_memberform').attr('disabled',false);
         return false;
       }
-      var len = document.getElementById('MobileNo').value;
+     
       if(len.length < 10){
 
         alert ( "Please Enter valid Phone number" );
@@ -625,27 +570,50 @@ function saveSnap(data_uri){
         return false; 
       }
       
-      var lenh = document.getElementById('HomePhoneNumber').value;
-      if(lenh){
-        if(lenh.length < 10){
-          alert ( "Please Enter valid Home Phone Number" );
-           $('#save_memberform').attr('disabled',false);
-          return false; 
-        }
-      }
-      
-      var leno = document.getElementById('OfficePhoneNumber').value;
-      if(leno){
-        if(leno.length < 10){
-          alert ( "Please Enter valid Office Phone Number" );
-           $('#save_memberform').attr('disabled',false);
-          return false; 
-        }
-      }
-    
-  $('#save_memberform').attr('disabled',true);
-      
-   
+
+      // alert($('#emergancyname').val().length);
+     if( $('#emergancyname').val().length < 0  || $('#emergancyname').val().length == 0) {
+       alert( "Please Provide Emergancy Name!" );
+            //$('#save_memberform').attr('disabled',false);
+       return false;
+
+    }
+     if( $('#emergancyrelation').val().length < 0 || $('#emergancyrelation').val().length == 0) {
+       alert( "Please Provide Emergancy Relation!" );
+        $('#save_memberform').attr('disabled',false);
+       return false;
+    }
+      if( $('#EmergancyPhoneNumber').val().length < 0  || $('#EmergancyPhoneNumber').val().length == 0) {
+       alert( "Please Provide Emergancy PhoneNumber!" );
+        $('#save_memberform').attr('disabled',false);
+       return false;
+    }
+    if( $('#address').val().length < 0  || $('#address').val().length == 0) {
+       alert( "Please Provide Address !" );
+        $('#save_memberform').attr('disabled',false);
+       return false;
+    }
+    if( $('#birthday').val().length < 0  || $('#birthday').val().length == 0) {
+       alert( "Please Provide Birthdate !" );
+        $('#save_memberform').attr('disabled',false);
+       return false;
+    }
+    var fromt = $('#fromtime').val();
+   if(!fromt){
+       $('#save_memberform').attr('disabled',false);
+      alert ( "Please Enter From Time" );
+      return false; 
+   }
+   var tot =$('#totime').val();
+   if(!tot){
+      alert ( "Please Enter To Time" );
+       $('#save_memberform').attr('disabled',false);
+      return false; 
+   }
+    $('#save_memberform').trigger('click');
+    $('#save_memberform').attr('disabled',true);
+                                                                            
+   });
    </script>
  
 </section>
