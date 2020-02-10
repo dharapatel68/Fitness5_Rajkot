@@ -845,7 +845,7 @@ function saveSnap(data_uri){
       return false;
      }
      if($('#username').val().length < 0 || ($('#username').val().length == 0)){
-      alert('Please Select Gender'); 
+      alert('Please Enter UserName'); 
       $('#save_memberform').attr('disabled',false);
       return false;
      }

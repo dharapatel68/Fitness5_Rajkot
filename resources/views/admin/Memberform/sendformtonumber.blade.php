@@ -57,15 +57,25 @@ td{
             <div class="box-body">
             	<div class="col-lg-3"></div>
             	<div class="col-lg-6">
-            	<form>
+              <form action="{{ url('sendmemberform') }}" method="POST">
+                @csrf
+                <div class="form-group">
+		            	<label>First Name</label>
+		            	<input type="text" name="firstname" class="form-control" id="firstname" autocomplete="off" placeholder="First Name">
+                </div>
+                <div class="form-group">
+		            	<label>Last Name</label>
+		            	<input type="text" name="lastname" class="form-control" id="lastname" autocomplete="off"  placeholder="Last Name">
+		            </div>
             		 <div class="form-group">
 		            	<label>Mobileno</label>
-		            	<input type="text" name="mobilno" class="form-control" id="mobileno">
-		            </div>
+		            	<input type="text" name="mobileno" class="form-control" id="mobileno" autocomplete="off"  placeholder="Mobile No">
+                </div>
+                
 		            <center>
 		            <div class="form-group">
 
-		            	<button type="button" class="btn btn-success" id="send">Send</button>
+		            	<button type="submit" class="btn btn-success" id="send">Send</button>
 		            	 
 		            </div>
 		            </center>
@@ -90,13 +100,22 @@ td{
 </div>
 <script type="text/javascript">
 	
-	$("#send").on('click', function(){
-		var code='dfd';
-		var id=$('#mobileno').val();
-		// alert(id);
-		location.href = '/sendmemberform/'+id+'/'+code+'';
-     // window.location = "sendmemberform/"+id+"/"+code"";    
-});
+// 	$("#send").on('click', function(){
+// 		var code='dfd';
+// 		var id=$('#mobileno').val();
+//     var route='sendmemberform/'+id+'/'+code+'';
+//     $.ajax({
+//           type : 'POST', 
+//           url :  route ,
+//           data : {code:code,id:id,_token:'{{ csrf_token() }}'},
+//           success : function(data){
+           
+//           }
+//         });
+// 		// alert(id);
+// 		// location.href = '/sendmemberform/'+id+'/'+code+'';
+//      // window.location = "sendmemberform/"+id+"/"+code"";    
+// });
 </script>
 <script type="text/javascript">
 
