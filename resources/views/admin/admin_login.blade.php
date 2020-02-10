@@ -83,36 +83,10 @@
             </a> -->
           </div>
 
-         <!--  <div class="text-center p-t-115">
-            <span class="txt1">
-              Don’t have an account?
-            </span>
-
-            <a class="txt2" href="#">
-              Sign Up
-            </a>
-          </div> -->
         </form>
       </div>
     </div>
   </div>
-
-  <!--
-          </script> -->
-  
-
-  
-
-
-<!-- /.login-box -->
-
-<!-- jQuery 3 -->
-<!-- <script src="../../bower_components/jquery/dist/jquery.min.js"></script>-->
-<!-- Bootstrap 3.3.7 -->
-<!-- <script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
- --><!-- iCheck
-<script src="../../plugins/iCheck/icheck.min.js"></script> -->
-
 </body>
 </html>
 <script type="text/javascript">

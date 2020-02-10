@@ -473,9 +473,6 @@ $(function() {
           $('#docs').val('');
           $('#docstype').val('');
 
-          
-// $('#exampleModalCenter').modal('show');
-// $('#exampleModalCenter').modal('hide');
     });
      var attachfiles1 = new Array();
     $('#save').on('click',function(){
@@ -517,19 +514,25 @@ $(function() {
 </script>
 <script type="text/javascript">
   $('#first_name').change(function(){
-$('#last_name').trigger('change');
+    var firstname= $('#first_name').val();
+    firstname = firstname.replace(/[^a-z\u00D1\u00F10-9]*/ig,'');
+    $('#first_name').val(firstname);
+    $('#last_name').trigger('change');
   });
-$('#last_name').change(function(){
-           let fname = $('#first_name').val();
-           let lname = $('#last_name').val();
-           let username = fname+lname;
-           $('#username').val(username);
-             var el = $('#username').val();
-        var val = el.replace(/\s/g, "");
-        $('#username').val(val);
-            $('#username').trigger('keyup');
+  $('#last_name').change(function(){
+    let fname = $('#first_name').val();
+    let lname = $('#last_name').val();
 
-       });
+    lname = lname.replace(/[^a-z\u00D1\u00F10-9]*/ig,'');
+    $('#last_name').val(lname);
+    let username = fname+lname;
+    $('#username').val(username);
+    var el = $('#username').val();
+    var val = el.replace(/\s/g, "");
+    $('#username').val(val);
+    $('#username').trigger('keyup');
+
+  });
 </script>
 <script type="text/javascript">
     $('#profile-img').bind('change', function(event) {
