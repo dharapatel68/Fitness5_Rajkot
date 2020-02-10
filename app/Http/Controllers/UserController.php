@@ -42,12 +42,12 @@ class UserController extends Controller
             if ($file = $request->file('file'))
             {
                 $file_name = $file->getClientOriginalName();
-                $file_size = $file->getClientSize();
+                $file_size = $file->getSize();
 
                 $file_name = time() . '_' . $file_name;
                 $filename = public_path('/images/' . $file_name);
                                 
-                if ($file_size > 2000000)
+                if ($file_size > 5000000)
                 {
                     $img = Image::make($request->file('file')
                         ->getRealPath())
@@ -86,7 +86,26 @@ class UserController extends Controller
                 }
             }
 
-            $request->validate(['username' => 'required|min:3|max:255', 'Role_id' => 'required', 'email' => 'required|max:255', 'password' => 'required|max:255|min:6', 'gender' => 'required', 'mobileno' => 'required|numeric', 'first_name' => 'required', 'last_name' => 'required', 'department' => 'nullable|min:3|max:255', 'accountNo' => 'nullable|min:3|max:255', 'accountName' => 'nullable|min:3|max:255', 'IFSCcode' => 'nullable|min:3|max:255', 'BankName' => 'nullable|min:3|max:255', 'BranchName' => 'nullable|min:3|max:255', 'BranchCode' => 'nullable|min:3|max:255', 'photo' => 'mimes:jpeg,jpg,png,gif|max:20000', 'mobileno' => 'required|min:10', 'salary' => 'nullable', 'workinghour' => 'required', 'docs.*' => 'max:20000', ]);
+            $request->validate(['username' => 'required|min:3|max:255',
+                'Role_id' => 'required',
+                'email' => 'required|max:255',
+                'password' => 'required|max:255|min:6',
+                'gender' => 'required',
+                'mobileno' => 'required|numeric',
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'department' => 'nullable|min:3|max:255',
+                'accountNo' => 'nullable|min:3|max:255',
+                'accountName' => 'nullable|min:3|max:255',
+                'IFSCcode' => 'nullable|min:3|max:255',
+                'BankName' => 'nullable|min:3|max:255',
+                'BranchName' => 'nullable|min:3|max:255',
+                'BranchCode' => 'nullable|min:3|max:255',
+                'photo' => 'mimes:jpeg,jpg,png,gif|max:5000',
+                'mobileno' => 'required|min:10',
+                'salary' => 'nullable',
+                'workinghour' => 'required',
+                'docs.*' => 'max:5000', ]);
 
             $usr = Employee::where('username', $request['username'])->get()
                 ->all();
@@ -116,10 +135,10 @@ class UserController extends Controller
                     {
                         $name = $file->getClientOriginalName();
                         $name = $name . '_' . $request['username'];
-                        $file_size = $file->getClientSize();
+                        $file_size = $file->getSize();
                         /******************************** */
                         $filename = public_path('/files/' . $name);
-                        if ($file_size > 2000000)
+                        if ($file_size > 5000000)
                         {
                             $img = Image::make($file->getRealPath())
                                 ->fit(400, 300)
@@ -206,7 +225,21 @@ class UserController extends Controller
 
             $request->validate([
 
-            'first_name' => 'required', 'last_name' => 'required', 'department' => 'nullable|min:3|max:255', 'accountNo' => 'nullable|min:3|max:255', 'accountName' => 'nullable|min:3|max:255', 'IFSCcode' => 'nullable|min:3|max:255', 'BankName' => 'nullable|min:3|max:255', 'BranchName' => 'nullable|min:3|max:255', 'BranchCode' => 'nullable|min:3|max:255', 'photo' => 'mimes:jpeg,jpg,png,gif|max:20000', 'mobileno' => 'required|min:10', 'docs.*' => 'max:20000', 'password' => 'nullable|max:255|min:6', 'salary' => 'nullable', 'workinghour' => 'required', ]);
+            'first_name' => 'required',
+             'last_name' => 'required', 
+             'department' => 'nullable|min:3|max:255', 
+             'accountNo' => 'nullable|min:3|max:255', 
+             'accountName' => 'nullable|min:3|max:255', 
+             'IFSCcode' => 'nullable|min:3|max:255', 
+             'BankName' => 'nullable|min:3|max:255', 
+             'BranchName' => 'nullable|min:3|max:255', 
+             'BranchCode' => 'nullable|min:3|max:255', 
+             'photo' => 'mimes:jpeg,jpg,png,gif|max:5000', 
+             'mobileno' => 'required|min:10',
+              'docs.*' =>  'max:5000', 
+              'password' => 'nullable|max:255|min:6', 
+             'salary' => 'nullable', 
+             'workinghour' => 'required', ]);
             // dd($request);
             $role = lcfirst(Role::find($request['Role_id'])->employeerole);
             $check = '';
@@ -240,7 +273,7 @@ class UserController extends Controller
                     /****************** */
 
                     $filename = public_path('/files/' . $file_name);
-                    if ($file_size > 2000000)
+                    if ($file_size > 5000000)
                     {
                         $img = Image::make($file->getRealPath())
                             ->fit(400, 300)
@@ -277,7 +310,7 @@ class UserController extends Controller
                 $file_size = $file->getClientSize();
                 $file_name = time() . '_' . $file_name;
                 $filename = public_path('/images/' . $file_name);
-                if ($file_size > 2000000)
+                if ($file_size > 5000000)
                 {
                     $img = Image::make($request->file('file')
                         ->getRealPath())

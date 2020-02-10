@@ -435,7 +435,7 @@ $(function() {
   for (var i = 0; i < imageArr.files.length; i++){
      var imageSize = imageArr.files[i].size;
      var imageName = imageArr.files[i].name;
-     if (imageSize > 2000000){
+     if (imageSize >8000000){
          var imageSizeArr = 1;
      }
      if (imageSizeArr == 1){
@@ -535,7 +535,7 @@ $('#last_name').change(function(){
     $('#profile-img').bind('change', function(event) {
 
   //this.files[0].size gets the size of your file.
-  if(this.files[0].size > 2000000){
+  if(this.files[0].size > 8000000){
     alert('Profile Picture size is too Big');
 $('#profile-img').val('');
   }
