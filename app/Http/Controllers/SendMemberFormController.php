@@ -11,11 +11,18 @@ use App\Message;
 
 class SendMemberFormController extends Controller
 {
-   public function sendmemberform(Request $request,$id,$code)
+   public function sendmemberform(Request $request)
     {	
+        if($request->isMethod('post')){
+            $id=$request->mobileno;
+           
     	    $link_send = url('/').'/'.$id.'/addmember';
            $msg= Message::where('messagesid',18)->get()->first();
            $msg=$msg->message;
+           $firstname=$request->firstname;
+      
+            $lastname=$request->lastname;
+            $msg ='Dear '.$firstname.' '.$lastname.' '.$msg; 
             
             $bitlylink = app('bitly')->getUrl($link_send);
             ShortLink::create([
@@ -33,6 +40,7 @@ class SendMemberFormController extends Controller
             $otpsend = Curl::to($url)->get();
             
             return redirect()->back()->withSuccess('Form SuccesFully Send');
+        }
     }
     public function addmeber(Request $request,$id){
         $shortlink=ShortLink::where('code',$id)->get()->last();

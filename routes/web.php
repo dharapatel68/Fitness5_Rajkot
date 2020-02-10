@@ -469,7 +469,7 @@ Route::group(['middleware' => ['admin']], function() {
    Route::any('loaduserbytype','AdminController@loaduserbytype')->name('loaduserbytype');
    Route::any('loaduserprofile','AdminController@loaduserprofile')->name('loaduserprofile');
    /************************************end dashboard route****************************/
-   Route::any('sendmemberform/{id}/{code}', 'SendMemberFormController@sendmemberform')->name('sendmemberform');
+   Route::any('sendmemberform', 'SendMemberFormController@sendmemberform')->name('sendmemberform');
    Route::any('addtrainerprofile', 'TrainerProfileController@addtrainerprofile')->name('addtrainerprofile');
    Route::any('viewtrainers', 'TrainerProfileController@viewtrainers')->name('viewtrainers');
    Route::any('viewtrainerprofile/{id}', 'TrainerProfileController@viewtrainerprofile')->name('viewtrainerprofile');

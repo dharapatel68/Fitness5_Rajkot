@@ -26,132 +26,111 @@ table td{
 }
 </style>
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-     	 <h1 style="text-decoration: none;">Member Report</h1>
-     </section>
-      <section class="content">
-      <!-- Info boxes -->
-     	 <div class="row">
-     	 	<div class="col-md-12">
-     	 		<div class="row">
-     	 			<div class="box box-info">
-     	 				 <div class="box-header with-border">
-			              <h3 class="box-title">Filters</h3>
-
-			              <div class="box-tools pull-right">
-			                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-			                </button>
-			                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-			              </div>
-			            </div>
-			            <!-- /.box-header -->
-			            <div class="box-body">
-			            	<form action="{{url('memberreport')}}" method="post">
-			            		{{csrf_field()}}
-							<div class="table-responsive">
-							  <table class="table no-margin">
-							  <thead>
-						  <tr>
-							    <th>From :</th>
-							    <th>To :</th>
-							  
-							    <th>Username</th>
-                  <th>Any Keyword</th>
-
-							    
-							  </tr>
-							</thead>
-							<tbody>
-					
-							<tr>
-							<td><input type="date" name="fdate" class="form-control" value="{{$query['fdate']}}"></td>
-							<td><input type="date" name="tdate" class="form-control" value="{{$query['tdate']}}"></td>
-					
-							<td><select name="username" class="form-control select2 span8" data-placeholder="Select a Username" >
-								<option value="" selected="" disabled="">Select a Username</option>
-								@foreach($users as $user)
-
-								<option value="{{$user->userid}}"  @if(isset($query['username'])) {{$query['username'] == $user->userid ? 'selected':''}} @endif>
-									
-									{{ $user->username }} 
-							
-									 </option>
-									@endforeach</select></td>
-                    <td><input type="text" name="keyword" placeholder="Search Keyword" class="form-control" value="{{$query['keyword']}}"></td>
-								
-							
-							</tr>
-							<tr>
-							
-								<td style="text-align: left" colspan="4"><button type="submit" name="search" class="btn bg-orange"><i class="fa fa-filter"></i>   Filters</button><a href="{{ url('memberreport') }}" class="btn bg-red">Clear</a></td>
-								
-							</tr>
-							
-
-							</tbody>
-							</table>
-
-							</div>
-						</form>
-			            </div>	
-     	 			</div>
-     	 			<div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title"></h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+     <h1 style="text-decoration: none;">Member Report</h1>
+  </section>
+  <section class="content">
+     <!-- Info boxes -->
+     <div class="row">
+        <div class="col-md-12">
+           <div class="row">
+              <div class="box box-info">
+                 <div class="box-header with-border">
+                    <h3 class="box-title">Filters</h3>
+                    <div class="box-tools pull-right">
+                       <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                       </button>
+                       <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                 </div>
+                 <!-- /.box-header -->
+                 <div class="box-body">
+                    <form action="{{url('memberreport')}}" method="post">
+                       {{csrf_field()}}
+                       <div class="table-responsive">
+                          <table class="table no-margin">
+                             <thead>
+                                <tr>
+                                   <th>From :</th>
+                                   <th>To :</th>
+                                   <th>Username</th>
+                                   <th>Any Keyword</th>
+                                </tr>
+                             </thead>
+                             <tbody>
+                                <tr>
+                                   <td><input type="date" name="fdate" class="form-control" value="{{$query['fdate']}}"></td>
+                                   <td><input type="date" name="tdate" class="form-control" value="{{$query['tdate']}}"></td>
+                                   <td>
+                                      <select name="username" class="form-control select2 span8" data-placeholder="Select a Username" >
+                                         <option value="" selected="" disabled="">Select a Username</option>
+                                         @foreach($users as $user)
+                                         <option value="{{$user->userid}}"  @if(isset($query['username'])) {{$query['username'] == $user->userid ? 'selected':''}} @endif>
+                                         {{ $user->username }} 
+                                         </option>
+                                         @endforeach
+                                      </select>
+                                   </td>
+                                   <td><input type="text" name="keyword" placeholder="Search Keyword" class="form-control" value="{{$query['keyword']}}"></td>
+                                </tr>
+                                <tr>
+                                   <td style="text-align: left" colspan="4"><button type="submit" name="search" class="btn bg-orange"><i class="fa fa-filter"></i>   Filters</button><a href="{{ url('memberreport') }}" class="btn bg-red">Clear</a></td>
+                                </tr>
+                             </tbody>
+                          </table>
+                       </div>
+                    </form>
+                 </div>
               </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <div class="table-responsive">
-                <table class="table no-margin">
-                  <thead>
-                  <tr>
-                  	<th>Date</th>
-                    <th>Name</th>
-                    <th>Diet</th>
-                    <th>Exercise</th>
-                       <th>Diet AssignDate</th>
-                    <th>Workout AssignDate</th>
-
-
-                  </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($data as $data1)  
-                     <tr>
-
-                      <td>{{date('d-m-Y', strtotime($data1->createddate))}}</td>
-                       <td>{{ucwords($data1->firstname)}} {{ucwords($data1->lastname)}}</td>
-                        <td>@if ($data1->memberdietplanid == null )<a href="{{url('assigndiettomember/'.$data1->memid)}}">Not Assigned</a> @else  {{$data1->dietplanname}} @endif</td>
-                          <td>@if ($data1->workoutid == null) <a href="{{ url('assignExercise/'.$data1->memid) }}">Not Assigned</a>  @else  {{$data1->workoutname }} @endif</td>
-                          <td>@if($data1->dietassigndate) {{ date('d-m-Y', strtotime($data1->dietassigndate))}} @endif</td><td>@if($data1->workoutassigndate){{ date('d-m-Y', strtotime($data1->workoutassigndate))}}@endif
-                        </td>
-                     </tr>
-     		           @endforeach
-
-	
-                  	
-                  </tbody>
-                </table>
-                    <div class="datarender" style="text-align: center">
-                         {{ $data->links() }}    
-          </div>
+              <div class="box box-info">
+                 <div class="box-header with-border">
+                    <h3 class="box-title"></h3>
+                    <div class="box-tools pull-right">
+                       <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                       </button>
+                       <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                 </div>
+                 <!-- /.box-header -->
+                 <div class="box-body">
+                    <div class="table-responsive">
+                       <table class="table no-margin">
+                          <thead>
+                             <tr>
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Diet</th>
+                                <th>Exercise</th>
+                                <th>Diet AssignDate</th>
+                                <th>Workout AssignDate</th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                             @foreach($data as $data1)  
+                             <tr>
+                                <td>{{date('d-m-Y', strtotime($data1->createddate))}}</td>
+                                <td>{{ucwords($data1->firstname)}} {{ucwords($data1->lastname)}}</td>
+                                <td>@if ($data1->memberdietplanid == null )<a href="{{url('assigndiettomember/'.$data1->memid)}}">Not Assigned</a> @else  {{$data1->dietplanname}} @endif</td>
+                                <td>@if ($data1->workoutid == null) <a href="{{ url('assignExercise/'.$data1->memid) }}">Not Assigned</a>  @else  {{$data1->workoutname }} @endif</td>
+                                <td>@if($data1->dietassigndate) {{ date('d-m-Y', strtotime($data1->dietassigndate))}} @endif</td>
+                                <td>@if($data1->workoutassigndate){{ date('d-m-Y', strtotime($data1->workoutassigndate))}}@endif
+                                </td>
+                             </tr>
+                             @endforeach
+                          </tbody>
+                       </table>
+                       <div class="datarender" style="text-align: center">
+                          {{ $data->links() }}    
+                       </div>
+                    </div>
+                    <!-- /.table-responsive -->
+                 </div>
               </div>
-              <!-- /.table-responsive -->
-            </div>
-   
-          </div>
-     	 		</div>
-     	 	</div>
-
-      	 </div>
- 	  </section>
+           </div>
+        </div>
+     </div>
+  </section>
 </div>
 <script type="text/javascript">
 

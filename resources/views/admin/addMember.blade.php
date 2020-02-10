@@ -845,7 +845,7 @@ function saveSnap(data_uri){
       return false;
      }
      if($('#username').val().length < 0 || ($('#username').val().length == 0)){
-      alert('Please Select Gender'); 
+      alert('Please Enter UserName'); 
       $('#save_memberform').attr('disabled',false);
       return false;
      }
@@ -1248,9 +1248,17 @@ function saveSnap(data_uri){
    });
 </script>
 <script type="text/javascript">
-   $('#firstname').on('keyup',function(){
+
+   $('#firstname').on('keyup',function(f){
+      
        var  first = document.getElementById("firstname").value;
        var  second = document.getElementById("lastname").value;
+       first = first.replace(/[^a-z\u00D1\u00F10-9]*/ig,'');
+       second = second.replace(/[^a-z\u00D1\u00F10-9]*/ig,'');
+
+      $('#firstname').val(first);
+      $('#lastname').val(second);
+            event.returnValue = true;
        $( "#username" ).trigger( "keyup" );
        $('#username').val(first+""+second);
          var el = $('#username').val();
@@ -1286,11 +1294,18 @@ function saveSnap(data_uri){
    
        var  first = document.getElementById("firstname").value;
        var  second = document.getElementById("lastname").value;
+
+       first = first.replace(/[^a-z\u00D1\u00F10-9]*/ig,'');
+       second = second.replace(/[^a-z\u00D1\u00F10-9]*/ig,'');
+       $('#firstname').val(first);
+      $('#lastname').val(second);
+
        $( "#username" ).trigger( "keyup" );
    
        $('#username').val(first+""+second);
          var el = $('#username').val();
         var val = el.replace(/\s/g, "");
+        val = val.replace(/[^a-z\u00D1\u00F10-9]*/ig,'');
         $('#username').val(val);
        var error_username = '';
        var username = $('#username').val();
@@ -1324,6 +1339,8 @@ function saveSnap(data_uri){
          // alert("hi");
          var error_username = '';
          var username = $('#username').val();
+         username = username.replace(/[^a-z\u00D1\u00F10-9]*/ig,'');
+         $('#username').val(username);
          var _token = $('input[name="_token"]').val();
    
          $.ajax({
