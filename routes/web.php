@@ -729,3 +729,10 @@ Route::any('edittrialform/{trailformid}','TrialformController@edittrialform');
 
 ////////////////////////////end trial form routs///////////////////////////////////
 Route::any('extendemployee','UserController@extendemployeeexpiry');
+Route::any('changeStatus/{id}', 'PackageController@changeStatus')->name('changeStatus');
+Route::any('importpunch', 'HRController@importpunch')->name('importpunch');
+Route::any('downloaddemosheet', 'HRController@downloaddemosheet')->name('downloaddemosheet');
+Route::any('downloadexcel', 'HRController@downloadexcel')->name('downloadexcel');
+Route::any('importemppunchcsv', 'HRController@importemppunchcsv')->name('importemppunchcsv');
+
+

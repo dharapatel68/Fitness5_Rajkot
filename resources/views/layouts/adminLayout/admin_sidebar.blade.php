@@ -166,6 +166,7 @@
                               <li><a href="{{ route('employeelog') }}"><i class="fa fa-plus"></i> View Log</a></li>
                               <li><a href="{{ route('employeelogdaywise') }}"><i class="fa fa-plus"></i> View Log Daywise</a></li>
                               <li><a href="{{ route('addemppunch') }}"><i class="fa fa-plus"></i> Add Punch</a></li>
+                              <li><a href="{{ route('importpunch') }}"><i class="fa fa-plus"></i> Import Punch</a></li>
                            </ul>
                         </li>
                         <li class="treeview">

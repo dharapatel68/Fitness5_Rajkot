@@ -105,7 +105,13 @@
   if(isset($_POST['trainerid'])){
      $tid=$_POST['trainerid'];
      $employee=\App\Employee::where('employeeid',$tid)->where('status',1)->get()->first();
-     $employeename=$employee->username;
+     if(!(empty($employee)))
+     {
+     if(!(empty($employee))->username)
+     {
+      $employeename=$employee->username;
+     }
+   }
   }
   else{
     $tid=0;
@@ -189,7 +195,7 @@
                    
                     <option></option>
                     @foreach ($employees as $employee)
-                      <option value="{{$employee->employeeid}}" {{ $tid == $employee->employeeid ? 'selected':''}}>{{$employee->username}}</option>
+                      <option value="{{$employee->employeeid}}" {{ $tid == $employee->employeeid ? 'selected':''}}>@if($employee->username){{$employee->username}}@endif</option>
                     @endforeach
                   </select>
                   @endif
