@@ -276,7 +276,7 @@ class HRController extends Controller
 
 		$year = $request->year;
 
-		$working_days = WorkingDays::where('year', $year)->orderBy('workingcalid', 'asc')->get()->all();
+		$working_days = WorkingDays::where('year', $year)->orderBy('workingcalid', 'asc')->paginate(10);
 
 		return view('hr.workingdays.viewworkingdays', compact('working_days', 'year'));
 	}
@@ -1947,6 +1947,21 @@ public function importemppunchcsv(Request $request){
 							  $employeelog->checkout = $empcheckout;
 							  $employeelog->save();
 
+						  }else{
+							  $today = date('Y-m-d');
+							$hremployteelogexist = HREmployeeelog::where('userid', $empid)->whereMonth('punchdate',$today)->whereYear('punchdate',$today)->get()->all();
+							if($hremployteelogexist){
+								foreach ($hremployteelogexist as $key => $value) {
+									$value->delete();
+									
+								}
+								$employeelog = new HREmployeeelog();
+								$employeelog->userid = $empid;
+								$employeelog->punchdate = date('Y-m-d', strtotime($empdate));
+								$employeelog->checkin = $empcheckin;
+								$employeelog->checkout = $empcheckout;
+								$employeelog->save();
+							}
 						  }
 					  }
 
