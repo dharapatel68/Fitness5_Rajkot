@@ -203,7 +203,7 @@ $confirmdate = '';
                                         <input type="text" class="form-control" name="totalsessionprice" id="totalsessionprice" placeholder="price" value="{{ $salary->ptsessionsalary }}"readonly >
                                      </div>
                                      <div class="col-sm-4 col-lg-3">
-                                        <button type="button" class="btn  btn-default"  data-toggle="modal" data-target="#ptlogs" id="ptlogs" value="PT Logs">PT Logs</button>
+                                        {{-- <button type="button" class="btn  btn-default"  data-toggle="modal" data-target="#ptlogs" id="ptlogs" value="PT Logs">PT Logs</button> --}}
                                      </div>
                                   </div>
                                </div>
