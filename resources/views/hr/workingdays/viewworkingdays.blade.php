@@ -1,3 +1,4 @@
+
 @extends('layouts.adminLayout.admin_design')
 @section('title', 'View Working Days')
 
@@ -77,9 +78,12 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+                                        <div class="datarender" style="text-align: center">  {!! $working_days->render() !!} </div>
+
                                     @else
                                         <tr>
                                             <td colspan="5">No Data Found</td>
+
                                         </tr>
                                     @endif
                                 </tbody>

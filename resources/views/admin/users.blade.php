@@ -92,15 +92,15 @@
                                 @endif
                                 <input type="hidden" name="deviceaccess" id="deviceaccess" value="{{$user->employeeid}}">
                                 </a>
-                                <a href="#" class="" id="userfetchlogs" data-toggle="modal" onclick="fetchlogs('{{$user->mobileno}}')" data-target="#fetchlogs" title="Logs"><i class="fa fa-history"></i></a>
+                                <a href="" class="" id="userfetchlogs" data-toggle="modal" onclick="fetchlogs('{{$user->mobileno}}')" data-target="#fetchlogs" title="Logs"><i class="fa fa-history"></i></a>
                                 @if($user->status == 1)
-                                <a href="#" class="" id="deactiveuserq" data-toggle="modal" data-target="#deactiveuser" onclick="deactiveuser('{{$user->mobileno}}')"  title="Deactive User"><i class="fa fa-user"></i></a>
+                                <a href="" class="" id="deactiveuserq" data-toggle="modal" data-target="#deactiveuser" onclick="deactiveuser('{{$user->mobileno}}')"  title="Deactive User"><i class="fa fa-user"></i></a>
                                 @else
-                                <a href="#" data-toggle="modal" id="activeuserq" data-target="#activedeviceuser" onclick="activeuser('{{$user->mobileno}}')" title="Active User"><i class="fa fa-user" style="color: #B49168;"></i></a>
+                                <a href="" data-toggle="modal" id="activeuserq" data-target="#activedeviceuser" onclick="activeuser('{{$user->mobileno}}')" title="Active User"><i class="fa fa-user" style="color: #B49168;"></i></a>
                                 @endif
                                 <!-- <a href="#" class="btn-xs delete" id="userfetchlogs" onclick="" title="Delete User"><i class="fa fa-times"></i></a> -->
                                 <!--  <a href="{{ url('deleteuser/'.$user->id) }}"class="delete" title="Delete"><i class="fa fa-trash"></i></a> -->
-                                <a href="#" data-toggle="modal" id="activeuserq"class="delete" data-target="#extendsexpiry" onclick="extendexpiry('{{$user->employeeid}}')" title="Extend Expiry"><i class="fa fa-plus" ></i></a>
+                                <a href="" data-toggle="modal" id="activeuserq"class="delete" data-target="#extendsexpiry" onclick="extendexpiry('{{$user->employeeid}}')" title="Extend Expiry"><i class="fa fa-plus" ></i></a>
                              </td>
                           </tr>
                           @endforeach
@@ -389,7 +389,7 @@
                  </div>
                  <div class="modal-footer">
                     <button type="button" class="btn  btn-danger" data-dismiss="modal">Close</button>
-                    <a href="#" class="btn bg-green" id="activeuser">Active</a>
+                    <a href="" class="btn bg-green" id="activeuser">Active</a>
                  </div>
               </div>
            </div>
@@ -466,8 +466,8 @@
                              success:function(data)
                              {
                               
-                                 alert(data);
-                                window.location.reload();
+                                // alert(data);
+                               //window.location.reload();
                             },
 
                           });
@@ -494,7 +494,7 @@
                              success:function(data)
                              {
                               
-                                  alert(data);
+                                 
                                   window.location.reload();
                             },
 
