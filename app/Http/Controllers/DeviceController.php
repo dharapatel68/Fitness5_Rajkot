@@ -883,11 +883,13 @@ class DeviceController extends Controller
       $portno_const = config('constants.port');
       $duser = User::where('usermobileno',$devicemobileno)->get()->first();
       $deviceuser_data = Deviceuser::where('userid',$duser->userid)->get()->first();
-      
-      $newdate = explode('-', date('Y-m-d', strtotime($deviceuser_data->expirydate)));
+      if($deviceuser_data){
+
+     
+          $newdate = explode('-', date('Y-m-d', strtotime($deviceuser_data->expirydate)));
        // print_r($newdate);exit;
 
-       $action = new Actionlog();
+          $action = new Actionlog();
            $action->user_id = session()->get('admin_id');
            $action->ip = $request->ip();
            $action->action_type = 'update';
@@ -927,6 +929,7 @@ class DeviceController extends Controller
                  echo "Your Device Not connected !";
    
         }*/
+      }
 
     }
 

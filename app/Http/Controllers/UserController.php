@@ -383,7 +383,7 @@ class UserController extends Controller
 
             $users = Employee::get()->all();
             return redirect('users')
-                ->with('message', 'Succesfully Edited', compact('users'));
+                ->with('message', 'User Succesfully Edited', compact('users'));
         }
 
         return view('admin.editUser', compact('user', 'roles'));
