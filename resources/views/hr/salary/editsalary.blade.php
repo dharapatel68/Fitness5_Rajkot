@@ -168,7 +168,10 @@ $confirmdate = '';
                                  $totalfloorsalrydisplay = round($totalfloorhour * $perhoursalary,2);
                                 
                               }
-                           
+                           else{
+                              $totalfloorsalry= $currentsalary;
+                              $totalfloorsalrydisplay= $currentsalary;
+                           }
                               $currentsalary=$totalfloorsalry + $salary->ptsessionsalary;
                             @endphp
                             

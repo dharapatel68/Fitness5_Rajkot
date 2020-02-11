@@ -832,42 +832,42 @@ class DeviceController extends Controller
       $newdate = explode('-', $newdate);
        // print_r($newdate);exit;
 
-       $action = new Actionlog();
-           $action->user_id = session()->get('admin_id');
-           $action->ip = $request->ip();
-           $action->action_type = 'update';
-           $action->action = 'Deactive Employee';
-           $action->action_on = $duser->userid;
-           $action->save();
+      $action = new Actionlog();
+      $action->user_id = session()->get('admin_id');
+      $action->ip = $request->ip();
+      $action->action_type = 'update';
+      $action->action = 'Deactive Employee';
+      $action->action_on = $duser->userid;
+      $action->save();
            
-           try {
+      try {
 
-                    $deviceinfo = DB::table('deviceinfo')
-                              ->where('devicetype','independent')
-                              ->where('portno', $portno_const)
-                              ->first();
+        $deviceinfo = DB::table('deviceinfo')
+                  ->where('devicetype','independent')
+                  ->where('portno', $portno_const)
+                  ->first();
 
-                    $url = 'http://'.$deviceinfo->ipaddress.'';
-                
-                    $username = $deviceinfo->username;
-                    $password = $deviceinfo->password;
-                     
-                    //Initiate cURL.
-                   $emp_api = 'http://'.$deviceinfo->ipaddress.':'.$deviceinfo->portno.'/device.cgi/users?action=set&user-id='.$duser->userid.'&ref-user-id='.$duser->userid.'&validity-enable=1&validity-date-dd='.$newdate[2].'&validity-date-mm='.$newdate[1].'&validity-date-yyyy='.$newdate[0].'';
+        $url = 'http://'.$deviceinfo->ipaddress.'';
+    
+        $username = $deviceinfo->username;
+        $password = $deviceinfo->password;
+          
+        //Initiate cURL.
+        $emp_api = 'http://'.$deviceinfo->ipaddress.':'.$deviceinfo->portno.'/device.cgi/users?action=set&user-id='.$duser->userid.'&ref-user-id='.$duser->userid.'&validity-enable=1&validity-date-dd='.$newdate[2].'&validity-date-mm='.$newdate[1].'&validity-date-yyyy='.$newdate[0].'';
 
-                    $cronjob = new ApiCronJob();
-                    $cronjob->apiuserid= $duser->userid;
-                    $cronjob->apitype= 'deactive employee';
-                    $cronjob->api= $emp_api;
-                    $cronjob->response_code= '';
-                    $cronjob->status= 0;
-                    $cronjob->save();
+        $cronjob = new ApiCronJob();
+        $cronjob->apiuserid= $duser->userid;
+        $cronjob->apitype= 'deactive employee';
+        $cronjob->api= $emp_api;
+        $cronjob->response_code= '';
+        $cronjob->status= 0;
+        $cronjob->save();
 
-                      $status = Deviceuser::where('userid',$en->userid)->update(['status' => 0]);
-                      $empstatus = Employee::where('mobileno',$devicemobileno)->update(['status' => 2]);
-                      echo "User Deactiveted !";
+        $status = Deviceuser::where('userid',$en->userid)->update(['status' => 0]);
+        $empstatus = Employee::where('mobileno',$devicemobileno)->update(['status' => 2]);
+        echo "User Deactiveted !";
                     
-         } catch (\Exception $e) {
+        } catch (\Exception $e) {
               
                  echo "Your Device Not connected !";
    
