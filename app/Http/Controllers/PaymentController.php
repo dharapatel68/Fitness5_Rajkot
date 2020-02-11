@@ -1378,6 +1378,12 @@ $gstno='';
        $emailsetting =  Emailsetting::where('status',1)->first();
 
        if ($emailsetting) {
+         
+         if(!empty($email)){
+          $email = $email;
+         }else{
+          $email ='non@gmail.com';
+         }
 
        $data = [
                              //'data' => 'Rohit',

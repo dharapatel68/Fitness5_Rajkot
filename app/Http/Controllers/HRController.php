@@ -1628,7 +1628,7 @@ class HRController extends Controller
 		DB::beginTransaction();
 		try {
 
-		$empexpirydate = EmployeeLeave::where('employeeid', $id)->first();
+		$empexpirydate = EmployeeLeave::where('employeeleaveid', $id)->first();
 		if($empexpirydate){
 			$empexpirydate->delete();
 		}
@@ -1957,13 +1957,12 @@ public function importemppunchcsv(Request $request){
 							  $date=date('Y-m-d',strtotime($empdate));
 							  $excelyear = date('Y', strtotime($date));
 							  $excelmonth = date('m', strtotime($date));
-							  $hremployteelogexist = HREmployeeelog::where('userid', $empid)->whereMonth('punchdate',$excelmonth)->whereYear('punchdate',$excelyear)->get()->all();
+							  $employeelog_exist = HREmployeeelog::where('userid', $empid)->where('punchdate', date('Y-m-d', strtotime($empdate)))->where('checkin', 'like' , $empcheckin.'%')->where('checkout', 'like' , $empcheckout.'%')->first();
 							
-							if($hremployteelogexist){
-								foreach ($hremployteelogexist as $key => $value) {
-									$value->delete();
-									
-								}
+							if($employeelog_exist){
+								
+									$employeelog_exist->delete();
+								
 								$employeelog = new HREmployeeelog();
 								$employeelog->userid = $empid;
 								$employeelog->punchdate = date('Y-m-d', strtotime($empdate));
