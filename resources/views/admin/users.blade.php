@@ -27,6 +27,15 @@
         <strong>{{ $message }}</strong>
      </div>
      @endif 
+     @if (Session::get('errors'))
+     @foreach ($errors->all() as $error)
+     <div class="alert alert-danger alert-block">
+      <button type="button" class="close" data-dismiss="alert">×</button> 
+      <strong>{{ $error }}</strong>
+   </div>
+ @endforeach
+     
+     @endif 
      <div class="table-wrapper">
         <div class="table-title">
            <div class="box">
