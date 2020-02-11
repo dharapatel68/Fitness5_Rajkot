@@ -899,8 +899,12 @@ class HRController extends Controller
 			$Workindays = 0;
 			$holidays = 0;
 		}
+		/*****for leave cal******/
+		$totalworkindays = $Workindays+$holidays;
+		$leavedays_cal = $totalworkindays - $attenddays;
+		/*****End *for leave cal******/
 		$actualdays = $Workindays- $workingdays_data->holidays ;
-		$leavedays_cal = $Workindays - $attenddays;
+		
 		
 		//dd($actualdays);
 
@@ -909,9 +913,12 @@ class HRController extends Controller
 		if($leavedays_cal < 0){
 			$leavedays_cal = 0;
 		}
+	
+		$empattandedhours=($totalworkindays-$leavedays_cal) * $empworkinghour;
+	
+		$totalworkinghour = ($Workindays + $holidays) * $empworkinghour;
 
-		$totalworkinghour = $Workindays * $empworkinghour;
-		$empworkingminute = $Workindays * $empworkinghour * 60;
+		$empworkingminute = ($Workindays + $holidays)  * $empworkinghour * 60;
 		$totalminute = $attenddays * $empworkinghour * 60; 
 		$totalminutedisplay = $totalminute/60;
 
@@ -980,12 +987,11 @@ class HRController extends Controller
 		/*******************for trainer session wise salary***************************** */
 
 
-
 		/*********************for trainer session wise salary*************************** */
 
 		/*******************end if trainer***************************** */
 
-		return view('hr.salary.calculatesalary')->with(compact('attenddays', 'totalminute', 'totalhour', 'totaldays', 'givenleave', 'takenleave', 'empdata', 'empsalary', 'empworkinghour', 'total_hour', 'year', 'month','cal_month', 'Workindays', 'holidays', 'empworkingminute', 'current_salary', 'employeeid', 'takenleave_display', 'Workindays', 'leavedays_cal', 'totalworkinghour', 'employeelog', 'totalminute_dispaly', 'totalhour_dispaly_model', 'emploanamount', 'lateemployeelog', 'actualdays','trainersession','trainersessiondetail','trainerdetail'));
+		return view('hr.salary.calculatesalary')->with(compact('attenddays', 'totalminute', 'totalhour', 'totaldays', 'givenleave', 'takenleave', 'empdata', 'empsalary','empattandedhours', 'empworkinghour', 'total_hour', 'year', 'month','cal_month', 'Workindays', 'holidays', 'empworkingminute', 'current_salary', 'employeeid', 'takenleave_display', 'Workindays', 'leavedays_cal', 'totalworkinghour', 'employeelog', 'totalminute_dispaly', 'totalhour_dispaly_model', 'emploanamount', 'lateemployeelog', 'actualdays','trainersession','trainersessiondetail','trainerdetail'));
 
 	// }  catch(\Exception $e) {
 
