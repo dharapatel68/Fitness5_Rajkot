@@ -140,11 +140,15 @@ $confirmdate = '';
                                </div>
                             </div>
                             @php
-                            $totalfloorhour=$totalworkinghour-$trainersession;
-                            $perdaysalary=round($empsalary/$Workindays, 2);
+                            $totalfloorhour=$empattandedhours-$trainersession;
+                       
+                            $perdaysalary=round($empsalary/($Workindays+$holidays), 2);
+                           
                             $perhoursalary=round($perdaysalary/$empworkinghour , 2);
+                           
+                           
                             @endphp
-                            
+                        
                                 <div class="row">
                                     <div class="">
                                         <div class="form-group">
@@ -153,6 +157,7 @@ $confirmdate = '';
                                                 <input type="text" class="form-control" id="totalfloorhour" placeholder="Floor" value="{{ $totalfloorhour }}"readonly >
                                             </div>
                                             <div class="col-sm-4 col-lg-3">
+                                           
                                                 <input type="text" class="form-control" id="floorslary" placeholder="Floor" value="{{ $totalfloorhour*$perhoursalary }}"readonly >
                                             </div>
                                             <div class="col-sm-4 col-lg-3">
@@ -603,6 +608,7 @@ $confirmdate = '';
         let leavedays_cal  = Number(actualdays) - Number(attenddays); 
         let perdaysalary = monthlysalary/workingdays;
         let perhoursalary = perdaysalary/empworkinghour;
+ 
         var holidays = Number($('#holiday').val());
         let emi = $('#emi').val();
         let otheramount = $('#otheramount').val();
