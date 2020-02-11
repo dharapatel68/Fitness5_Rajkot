@@ -531,7 +531,7 @@ class HRController extends Controller
 
 		$empid = $request->employeeid;
 
-		$account = EmployeeAccount::with('employeename')->where('employeeid', $empid)->get()->paginate(10);
+		$account = EmployeeAccount::with('employeename')->where('employeeid', $empid)->paginate(10);
 		$employee = Employee::where('status', 1)->get()->all();
 
 
