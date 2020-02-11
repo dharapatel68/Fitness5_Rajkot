@@ -147,6 +147,7 @@
                                                                 </td> 
                                                             </tr>
                                                         @endforeach
+                                                        <div class="datarender" style="text-align: center">  {!! $salary->render() !!} </div>
                                                     @else
                                                         <tr>
                                                             <td colspan="5">No data found</td>

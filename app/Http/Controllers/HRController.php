@@ -694,7 +694,7 @@ class HRController extends Controller
 
 			]);
 
-			$emppunch = new HREmployeeLog();
+			$emppunch = new HREmployeeelog();
 			$emppunch->userid = $request->employeeid;
 			$emppunch->punchdate = $request->punchdate;
 			$emppunch->checkin = $request->checkin;
@@ -1147,7 +1147,7 @@ class HRController extends Controller
 
 	public function viewsalary(){
 
-		$salary = Salary::with('employee')->where('status', 'Unlocked')->get()->all();
+		$salary = Salary::with('employee')->where('status', 'Unlocked')->paginate(10);
 
 		$employee = Employee::where('status', 1)->get()->all();
 
