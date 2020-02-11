@@ -333,24 +333,20 @@ Mo. : 0281 2583005/2587005 <br></font>
     @if($duedate)
     <table style="margin: 5px;  margin-top:60px;" width=100%  cellpadding="5px;" cellspacing="0px">
          <thead>
-             <tr><th style="border:none;"><font size="3">Due Information</font></th></tr>
-             <tr style="border-right: thick solid; border-left: thick solid;border-color: #CACFD2; border-top: thick solid;border-bottom:thick solid; border:1px;border-color: #CACFD2;">
+            <tr><th style="border:none;"><font size="3">Due Information</font></th></tr>
+            <tr style="border-right: thick solid; border-left: thick solid;border-color: #CACFD2; border-top: thick solid;border-bottom:thick solid; border:1px;border-color: #CACFD2;">
             <th style="border-left: thick solid; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Due Date</th>
-                <th style="border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">State</th>
-                 
-                    
-                <th  style="border-right: thick solid; border-top: thick solid;border-bottom:thick solid; text-align: right; border-right:thick solid;border-color: #CACFD2;">Amount</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="border-left: thick solid;border-bottom: thick solid;border-color: #CACFD2;">
-                            {{date('j F, Y', strtotime($duedate))}}
-                        </td>
-                        <td style="border-bottom: thick solid;border-color: #CACFD2;">Due Date Scheduled</td>
-                        <td style="text-align: right;border-bottom: thick solid; border-right:thick solid;border-color: #CACFD2;"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{ $payment->remainingamount }}</td>
-                    </tr>
-                </tbody>
+            <th style="border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">State</th>
+            <th  style="border-right: thick solid; border-top: thick solid;border-bottom:thick solid; text-align: right; border-right:thick solid;border-color: #CACFD2;">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="border-left: thick solid;border-bottom: thick solid;border-color: #CACFD2;">{{date('j F, Y', strtotime($duedate))}}</td>
+              <td style="border-bottom: thick solid;border-color: #CACFD2;">Due Date Scheduled</td>
+              <td style="text-align: right;border-bottom: thick solid; border-right:thick solid;border-color: #CACFD2;"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{ $payment->remainingamount }}</td>
+            </tr>
+          </tbody>
     </table>
     @endif
        </font>
