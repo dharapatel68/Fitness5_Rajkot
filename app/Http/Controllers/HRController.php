@@ -840,7 +840,7 @@ class HRController extends Controller
 		
 
 		$attenddays = count($employeelog_days);
-		
+			
 		$totalminute = 0;
 		$totalhour = 0;
 		$totaldays = 0;
@@ -1155,6 +1155,7 @@ class HRController extends Controller
 	public function editsalary($id, Request $request){
 		
 		$salary = Salary::with('employee')->where('salaryid', $id)->first();
+		
 		$employeeid = $salary->employeeid;
 		$month = $salary->month;
 		$year = $salary->year;

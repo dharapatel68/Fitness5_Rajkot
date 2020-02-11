@@ -54,7 +54,7 @@ $confirmdate = '';
                 <input type="hidden" name="holidays" value="{{ $holidays }}">
                 <input type="hidden" name="totalworkinghour" value="{{ $totalworkinghour }}">
                 <input type="hidden" name="empworkingminute" value="{{ $empworkingminute }}">
-                <input type="hidden" name="monthlyworking_hour_display" value="{{ $totalworkinghour }}">
+                <input type="hidden" name="monthlyworking_hour_display" value="{{ $empattandedhours }}">
                 <input type="hidden" name="totalworkinghour_display" id="totalworkinghour"  value="{{ $totalhour_dispaly_model }}">
                 <input type="hidden" name="workingminute" id="workingminute" value="{{ $totalminute_dispaly }}">
                 <input type="hidden" name="empsalary" value="{{ $empsalary }}">

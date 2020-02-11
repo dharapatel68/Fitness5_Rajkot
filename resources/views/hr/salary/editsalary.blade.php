@@ -157,8 +157,19 @@ $confirmdate = '';
                        
                               $totalfloorhour=$salary->empworkinghour-$counttotalsession;
                               $currentsalary =$salary->currentsalary + $salary->salaryemi;
-                              $totalfloorsalry = $currentsalary - $salary->ptsessionsalary;
-                              $currentsalary=$totalfloorsalry + $salary->ptsessionsalary
+                              if($salary->ptsessionsalary > 0){
+                                 $totalfloorsalry = $currentsalary - $salary->ptsessionsalary;
+                                 $totaldays=$salary->actualdays+$salary->holidays;
+                                 $perdaysalary =$salary->empsalary / $totaldays;
+                                
+                                 $perhoursalary = $perdaysalary/$salary->employee->workinghour; 
+                               
+                                 $currentsalary =  $totalfloorsalry + ( $counttotalsession*$perhoursalary );
+                                 $totalfloorsalrydisplay = round($totalfloorhour * $perhoursalary,2);
+                                
+                              }
+                           
+                              $currentsalary=$totalfloorsalry + $salary->ptsessionsalary;
                             @endphp
                             
                                 <div class="row">
@@ -169,7 +180,7 @@ $confirmdate = '';
                                                 <input type="text" class="form-control" id="totalfloorhour" placeholder="Floor" value="{{ $totalfloorhour }}"readonly >
                                             </div>
                                             <div class="col-sm-4 col-lg-3">
-                                                <input type="text" class="form-control" id="floorslary" placeholder="Floor" value="{{  $totalfloorsalry }}"readonly >
+                                                <input type="text" class="form-control" id="floorslary" placeholder="Floor" value="{{  $totalfloorsalrydisplay }}"readonly >
                                             </div>
                                             <div class="col-sm-4 col-lg-3">
                                                 <button type="button" class="btn btn-default" id="floorlogs" value="Floor Logs" data-toggle="modal" data-target="#exampleModalLong">Floor Logs</button>        
