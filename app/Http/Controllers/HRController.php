@@ -1629,7 +1629,10 @@ class HRController extends Controller
 		try {
 
 		$empexpirydate = EmployeeLeave::where('employeeid', $id)->first();
-		$empexpirydate->delete();
+		if($empexpirydate){
+			$empexpirydate->delete();
+		}
+		
 
 		DB::commit();
 		$success = true;
@@ -1948,8 +1951,14 @@ public function importemppunchcsv(Request $request){
 							  $employeelog->save();
 
 						  }else{
-							  $today = date('Y-m-d');
-							$hremployteelogexist = HREmployeeelog::where('userid', $empid)->whereMonth('punchdate',$today)->whereYear('punchdate',$today)->get()->all();
+							  $year = date('Y');
+							  $month = date('m');
+						
+							  $date=date('Y-m-d',strtotime($empdate));
+							  $excelyear = date('Y', strtotime($date));
+							  $excelmonth = date('m', strtotime($date));
+							  $hremployteelogexist = HREmployeeelog::where('userid', $empid)->whereMonth('punchdate',$excelmonth)->whereYear('punchdate',$excelyear)->get()->all();
+							
 							if($hremployteelogexist){
 								foreach ($hremployteelogexist as $key => $value) {
 									$value->delete();
