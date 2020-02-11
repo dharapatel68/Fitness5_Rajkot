@@ -1957,11 +1957,11 @@ public function importemppunchcsv(Request $request){
 							  $date=date('Y-m-d',strtotime($empdate));
 							  $excelyear = date('Y', strtotime($date));
 							  $excelmonth = date('m', strtotime($date));
-							  $employeelog_exist = HREmployeeelog::where('userid', $empid)->where('punchdate', date('Y-m-d', strtotime($empdate)))->where('checkin', 'like' , $empcheckin.'%')->where('checkout', 'like' , $empcheckout.'%')->first();
-							
-							if($employeelog_exist){
-								
-									$employeelog_exist->delete();
+							  $employeelog_exist = HREmployeeelog::where('userid', $empid)->where('punchdate', date('Y-m-d', strtotime($empdate)))->get()->all();
+								foreach($employeelog_exist as $employeeloge){
+									$employeeloge->delete();
+								}
+									
 								
 								$employeelog = new HREmployeeelog();
 								$employeelog->userid = $empid;
@@ -1969,7 +1969,7 @@ public function importemppunchcsv(Request $request){
 								$employeelog->checkin = $empcheckin;
 								$employeelog->checkout = $empcheckout;
 								$employeelog->save();
-							}
+							
 						  }
 					  }
 
