@@ -749,7 +749,7 @@ class HRController extends Controller
 
 			if($status == 'Locked'){
 
-				Session::flash('message', 'Salary is already loacked');
+				Session::flash('message', 'Salary is already locked');
 	    		Session::flash('alert-type', 'error');
 
 				return redirect()->route('viewlockedsalary');
@@ -773,7 +773,10 @@ class HRController extends Controller
 
 			return redirect()->route('workingdays')->with(compact('year', 'month'));
 		}
-
+		$empdata = Employee::where('employeeid', $employeeid)->first();
+		if($empdata->workinghour <= 0){
+			return redirect('users')->withErrors('Kindly Add working Days');
+		}
 		if(!empty($employeeid) || !empty($year) || !empty($month)){
 
 		if($request->month == 'Janaury'){
