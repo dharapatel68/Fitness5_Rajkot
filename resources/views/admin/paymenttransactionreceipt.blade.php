@@ -7,7 +7,7 @@
         td {
             border-bottom: 1px solid #ddd;
             margin: 5px;
-            border-color: #CACFD2;
+          
 
         }
          p { page-break-after: always; }
@@ -78,14 +78,14 @@ Mo. : 0281 2583005/2587005 <br></font>
                     <tr><th style="border:none;"><font size="3">Package Information</font></th></tr>
                     <tr style="border-left: thick solid; border-top: thick solid;border-bottom:bold solid; border:1px; border-color: #CACFD2:">
                         
-                    <th style="border-color: #CACFD2;border-left:thick solid; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Package</th>
-                <th style="border-color: #CACFD2; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Duration</th>
-                <th  style="border-color: #CACFD2;border-right: thick solid; border-top: thick solid;border-bottom:thick solid; text-align: right;border-color: #CACFD2;" >Amount</th>
+                    <th style="border-left:thick solid; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Package</th>
+                <th style="border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Duration</th>
+                <th  style="border-right: thick solid; border-top: thick solid;border-bottom:thick solid; text-align: right;border-color: #CACFD2;" >Amount</th>
                 </tr>
                 </thead>
        <tbody>
                     <tr>
-                        <td style="border-color: #CACFD2;border-left:thick solid;border-color: #CACFD2;">
+                        <td style="border-left:thick solid;border-color: #CACFD2;">
                             @if($tax == 0)
                                 Physiotherapy Services
                             @else
@@ -94,7 +94,7 @@ Mo. : 0281 2583005/2587005 <br></font>
                         </td>
                       
                         <td>{{date('j F, Y', strtotime($memberpackage->joindate))}}  to {{date('j F, Y', strtotime($memberpackage->expiredate))}}</td>
-                          <td  style="border-color: #CACFD2;text-align: right;border-color: #CACFD2; border-right:thick solid;border-color: #CACFD2;"
+                          <td  style="text-align: right; border-right:thick solid;border-color: #CACFD2;"
                           ><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{ $payment1->schemebaseprice }}</td>
                     </tr>
                  
@@ -102,23 +102,23 @@ Mo. : 0281 2583005/2587005 <br></font>
                      @if($discount > 0 )
                     <tr>
 
-                        <td colspan="1"style="border-color: #CACFD2;border-left:thick solid;border-color: #CACFD2;">
+                        <td colspan="1"style="border-left:thick solid;border-color: #CACFD2;">
                          
                           
                         </td>
                         <td  style="text-align: right">  <b>Discount </b></td>
-                        <td  style="border-color: #CACFD2; text-align: right;border-right:thick solid;border-color: #CACFD2;"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>   {{$discount}}</td>
+                        <td  style=" text-align: right;border-right:thick solid;border-color: #CACFD2;"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>   {{$discount}}</td>
                     </tr>
                     @endif
                     <tr>
-                        <td colspan="1"style="border-color: #CACFD2;border-left:thick solid;border-color: #CACFD2;">
+                        <td colspan="1"style="border-left:thick solid;border-color: #CACFD2;">
                             
                         </td>
                         <td style="text-align: right"><b>GST ( {{ $tax }} %)</b></td>
                         <td  style="text-align: right;border-right:thick solid;border-color: #CACFD2;" border-right:thick solid;><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$payment1->taxamount}}</td>
                     </tr>
                     <tr>
-                        <td colspan="1"style="border-color: #CACFD2;border-left:thick solid;border-color: #CACFD2;">
+                        <td colspan="1"style="border-left:thick solid;border-color: #CACFD2;">
                         <?php 
                             $discount_amount = $payment1->schemebaseprice - $discount;
                             $total_amount = $discount_amount + $payment1->taxamount;
@@ -126,11 +126,11 @@ Mo. : 0281 2583005/2587005 <br></font>
 
                         ?>
                         </td>
-                        <td  style="border-color: #CACFD2;text-align: right;border-color: #CACFD2"><b>Total</b></td>
-                        <td  style="border-color: #CACFD2;text-align: right;border-right:thick solid;border-color: #CACFD2;"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$total_amount}}</td>
+                        <td  style="text-align: right;border-color: #CACFD2"><b>Total</b></td>
+                        <td  style="text-align: right;border-right:thick solid;border-color: #CACFD2;"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$total_amount}}</td>
                     </tr>
                      <tr>
-                        <td colspan="1"style="border-color: #CACFD2;border-left:thick solid;border-bottom:thick solid;border-color: #CACFD2;">
+                        <td colspan="1"style="border-left:thick solid;border-bottom:thick solid;border-color: #CACFD2;">
                         
                         </td>
                         <?php 
@@ -179,8 +179,8 @@ Mo. : 0281 2583005/2587005 <br></font>
 
 
                         ?>
-                        <td  style="border-color: #CACFD2;text-align: right;border-bottom:thick solid;border-color: #CACFD2;"><b>Total In Words</b></td>
-                        <td  style="border-color: #CACFD2;text-align: right;border-right:thick solid; border-bottom:thick solid;border-color: #CACFD2; "> {{$word}} 
+                        <td  style="text-align: right;border-bottom:thick solid;border-color: #CACFD2;"><b>Total In Words</b></td>
+                        <td  style="text-align: right;border-right:thick solid; border-bottom:thick solid;border-color: #CACFD2; "> {{$word}} 
                       
                         </td>
                     </tr>
@@ -192,13 +192,13 @@ Mo. : 0281 2583005/2587005 <br></font>
             <table style="margin: 5px;  margin-top:60px;" width=100% cellpadding="5px;" cellspacing="0px">
                 <thead>
                      <tr><th style="border:none; width: 160px;"><font size="3">Payment Information</font></th></tr><tr style="border-color: #CACFD2;border-right: thick solid; border-left: thick solid; border-top: thick solid;border-bottom:thick solid; border:1px;border-color: #CACFD2;">
-                    <th style=" border-color: #CACFD2;border-left: thick solid; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Receipt No & Date</th>
+                    <th style=" border-left: thick solid; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Receipt No & Date</th>
                 <th style="border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Payment Type</th>
-                  <th style="border-color: #CACFD2;border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Cheque/
+                  <th style="border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Cheque/
                     <br>Card Info</th>
-                    <th style=" border-color: #CACFD2;border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Collected By</th>
-                     <th style="border-color: #CACFD2; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2; width: 100px;">Details</th>
-                <th  style="border-color: #CACFD2;border-right: thick solid; border-top: thick solid;border-bottom:thick solid; text-align: right;border-color: #CACFD2;">Amount</th>
+                    <th style="border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Collected By</th>
+                     <th style=" border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2; width: 100px;">Details</th>
+                <th  style="border-right: thick solid; border-top: thick solid;border-bottom:thick solid; text-align: right;border-color: #CACFD2;">Amount</th>
                 </tr>
                 </thead>
        <tbody>
@@ -220,7 +220,7 @@ Mo. : 0281 2583005/2587005 <br></font>
                       ?>
                       <tr>
 
-                        <td style="width: 120px; border-color: #CACFD2;border-left:thick solid;border-color: #CACFD2;"><span style="font-size: 13px;">{{ $oldpayment->receiptno }}</span> <b>#</b> {{date('j F, Y', strtotime($oldpayment->paymentdate))}}</td>
+                        <td style="width: 120px;border-left:thick solid;border-color: #CACFD2;"><span style="font-size: 13px;">{{ $oldpayment->receiptno }}</span> <b>#</b> {{date('j F, Y', strtotime($oldpayment->paymentdate))}}</td>
                         <td>{{$oldpayment->mode}}</td>
                         <td>{{$oldpayment->remarks}}</td>
                         <td>{{ !empty($takenby) ? ucfirst($takenby) : ''}}</td>
@@ -230,9 +230,9 @@ Mo. : 0281 2583005/2587005 <br></font>
                         $amount_added = $oldpayment->amount - $perc;
                         $total_amount_display = $total_amount_display + $amount_added + $perc;
                         @endphp
-                        <td style="border-color: #CACFD2;border-color: #CACFD2; width: 100px;">Amount :<span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>{{$oldpayment->amount - $perc}} <br>
+                        <td style="border-color: #CACFD2; width: 100px;">Amount :<span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>{{$oldpayment->amount - $perc}} <br>
                           Tax :<span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$perc}} </td>
-                          <td style="border-color: #CACFD2;text-align: right;border-right:thick solid;border-color: #CACFD2;"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$oldpayment->amount}}</td>
+                          <td style="text-align: right;border-right:thick solid;border-color: #CACFD2;"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$oldpayment->amount}}</td>
 
                         </tr>
                       @endforeach
@@ -243,7 +243,7 @@ Mo. : 0281 2583005/2587005 <br></font>
                    
                     <tr>
                      
-                        <td style="width: 120px; border-color: #CACFD2;border-left:thick solid;border-color: #CACFD2;"><span style="font-size: 13px;">{{ $payment->receiptno }}</span> <b>#</b> {{date('j F, Y', strtotime($payment->paymentdate))}}</td>
+                        <td style="width: 120px;border-left:thick solid;border-color: #CACFD2;"><span style="font-size: 13px;">{{ $payment->receiptno }}</span> <b>#</b> {{date('j F, Y', strtotime($payment->paymentdate))}}</td>
                        <td>{{$payment->mode}}</td>
                         <td>{{$payment->remarks}}</td>
                         <td>{{ !empty($takenby) ? ucfirst($takenby) : ''}}</td>
@@ -253,9 +253,9 @@ Mo. : 0281 2583005/2587005 <br></font>
              $amount_added = $payment->amount - $perc;
              $total_amount_display = $total_amount_display + $amount_added + $perc + $add_discount;
              @endphp
-            <td style="border-color: #CACFD2;border-color: #CACFD2; width: 100px;">Amount :<span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>{{$payment->amount - $perc}} <br>
+            <td style="border-color: #CACFD2; width: 100px;">Amount :<span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>{{$payment->amount - $perc}} <br>
             Tax :<span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$perc}} </td>
-                        <td style="border-color: #CACFD2;text-align: right;border-right:thick solid;border-color: #CACFD2;"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$payment->amount}}</td>
+                        <td style="text-align: right;border-right:thick solid;border-color: #CACFD2;"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$payment->amount}}</td>
                        
                     </tr>
 
@@ -263,20 +263,20 @@ Mo. : 0281 2583005/2587005 <br></font>
                      @endforeach
                      <tr>
                        
-                        <td style="border-color: #CACFD2;border-left:thick solid;border-color: #CACFD2;"></td>
+                        <td style="border-left:thick solid;border-color: #CACFD2;"></td>
                        <td></td>
                        <td><b>Total</b></td>
                         <td></td>
                         
                          <td style="width: 100px;"></td>
-                        <td  style="border-color: #CACFD2;text-align: right;border-right:thick solid;border-color: #CACFD2;"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$total_amount_display}}</td>
+                        <td  style="text-align: right;border-right:thick solid;border-color: #CACFD2;"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$total_amount_display}}</td>
                      </tr> 
                      @if($totalpay)
                        <tr>
                        
-                        <td style="border-color: #CACFD2;border-left:thick solid; border-bottom: thick solid; border-color: #CACFD2;"></td>
-                       <td style="border-color: #CACFD2;border-bottom: thick solid;border-color: #CACFD2;"></td>
-                           <td style="border-color: #CACFD2;border-bottom: thick solid;border-color: #CACFD2;"><b>Total In Words</b></td>
+                        <td style="border-left:thick solid; border-bottom: thick solid; border-color: #CACFD2;"></td>
+                       <td style="border-bottom: thick solid;border-color: #CACFD2;"></td>
+                           <td style="border-bottom: thick solid;border-color: #CACFD2;"><b>Total In Words</b></td>
                            <?php 
 
                           $no = round($total_amount_display);
@@ -320,7 +320,7 @@ Mo. : 0281 2583005/2587005 <br></font>
                         $totalpay= $result . "Rupees  " . $points . " ";
                         ?>
                        
-                        <td colspan="3" style="border-color: #CACFD2;text-align: right;border-right:thick solid;border-bottom: thick solid;border-color: #CACFD2;"> {{  $totalpay}}</td>
+                        <td colspan="3" style="text-align: right;border-right:thick solid;border-bottom: thick solid;border-color: #CACFD2;"> {{  $totalpay}}</td>
                      </tr> 
                      @endif
                    </tbody>
@@ -334,21 +334,21 @@ Mo. : 0281 2583005/2587005 <br></font>
     <table style="margin: 5px;  margin-top:60px;" width=100%  cellpadding="5px;" cellspacing="0px">
          <thead>
              <tr><th style="border:none;"><font size="3">Due Information</font></th></tr>
-             <tr style="border-color: #CACFD2;border-right: thick solid; border-left: thick solid;border-color: #CACFD2; border-top: thick solid;border-bottom:thick solid; border:1px;border-color: #CACFD2;">
-            <th style="border-color: #CACFD2;border-left: thick solid; border-top: thick solid;border-color: #CACFD2;border-bottom:thick solid;border-color: #CACFD2;">Due Date</th>
-                <th style=" border-color: #CACFD2;border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">State</th>
+             <tr style="border-right: thick solid; border-left: thick solid;border-color: #CACFD2; border-top: thick solid;border-bottom:thick solid; border:1px;border-color: #CACFD2;">
+            <th style="border-left: thick solid; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Due Date</th>
+                <th style="border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">State</th>
                  
                     
-                <th  style="border-color: #CACFD2;border-right: thick solid; border-top: thick solid;border-bottom:thick solid; text-align: right; border-right:thick solid;border-color: #CACFD2;">Amount</th>
+                <th  style="border-right: thick solid; border-top: thick solid;border-bottom:thick solid; text-align: right; border-right:thick solid;border-color: #CACFD2;">Amount</th>
                 </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="border-color: #CACFD2;border-left: thick solid;border-bottom: thick solid;border-color: #CACFD2;">
+                        <td style="border-left: thick solid;border-bottom: thick solid;border-color: #CACFD2;">
                             {{date('j F, Y', strtotime($duedate))}}
                         </td>
-                        <td style="border-color: #CACFD2;border-bottom: thick solid;border-color: #CACFD2;">Due Date Scheduled</td>
-                        <td style="border-color: #CACFD2;text-align: right;border-bottom: thick solid; border-right:thick solid;border-color: #CACFD2;"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{ $payment->remainingamount }}</td>
+                        <td style="border-bottom: thick solid;border-color: #CACFD2;">Due Date Scheduled</td>
+                        <td style="text-align: right;border-bottom: thick solid; border-right:thick solid;border-color: #CACFD2;"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{ $payment->remainingamount }}</td>
                     </tr>
                 </tbody>
     </table>
