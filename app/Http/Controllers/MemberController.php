@@ -354,10 +354,10 @@ public function otpverify(Request $request){
       }
 
   
-        $usrnameexist = User::where('username',$username)->get()->first();
-         if($usrnameexist){
-            return redirect('addMember')->with('message','User Already exists');
-         }
+        // $usrnameexist = User::where('username',$username)->get()->first();
+        //  if($usrnameexist){
+        //     return redirect('addMember')->with('message','User Already exists');
+        //  }
 
 
      $mobile=$request['CellPhoneNumber'];
