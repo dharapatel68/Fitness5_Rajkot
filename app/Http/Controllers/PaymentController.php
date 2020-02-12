@@ -1300,6 +1300,7 @@ $gstno='';
       /*dd($payment[0]);*/
       $filename = time().'invoice.pdf';
       $pdflink = url('/').'/transactionpaymentreceipt/'.$invoice_no.'/'.$phoneno;
+      
       $pdflink = app('bitly')->getUrl($pdflink);
 
       $tax = $payment_tax;
