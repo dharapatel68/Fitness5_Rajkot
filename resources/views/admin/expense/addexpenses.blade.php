@@ -43,6 +43,15 @@
                   
             </div>
             <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Company</label>
+                  <input type="text"name="companyname" value="{{ old('company') }}" class="form-control number "autocomplete="off" placeholder="Company"  class="span11" maxlength="18" />
+                </div>
+              </div>
+              
+            </div>
+            <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Account No</label>
