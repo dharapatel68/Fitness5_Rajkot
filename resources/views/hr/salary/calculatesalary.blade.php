@@ -323,7 +323,7 @@ $confirmdate = '';
                                      <div class="col-sm-4 col-lg-3">
                                         <input type="text" class="form-control hide"  placeholder="PT" value="{{ $trainersession }}">
                                      </div>
-                                     <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label">Other Deduction</label>
+                                     <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label">TDS</label>
                                      {{-- <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label"></label> --}}
                                      <div class="col-sm-4 col-lg-3">
                                         <input type="number" name="otheramount" class="form-control" min="0" id="otheramount" onfocusOut="calotheramount()" onfocusIn="storeotheramt()">
