@@ -25,17 +25,7 @@ class TransactionPaymentReceipt
       $oldpayment_data = '';
 
     $payment= Payment::where('invoiceno',$request)->where('mode','!=','total')->whereIn('invoicetype', ['m', 'o'])->get()->all();
-    /*if(empty($payment)){
-      $payment= Payment::where('invoiceno',$request)->where('mode','!=','total')->where('invoicetype', 'o')->get()->all();
-    }*/
-    
-  //   $payment1 = Payment::where('invoiceno', function($query){
-  //     $query->select('invoiceno')
-  //           ->from(with(new Payment)->getTable())
-  //           ->whereIn('invoicetype', ['m', 'o'])
-  //           ->where('mode','!=','total')
-  //           ->where('invoiceno',3);
-  // })->get()->first();
+ 
  
      $payment1 = Payment::where('invoiceno',$request)->where('memberid',$memberid)->where('mode','!=','total')->whereIn('invoicetype', ['m', 'o'])->get()->first();
     
@@ -204,12 +194,13 @@ class TransactionPaymentReceipt
 $request->replace(['paymentdate' => $today,'username' => $user->username]);
 
   // $request->username=$user->username;
-     
+  $tax=$payment_tax;
        $this->pdf->loadHtml(
-        View::make('admin.paymenttransactionreceipt')->with(['member'=>$member,'totalpay'=>$totalpay,'request'=>$request,'payment'=>$payment,'phoneno'=> $phoneno,'scheme'=>$scheme,'memberpackage'=>$memberpackage,'word'=>$word,'companyName'=>$companyName,'Gstno'=>$Gstno,'duedate'=> $duedate,'takenby'=>$takenby,'discount'=>$discount,'tax'=>$payment_tax, 'total_payment' => $total_payment, 'oldpayment_data' => $oldpayment_data,'payment1'=>$payment1])->render());
+        View::make('admin.paymenttransactionreceipt',$member,$totalpay,$request,$payment,$phoneno,$scheme,
+        $memberpackage,$word,$companyName,$Gstno,$duedate,$takenby,$discount,$tax, $total_payment , $oldpayment_data,$payment1));
        
       $this->pdf->render();
-     
+      $pdf = $this->pdf->output();
       $this->pdf->stream(''.$member->firstname.' '.$member->lastname.'.pdf');
       exit(0);
     

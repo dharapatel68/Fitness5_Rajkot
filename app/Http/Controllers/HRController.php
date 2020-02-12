@@ -27,6 +27,7 @@ use App\ExcelExport;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 
 class HRController extends Controller
 {
@@ -1962,7 +1963,6 @@ public function importemppunchcsv(Request $request){
 									$employeeloge->delete();
 								}
 									
-								
 								$employeelog = new HREmployeeelog();
 								$employeelog->userid = $empid;
 								$employeelog->punchdate = date('Y-m-d', strtotime($empdate));
@@ -1988,6 +1988,14 @@ public function importemppunchcsv(Request $request){
 
 	}
 	////////////////////////////////////////// import punch end/////////////////////////////////////////////////////////////
-
+	
+	/*****************************Salary Slip************************************** */
+	public function printsalaryslip(){
+		$data = ['title' => 'Welcome to HDTuto.com'];
+        $pdf = PDF::loadView('hr.salary.salaryslip', $data);
+  
+        return $pdf->stream('Salary Slip.pdf');
+	}
+	/******************************************************************* */
 
 }
