@@ -39,7 +39,7 @@
                   <div class="col-md-12">
                      <div class="form-group">
                         <label>Company</label>
-                        <input type="text" class="form-control" value="{{$categoryname->company }}"   name="companyname"  placeholder="Company">
+                        <input type="text" class="form-control" value="{{$categoryname->company }}"   name="companyname"  placeholder="Enter Company">
                      </div>
                   </div>
                 

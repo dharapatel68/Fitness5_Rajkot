@@ -125,12 +125,13 @@
                               <tr>
                                 <th>User</th>
                                 <th>Category</th>
+                                <th>Company</th>
                                 <th>Amount</th>
                                 <th>BillNo</th>
                                 <th>Mode</th>
                                 <th>GST</th>
                                 <th>Date</th>
-                                <th>Time</th>
+                                {{-- <th>Time</th> --}}
                                 <th>Action</th>
                               </tr>
                             </thead>
@@ -140,12 +141,12 @@
                               <tr>
                                 <td>{{$categoryname->username}}</td>
                                 <td>{{$categoryname->categoryname}}</td>
+                                <td>{{$categoryname->company}}</td>
                                 <td>{{$categoryname->amount}}</td>
                                 <td>{{$categoryname->billno}}</td>
                                 <td>{{$categoryname->paymenttype}}</td>
                                 <td>{{$categoryname->gstamount}}</td>
                                 <td>{{date('d-m-Y', strtotime($categoryname->dte))}}</td>
-                                <td>{{date('H:i:s',strtotime($categoryname->timestamp))}}</td>
                                 <td>
                                   <a href="{{ url('editExpenseitems/'.$categoryname->expensepaymentid) }}"class="edit" title="Edit">
                                     <i class="fa fa-edit"></i>
