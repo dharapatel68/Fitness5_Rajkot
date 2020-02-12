@@ -1618,7 +1618,7 @@ $gstno='';
        $today =date("d-m-Y");
        $request = new \Illuminate\Http\Request();
      $request->replace(['paymentdate' => $today,'username' => $user->username]);
-     $data = ['title' => 'Welcome to HDTuto.com'];
+   
      $tax=$payment_tax;
      if($oldpayment_data){
       $oldpayment_data=$oldpayment_data;
@@ -1636,12 +1636,12 @@ $gstno='';
         abort(404);
       }
     }
-      public function pdfStream(Request $request,$id){
+    //   public function pdfStream(Request $request,$id){
 
-      $pdf = new \App\TransactionPaymentReceipt;
-      $pdf->generate($id);
+    //   $pdf = new \App\TransactionPaymentReceipt;
+    //   $pdf->generate($id);
 
-    }
+    // }
     public function remainingplaceorder($id, Request $request){
 // dd($id);
       $Payment = '';
