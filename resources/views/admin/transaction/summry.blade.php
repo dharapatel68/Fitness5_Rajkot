@@ -512,7 +512,7 @@ textarea.input100 {
                 </td>
               </tr>
                <tr>
-                  <td  style="text-align: left;"><a href="{{url('transactionpaymentreceipt/'.$summry['InvoiceID'].'/'.$summry['mobileno'])}}"><b style="font-size: 20px;">Download Print  <i class="fa fa-print" style="size: 20px;"></i></b></a></td>
+                  <td  style="text-align: left;"><a href="{{url('transactionpaymentreceipt/'.$summry['InvoiceID'].'/'.$summry['mobileno'])}}" target="_blank"><b style="font-size: 20px;">Download Print  <i class="fa fa-print" style="size: 20px;"></i></b></a></td>
                   <td  style="text-align: left;"><a href="{{url('dashboard')}}"><b style="font-size: 20px;"> Dashboard  <i class="fa fa-tachometer" style="size: 20px;"></i></b></a></td>
                </tr>
                <tr>
