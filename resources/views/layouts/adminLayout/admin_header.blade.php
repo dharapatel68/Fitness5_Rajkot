@@ -306,9 +306,11 @@
                 <div class="pull-left">
        
                    @php $us1 = session('username');
-                      
-                      $user1 =   DB::table('employee')->where('username',$us1)->get()->first();
-              
+                      if($us1){
+                        $user1 =   DB::table('employee')->where('username',$us1)->get()->first();
+                      }else{
+                        $user1 =''; 
+                      }
                     @endphp 
                     @if($user1) 
                   <a href="{{url('edituser/'.$user1->employeeid)}}" class="btn btn-default btn-flat">Profile</a>
@@ -318,8 +320,7 @@
                 <div class="pull-right">
                   <a href="{{url('/logout')}}" class="btn btn-default btn-flat">Sign out</a>
                 </div>
-<!--                 "{{ url('edituser/'.$user->employeeid) }}"
- -->              </li>
+              </li>
             </ul>
           </li>
           <!-- Control Sidebar Toggle Button -->

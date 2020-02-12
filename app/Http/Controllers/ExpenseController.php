@@ -421,7 +421,7 @@ $users=Employee::get()->all();
 
             ]);
 
-            $mealmaster =     expensepayment::create([
+            $mealmaster =  expensepayment::create([
 
               'adminid'=>session()->get('admin_id'),
 
@@ -429,6 +429,7 @@ $users=Employee::get()->all();
               'employeeid'=> $request['employeeid'],
               'expensecategoryid'=> $request['expensecategoryid'],
               'paymenttype'=> $request['paymenttype'],
+              'company' => $request['companyname'],
               'amount'=> $request['amount'],
               'dte'=> $request['dte'],
               'billno'=> $request['billno'],
@@ -479,6 +480,7 @@ $users=Employee::get()->all();
             $dte=date('Y-m-d',strtotime($request->dte));
             $expensepayment->paymenttype=$request->paymenttype;
             $expensepayment->amount=$request->amount;
+            $expensepayment->company=$request->companyname;
             $expensepayment->gstamount=$request->gstamount;
             $expensepayment->billno=$request->billno;
             $expensepayment->Chequeno=$request->Chequeno;
