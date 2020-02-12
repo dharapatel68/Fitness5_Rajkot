@@ -133,10 +133,6 @@ $users=Employee::get()->all();
    
 
    }
-       // $expensepayment= expensepayment::leftjoin('employee','expensepayment.employeeid','employee.employeeid')->leftjoin('expensemaster','expensemaster.expensecategoryid','expensepayment.expensecategoryid')->where('expensepayment.status','Active')->select('expensepayment.created_at as timestamp','employee.*','expensepayment.*','expensemaster.*');
-       //               //  dd($expensepayment);
-       //    return view('admin.expense.viewexpenses',compact('expensepayment')); 
-               // return view('expensegstreport')->with('expensepayment', $expensepayment);
 
     }
 
@@ -214,7 +210,7 @@ $users=Employee::get()->all();
 
       
 
-                $expensepayment_array[] = array('User','Category','Amount', 'BillNo','Mode','GST', 'Date' );
+                $expensepayment_array[] = array('User','Category','Company','Amount', 'BillNo','Mode','GST', 'Date' );
 
                 // dd($expensepayment);
 
@@ -222,8 +218,8 @@ $users=Employee::get()->all();
                 {
                    $expensepayment_array[] = array(
                       'User' => $expensepayment1->username,
-                                            'Category' => $expensepayment1->categoryname,
-
+                      'Category' => $expensepayment1->categoryname,
+                      'Compnay' => $expensepayment1->company,
                       'Amount' => $expensepayment1->amount,
 
                       'BillNo' => $expensepayment1->billno,
@@ -529,4 +525,4 @@ $users=Employee::get()->all();
 
 
   }
-  ?>
+  
