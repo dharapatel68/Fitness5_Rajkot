@@ -275,11 +275,11 @@ color: black;
             </div>
             <div class="form-group">
                <label>Birthdate</label>
-               <input placeholder="Birthdate" value="{{old('birthday')}}" type="date"  class="form-control" max="<?php echo date('Y-m-d');?>" name="birthday" class="span11" id="birthday">
+               <input placeholder="Birthdate" value="@if(!empty($memberdata->birthday)){{$memberdata->birthday}}@endif" type="date"  class="form-control" max="<?php echo date('Y-m-d');?>" name="birthday" class="span11" id="birthday">
                </div>
             <div class="form-group">
                <label>Anniversary</label>
-               <input placeholder="Anniversary" value="{{ old('anniversary') }}" type="date" onkeypress="return false" class="form-control" max="<?php echo date('Y-m-d');?>" name="anniversary" class="span11">
+               <input placeholder="Anniversary" value="@if(!empty($memberdata->anniversary)){{$memberdata->anniversary}}@endif" type="date" onkeypress="return false" class="form-control" max="<?php echo date('Y-m-d');?>" name="anniversary" class="span11">
             </div>
             <div class="form-group">
                <label>Preferred Timing</label>

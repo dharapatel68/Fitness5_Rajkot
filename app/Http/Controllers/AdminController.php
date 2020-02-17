@@ -206,7 +206,7 @@ class AdminController extends Controller
         $collection = $rootschemes;
         $duepayment = Payment::leftJoin('member', 'member.memberid', '=', 'payments.memberid')->whereRaw('paymentid IN (select MAX(paymentid) FROM payments GROUP BY memberid)')
             ->where('payments.remainingamount', '>', 0)
-            ->paginate(5);
+            ->paginate(1000);
 
         $packageexpirenearlydate = date('Y-m-d');
         $packageexpirenearly = [];
@@ -389,6 +389,7 @@ class AdminController extends Controller
         $trainersession2 = Ptmember::leftjoin('member', 'member.memberid', 'ptmember.memberid')
             ->leftjoin('schemes', 'schemes.schemeid', 'ptmember.schemeid')
             ->whereIn('ptmember.status', ['Active', 'Pending'])
+            ->where('hoursfrom','!=','')
             ->select('member.memberid', 'member.firstname', 'member.lastname')
             ->groupBy('member.memberid', 'member.firstname', 'member.lastname')
             ->get()
@@ -397,6 +398,7 @@ class AdminController extends Controller
         $trainersession = Ptmember::where('trainerid', $trainerid)->leftjoin('member', 'member.memberid', 'ptmember.memberid')
             ->leftjoin('schemes', 'schemes.schemeid', 'ptmember.schemeid')
             ->whereIn('ptmember.status', ['Active', 'Pending'])
+            ->where('ptmember.hoursfrom','!=','')
             ->select('member.memberid', 'member.firstname', 'member.lastname')
             ->groupBy('member.memberid', 'member.firstname', 'member.lastname')
             ->get()
@@ -410,6 +412,7 @@ class AdminController extends Controller
                 ->leftjoin('member', 'member.memberid', 'ptmember.memberid')
                 ->leftjoin('schemes', 'schemes.schemeid', 'ptmember.schemeid')
                 ->whereIn('ptmember.status', ['Active', 'Pending'])
+                ->where('ptmember.hoursfrom','!=','')
                 ->select('member.*', 'ptmember.*', 'ptmember.status as ptstatus', 'schemes.schemename')
                 ->get()
                 ->all();
@@ -419,7 +422,8 @@ class AdminController extends Controller
             $deductedcount = Ptmember::where('ptmember.memberid', $value->memberid)
                 ->leftjoin('member', 'member.memberid', 'ptmember.memberid')
                 ->leftjoin('schemes', 'schemes.schemeid', 'ptmember.schemeid')
-                ->whereIn('ptmember.status', ['Conducted'])
+                ->whereIn('ptmember.status', ['Conducted','Marked'])
+                ->where('ptmember.hoursfrom','!=','')
                 ->select('member.*', 'ptmember.*', 'ptmember.status as ptstatus', 'schemes.schemename')
                 ->count();
 
@@ -434,6 +438,7 @@ class AdminController extends Controller
                 ->leftjoin('member', 'member.memberid', 'ptmember.memberid')
                 ->leftjoin('schemes', 'schemes.schemeid', 'ptmember.schemeid')
                 ->whereIn('ptmember.status', ['Active', 'Pending'])
+                ->where('ptmember.hoursfrom','!=','')
                 ->select('member.*', 'ptmember.*', 'ptmember.status as ptstatus', 'schemes.schemename')
                 ->get()
                 ->all();
@@ -444,6 +449,7 @@ class AdminController extends Controller
                 ->leftjoin('member', 'member.memberid', 'ptmember.memberid')
                 ->leftjoin('schemes', 'schemes.schemeid', 'ptmember.schemeid')
                 ->whereIn('ptmember.status', ['Conducted'])
+                ->where('ptmember.hoursfrom','!=','')
                 ->select('member.*', 'ptmember.*', 'ptmember.status as ptstatus', 'schemes.schemename')
                 ->count();
 
