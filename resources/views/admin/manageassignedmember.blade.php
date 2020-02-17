@@ -107,7 +107,7 @@
      $employee=\App\Employee::where('employeeid',$tid)->where('status',1)->get()->first();
      if(!(empty($employee)))
      {
-     if(!(empty($employee))->username)
+     if(!empty($employee->username))
      {
       $employeename=$employee->username;
      }

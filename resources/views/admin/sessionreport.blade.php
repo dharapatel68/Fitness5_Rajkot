@@ -107,7 +107,7 @@
  
   if(isset($_POST['trainerid'])){
      $tid=$_POST['trainerid'];
-     $employee=\App\Employee::where('employeeid',$tid)->where('status',1)->get()->first();
+     $employee=\App\Employee::where('employeeid',$tid)->get()->first();
      $employeename=$employee->username;
   }
   else{
