@@ -51,25 +51,7 @@ while($row=mysqli_fetch_assoc($result)){
 
        }
 
-        $sumdiff=0;
-        /************for time calculate basis on punch***************** */
-        $queryfortime = "SELECT * from hr_device_emplog WHERE dateid =  '".$deviceevent['date']."' AND empid='".$deviceevent['detail1']."' LIMIT 1";
-
-        $result1 = $conn->query($queryfortime);
-        $qq=array();
-        while($row=mysqli_fetch_assoc($result1)){
-        $qq[]=$row;
-        }
-        for ($i=1;$i<=3;$i++){
-        $ts1 = strtotime(str_replace('/', '-', ''.$qq[0]['timein'.$i].''));
-        $ts2 = strtotime(str_replace('/', '-', ''.$qq[0]['timeout'.$i].''));
-        $diff = abs($ts1 - $ts2) / 3600;
-        $sumdiff=$sumdiff+$diff;
-          }
-        /*******************************/
-        echo $sumdiff;
-        $querystoretimediff = "UPDATE hr_device_emplog SET totalworkinghours = '".$sumdiff."' WHERE dateid = '".$deviceevent['date']."' AND empid='".$deviceevent['detail1']."' LIMIT 1";
-
+      
            
      }
 

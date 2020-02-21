@@ -760,10 +760,10 @@ $gstno='';
                  "dueamnt"=>$remainingamount,"package"=>$scheme_name, "transactionid"=>$result_of_transaction, 'userid'=>$userid);*/
         $summry = array("fullname"=>$fullname, "joindate"=>$joindate,   
                   "enddate"=>$expiredate, "amount"=>$amount_paid, 'mobileno'=>$mobileno, 'userid'=>$userid, 'memberid'=>$memberid,   "InvoiceID"=>$invoice_no, "TransactionType"=>$transaction_type, "duedate"=>$due_date,  
-                  "dueamnt"=>$remainingamount,"package"=>$scheme_name, "transactionid"=>$result_of_transaction ,"rootschemeid"=>$rootschemeid);
+                  "dueamnt"=>$remainingamount,"package"=>$scheme_name, "transactionid"=>$result_of_transaction ,"rootschemeid"=>$rootschemeid,"msg" => '');
 
 
-       
+     
       return view('admin.transaction.summry')->with('summry',$summry);
 
       } else {

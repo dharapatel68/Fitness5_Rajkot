@@ -472,11 +472,11 @@ public function ajaxgetjoindate(Request $request){
              $demo =  DB::table('member')->select('userid')->where('memberid', '=', $member)->get();
              
           // DB::enableQueryLog();
-          $package= Ptmember::where('memberid',$member)
-            ->leftjoin('memberpackages','memberpackages.memberpackagesid','ptmember.packageid')
-            ->leftjoin('schemes','schemes.schemeid' , 'ptmember.schemeid')
-            ->groupBy('ptmember.packageid')
-            ->get()->all();
+          $package = DB::select( DB::raw("SELECT memberpackages.*,schemes.schemeid,schemes.schemename 
+          from ptmember 
+         left Join schemes on schemes.schemeid=ptmember.schemeid 
+          left join  memberpackages on memberpackages.memberpackagesid = ptmember.packageid
+         where ptmember.memberid='".$member."' "));
             // dd( DB::getQueryLog());
             //  $package = DB::select( DB::raw("SELECT memberpackages.*,schemes.schemeid,schemes.schemename 
             //                                   from memberpackages 
