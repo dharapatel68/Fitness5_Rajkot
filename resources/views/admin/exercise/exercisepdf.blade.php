@@ -86,17 +86,17 @@
 
                 <thead>
                     <tr><th style="border:none;text-align:center;" colspan="6" ><font size="3">WorkoutPlan  Information</font> <b style="text-align: right; font-size: 16px;"></b></th></tr>
-                    <tr><th style=" text-align:left; border-color: #CACFD2  ; border-top: thick solid;border-left: thick solid;border-right: thick solid;border-bottom:thick solid;border-color: #CACFD2  ;" colspan="6"><font size="3">  {{ ucfirst($data['workoutname'])}}
+                    <tr><th style=" text-align:left;  border-top: thick solid;border-left: thick solid;border-right: thick solid;border-bottom:thick solid;border-color: #CACFD2  ;" colspan="6"><font size="3">  {{ ucfirst($data['workoutname'])}}
  </font></th></tr>
                     <tr style=" border-left: thick solid; border-top: thick solid;border-bottom:bold solid; border:1px; border-color: #CACFD2  :">
-                     <th style="border-color: #CACFD2  ;border-left:thick solid; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2  ;"></th>   
-                <th style="border-color: #CACFD2  ; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2  ;">Exercise</th>
-   <th style="border-color: #CACFD2  ; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2  ;">Exercise Set</th>
-                <th style="border-color: #CACFD2  ; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2  ;">Time(Min)</th>
+                     <th style="border-left:thick solid; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2  ;"></th>   
+                <th style=" border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2  ;">Exercise</th>
+   <th style="border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2  ;">Exercise Set</th>
+                <th style=" border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2  ;">Time(Min)</th>
             
-                <th style="border-color: #CACFD2  ; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2  ;">Repetition</th>
+                <th style=" border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2  ;">Repetition</th>
                
-                   <th  style="border-color: #CACFD2  ;border-right: thick solid; border-top: thick solid;border-bottom:thick solid; border-color: #CACFD2  ;">Instruction</th> 
+                   <th  style="border-right: thick solid; border-top: thick solid;border-bottom:thick solid; border-color: #CACFD2  ;">Instruction</th> 
 
                 <!--   <th style="border-color: #CACFD2  ; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2  ;">Duration</th>
                 <th  style="border-color: #CACFD2  ;border-right: thick solid; border-top: thick solid;border-bottom:thick solid; text-align: right;border-color: #CACFD2  ;">Amount</th> -->
@@ -107,13 +107,13 @@
          @foreach($exe as $key=>$exe1)
  @if($key > 0)       
          @if($exe[$key-1]['exerciseday'] != $exe[$key]['exerciseday'])
-         <tr ><td style=" font-size: 12; border-color: #CACFD2  ;border-left:thick solid;border-right:thick solid;border-color: #CACFD2  ;" colspan="6"><b>{{$exe1['exerciseday'] == 1 ? 'Monday' :''}} {{$exe1['exerciseday'] == 2 ? 'Tuesday' :''}} {{$exe1['exerciseday'] == 3 ? 'Wednesday' :''}} {{$exe1['exerciseday'] == 4 ? 'Thrusday' :''}} {{$exe1['exerciseday'] == 5 ? 'Friday' :''}} {{$exe1['exerciseday'] == 6 ? 'Saturday' :''}}{{$exe1['exerciseday'] == 7 ? 'Sunday' :''}} </b></td></tr>
+         <tr ><td style=" font-size: 12; border-left:thick solid;border-right:thick solid;border-color: #CACFD2  ;" colspan="6"><b>{{$exe1['exerciseday'] == 1 ? 'Monday' :''}} {{$exe1['exerciseday'] == 2 ? 'Tuesday' :''}} {{$exe1['exerciseday'] == 3 ? 'Wednesday' :''}} {{$exe1['exerciseday'] == 4 ? 'Thrusday' :''}} {{$exe1['exerciseday'] == 5 ? 'Friday' :''}} {{$exe1['exerciseday'] == 6 ? 'Saturday' :''}}{{$exe1['exerciseday'] == 7 ? 'Sunday' :''}} </b></td></tr>
          @endif
          @else
-         <tr><td style=" font-size: 12;border-color: #CACFD2  ;border-left:thick solid;border-right:thick solid;border-color: #CACFD2  ;"colspan="6"> <b>{{$exe1['exerciseday'] == 1 ? 'Monday' :''}}</b></td></tr>
+         <tr><td style=" font-size: 12;border-left:thick solid;border-right:thick solid;border-color: #CACFD2  ;"colspan="6"> <b>{{$exe1['exerciseday'] == 1 ? 'Monday' :''}}</b></td></tr>
          @endif
                     <tr>
-                      <td style="border-color: #CACFD2  ;border-left:thick solid;border-color: #CACFD2  ;"></td>
+                      <td style="border-left:thick solid;border-color: #CACFD2  ;"></td>
 
                       <td >{{ ucfirst($exe1->exercise->exercisename)}}</td>
 
@@ -122,7 +122,7 @@
                       <td>{{ $exe1->memberexercisetime != '0' ? $exe1->memberexercisetime : '' }} <!-- {{date('j F, Y', strtotime($exe1['fromdate']))}}  to {{date('j F, Y', strtotime($exe1['todate']))}} --></td>
                       <td> {{ $exe1['memberexerciserep'] > 0 ? $exe1['memberexerciserep'] :'' }}</td>
 
-                      <td style="border-color: #CACFD2  ;border-color: #CACFD2  ; border-right:thick solid;border-color: #CACFD2  ;"> {{$exe1['memberexerciseins']}}  </td>
+                      <td style="border-right:thick solid;border-color: #CACFD2  ;"> {{$exe1['memberexerciseins']}}  </td>
 
                     </tr>
          

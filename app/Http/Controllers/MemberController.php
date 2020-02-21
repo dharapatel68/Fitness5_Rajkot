@@ -529,9 +529,9 @@ public function otpverify(Request $request){
       $filename = public_path('/files/' . $file_name);
       if ($file_size > 5000000)
       {
-          $img = Image::make($file->getRealPath())
+          /*$img = Image::make($file->getRealPath())
               ->fit(400, 300)
-              ->save($filename, 80);
+              ->save($filename, 80);*/
          
       }
       else
@@ -591,9 +591,9 @@ public function otpverify(Request $request){
         if ($file_size > 5000000)
         {
           $filename =public_path('/files/'.$name);
-            $img = Image::make($file->getRealPath())
+            /*$img = Image::make($file->getRealPath())
                 ->fit(400, 300)
-                ->save($filename, 80);
+                ->save($filename, 80);*/
         }
         else
         {

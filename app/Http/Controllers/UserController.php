@@ -17,7 +17,7 @@ use App\Emailsetting;
 use Session;
 use App\Notify;
 use App\ApiCronJob;
-use Image;
+//use Image;
 
 class UserController extends Controller
 {
@@ -49,10 +49,10 @@ class UserController extends Controller
                                 
                 if ($file_size > 5000000)
                 {
-                    $img = Image::make($request->file('file')
+                    /*$img = Image::make($request->file('file')
                         ->getRealPath())
                         ->fit(400, 300)
-                        ->save($filename, 80);
+                        ->save($filename, 80);*/
           
                 }
                 else
@@ -140,9 +140,9 @@ class UserController extends Controller
                         $filename = public_path('/files/' . $name);
                         if ($file_size > 5000000)
                         {
-                            $img = Image::make($file->getRealPath())
+                            /*$img = Image::make($file->getRealPath())
                                 ->fit(400, 300)
-                                ->save($filename, 80);
+                                ->save($filename, 80);*/
                             $data[] = $name;
                         }
                         else

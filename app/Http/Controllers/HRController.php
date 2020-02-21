@@ -28,7 +28,8 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
-
+use App\HR_device_emplog;
+use Carbon\Carbon;
 class HRController extends Controller
 {
     
@@ -682,8 +683,6 @@ class HRController extends Controller
 	public function addemppunch(Request $request){
 
 		$employee = Employee::where('status', 1)->get()->all();
-
-
 		if($request->isMethod('POST')){
 
 			$request->validate([
@@ -691,30 +690,94 @@ class HRController extends Controller
 				'employeeid' => 'required',
 				'punchdate' => 'required|date',
 				'checkin' => 'required',
-				'checkin' => 'required',
+				'checkout' => 'required',
 
 			]);
+			$error=0;
+			$emppunch = HR_device_emplog::where('dateid',$request->punchdate)->where('empid',$request->employeeid)->get()->first();
+			$punch = array();
+			$finalpunch = array();
+			/*******************/
+			if($emppunch){
+				array_push($punch,$emppunch->timein1,$emppunch->timeout1,$emppunch->timein2,$emppunch->timeout2,$emppunch->timein3,$emppunch->timeout3,$request->checkin,$request->checkout);
+				foreach($punch as $punch1){
+					if($punch1 > 0){
+						array_push($finalpunch, $punch1);
+					}
+				}
+			
+				/*******************/
+					sort($finalpunch);
+					$punchlength = count($finalpunch);
+					
+					for($i= 0; $i<$punchlength;$i++){
+						if($punchlength == 2){
+							if($finalpunch[$i]){
+								$emppunch->timein1 = $finalpunch[$i];
+								$i++;
+							}
+							if($finalpunch[$i]){
+								$emppunch->timeout1 = $finalpunch[$i];
+								$i++;
+							}
+							
+						}
+						else if($punchlength == 4){
+							if($finalpunch[$i]){
+								$emppunch->timein1 = $finalpunch[$i];
+								$i++;
+							}
+							if($finalpunch[$i]){
+								$emppunch->timeout1 = $finalpunch[$i];
+								$i++;
+							}
+							if($finalpunch[$i]){
+								$emppunch->timein2 = $finalpunch[$i];
+								$i++;
+							}
+							if($finalpunch[$i]){
+								$emppunch->timeout2 = $finalpunch[$i];
+								$i++;
+							}
+						}
+						else if($punchlength == 6){
+							if($finalpunch[$i]){
+								$emppunch->timein1 = $finalpunch[$i];
+								$i++;
+							}
+							if($finalpunch[$i]){
+								$emppunch->timeout1 = $finalpunch[$i];
+								$i++;
+							}
+							if($finalpunch[$i]){
+								$emppunch->timein2 = $finalpunch[$i];
+								$i++;
+							}
+							if($finalpunch[$i]){
+								$emppunch->timeout2 = $finalpunch[$i];
+								$i++;
+							}
+							if($finalpunch[$i]){
+								$emppunch->timein3 = $finalpunch[$i];
+								$i++;
+							}
+							if($finalpunch[$i]){
+								$emppunch->timeout3 = $finalpunch[$i];
+								$i++;
+							}
+						}
+						
+					}
+			 		$emppunch->save();
 
-			$emppunch = new HREmployeeelog();
-			$emppunch->userid = $request->employeeid;
-			$emppunch->punchdate = $request->punchdate;
-			$emppunch->checkin = $request->checkin;
-			$emppunch->checkout = $request->checkin;
-			$emppunch->actionby = session()->get('admin_id');
-
-			$emppunch->save();
-
-			Session::flash('message', 'Punch is added successfully');
-			Session::flash('alert-type', 'success');
-
-
-			return redirect()->route('employeelog');
-
-
+				Session::flash('message', 'Punch is added successfully');
+				Session::flash('alert-type', 'success');
+	
+				return redirect()->route('employeelog');
+			}else{
+				return redirect()->route('employeelog')->withErrors(['Log Not Exists']);
+			}
 		}
-
-
-
 
 		return view('hr.employeelog.addemployeepunch')->with(compact('employee'));
 
@@ -1816,27 +1879,25 @@ public function downloaddemosheet(Request $request){
 			for($i = 1; $i<= $day_in_month; $i++){
 
 				$current_date = date('Y-m-d',strtotime("$year-$cal_month-$i"));
-				//dd($current_date);
+			
 				$excel = new ExcelExport();
-				$excel->employeeid = $employeeid;
-				$excel->employeename = ucfirst($empdetail->first_name).' '.ucfirst($empdetail->last_name);
-				$excel->date = $current_date;
-				$excel->checkin = '';
-				$excel->checkout = '';
+							 							
+				$current_date;
+				$excel->dateid = $current_date;
+				$excel->empid = $employeeid;
+				$excel->timein1 = '';
+				$excel->timeout1 = '';
+				$excel->timein2 = '';
+				$excel->timeout2 = '';
+				$excel->timein3 = '';
+				$excel->timeout3 = '';
+				$excel->type = '';
+				$excel->leave = '';
+				$excel->totalworkinghours = '';
+				$excel->salary = '';
 				$excel->save();
-
-				$excel = new ExcelExport();
-				$excel->employeeid = $employeeid;
-				$excel->employeename = ucfirst($empdetail->first_name).' '.ucfirst($empdetail->last_name);
-				$excel->date = $current_date;
-				$excel->checkin = '';
-				$excel->checkout = '';
-				$excel->save();
-				
-
 
 			}
-			
 			
 		$isexport = 1;
 		$employee = Employee::where('status', 1)->get()->all();
@@ -1864,29 +1925,40 @@ public function downloadexcel(){
 	$empname = session()->get('empname');
 	$grid=ExcelExport::get()->all();
 	$employeename='';
+
 	if($grid){
-		$student_array[] = array('Id','EmoployeeName','Date','Check In','Check Out');
+	
+		$student_array[] = array('dateid','Employeeid','timein1','timeout1','timein2','timeout2','timein3','timeout3','type','leave','totalworkinghours','salary');
  
 	 foreach ($grid as $student)
 	 {
 	   
 		 $student_array[] = array(
-			 'Id' =>$student->employeeid,
-			 'EmoployeeName' =>$student->employeename,
-			 'Date' => $student->date,
-			 'Check In' => $student->checkin,
-			 'Check Out' => $student->checkout,
+			 'dateid' =>$student->dateid,
+			 'empid' =>$student->empid,
+			 'timein1' => $student->timein1,
+			 'timeout1' => $student->timeout1,
+			 'timein2' => $student->timein2,
+			 'timeout2' =>$student->timeout2,
+			 'timein3' =>$student->timein3,
+			 'timeout3'=>$student->timeout3,
+			 'type'=>$student->type,
+			 'leave'=>$student->leave,
+			 'totalworkinghours' => $student->totalworkinghours,
+			 'salary'=>$student->salary,
+
 		 );
+		 
 	 }
-	 $employeename=$student->employeename;
- Excel::create($employeename, function($excel) use ($student_array) {
+	
+	 Excel::create($empname, function($excel) use ($student_array) {
 					 $excel->sheet('mySheet', function($sheet) use ($student_array)
 					 {
  
 						$sheet->fromArray($student_array);
  
 					 });
-				})->export('csv');;
+				})->export('csv');
 				
 			}		
 
@@ -1922,58 +1994,83 @@ public function importemppunchcsv(Request $request){
 		  if($fileSize <= $maxFileSize){
 
 			  $data = array_map('str_getcsv', file($path));
-			  //dd($data);
+				
 			  foreach($data as $key => $csv_data){
-				  if($key != 0){
+				  if($key > 1){
+					$dateid= $csv_data[0];
+					  $empid = $csv_data[1];
+					  $empdate = $csv_data[0];
+					  $timein1 = $csv_data[2];
+					  $timeout1 = $csv_data[3];
+					  $timein2 = $csv_data[4];
+					  $timeout2 = $csv_data[5];
+					  $timein3 = $csv_data[6];
+					  $timeout3 = $csv_data[7];
+				
 
-					  $empid = $csv_data[0];
-					  $empname = $csv_data[1];
-					  $empdate = $csv_data[2];
-					  $empcheckin = $csv_data[3];
-					  $empcheckout = $csv_data[4];
-					  echo $empid.'<br/>';
-					  echo $empname.'<br/>';
-					  echo $empdate.'<br/>';
-					  echo $empcheckin.'<br/>';
-					  echo $empcheckout.'<br/>';
-					  //dd('stop');
+					  if(!empty($empid) && is_numeric($empid) && !empty($empdate) && strtotime($empdate) && !empty($timein1) &&  !empty($timeout1)){
 
-					  if(!empty($empid) && is_numeric($empid) && !empty($empdate) && strtotime($empdate) && !empty($empcheckin) &&  !empty($empcheckout)){
-
-						  $employeelog_exist = HREmployeeelog::where('userid', $empid)->where('punchdate', date('Y-m-d', strtotime($empdate)))->where('checkin', 'like' , $empcheckin.'%')->where('checkout', 'like' , $empcheckout.'%')->first();
+						  $employeelog_exist = HR_device_emplog::where('empid', $empid)->where('dateid', date('Y-m-d', strtotime($empdate)))->first();
 
 						  if(empty($employeelog_exist)){
 
-							  $employeelog = new HREmployeeelog();
-							  $employeelog->userid = $empid;
-							  $employeelog->punchdate = date('Y-m-d', strtotime($empdate));
-							  $employeelog->checkin = $empcheckin;
-							  $employeelog->checkout = $empcheckout;
+							  $employeelog = new HR_device_emplog();
+							  $employeelog->dateid = date('Y-m-d', strtotime($empdate));
+							  $employeelog->empid = $empid;
+							  $employeelog->timein1 = $csv_data[2];
+							  $employeelog->timeout1 =$csv_data[3];
+							  $employeelog->timein2 = $csv_data[4];
+							  $employeelog->timeout2 =$csv_data[5];
+							  $employeelog->timein3= $csv_data[6];
+							  $employeelog->timeout3 =$csv_data[7];
 							  $employeelog->save();
 
 						  }else{
-							  $year = date('Y');
-							  $month = date('m');
-						
-							  $date=date('Y-m-d',strtotime($empdate));
-							  $excelyear = date('Y', strtotime($date));
-							  $excelmonth = date('m', strtotime($date));
-							  $employeelog_exist = HREmployeeelog::where('userid', $empid)->where('punchdate', date('Y-m-d', strtotime($empdate)))->get()->all();
-								foreach($employeelog_exist as $employeeloge){
-									$employeeloge->delete();
-								}
+							$employeelog_exist->delete();
 									
-								$employeelog = new HREmployeeelog();
-								$employeelog->userid = $empid;
-								$employeelog->punchdate = date('Y-m-d', strtotime($empdate));
-								$employeelog->checkin = $empcheckin;
-								$employeelog->checkout = $empcheckout;
-								$employeelog->save();
+							$employeelog = new HR_device_emplog();
+							$employeelog->dateid = date('Y-m-d', strtotime($empdate));
+							$employeelog->empid = $empid;
+							$employeelog->timein1 = $csv_data[2];
+							$employeelog->timeout1 =$csv_data[3];
+							$employeelog->timein2 = $csv_data[4];
+							$employeelog->timeout2 =$csv_data[5];
+							$employeelog->timein3= $csv_data[6];
+							$employeelog->timeout3 =$csv_data[7];
+							$employeelog->save();
 							
 						  }
 					  }
-
-
+					  /**********************for calculate working hours*******************************/
+					//   $sumdiff =0;
+					//   $total=0;
+					  
+					// 		for ($i=1;$i<=3;$i++){
+					// 			// if($employeelog->totalworkinghours > 0){
+					// 			// 	$sumdiff =	$employeelog->totalworkinghours;
+								
+					// 			// }
+							
+					// 			$ts1 = Carbon::parse($employeelog['timein'.$i]);
+							
+					// 			$ts2 = Carbon::parse($employeelog['timeout'.$i]);
+					// 			$diff=$ts2->diff($ts1)->format('%H:%I:%S');
+					// 			// $difference = round(abs($ts2 - $ts1) / 3600,2);
+					// 			if($diff > 0){
+					// 				$sumdiff =  strtotime($employeelog->totalworkinghours) + strtotime($diff);
+								
+								
+					// 				$sumdiff = strtotime($employeelog->totalworkinghours) + strtotime($total);
+					// 				$total =   date('h:i:s',$sumdiff);
+					// 			}
+								
+					// 			}
+					
+					// 	   $employeelog->totalworkinghours = 	$total ;
+					// 	   $employeelog->save();
+						
+						  /*********************End for calculate working hours***************************/
+						
 				  }
 			  }
 
@@ -1997,5 +2094,12 @@ public function importemppunchcsv(Request $request){
         return $pdf->stream('Salary Slip.pdf');
 	}
 	/******************************************************************* */
+	public function getpunchrecord(Request $request){
+		$punchdate=$request->punchdate;
+		$empid = $request->empid;
+		$result=HR_device_emplog::where('empid',$empid)->where('dateid',$punchdate)->get()->first();
+		return $result;
+	}
+	
 
 }

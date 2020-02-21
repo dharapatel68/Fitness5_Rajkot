@@ -589,8 +589,12 @@ textarea.input100 {
 
 
 $(document).ready(function(){
+  var msg = '<?php echo $msg ?>';
+    if(msg){
+      $('#modal').trigger('click');
+    }
     //  $(document).on("keydown", disableF5);
-    $('#modal').trigger('click');
+   
 });
 
 
