@@ -88,37 +88,37 @@
     </th>
     </tr>
     <tr>
-      <th style=" text-align:center; border-color: #CACFD2 ; border-top: thick solid;border-left: thick solid;border-right: thick solid;border-bottom:thick solid;border-color: #CACFD2 ;" colspan="6"><font size="3"> Diet : {{$data['planname']}} &nbsp; &nbsp;From {{ $data['fromdate'] ? date('j F, Y', strtotime($data['fromdate'])) :''}} &nbsp;&nbsp;To:   {{ $data['todate'] ? date('j F, Y', strtotime($data['todate'])) : '' }}
+      <th style=" text-align:center;  border-top: thick solid;border-left: thick solid;border-right: thick solid;border-bottom:thick solid;border-color: #CACFD2 ;" colspan="6"><font size="3"> Diet : {{$data['planname']}} &nbsp; &nbsp;From {{ $data['fromdate'] ? date('j F, Y', strtotime($data['fromdate'])) :''}} &nbsp;&nbsp;To:   {{ $data['todate'] ? date('j F, Y', strtotime($data['todate'])) : '' }}
  </font>
       </th>
     </tr>
     <tr style=" border-left: thick solid; border-top: thick solid;border-bottom:bold solid; border:1px; border-color: #CACFD2 :">
-      <th style="border-color: #CACFD2 ;border-left:thick solid; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2 ;"></th>
-      <th style="border-color: #CACFD2 ; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2 ;">Meal Type</th>
-      <th style="border-color: #CACFD2 ; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2 ;">Items</th>
-      <th style="border-color: #CACFD2 ; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2 ;">Time</th>
-      <th style="border-color: #CACFD2 ; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2 ;">Compulsary</th>
-      <th style="border-color: #CACFD2 ;border-right: thick solid; border-top: thick solid;border-bottom:thick solid; border-color: #CACFD2 ;">Note</th>
+      <th style="border-left:thick solid; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2 ;"></th>
+      <th style="border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2 ;">Meal Type</th>
+      <th style="border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2 ;">Items</th>
+      <th style="border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2 ;">Time</th>
+      <th style="border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2 ;">Compulsary</th>
+      <th style="border-right: thick solid; border-top: thick solid;border-bottom:thick solid; border-color: #CACFD2 ;">Note</th>
       <!--   <th style="border-color: #CACFD2 ; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2 ;">Duration</th>
                 <th  style="border-color: #CACFD2 ;border-right: thick solid; border-top: thick solid;border-bottom:thick solid; text-align: right;border-color: #CACFD2 ;">Amount</th> -->
     </tr>
     </thead>
     <tbody style="border-bottom: thick solid; border-color: #CACFD2  ;">@foreach($memberdiet as $key=>$memberdiet1) @if($key > 0) @if($memberdiet[$key-1]['dietday'] != $memberdiet[$key]['dietday'])
       <tr>
-        <td style=" font-size: 12; border-color: #CACFD2 ;border-left:thick solid;border-right:thick solid;border-color: #CACFD2 ;" colspan="6"><b>{{$memberdiet1['dietday'] == 1 ? 'Monday' :''}} {{$memberdiet1['dietday'] == 2 ? 'Tuesday' :''}} {{$memberdiet1['dietday'] == 3 ? 'Wednesday' :''}} {{$memberdiet1['dietday'] == 4 ? 'Thrusday' :''}} {{$memberdiet1['dietday'] == 5 ? 'Friday' :''}} {{$memberdiet1['dietday'] == 6 ? 'Saturday' :''}}{{$memberdiet1['dietday'] == 7 ? 'Sunday' :''}} </b>
+        <td style=" font-size: 12;border-left:thick solid;border-right:thick solid;border-color: #CACFD2 ;" colspan="6"><b>{{$memberdiet1['dietday'] == 1 ? 'Monday' :''}} {{$memberdiet1['dietday'] == 2 ? 'Tuesday' :''}} {{$memberdiet1['dietday'] == 3 ? 'Wednesday' :''}} {{$memberdiet1['dietday'] == 4 ? 'Thrusday' :''}} {{$memberdiet1['dietday'] == 5 ? 'Friday' :''}} {{$memberdiet1['dietday'] == 6 ? 'Saturday' :''}}{{$memberdiet1['dietday'] == 7 ? 'Sunday' :''}} </b>
         </td>
       </tr>@endif @else
       <tr>
-        <td style=" font-size: 12;border-color: #CACFD2 ;border-left:thick solid;border-right:thick solid;border-color: #CACFD2 ;" colspan="6"> <b>{{$memberdiet1['dietday'] == 1 ? 'Monday' :''}}</b>
+        <td style=" font-size: 12;border-left:thick solid;border-right:thick solid;border-color: #CACFD2 ;" colspan="6"> <b>{{$memberdiet1['dietday'] == 1 ? 'Monday' :''}}</b>
         </td>
       </tr>@endif
       <tr>
-        <td style="border-color: #CACFD2 ;border-left:thick solid;border-color: #CACFD2 ;"></td>
+        <td style="border-left:thick solid;border-color: #CACFD2 ;"></td>
         <td>{{ ucfirst($memberdiet1->mealmaster->mealname)}}</td>
         <td>@if($itemnames[$key]) @foreach($itemnames[$key] as $value) {{'' .ucfirst($value)}} @endforeach @endif</td>
         <td>{{ $memberdiet1->diettime != '00:00:00' ? date('h:i a', strtotime($memberdiet1->diettime)) : '' }}</td>
         <td>{{ $memberdiet1['compulsary'] == 1? 'Yes':'No' }}</td>
-        <td style="border-color: #CACFD2 ;border-color: #CACFD2 ; border-right:thick solid;border-color: #CACFD2 ;">{{$memberdiet1['remark']}}</td>
+        <td style=" border-right:thick solid;border-color: #CACFD2 ;">{{$memberdiet1['remark']}}</td>
       </tr>@endforeach</tbody>
 
     </table>

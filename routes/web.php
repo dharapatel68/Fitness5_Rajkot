@@ -22,6 +22,8 @@
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+Route::any('sendmemberform', 'SendMemberFormController@sendmemberform')->name('sendmemberform');
+Route::any('{id}/addmember', 'SendMemberFormController@addmeber');
 Route::any('BookTrainer','TrainerProfileControllerApp@BookTrainer');
 Route::any('viewtrainersApp/{id}', 'TrainerProfileControllerApp@viewtrainers')->name('viewtrainersApp');
 Route::any('viewtrainerprofileApp/{id}', 'TrainerProfileControllerApp@viewtrainerprofile')->name('viewtrainerprofileApp');
@@ -469,7 +471,7 @@ Route::group(['middleware' => ['admin']], function() {
    Route::any('loaduserbytype','AdminController@loaduserbytype')->name('loaduserbytype');
    Route::any('loaduserprofile','AdminController@loaduserprofile')->name('loaduserprofile');
    /************************************end dashboard route****************************/
-   Route::any('sendmemberform', 'SendMemberFormController@sendmemberform')->name('sendmemberform');
+
    Route::any('addtrainerprofile', 'TrainerProfileController@addtrainerprofile')->name('addtrainerprofile');
    Route::any('viewtrainers', 'TrainerProfileController@viewtrainers')->name('viewtrainers');
    Route::any('viewtrainerprofile/{id}', 'TrainerProfileController@viewtrainerprofile')->name('viewtrainerprofile');
@@ -483,7 +485,7 @@ Route::group(['middleware' => ['admin']], function() {
    Route::post('generate-shorten-link', 'ShortLinkController@store')->name('generate.shorten.link.post');
    Route::get('sendmemberform1/{code}', 'ShortLinkController@shortenLink')->name('pshorten.link');
    /**********************************************************************************/
-   Route::any('{id}/addmember', 'SendMemberFormController@addmeber');
+  
    Route::any('viewrequests', 'SendMemberFormController@viewrequests');
    Route::any('sendformtonumber', 'SendMemberFormController@sendformtonumber');
    Route::any('changeMemberStatus', 'SendMemberFormController@changeMemberStatus');
@@ -736,4 +738,4 @@ Route::any('downloaddemosheet', 'HRController@downloaddemosheet')->name('downloa
 Route::any('downloadexcel', 'HRController@downloadexcel')->name('downloadexcel');
 Route::any('importemppunchcsv', 'HRController@importemppunchcsv')->name('importemppunchcsv');
 
-
+Route::any('getpunchrecord', 'HRController@getpunchrecord')->name('getpunchrecord');

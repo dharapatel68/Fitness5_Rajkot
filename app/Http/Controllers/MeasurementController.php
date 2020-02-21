@@ -92,7 +92,7 @@ class MeasurementController extends Controller
           array_push($users, $val);
         }
        
-          $measurement1=Measurement::leftjoin('member','member.memberid','measurement.memberid')->where('memberid',$value)->get()->first();
+          $measurement1=Measurement::leftjoin('member','member.memberid','measurement.memberid')->where('measurement.memberid',$value)->get()->first();
           if($measurement1){
             array_push($measurement, $measurement1);    
           }

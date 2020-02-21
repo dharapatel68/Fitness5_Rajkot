@@ -70,7 +70,7 @@
     </div>
     <br>
     <br>
-    <div class="content" style="margin-top: 70px;">
+    <div class="content" style="margin-top: 80px;">
         <h3 style="margin-left: 200px;">Consent Form of {{  ucfirst($request->firstname)}} {{  ucfirst($request->lastname)}} #{{$request->memberid}}</h3>
         <p style="font-size:10">Member Name: @if($request->firstname)<b>
         {{  ucfirst($request->firstname)}}  {{  ucfirst($request->lastname)}}</b>@else _____________________ @endif
@@ -80,7 +80,7 @@
          {{$request->email}}</b>@else _____________________ @endif
             <br>
             <h4>In consideration of my desire to engage in an exercise programme at the FITNESS5. I Understand and Agree to following:</h4>
-            <center><b style="margin-top: -200px;">TERMS & CONDITIONS</b>
+            <center><b style="margin-top: -400px !important; padding-top:-200px;">TERMS & CONDITIONS</b>
             </center>
     </div>
     <div class="text">
@@ -160,7 +160,6 @@
     </div>
     </div>
     <div>
-        <br>
         <table width="100%" style="margin-left: 8px;   margin-right: 40px; border-width: 2px;border-color: black;">
             <tr>
                 <td style="border:2px;"></td>
