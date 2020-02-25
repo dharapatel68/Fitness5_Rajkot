@@ -901,9 +901,9 @@ class HRController extends Controller
 	
 		//  try {
 
-		$employeelog = HREmployeeelog::where('userid', $employeeid)->whereBetween('punchdate', [$fromdate, $todate])->get()->all();
+		$employeelog = HR_device_emplog::where('empid', $employeeid)->whereBetween('dateid', [$fromdate, $todate])->where('timein1','>',0)->get()->all();
 		
-		$employeelog_days = HREmployeeelog::where('userid', $employeeid)->whereBetween('punchdate', [$fromdate, $todate])->groupBy('punchdate')->select('punchdate')->get()->all();
+		$employeelog_days = HR_device_emplog::where('empid', $employeeid)->whereBetween('dateid', [$fromdate, $todate])->where('timein1','>',0)->groupBy('dateid')->select('dateid')->get()->all();
 		
 
 		$attenddays = count($employeelog_days);
@@ -967,8 +967,10 @@ class HRController extends Controller
 			$holidays = 0;
 		}
 		/*****for leave cal******/
-		$totalworkindays = $Workindays+$holidays;
+		$totalworkindays = $Workindays;
+		
 		$leavedays_cal = $totalworkindays - $attenddays;
+	
 		/*****End *for leave cal******/
 		$actualdays = $Workindays- $workingdays_data->holidays ;
 		
@@ -990,22 +992,22 @@ class HRController extends Controller
 		$totalminutedisplay = $totalminute/60;
 
 		$total_hour = ceil($totalminute / 60);
-
+ 
 
 		$takenleave = $Workindays - $attenddays;
 		
-		$totalattenddays = $Workindays - $takenleave;
+		$totalattenddays = $attenddays + $holidays;
 	
 		
-		$perdaysalary = ($empsalary/$Workindays);
-
+		$perdaysalary = ($empsalary/($Workindays + $holidays));
+		
 		$current_salary = number_format((float)($perdaysalary * $totalattenddays), 2, '.', '');
 
 		if($current_salary > $empsalary){
 			$current_salary = $empsalary;
 		}
 		
-
+	
 		$store = !empty($request->store) ? $request->store : 0;
 
 		$success = true;
@@ -1023,6 +1025,7 @@ class HRController extends Controller
 				$trainerschemes=[];
 
 				$trainersession=Claimptsession::where('trainerid',$empdata->employeeid)->where('status','Active')->whereMonth('actualdate',$cal_month)->whereYear('actualdate',$year)->get()->count();
+				
 				$trainersessiondetail=Claimptsession::where('trainerid',$empdata->employeeid)->where('status','Active')->whereMonth('actualdate',$cal_month)->whereYear('actualdate',$year)->orderBy('actualdate','desc')->get()->all();
 				foreach ($trainersessiondetail as $key => $value) {
 					
@@ -1038,6 +1041,18 @@ class HRController extends Controller
 				$trainerdetail['trainerlevel']=$trainerlevel;
 				$trainerdetail['trainerpercentage']=$trainerpercentage;
 				$trainerdetail['trainershemes']=$trainersessiondetail;
+			
+				$perhoursalary = $perdaysalary / $empworkinghour;
+				$totalsessionprice=0;
+				$current_salary = $current_salary - ($perhoursalary*$trainersession);
+				foreach($trainerdetail['trainershemes'] as $schemedetail)  
+				{
+				   
+					$totalsessionprice += $schemedetail->amount;
+				}
+				$current_salary = $current_salary + $totalsessionprice;
+				$current_salary = round($current_salary ,  2);
+				
 				
 			}else{
 				Session::flash('message', 'Please assign level to trainer ');
