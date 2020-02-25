@@ -381,16 +381,24 @@ $confirmdate = '';
                 <table class="table">
                     <thead>
                         <th>Date</th>
-                        <th>Check In</th>
-                        <th>Check Out</th>
+                        <th>Check In </th>
+                        <th>Check Out </th>
+                        <th>Check In </th>
+                        <th>Check Out </th>
+                        <th>Check In </th>
+                        <th>Check Out </th>
                         <th></th>
                     </thead>
                     <tbody>
                         @foreach($employeelog as $emplog)
                             <tr>
-                                <td>{{date('d-m-Y',strtotime($emplog->punchdate))}}</td>
-                                <td>{{$emplog->checkin}}</td>
-                                <td>{{$emplog->checkout}}</td>
+                                <td>{{date('d-m-Y',strtotime($emplog->dateid))}}</td>
+                                <td>{{$emplog->timein1}}</td>
+                                <td>{{$emplog->timeout1}}</td>
+                                <td>{{$emplog->timein2}}</td>
+                                <td>{{$emplog->timeout2}}</td>
+                                <td>{{$emplog->timein3}}</td>
+                                <td>{{$emplog->timeout3}}</td>
                                 
                             </tr>
                             @endforeach

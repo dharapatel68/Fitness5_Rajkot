@@ -1592,7 +1592,7 @@ textarea.input100 {
                                 </td>
                                 @if($package->status == 1)
                                 @if(Session::get('role')  == 'admin' || Session::get('role')  == 'Admin')
-                                  <td> <a href="{{url('changeStatus/'.$package->memberpackagesid )}}"  zclass="btn bg-light-navy"  > <span class="label label-warning" >Deactive</a></span> </td>
+                                  <td> <a href="{{url('changeStatus/'.$package->memberpackagesid )}}"  class="btn bg-light-navy"  > <span class="label label-warning" >Deactive</a></span> </td>
                                   @endif
                                     @endif                       
 

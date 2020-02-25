@@ -402,12 +402,12 @@ public function schemeforpayment(Request $request)
           $memberpackage_data=MemberPackages::where('userid',$userid)->where('memberpackagesid',$member->invoiceno)->get()->first();
               if($memberpackage_data) {
         $member_package .= '<tr>';
-          $member_package .= '<td>'.ucfirst($member->schemename).'</td>';
-           $member_package .= '<td>'.$member->discountamount.'</td>';
-            $member_package .= '<td>'.$member->amount.'</td>';
-               $member_package .= '<td>'.date('d-m-Y', strtotime($member->date)).'</td>';
-          $member_package .= '<td>'.date('d-m-Y', strtotime($memberpackage_data->joindate)).'</td>';
-          $member_package .= '<td>'.date('d-m-Y', strtotime($memberpackage_data->expiredate)).'</td>';
+        $member_package .= '<td>'.ucfirst($member->schemename).'</td>';
+        $member_package .= '<td>'.$member->discountamount.'</td>';
+        $member_package .= '<td>'.$member->amount.'</td>';
+        $member_package .= '<td>'.date('d-m-Y', strtotime($member->date)).'</td>';
+        $member_package .= '<td>'.date('d-m-Y', strtotime($memberpackage_data->joindate)).'</td>';
+        $member_package .= '<td>'.date('d-m-Y', strtotime($memberpackage_data->expiredate)).'</td>';
         $member_package .= '</tr>';
       }
         }
