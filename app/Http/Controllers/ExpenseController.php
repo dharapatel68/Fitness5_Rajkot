@@ -14,7 +14,7 @@ use App\Admin;
 use App\Employee;
 use App\expensepayment;
 use App\bankmaster;
-use App\notify;
+use App\Notify;
 use Session;
 
 use DB;
