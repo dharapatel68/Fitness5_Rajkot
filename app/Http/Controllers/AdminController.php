@@ -576,7 +576,7 @@ class AdminController extends Controller
 
         }
 
-        return view('admin.admin_login');
+        return view('admin.loginpage');
 
     }
     public function loginpage()
@@ -593,7 +593,7 @@ class AdminController extends Controller
         else
         {
             $msg = 'Invalid Username or Password';
-            return view('admin.admin_login')->with('msg');
+            return view('admin.loginpage')->with('msg');
 
         }
 
@@ -669,6 +669,48 @@ class AdminController extends Controller
 
         }
 
+    }
+    public function sessionreportadmin(Request $request){
+
+        $trainersession2 = Ptmember::leftjoin('member', 'member.memberid', 'ptmember.memberid')
+        ->leftjoin('schemes', 'schemes.schemeid', 'ptmember.schemeid')
+        ->whereIn('ptmember.status', ['Active', 'Pending'])
+        ->where('hoursfrom','!=','')
+        ->select('member.memberid', 'member.firstname', 'member.lastname')
+        ->groupBy('member.memberid', 'member.firstname', 'member.lastname')
+        ->get()
+        ->all();
+
+
+
+
+    foreach ($trainersession2 as $key => $value)
+    {
+        # code...
+        $activecount = Ptmember::where('ptmember.memberid', $value->memberid)
+            ->leftjoin('member', 'member.memberid', 'ptmember.memberid')
+            ->leftjoin('schemes', 'schemes.schemeid', 'ptmember.schemeid')
+            ->whereIn('ptmember.status', ['Active', 'Pending'])
+            ->where('ptmember.hoursfrom','!=','')
+            ->select('member.*', 'ptmember.*', 'ptmember.status as ptstatus', 'schemes.schemename')
+            ->get()
+            ->all();
+
+        $value['schemenameprint'] = $activecount[0]->schemename;
+        $activecount = count($activecount);
+        $deductedcount = Ptmember::where('ptmember.memberid', $value->memberid)
+            ->leftjoin('member', 'member.memberid', 'ptmember.memberid')
+            ->leftjoin('schemes', 'schemes.schemeid', 'ptmember.schemeid')
+            ->whereIn('ptmember.status', ['Conducted','Marked'])
+            ->where('ptmember.hoursfrom','!=','')
+            ->select('member.*', 'ptmember.*', 'ptmember.status as ptstatus', 'schemes.schemename')
+            ->count();
+
+        $value['activecount'] = $activecount;
+        $value['deductedcount'] = $deductedcount;
+    }
+
+        return view('admin.sessionreportadmin',compact('trainersession2'));
     }
 }
 

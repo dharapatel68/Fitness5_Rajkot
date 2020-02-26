@@ -596,12 +596,12 @@ class HRController extends Controller
 		
 		$searchparameter = ['employeeid' => $employeeid, 'month' => $month, 'year' => $year];
 
-		$employeelog = HREmployeeelog::where('userid', $employeeid)->whereBetween('punchdate', [$fromdate, $todate])->orderBy('checkout', 'asc')->get();
-
+		$employeelog = HR_device_emplog::where('empid', $employeeid)->whereBetween('dateid', [$fromdate, $todate])->orderBy('timeout1', 'asc')->get();
+	
 		return datatables()->of($employeelog)
-		->editColumn('checkout', function($employeelog){
-			if(!empty($employeelog->checkout)){
-				return $employeelog->checkout;
+		->editColumn('timeout1', function($employeelog){
+			if(!empty($employeelog->timeout1)){
+				return $employeelog->timeout1;
 			}else{
 				if(session()->get('logged_role') == 'Admin'){
 
@@ -611,6 +611,59 @@ class HRController extends Controller
 				}
 			}
 
+		})
+
+		->editColumn('timein2', function($employeelog){
+			if(!empty($employeelog->timein2)){
+				return $employeelog->timein2;
+			}else{
+				if(session()->get('logged_role') == 'Admin'){
+
+					//return "<a href=".route('addpunch', $employeelog->emplogid)." class='btn btn-danger'>Miss</a>";
+				}else{
+					//return "<a class='btn btn-danger' disabled title='Dare to edit this'>Miss</a>";
+				}
+			}
+
+		})
+		->editColumn('timeout2', function($employeelog){
+			if(!empty($employeelog->timeout2)){
+				return $employeelog->timeout2;
+			}else{
+				if(session()->get('logged_role') == 'Admin'){
+
+					//return "<a href=".route('addpunch', $employeelog->emplogid)." class='btn btn-danger'>Miss</a>";
+				}else{
+					//return "<a class='btn btn-danger' disabled title='Dare to edit this'>Miss</a>";
+				}
+			}
+			
+		})
+		->editColumn('timein3', function($employeelog){
+			if(!empty($employeelog->timein3)){
+				return $employeelog->timein3;
+			}else{
+				if(session()->get('logged_role') == 'Admin'){
+
+					//return "<a href=".route('addpunch', $employeelog->emplogid)." class='btn btn-danger'>Miss</a>";
+				}else{
+					//return "<a class='btn btn-danger' disabled title='Dare to edit this'>Miss</a>";
+				}
+			}
+			
+		})
+		->editColumn('timeout3', function($employeelog){
+			if(!empty($employeelog->_)){
+				return $employeelog->_;
+			}else{
+				if(session()->get('logged_role') == 'Admin'){
+
+					//return "<a href=".route('addpunch', $employeelog->emplogid)." class='btn btn-danger'>Miss</a>";
+				}else{
+					//return "<a class='btn btn-danger' disabled title='Dare to edit this'>Miss</a>";
+				}
+			}
+			
 		})->escapeColumns([])
 		->make(true);
 
@@ -881,11 +934,11 @@ class HRController extends Controller
 		$checkintime = $emptime->workinghourfrom1;
 		$checkouttime = $emptime->workinghourto1;
 
-		$employeelog = HREmployeeelog::where('userid', $employeeid)->whereBetween('punchdate', [$fromdate, $todate])->where('checkout', null)->select('hr_employeelog.punchdate', 'hr_employeelog.checkin', 'hr_employeelog.checkout', 'hr_employeelog.checkin', 'hr_employeelog.emplogid')->groupBy('punchdate')->get()->all();
+		$employeelog = HR_device_emplog::where('empid', $employeeid)->whereBetween('dateid', [$fromdate, $todate])->where('timein1', null)->select('hr_device_emplog.dateid', 'hr_device_emplog.timein1', 'hr_device_emplog.timeout1', 'hr_device_emplog.timein2', 'hr_device_emplog.hr_device_emplogid')->groupBy('dateid')->get()->all();
 		
 
-		$lateemployeelog = HREmployeeelog::where('userid', $employeeid)->whereBetween('punchdate', [$fromdate, $todate])->where(function($query) use ($checkintime, $checkouttime){
-			$query->where('checkin', '>', $checkintime)->orWhere('checkout', '<', $checkouttime);
+		$lateemployeelog = HR_device_emplog::where('empid', $employeeid)->whereBetween('dateid', [$fromdate, $todate])->where(function($query) use ($checkintime, $checkouttime){
+			$query->where('timein1', '>', $checkintime)->orWhere('timeout1', '<', $checkouttime);
 		})->get()->all();
 
 		$error = 1;
@@ -1272,7 +1325,7 @@ class HRController extends Controller
 		$fromdate = date('Y-m-d',strtotime("$year-$cal_month-01"));
 		$todate = date('Y-m-d',strtotime("$year-$cal_month-$day_in_month"));
 		
-		$employeelog = HREmployeeelog::where('userid', $employeeid)->whereBetween('punchdate', [$fromdate, $todate])->get()->all();
+		$employeelog = HR_device_emplog::where('empid', $employeeid)->whereBetween('date', [$fromdate, $todate])->get()->all();
 		$emploanamount = EmployeeAccount::where('employeeid', $employeeid)->orderBy('empaccountid', 'desc')->pluck('amount')->first();
 
 		if($request->isMethod('POST')){
@@ -1742,6 +1795,7 @@ class HRController extends Controller
 	}
 
 	public function searchemployeelogdaywise(Request $request){
+
 		if ($request->ajax()) {
 
 		$employeeid = $request->employeeid;
@@ -1782,22 +1836,72 @@ class HRController extends Controller
 		
 		$searchparameter = ['employeeid' => $employeeid, 'month' => $month, 'year' => $year];
 
-		$employeelog = HREmployeeelog::where('userid', $employeeid)->whereBetween('punchdate', [$fromdate, $todate])->orderBy('checkout', 'asc')->select('hr_employeelog.punchdate', 'hr_employeelog.checkin', 'hr_employeelog.checkout', 'hr_employeelog.emplogid', DB::raw('MIN(hr_employeelog.checkin) as checkin'), DB::raw('MAX(hr_employeelog.checkout) as checkout'))->groupBy('punchdate')->get();
+		$employeelog = HR_device_emplog::where('empid', $employeeid)->whereBetween('dateid', [$fromdate, $todate])->select('hr_device_emplog.dateid', 'hr_device_emplog.timein1', 'hr_device_emplog.timeout1', 'hr_device_emplog.hr_device_emplogid', DB::raw('MIN(hr_device_emplog.timein1) as timein1'), DB::raw('MAX(hr_device_emplog.timeout1) as timeout1'))->groupBy('dateid')->get();
 
 		return datatables()->of($employeelog)
-		->editColumn('checkout', function($employeelog){
-			if(!empty($employeelog->checkout)){
-				return $employeelog->checkout;
+		->editColumn('timeout1', function($employeelog){
+			if(!empty($employeelog->timeout1)){
+				return $employeelog->timeout1;
 			}else{
 				if(session()->get('logged_role') == 'Admin'){
 
-					return "<a href=".route('addpunch', $employeelog->emplogid)." class='btn btn-danger'>Miss</a>";
+					//return "<a href=".route('addpunch', $employeelog->emplogid)." class='btn btn-danger'>Miss</a>";
 				}else{
-					return "<a class='btn btn-danger' disabled title='Dare to edit this'>Miss</a>";
+					//return "<a class='btn btn-danger' disabled title='Dare to edit this'>Miss</a>";
 				}
 			}
 
-		})->escapeColumns([])
+		})->editColumn('timein2', function($employeelog){
+			if(!empty($employeelog->timein2)){
+				return $employeelog->timein2;
+			}else{
+				if(session()->get('logged_role') == 'Admin'){
+
+					//return "<a href=".route('addpunch', $employeelog->emplogid)." class='btn btn-danger'>Miss</a>";
+				}else{
+					//return "<a class='btn btn-danger' disabled title='Dare to edit this'>Miss</a>";
+				}
+			}
+
+		})->editColumn('timeout2', function($employeelog){
+			if(!empty($employeelog->timeout2)){
+				return $employeelog->timeout2;
+			}else{
+				if(session()->get('logged_role') == 'Admin'){
+
+					//return "<a href=".route('addpunch', $employeelog->emplogid)." class='btn btn-danger'>Miss</a>";
+				}else{
+					//return "<a class='btn btn-danger' disabled title='Dare to edit this'>Miss</a>";
+				}
+			}
+
+		})->editColumn('timein3', function($employeelog){
+			if(!empty($employeelog->timein3)){
+				return $employeelog->timein3;
+			}else{
+				if(session()->get('logged_role') == 'Admin'){
+
+					//return "<a href=".route('addpunch', $employeelog->emplogid)." class='btn btn-danger'>Miss</a>";
+				}else{
+					//return "<a class='btn btn-danger' disabled title='Dare to edit this'>Miss</a>";
+				}
+			}
+
+		})
+		->editColumn('timeout3', function($employeelog){
+			if(!empty($employeelog->timeout3)){
+				return $employeelog->timeout3;
+			}else{
+				if(session()->get('logged_role') == 'Admin'){
+
+					//return "<a href=".route('addpunch', $employeelog->emplogid)." class='btn btn-danger'>Miss</a>";
+				}else{
+					//return "<a class='btn btn-danger' disabled title='Dare to edit this'>Miss</a>";
+				}
+			}
+
+		})
+		->escapeColumns([])
 		->make(true);
 
 		//$employee = Employee::where('status', 1)->get()->all();

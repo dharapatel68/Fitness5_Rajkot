@@ -111,6 +111,10 @@
                                                         <th>Date</th>
                                                         <th>Check In</th>
                                                         <th>Check Out</th>
+                                                        <th>Check In</th>
+                                                        <th>Check Out</th>
+                                                        <th>Check In</th>
+                                                        <th>Check Out</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -177,9 +181,14 @@
                     }
                 },
                 columns: [
-                {data: 'punchdate', name: 'punchdate'},
-                {data: 'checkin', name: 'checkin'},
-                {data: 'checkout', name: 'checkout'},
+                {data: 'dateid', name: 'dateid'},
+                {data: 'timein1', name: 'timein1'},
+                {data: 'timeout1', name: 'timeout1'},
+                {data: 'timein2', name: 'timein2'},
+                {data: 'timeout2', name: 'timeout2'},
+                {data: 'timein3', name: 'timein3'},
+                {data: 'timeout3', name: 'timeout3'},
+      
                 ]
             });
         });
