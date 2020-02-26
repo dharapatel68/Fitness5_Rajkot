@@ -84,7 +84,7 @@ class PaymentReportController extends Controller
 	        	$paymentdata->where('payments.mode',$mode);
 	        }
 
-	        $paymentdata=$paymentdata->paginate(8)->appends('query');
+	        $paymentdata=$paymentdata->paginate(1000)->appends('query');
 	        // dd($paymentdata);
 	        return view('admin.paymentreport.paymentreport',compact('paymentdata','users','modes','query'));
 
