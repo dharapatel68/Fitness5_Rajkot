@@ -340,13 +340,13 @@ ul {
   background-color: black;
 }
   .box {
-    border-top-color: #f39c12 !important;
+    border-top-color: #3a3938 !important;
 }
 .box-primary {
-    border-top-color: #f39c12 !important;
+    border-top-color: #3a3938 !important;
 }
 .active{
-   border-top-color: #f39c12 !important;
+   border-top-color: #3a3938 !important;
 }
 .timeline-item{
 

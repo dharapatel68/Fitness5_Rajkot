@@ -222,7 +222,7 @@ class UserController extends Controller
 
         if ($request->isMethod('post'))
         {
-
+          
             $request->validate([
 
             'first_name' => 'required',
@@ -243,6 +243,7 @@ class UserController extends Controller
             // dd($request);
             $role = lcfirst(Role::find($request['Role_id'])->employeerole);
             $check = '';
+         
             if ($request->hasFile('docs'))
             {
                 $allowedfileExtension = ['pdf', 'jpg', 'png', 'docx'];
@@ -261,8 +262,10 @@ class UserController extends Controller
                     }
                 }
             }
-            if ($check)
+            
+            if ($check == true)
             {
+             
                 // $items= Item::create($request->all());
                 foreach ($request->file('docs') as $file)
                 {
@@ -275,10 +278,10 @@ class UserController extends Controller
                     $filename = public_path('/files/' . $file_name);
                     if ($file_size > 5000000)
                     {
-                        $img = Image::make($file->getRealPath())
+                       /* $img = Image::make($file->getRealPath())
                             ->fit(400, 300)
                             ->save($filename, 80);
-                        $data[] = $name;
+                        $data[] = $name;*/
                     }
                     else
                     {
@@ -292,13 +295,20 @@ class UserController extends Controller
                 }
                 // dd($data);
                 // $user->files=json_encode($data);
-                // dd($request->alldocs[0]);
-                $user->files = $request->alldocs;
-                $user->save();
+            
+              
+                if(!empty($request->alldocs)){
+                    $user->files = $request->alldocs;
+                    $user->save();
+                }else{
+                    $user->files='';
+                    $user->save();
+                }
+                
             }
+            
             // dd($request->alldocs[0]);
-            $user->files = $request->alldocs;
-            $user->save();
+           
 
             if (!$request->photo)
             {

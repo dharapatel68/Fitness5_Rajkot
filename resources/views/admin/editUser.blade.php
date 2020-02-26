@@ -570,8 +570,7 @@ if(olddata){
 
             });
    
-                  </script>
-                  <script type="text/javascript">
+
     $('input#docs').change(function(){
   var imageSizeArr = 0;
   var imageArr = document.getElementById('docs');
@@ -630,8 +629,7 @@ if(olddata){
   
   // $('#docs').on('change',function(){
 
-                  </script>
-                  <script type="text/javascript">
+         
     $('#profile-img').bind('change', function(event) {
 
   //this.files[0].size gets the size of your file.
