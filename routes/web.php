@@ -739,3 +739,8 @@ Route::any('downloadexcel', 'HRController@downloadexcel')->name('downloadexcel')
 Route::any('importemppunchcsv', 'HRController@importemppunchcsv')->name('importemppunchcsv');
 
 Route::any('getpunchrecord', 'HRController@getpunchrecord')->name('getpunchrecord');
+
+
+Route::any('sessionreportadmin', 'AdminController@sessionreportadmin')->name('sessionreportadmin');
+
+

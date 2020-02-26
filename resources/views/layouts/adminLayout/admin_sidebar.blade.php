@@ -1,5 +1,8 @@
 <style type="text/css">
    @import url(https://fonts.googleapis.com/css?family=Montserrat);
+   a {
+    color: #131313;
+}
 </style>
 <?php 
    include('..///config/database.php');
@@ -71,7 +74,8 @@
                <ul class="treeview-menu">
                   <li class="treeview">
                      <a href="#">
-                     <img src="{{ asset('images/icon/device.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp; <span>Device</span>
+
+                     <i class="fa fa-hdd-o" ></i> <span>Device</span>
                      <span class="pull-right-container">
                      <i class="fa fa-angle-left pull-right"></i>
                      </span>
@@ -94,14 +98,14 @@
                   </li>
                   <li class="treeview">
                      <a href="#">
-                     <img src="{{ asset('images/icon/hr.png') }}" style="height: 22px; width: 22px;margin-left: -3px;">&nbsp;&nbsp; <span>HR</span>
+                        <i class="fa fa-user"></i> <span>HR</span>
                      <span class="pull-right-container">
                      <i class="fa fa-angle-left pull-right"></i>
                      </span>
                      </a>
                      <ul class="treeview-menu">
                         <li class="treeview">
-                           <a href="#"><img src="{{ asset('images/icon/workinghour.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp; Working Days
+                           <a href="#"> <i class="fa fa-clock-o"></i> Working Days
                            <span class="pull-right-container">
                            <i class="fa fa-angle-left pull-right"></i>
                            </span>
@@ -112,7 +116,7 @@
                            </ul>
                         </li>
                         <li class="treeview">
-                           <a href="#"><img src="{{ asset('images/icon/leave.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp; Leave
+                           <a href="#">  <i class="fa fa-shirtsinbulk"></i> Leave
                            <span class="pull-right-container">
                            <i class="fa fa-angle-left pull-right"></i>
                            </span>
@@ -124,7 +128,7 @@
                         </li>
                         <li class="treeview">
                            <a href="#">
-                           <img src="{{ asset('images/icon/employeeleave.png') }}" style="height: 23px; width: 23px;margin-left: -3px;">&nbsp;&nbsp;
+                           <i class="fa fa-shirtsinbulk"></i>
                            <span>
                            Employee Leave
                            </span>
@@ -146,7 +150,7 @@
                            </ul>
                         </li>
                         <li class="treeview">
-                           <a href="#"> <img src="{{ asset('images/icon/account.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp; Employee Account
+                           <a href="#"> <i class="fa fa-stack-exchange" ></i> Employee Account
                            <span class="pull-right-container">
                            <i class="fa fa-angle-left pull-right"></i>
                            </span>
@@ -157,7 +161,7 @@
                            </ul>
                         </li>
                         <li class="treeview">
-                           <a href="#"><img src="{{ asset('images/icon/employeelog.png') }}" style="height: 23px; width: 23px;margin-left: -3px;">&nbsp;&nbsp; Employee Log
+                           <a href="#"><i class="fa fa-table"></i> Employee Log
                            <span class="pull-right-container">
                            <i class="fa fa-angle-left pull-right"></i>
                            </span>
@@ -170,7 +174,7 @@
                            </ul>
                         </li>
                         <li class="treeview">
-                           <a href="#"><img src="{{ asset('images/icon/salary.png') }}" style="height: 18px; width: 18px;margin-left: -3px;">&nbsp;&nbsp; Employee Salary
+                           <a href="#"> <i class="fa fa-money"></i>&nbsp;&nbsp; Employee Salary
                            <span class="pull-right-container">
                            <i class="fa fa-angle-left pull-right"></i>
                            </span>
@@ -524,6 +528,11 @@
                   <li>
                      <a  href="{{ url('paymentreport') }}">
                      <i class="fa fa-chevron-right"></i><b>Payment Report</b>
+                     </a>
+                  </li>
+                  <li>
+                     <a  href="{{ url('sessionreportadmin') }}">
+                     <i class="fa fa-chevron-right"></i><b>Session Report</b>
                      </a>
                   </li>
                   <li class="treeview">
