@@ -1,6 +1,7 @@
 @extends('layouts.adminLayout.admin_design')
 
 @section('title', 'View Employee Log')
+<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
 
 @section('content')
 
@@ -119,6 +120,10 @@
                                                         <th>Date</th>
                                                         <th>Check In</th>
                                                         <th>Check Out</th>
+                                                        <th>Check In</th>
+                                                        <th>Check Out</th>
+                                                        <th>Check In</th>
+                                                        <th>Check Out</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -161,7 +166,9 @@
     </div>
 </div>    
 @endsection
+
 @push('script')
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>	
 <script type="text/javascript">
     $(document).ready(function(){
 
@@ -189,9 +196,14 @@
                     }
                 },
                 columns: [
-                {data: 'punchdate', name: 'punchdate'},
-                {data: 'checkin', name: 'checkin'},
-                {data: 'checkout', name: 'checkout'},
+                {data: 'dateid', name: 'dateid'},
+                {data: 'timein1', name: 'timein1'},
+                {data: 'timeout1', name: 'timeout1'},
+                {data: 'timein2', name: 'timein2'},
+                {data: 'timeout2', name: 'timeout2'},
+                {data: 'timein3', name: 'timein3'},
+                {data: 'timeout3', name: 'timeout3'},
+      
                 ]
             });
         });

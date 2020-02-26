@@ -16,6 +16,9 @@
   .red{
     color: red;
   }
+  a {
+    color: #131313;
+}
   .green{
     color:green;
   }
@@ -199,12 +202,11 @@ $(document).ready( function () {
               <div class="box" style="height:109px;">
                 <div class="box-header with-border">
                   <div class="box-body">
-                    <a href="{{url('addinquiry')}}" class="btn btn-social bg-warning">
-                        <img src="images/icon/inq1.jpg">Add Inquiry
+                    <a href="{{url('addinquiry')}}" class="btn btn-social">
+                       <i class="fa fa-pencil"></i> Inquiry
                         </a>
-                   
-                    <a  href="{{url('registration#tologin')}}"  class="btn btn-social bg-warning"><img src="images/icon/registration.png">Add Registration</a>
-                     <a  href="{{url('addMeasurement')}}" class="btn  btn-social bg-warning"><img src="images/icon/bodymeasu.png">Add Measurement</a>
+                     <a  href="{{url('addMeasurement')}}" class="btn  btn-social"> <i class="fa fa-user-plus "></i>Measurement</a>
+                     <a  href="{{url('directmessage')}}" class="btn  btn-social"> <i class="fa fa-envelope"></i>SMS</a>
                     </div>
                 </div>
               </div>
@@ -475,52 +477,7 @@ $(document).ready( function () {
           </div>
          </div>
       </div>
-      <div class="row">
-        <div class="col-lg-8">
-         <div class="box">
-           <div class="box-header with-border">
-             <h3 class="box-title">Member Session</h3>
-               <div class="box-tools pull-right">
-                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                 </button>
- 
-                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-               </div>
-             </div>
-             <div class="box-body">
-               <div class="table-responsive">
-                <table id="membersession" class="table table-bordered table-striped">
-               <thead>
-                 <tr>
-                   <th style="display: none"></th>
-                   <th>Member Name</th>
-                   <th>Scheme Name</th>
-                   <th>Active/Pending Session</th>
-                   <th>Deducted Session</th>
-                 </tr>
-               </thead>
-              <tbody>
-               @if(count($trainersession2)>0)
-               <tr>
- 
-                 @foreach($trainersession2 as $trainersession1)
-                 <td>{{$trainersession1->firstname}}  {{$trainersession1->lastname}}</td>
-                 <td>{{$trainersession1->schemenameprint}}</td>
-                 <td>{{$trainersession1->activecount}}</td>  
-                 <td>{{$trainersession1->deductedcount}}</td>
-               </tr>
-               @endforeach
-               @endif
-              </tbody>
-             </table>
-               <div class="datarender" style="text-align: center">
-               </div>
-          
-               </div>
-            </div>
-          </div>
-        </div>
-      </div>
+   
       @endif
   
 
