@@ -24,7 +24,7 @@ folder instead of downloading all of them to reduce the load. -->
   position: relative;
   margin: 0;
   padding: 0.625em 0.625em 0.625em 2em;
-  border-top: 1px solid #ff851b;
+  border-top:1px solid #0b0b0b;
   font-size: 1.20em;
   font-weight: bold;
   font-weight: normal;
@@ -82,7 +82,7 @@ folder instead of downloading all of them to reduce the load. -->
 .accordion-container .article-title:hover,
 .accordion-container .article-title:notActive,
 .accordion-container .content-entry.open .article-title {
-  background-color: #82C030;
+  background-color: #0b0b0b;
   color: white;
 }
 .accordion-container .article-title:hover i:before,
@@ -97,7 +97,7 @@ folder instead of downloading all of them to reduce the load. -->
   font-style: normal;
   font-size: 1.625em;
   sans-serif;
-  color: #ff851b;
+  color: #0b0b0b;
 }
 .accordion-container .content-entry i:before {
   content: "+ ";
@@ -181,7 +181,7 @@ folder instead of downloading all of them to reduce the load. -->
   border-top-color: #3a3938 !important;
 }
 .timeline-item {
-  background: #f5e0c0 !important;
+  background: #474444 !important;
 }
 :root {
   --main-color: #ffffff;

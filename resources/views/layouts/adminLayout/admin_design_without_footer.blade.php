@@ -264,7 +264,12 @@ table td {
 .btn-primary{
   background-color: black;
 }
-
+.skin-yellow-light .main-header .navbar {
+    background-color: #3a3938 !important;
+}
+.skin-yellow-light .main-header .logo{
+	  background-color: #3a3938 !important;
+	}
 </style>
 </head>
 <body class="sidebar-mini skin-yellow-light" id="bodyheader">
