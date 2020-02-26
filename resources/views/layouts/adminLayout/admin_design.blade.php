@@ -355,6 +355,12 @@ ul {
 .bgcancel{
   background: red !important;
 }
+.skin-yellow-light .main-header .navbar {
+    background-color: #3a3938 !important;
+}
+.skin-yellow-light .main-header .logo{
+	  background-color: #3a3938 !important;
+	}
 </style>
 </head>
 <body class="sidebar-mini skin-yellow-light" id="bodyheader"style="font-family: montserrat, arial, verdana;">

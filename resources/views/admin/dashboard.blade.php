@@ -95,8 +95,8 @@ $(document).ready( function () {
             <div class="icon">
               <i class="fa fa-shopping-cart"></i>
             </div>
-            <a href="{{url('inquiry')}}" class="small-box-footer">
-              More info <i class="fa fa-arrow-circle-right"></i>
+            <a href="{{url('addinquiry')}}" class="small-box-footer">
+            Add  <i class="fa fa-plus"></i>
             </a>
           </div>
         </div>
@@ -116,8 +116,8 @@ $(document).ready( function () {
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="{{url('members')}}" class="small-box-footer">
-              More info <i class="fa fa-arrow-circle-right"></i>
+            <a href="{{url('addMember')}}" class="small-box-footer">
+              Add  <i class="fa fa-plus"></i>
             </a>
           </div>
         </div>
@@ -137,7 +137,7 @@ $(document).ready( function () {
             <div class="icon">
               <i class="fa fa-inr"></i>
             </div>
-            <a  class="small-box-footer">
+            <a   href="{{url('paymentreport')}}" class="small-box-footer">
               More info <i class="fa fa-arrow-circle-right"></i>
             </a>
           </div>
