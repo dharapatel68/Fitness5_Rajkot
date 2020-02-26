@@ -38,6 +38,9 @@
           max-width: 100%;
           min-width: 100% !important;
 }
+.green{
+  color:green;
+}
  </style>
 
 
@@ -229,7 +232,7 @@
                         @if(isset($permission["'edit_member'"]))
                         <a href="{{ url('memberProfile/'.$member->memberid) }}"class="edit" title="Edit"><i class="fa fa-eye"></i></a>
 
-                        <a type="button" class=""   data-toggle="modal" data-target="#modal-default"  onclick="asd('{{$member->mobileno}}')" title="Notification"><i class="fa fa-bell" aria-hidden="true"></i><input type="hidden" name="notification"  value="{{$member->mobileno}}" id="notofication"></a>
+                        <a type="button" class="green"   data-toggle="modal" data-target="#modal-default"  onclick="asd('{{$member->mobileno}}')" title="Notification"><i class="fa fa-bell" aria-hidden="true"></i><input type="hidden" name="notification"  value="{{$member->mobileno}}" id="notofication"></a>
 
                         @endif
                       </td>

@@ -32,7 +32,7 @@ folder instead of downloading all of them to reduce the load. -->
   cursor: pointer;
 }
 .box {
-  border-top-color: #f39c12;
+  border-top-color: #3a3938 !important;
 }
 .checkmark {
   position: absolute;
@@ -174,11 +174,11 @@ folder instead of downloading all of them to reduce the load. -->
   color: #996;
 }
 .box {
-  border-top-color: #f39c12 !important;
+  border-top-color: #3a3938 !important;
   margin-bottom: 5px;
 }
 .active {
-  border-top-color: #f39c12 !important;
+  border-top-color: #3a3938 !important;
 }
 .timeline-item {
   background: #f5e0c0 !important;
@@ -838,7 +838,7 @@ textarea.input100 {
 <div class="row">
   <div class="col-md-3">
     <!-- Profile Image -->
-    <div class="box box-primary">
+    <div class="box">
       <div class="box-body box-profile">
         <img class="profile-user-img img-responsive img-circle" style="height: 200px; width:200px;" <?php if ($member->photo): ?> src="/files/{{$member->photo}}"
         <?php else: ?>src="/files/default.png"
@@ -2497,7 +2497,7 @@ textarea.input100 {
                 <!-- /.tab-content -->
                 <div class="col-lg-10" style="margin-left: -23px">
                   <br>
-                  <div class="box box-primary">
+                  <div class="box">
                     <div class="box-header with-border">
                       <h3 class="box-title">ID Proof Details</h3>
                     </div>
