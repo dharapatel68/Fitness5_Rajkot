@@ -9,7 +9,7 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1 style="text-decoration: none;">Payment Report</h1>
+        <h1 style="text-decoration: none;">Session Report</h1>
      </section>
       <section class="content">
         <div class="row">
