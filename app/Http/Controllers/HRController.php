@@ -1836,7 +1836,7 @@ class HRController extends Controller
 		
 		$searchparameter = ['employeeid' => $employeeid, 'month' => $month, 'year' => $year];
 
-		$employeelog = HR_device_emplog::where('empid', $employeeid)->whereBetween('dateid', [$fromdate, $todate])->select('hr_device_emplog.dateid', 'hr_device_emplog.timein1', 'hr_device_emplog.timeout1', 'hr_device_emplog.hr_device_emplogid', DB::raw('MIN(hr_device_emplog.timein1) as timein1'), DB::raw('MAX(hr_device_emplog.timeout1) as timeout1'))->groupBy('dateid')->get();
+		$employeelog = HR_device_emplog::where('empid', $employeeid)->whereBetween('dateid', [$fromdate, $todate])->groupBy('dateid')->get();
 
 		return datatables()->of($employeelog)
 		->editColumn('timeout1', function($employeelog){

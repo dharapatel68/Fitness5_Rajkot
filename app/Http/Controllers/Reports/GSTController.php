@@ -154,6 +154,7 @@ class GSTController extends Controller
             $paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
             $paginatedItems->setPath($request->url());
             $gst =  $paginatedItems;
+          
 
     return view('admin.gst.gstreport',compact('gst','gstall','query','modes','users'));
      

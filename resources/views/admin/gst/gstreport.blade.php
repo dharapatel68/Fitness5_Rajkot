@@ -169,7 +169,7 @@ td{
                            </tr>
                            <tr>
                               <td><input type="text" name="keyword" placeholder="Search Keyword" class="form-control" value="{{$query['keyword']}}"></td>
-                              <td style="text-align: left" colspan="4"><button type="submit" id="submitbutton"name="search" class="btn bg-orange"><i class="fa fa-filter"></i>   Filters</button><a href="{{ url('paymentreport') }}" class="btn bg-red">Clear</a></td>
+                              <td style="text-align: left" colspan="4"><button type="submit" id="submitbutton"name="search" class="btn bg-orange"><i class="fa fa-filter"></i>   Filters</button><a href="{{ url('gstreport') }}" class="btn bg-red">Clear</a></td>
                            </tr>
                         </tbody>
                      </table>
@@ -236,6 +236,7 @@ td{
                         @endif
                      </table>
                      <div class="datarender" style="text-align: center">
+                      
                       @if(isset($query)) 
                       @else 
                         {{ $gst->links() }}
@@ -318,11 +319,6 @@ $('#checkpwd').on('click',function(){
       });
   }); 
 
-   $('#gstreport1').DataTable({
-   stateSave: false,
-   Sortable: true,
-   paging:  true,
-   "lengthMenu": [[10, 15, -1], [10, 15, "All"]]
-   });
+ 
 </script>
 @endsection
