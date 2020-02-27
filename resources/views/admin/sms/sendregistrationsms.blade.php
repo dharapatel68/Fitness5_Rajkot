@@ -90,7 +90,7 @@
   cursor: pointer;
 }
 .tagcolor{
-  background-color: #DF9A04;
+  background-color: #3a3938;
   color: #fff;
 }
 .tagcolor:hover{
@@ -364,7 +364,7 @@ table, th, td {
                       <div class="row">
                         <div class="col-lg-8 col-lg-offset-3">
                           <div class="col-lg-3">
-                            <button class="btn btn-block bg-orange" id="sendsmsuser">send</button>
+                            <button class="btn btn-block bg-orange" id="sendsmsuser">Send</button>
                             <!-- <button class="btn bg-orange btn-block" id="sendsmsuser">Send</button> -->
                           </div>
                           <div class="col-lg-3">
