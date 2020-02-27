@@ -526,7 +526,7 @@ var counttab1=1;
             }
        
         counttab1++;
-    var ap='<tr id="tab1firsttr'+counttab1+'" class="tab1item"><td><div class="form-group"><select class="form-control exercisename" name="tab1exercisename'+counttab1+'"><option value="" disabled="" selected="">--Please select--</option>         <?php foreach($exercise as $exercisetab1)
+    var ap='<tr id="tab1firsttr'+counttab1+'" class="tab1item"><td><div class="form-group"><select class="form-control exercisename" name="tab1exercisename'+counttab1+'"><option value="" disabled="" selected="">--Please select--</option><?php foreach($exercise as $exercisetab1)
     { 
       echo '<option value="'.$exercisetab1->exerciseid.'">'.$exercisetab1->exercisename.'</option> '; 
     } 

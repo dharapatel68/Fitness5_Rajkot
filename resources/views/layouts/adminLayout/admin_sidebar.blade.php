@@ -1400,7 +1400,7 @@
    </section>
    <!-- /.sidebar -->
 </aside>
-<script>
+{{-- <script>
    $('#adminmenuopen').on('click',function(){
       $('#hrmodulemenuopen').hide();
       $('#memberformmenuopen').hide();
@@ -1440,7 +1440,7 @@
       $('#tagsmenuopen').hide(); 
       $('#registrationmenuopen').hide(); 
    });
-</script>
+</script> --}}
 <script type="text/javascript">
    var url = window.location;
    // for sidebar menu but not for treeview submenu
