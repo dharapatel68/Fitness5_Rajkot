@@ -81,7 +81,7 @@
   cursor: pointer;
 }
 .tagcolor{
-  background-color: #DF9A04;
+  background-color: #3a3938;
   color: #fff;
 }
 .tagcolor:hover{

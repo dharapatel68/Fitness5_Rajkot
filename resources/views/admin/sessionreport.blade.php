@@ -485,8 +485,13 @@
         if(data){
           $('#packageid').find('option:not(:first)').remove();
           $.each(data, function(i, item){
+            
             $('#mobileno').val(item.mobileno);
-            $("#packageid").append($("<option></option>").attr("value", item.memberpackagesid).text(item.schemename));
+            let current_datetime = new Date(item.joindate)
+                        let joindate = current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear();
+                        let enddatetime = new Date(item.expiredate)
+                        let end_date = enddatetime.getDate() + "-" + (enddatetime.getMonth() + 1) + "-" + enddatetime.getFullYear();
+            $("#packageid").append($("<option></option>").attr("value", item.memberpackagesid).text(item.schemename+ ' Start ' +joindate+ ' End ' +end_date ));
           });
           $("#packageid option[value="+pid+"]").attr("selected", "selected");
         }
