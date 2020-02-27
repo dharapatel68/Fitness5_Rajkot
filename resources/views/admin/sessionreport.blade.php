@@ -230,6 +230,22 @@
 
                 </div>
               </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>From Date</label>
+                <input type="date" name="fromdate" class="form-control" id="fromdate" value="{{ $fromdate ? $fromdate : ''}}" >
+               
+                  </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>To Date</label>
+                <input type="date" name="todate" class="form-control" id="todate"  value="{{$todate}}">
+             
+                </select>
+              </div>
+          </div>
                <div class="form-group">
                     <button name="view" type="submit" id="view" class="btn bg-green margin" style="margin-top: 25px">View</button>   <a href="{{ URL::route('sessionreport') }}"class="btn btn-danger margin" style="margin-top: 25px">Cancel</a>
                 </div>
@@ -272,7 +288,7 @@
                 </thead>
                 <tbody>
                @foreach($grid as $key=>$g)
-                <tr>
+                <tr class="ClassName">
                   @if(Session::get('role') == 'admin' || Session::get('role') == 'Admin')
                 <td><a href="{{ url('deletesession/'.$g->ptmemberid.'/'.$tid.'/'.$mid.'/'.$pid) }}"class="text-danger"  title="Delete"><i class="fa fa-close "></i></a></td>
                   @endif
@@ -282,14 +298,14 @@
                 <td>{{date('d-m-Y',strtotime($g->date))}}</td>
                 <td>{{$g->hoursfrom}} </td>
                 <td>{{$g->hoursto}} </td>
-                <td>@if($g->actualdate) {{date('d-m-Y',strtotime($g->actualdate))}} @endif</td>
+                <td>@if($g->actualdate){{ date('d-m-Y',strtotime($g->actualdate))}} @endif</td>
                <td>{{$g->actualtime}}</td>
 
 
                 <td>{{$g->ptmemberstatus}} </td>
                 <td>{{$g->ppackageid}}</td>
                 <td>{{$schemename != '' ? $schemename : $g->schemeid}}</td>
-                <!-- <td>{{'finaltrainerid'}}</td> -->
+                 {{-- <td>{{'finaltrainerid'}}</td> --}}
                 
                 
                 <td>{{$g->commision}} </td>
@@ -303,6 +319,7 @@
                 </tbody>
             
               </table>
+              Total Session : {{ count($grid) }}
               @php 
               $grid1 = json_decode(json_encode($grid), true);
                           
@@ -323,6 +340,40 @@
 </div>
 </div>
 </div>
+<script>
+function doSearch(fr,t) {
+var d1 = fr.split("-");
+var d2 = t.split("-");
+var from = new Date(d1[2], d1[1]-1, d1[0]);  
+var to   = new Date(d2[2], d2[1]-1, d2[0]);
+
+
+        var targetTable = document.getElementById('measurement');
+        var targetTableColCount;
+        for (var rowIndex = 0; rowIndex < targetTable.rows.length; rowIndex++) {
+            var rowData = [];
+            if (rowIndex == 0) {
+                targetTableColCount = targetTable.rows.item(rowIndex).cells.length;
+                continue; 
+            }
+
+            for (var colIndex = 0; colIndex < targetTableColCount; colIndex++) {
+                rowData.push(targetTable.rows.item(rowIndex).cells.item(colIndex).textContent);
+            }
+		for(var i=0;i<rowData.length;i++){
+				var c = rowData[i].split("-");
+				var check = new Date(c[2], c[1]-1, c[0]);
+  
+				if ((check >= from) && (check <= to))
+				    targetTable.rows.item(rowIndex).style.display = 'table-row';
+				else
+				    targetTable.rows.item(rowIndex).style.display = 'none';                    
+		}
+
+        }
+    }
+
+</script>
 <script type="text/javascript">
 
   $(function () {

@@ -476,7 +476,7 @@ public function ajaxgetjoindate(Request $request){
           from ptmember 
          left Join schemes on schemes.schemeid=ptmember.schemeid 
           left join  memberpackages on memberpackages.memberpackagesid = ptmember.packageid
-         where ptmember.memberid='".$member."' "));
+         where ptmember.memberid='".$member."' group by memberpackages.memberpackagesid"));
             // dd( DB::getQueryLog());
             //  $package = DB::select( DB::raw("SELECT memberpackages.*,schemes.schemeid,schemes.schemename 
             //                                   from memberpackages 
@@ -1145,22 +1145,35 @@ public function ajaxgetjoindate(Request $request){
 
       if($request->isMethod('post'))
       {
-
+      
         $packageid=$request->packageid;
         $traineridgen=$request->trainerid;
         $memberidgen=$request->memberid;
         $employees=Employee::where('roleid','4')->get()->all();
         $members = DB::select( DB::raw("select distinct `member`.* from `member` left join `ptmember` on (`ptmember`.`memberid` = `member`.`memberid`) where `ptmember`.`trainerid` = '".$traineridgen."' and (`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending' or `ptmember`.`status` = 'Marked')"));
-
+        $fromdate = $request->fromdate;
+        $todate = $request->todate;
+        if(empty($todate))
+        {
+          $todate=date('Y-m-d');
+        }
         $grid=array();
-        $grid = DB::select( DB::raw("select `ptmember`.*,claimptsession.*,ptmember.memberid AS 'pmemberid',ptmember.trainerid AS 'ptrainerid',ptmember.packageid AS 'ppackageid',ptmember.status AS 'ptmemberstatus', `employee`.`username`, `employee`.`employeeid` from `ptmember` 
-        left join `employee` on `employee`.`employeeid` = `ptmember`.`trainerid` right join claimptsession on ptmember.trainerid=claimptsession.trainerid AND ptmember.memberid=claimptsession.memberid AND ptmember.date=claimptsession.scheduledate  where `ptmember`.`memberid` = '".$memberidgen."' and `ptmember`.`packageid` = '".$packageid."' 
-        and `ptmember`.`trainerid` = '".$traineridgen."' and (`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending'  or `ptmember`.`status` = 'Deactive' or `ptmember`.`status` = 'Conducted' or `ptmember`.`status` = 'Marked' )"));
+        if(!empty($fromdate)){
+          $grid = DB::select( DB::raw("select `ptmember`.*,claimptsession.*,ptmember.memberid AS 'pmemberid',ptmember.trainerid AS 'ptrainerid',ptmember.packageid AS 'ppackageid',ptmember.status AS 'ptmemberstatus', `employee`.`username`, `employee`.`employeeid` from `ptmember` 
+          left join `employee` on `employee`.`employeeid` = `ptmember`.`trainerid` right join claimptsession on ptmember.trainerid=claimptsession.trainerid AND ptmember.memberid=claimptsession.memberid AND ptmember.date=claimptsession.scheduledate  where `ptmember`.`memberid` = '".$memberidgen."' and `ptmember`.`packageid` = '".$packageid."' 
+          and `ptmember`.`trainerid` = '".$traineridgen."' and  claimptsession.actualdate >= '".$fromdate."' AND
+          claimptsession.actualdate >= '".$todate."' and (`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending'  or `ptmember`.`status` = 'Deactive' or `ptmember`.`status` = 'Conducted' or `ptmember`.`status` = 'Marked')"));
+        }else{
+          $grid = DB::select( DB::raw("select `ptmember`.*,claimptsession.*,ptmember.memberid AS 'pmemberid',ptmember.trainerid AS 'ptrainerid',ptmember.packageid AS 'ppackageid',ptmember.status AS 'ptmemberstatus', `employee`.`username`, `employee`.`employeeid` from `ptmember` 
+          left join `employee` on `employee`.`employeeid` = `ptmember`.`trainerid` right join claimptsession on ptmember.trainerid=claimptsession.trainerid AND ptmember.memberid=claimptsession.memberid AND ptmember.date=claimptsession.scheduledate  where `ptmember`.`memberid` = '".$memberidgen."' and `ptmember`.`packageid` = '".$packageid."' 
+          and `ptmember`.`trainerid` = '".$traineridgen."' and (`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending'  or `ptmember`.`status` = 'Deactive' or `ptmember`.`status` = 'Conducted' or `ptmember`.`status` = 'Marked' )"));
+        }
+      
          // $grid = DB::select( DB::raw("select `ptmember`.*,claimptsession.*,ptmember.memberid AS 'pmemberid',ptmember.trainerid AS 'ptrainerid',ptmember.packageid AS 'ppackageid',ptmember.status AS 'ptmemberstatus', `employee`.`username`, `employee`.`employeeid` from `ptmember` left join `employee` on `employee`.`employeeid` = `ptmember`.`trainerid` left join claimptsession on ptmember.trainerid=claimptsession.trainerid AND ptmember.memberid=claimptsession.memberid AND ptmember.date=claimptsession.scheduledate  where `ptmember`.`memberid` = '".$memberidgen."' and `ptmember`.`packageid` = '".$packageid."' and `ptmember`.`trainerid` = '".$traineridgen."' and (`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending' or `ptmember`.`status` = 'Conducted')"));
 
          $trainerid=$traineridgen;
-        return view('admin.sessionreport',compact('members','employees','grid','trainerid'));
-      }
+         return view('admin.sessionreport',compact('members','employees','grid','trainerid','fromdate','todate'));
+        }
 
         $employees=Employee::where('roleid','4')->get()->all();
         // $members=Member::get()->all();
