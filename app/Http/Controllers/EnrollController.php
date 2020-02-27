@@ -24,7 +24,7 @@ class EnrollController extends Controller
     		Session::flash('message', 'Please add device or active device');
     		Session::flash('alert-type', 'error');
 
-    		return redirect()->route('adddevice', 'device');
+    		return redirect()->route('hr_adddevice', 'device');
 
     	}
 

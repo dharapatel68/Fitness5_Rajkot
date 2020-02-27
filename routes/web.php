@@ -278,18 +278,7 @@ Route::group(['middleware' => ['admin']], function() {
    Route::any('anytimeaccesscardreport','anytimeaccess\AnyTimeAccessReportController@anytimeaccessreport');
    /***************************End *Any time acces card********************************/
    /////////////////// device setting for portal start //////////////////////////////////
-   Route::any('listdevice', 'PortaldeviceController@listdevice')->name('listdevice');
-   Route::any('add_device', 'PortaldeviceController@adddevice')->name('adddevice');
-   Route::any('edit_device/{id}', 'PortaldeviceController@editdevice')->name('editdevice');
-   Route::any('delete/{id}', 'PortaldeviceController@deletedevice')->name('deletedevice');
-   Route::get('connection/check', 'PortaldeviceController@connectioncheck')->name('connectioncheck');
-   Route::post('setexpiryofregister', 'PortaldeviceController@setexpiry')->name('setexpiryofregister');
-   Route::post('setExpirypackage', 'PortaldeviceController@setExpirypackage')->name('setExpirypackage');
-   Route::post('check_expiry', 'PortaldeviceController@check_expiry')->name('check_expiry');
-   Route::post('setexpiryofemp', 'PortaldeviceController@setexpiryofemp')->name('setexpiryofemp');
-   Route::post('setmemberenroll', 'PortaldeviceController@setmemberenroll')->name('setmemberenroll');
-   Route::post('deactivemember', 'PortaldeviceController@deactivemember')->name('deactivemember');
-   Route::post('activemember', 'PortaldeviceController@activemember')->name('activemember');
+  
    /////////////////////////////// device setting for portal end ////////////////////////////////////
    //////////////////////////////////// extend expiry of registration ////////////////////////////////
    Route::post('sendotptoadmin', 'RegistrationController@sendotptoadmin')->name('sendotptoadmin');
@@ -316,7 +305,7 @@ Route::group(['middleware' => ['admin']], function() {
   
    // ------------ Device -------------
 
-   Route::any('adddevice', 'SettingController@adddevice');
+   Route::any('adddevice', 'SettingController@adddevice')->name('adddevice');
    Route::post('setuser','ProfileController@setuser');
    Route::post('setuserfromsummary','DeviceController@setuserfromsummary')->name('setuserfromsummary');
    Route::get('enrolluserfromsummary','DeviceController@enrolluserfromsummary')->name('enrolluserfromsummary');
