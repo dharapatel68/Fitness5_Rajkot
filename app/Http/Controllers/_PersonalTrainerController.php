@@ -1141,7 +1141,8 @@ public function ajaxgetjoindate(Request $request){
 
 
    public function sessionreport(Request $request){
-
+    $fromdate = $request->fromdate;
+    $todate = $request->todate;
 
       if($request->isMethod('post'))
       {
@@ -1151,8 +1152,7 @@ public function ajaxgetjoindate(Request $request){
         $memberidgen=$request->memberid;
         $employees=Employee::where('roleid','4')->get()->all();
         $members = DB::select( DB::raw("select distinct `member`.* from `member` left join `ptmember` on (`ptmember`.`memberid` = `member`.`memberid`) where `ptmember`.`trainerid` = '".$traineridgen."' and (`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending' or `ptmember`.`status` = 'Marked')"));
-        $fromdate = $request->fromdate;
-        $todate = $request->todate;
+       
         if(empty($todate))
         {
           $todate=date('Y-m-d');
@@ -1162,7 +1162,7 @@ public function ajaxgetjoindate(Request $request){
           $grid = DB::select( DB::raw("select `ptmember`.*,claimptsession.*,ptmember.memberid AS 'pmemberid',ptmember.trainerid AS 'ptrainerid',ptmember.packageid AS 'ppackageid',ptmember.status AS 'ptmemberstatus', `employee`.`username`, `employee`.`employeeid` from `ptmember` 
           left join `employee` on `employee`.`employeeid` = `ptmember`.`trainerid` right join claimptsession on ptmember.trainerid=claimptsession.trainerid AND ptmember.memberid=claimptsession.memberid AND ptmember.date=claimptsession.scheduledate  where `ptmember`.`memberid` = '".$memberidgen."' and `ptmember`.`packageid` = '".$packageid."' 
           and `ptmember`.`trainerid` = '".$traineridgen."' and  claimptsession.actualdate >= '".$fromdate."' AND
-          claimptsession.actualdate >= '".$todate."' and (`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending'  or `ptmember`.`status` = 'Deactive' or `ptmember`.`status` = 'Conducted' or `ptmember`.`status` = 'Marked')"));
+          claimptsession.actualdate <= '".$todate."' and (`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending'  or `ptmember`.`status` = 'Deactive' or `ptmember`.`status` = 'Conducted' or `ptmember`.`status` = 'Marked')"));
         }else{
           $grid = DB::select( DB::raw("select `ptmember`.*,claimptsession.*,ptmember.memberid AS 'pmemberid',ptmember.trainerid AS 'ptrainerid',ptmember.packageid AS 'ppackageid',ptmember.status AS 'ptmemberstatus', `employee`.`username`, `employee`.`employeeid` from `ptmember` 
           left join `employee` on `employee`.`employeeid` = `ptmember`.`trainerid` right join claimptsession on ptmember.trainerid=claimptsession.trainerid AND ptmember.memberid=claimptsession.memberid AND ptmember.date=claimptsession.scheduledate  where `ptmember`.`memberid` = '".$memberidgen."' and `ptmember`.`packageid` = '".$packageid."' 
@@ -1172,8 +1172,8 @@ public function ajaxgetjoindate(Request $request){
          // $grid = DB::select( DB::raw("select `ptmember`.*,claimptsession.*,ptmember.memberid AS 'pmemberid',ptmember.trainerid AS 'ptrainerid',ptmember.packageid AS 'ppackageid',ptmember.status AS 'ptmemberstatus', `employee`.`username`, `employee`.`employeeid` from `ptmember` left join `employee` on `employee`.`employeeid` = `ptmember`.`trainerid` left join claimptsession on ptmember.trainerid=claimptsession.trainerid AND ptmember.memberid=claimptsession.memberid AND ptmember.date=claimptsession.scheduledate  where `ptmember`.`memberid` = '".$memberidgen."' and `ptmember`.`packageid` = '".$packageid."' and `ptmember`.`trainerid` = '".$traineridgen."' and (`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending' or `ptmember`.`status` = 'Conducted')"));
 
          $trainerid=$traineridgen;
-         return view('admin.sessionreport',compact('members','employees','grid','trainerid','fromdate','todate'));
-        }
+        return view('admin.sessionreport',compact('members','employees','grid','trainerid','fromdate','todate'));
+      }
 
         $employees=Employee::where('roleid','4')->get()->all();
         // $members=Member::get()->all();
@@ -1184,7 +1184,7 @@ public function ajaxgetjoindate(Request $request){
 
         $trainerid=Session::get('employeeid');
        
-      return view('admin.sessionreport',compact('members','employees','grid','trainerid'));
+      return view('admin.sessionreport',compact('members','employees','grid','trainerid','fromdate','todate'));
    }
     public function  gettrainermember(Request $request){
 
