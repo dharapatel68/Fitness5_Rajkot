@@ -397,7 +397,7 @@ $(document).ready( function () {
                         <td>{{$flup->firstname}}   {{$flup->lastname}} </td>
                         <td>{{$flup->mobileno}}</td>
                         <td>{{$flup->followuptime}}</td>
-                        <td class="{{ $flup->rating == 'cold' || $flup->rating == 'notinterested' ? 'red' : 'green'}}">{{ ucfirst($flup->rating)}}</td>
+                        <td class="{{ $flup->callrating == 'cold' || $flup->callrating == 'notinterested' ? 'red' : 'green'}}">{{ ucfirst($flup->callrating)}}</td>
                          <td><a href="{{url('viewfollowupprofile/'.$flup->inquiriesid)}}"class="Add" title="View Inquiry Profile" id="viewfollowupprofile{{$i}}"><i class="fa fa-eye"></i></a>
                             <a href="{{ url('viewfollowup/'.$flup->inquiriesid) }}"class="call" id="addfollowup{{$i}}" title="Add Followup" onclick="call()"><i class="fa fa-phone"></i></a>
                       </tr>

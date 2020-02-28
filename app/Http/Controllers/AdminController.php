@@ -301,7 +301,8 @@ class AdminController extends Controller
         $data['membercounttotal'] = $membercounttotal;
         $data['membercounttoday'] = $membercounttoday;
         //dd($packageexpirenearly);
-        $followup = Inquiry::leftjoin('followup', 'followup.inquiryid', 'inquiries.inquiriesid')->where('followup.followupdays', date('Y-m-d'))
+        $followup = Inquiry::leftjoin('followup', 'followup.inquiryid', 'inquiries.inquiriesid')
+                            ->leftjoin('followupcalldetails', 'followupcalldetails.inquiriesid', 'inquiries.inquiriesid')->where('followupcalldetails.calldate', date('Y-m-d'))
             ->where('followup.status', "1")
             ->paginate(5);
         $users = User::get()->all();
