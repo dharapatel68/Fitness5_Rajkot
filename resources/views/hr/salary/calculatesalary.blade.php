@@ -425,23 +425,24 @@ $confirmdate = '';
             <div class="table-responsive">
                 <table class="table">
                     <thead class="thead-inverse">
-                        <th>Date</th>
+                        <th>Total Session</th>
                         <th>Member</th>
                         <th>Scheme</th>
-                        <th>Session Time</th>
                         <th>Session Amount</th>
                     </thead>
                     <tbody>
                         @if(!empty($trainerdetail['trainershemes']))
                             @if(count($trainerdetail['trainershemes']) > 0)
-                                @foreach($trainerdetail['trainershemes'] as $tsession)
-                                <tr>
-                                    <td>{{date('d-m-Y',strtotime($tsession->actualdate))}}</td>
+                                @foreach($trainerdetail['trainershemes'] as $key => $tsession)
+                                 @if($key == 0)
+                                  <tr>
+                                    <td>{{count($trainerdetail['trainershemes'])}}</td>
                                     <td>{{$tsession->firstname}} {{$tsession->lastname}}</td>
                                     <td>{{$tsession->schemename}}</td>
-                                    <td>{{$tsession->actualtime}}</td>
+                                    
                                     <td>{{$tsession->amount}}</td>
                                 </tr>
+                                @endif
                                 @endforeach
                             @endif
                         @endif
