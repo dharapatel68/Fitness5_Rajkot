@@ -11,7 +11,7 @@ use App\User;
 use App\Device_Employee;
 use Ixudra\Curl\Facades\Curl;
 use App\MemberEnrollment;
-use App\HRDeviceEvent;
+use App\HRDeviceevent;
 use App\HRDeviceseqcount;
 use App\Employee;
 use App\Actionlog;
@@ -204,7 +204,7 @@ class HRFetchlogs extends Command
                                                 'detail5'        => !empty($array['Events']['detail-5']) ? $array['Events']['detail-5'] : '' ,
 
                                             ];                                        
-                                              HRDeviceEvent::insert($deviceeventdata);
+                                              HRDeviceevent::insert($deviceeventdata);
                                                 $seqnumber++; 
                                     }
 
@@ -213,7 +213,7 @@ class HRFetchlogs extends Command
                                 else 
                                 {
                                   
-                                     $lastec = HRDeviceEvent::get()->last();
+                                     $lastec = HRDeviceevent::get()->last();
 
                                     if ($lastec->seqno != $dscrollocseq3) {
                                             
@@ -267,7 +267,7 @@ class HRFetchlogs extends Command
                                             ];                                        
                                              // dd($deviceeventdata);
 
-                                              HRDeviceEvent::insert($deviceeventdata);
+                                              HRDeviceevent::insert($deviceeventdata);
                                                 // $second++;
    
                                                 }
@@ -345,7 +345,7 @@ class HRFetchlogs extends Command
                                                       'detail5'        => !empty($array['Events']['detail-5']) ? $array['Events']['detail-5'] : '' ,
 
                                                   ];                                        
-                                                    HRDeviceEvent::insert($deviceeventdata);
+                                                    HRDeviceevent::insert($deviceeventdata);
                                                       $seqnumber++; 
                                           }
                                           // for loop completed
@@ -409,7 +409,7 @@ class HRFetchlogs extends Command
                                             ];                                        
                                               // dd($deviceeventdata);
 
-                                              HRDeviceEvent::insert($deviceeventdata);
+                                              HRDeviceevent::insert($deviceeventdata);
                                                 // $second++;
    
                                                 }

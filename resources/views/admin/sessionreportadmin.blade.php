@@ -1,5 +1,17 @@
 @extends('layouts.adminLayout.admin_design')
 @section('content')
+<link rel="stylesheet" href="{{ asset('bower_components/Ionicons/css/ionicons.min.css') }}">
+<!-- DataTables -->
+<link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+<!-- Theme style -->
+<link rel="stylesheet" href="{{ asset('dist/css/AdminLTE.min.css') }}">
+
+<link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css') }}">
+<script src="{{ asset('bower_components/datatables.net/js/jquery.js') }}"></script>
+<script  src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('bower_components/datatables.net/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('bower_components/datatables.net/js/dataTables.responsive.js') }}"></script>
+
 <style type="text/css">
 .content-wrapper{
     padding-right: 15px !important;
@@ -29,7 +41,7 @@
                 <table id="membersession" class="table table-bordered table-striped">
             <thead>
                 <tr>
-                <th style="display: none"></th>
+         
                 <th>Member Name</th>
                 <th>Scheme Name</th>
                 <th>Active/Pending Session</th>
@@ -61,3 +73,15 @@
       </section>
 </div>
 @endsection
+@push('script')
+<script type="text/javascript">
+$('#membersession').DataTable({
+    'paging'      : true,
+    'lengthChange': false,
+    'searching'   : true,
+    'ordering'    : true,
+    'info'        : false,
+    'autoWidth'   : false
+  });
+</script>
+@endpush
