@@ -476,7 +476,7 @@ public function ajaxgetjoindate(Request $request){
           from ptmember 
          left Join schemes on schemes.schemeid=ptmember.schemeid 
           left join  memberpackages on memberpackages.memberpackagesid = ptmember.packageid
-         where ptmember.memberid='".$member."' group by memberpackages.memberpackagesid"));
+         where ptmember.memberid='".$member."' and memberpackages.status = 1 group by memberpackages.memberpackagesid"));
             // dd( DB::getQueryLog());
             //  $package = DB::select( DB::raw("SELECT memberpackages.*,schemes.schemeid,schemes.schemename 
             //                                   from memberpackages 
