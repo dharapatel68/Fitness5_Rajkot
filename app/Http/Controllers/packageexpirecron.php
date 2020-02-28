@@ -1,7 +1,7 @@
 <?php
 
   // $conn= mysqli_connect("localhost", "gym_weybee", "gymweybee@123", "gym_weybee"); 
-   $conn= mysqli_connect("localhost", "admin_fitness5mumbai", "fitness5mumbai@123","admin_fitness5mumbai");
+  // $conn= mysqli_connect("localhost", "admin_fitness5mumbai", "fitness5mumbai@123","admin_fitness5mumbai");
   $query='SELECT * FROM memberpackages left join member on memberpackages.userid = member.userid WHERE member.status = 1';
   $result=mysqli_query($conn,$query);
 
@@ -49,5 +49,28 @@
   
     echo "Member Expire Successfull";
 
+
+
+    /************************************************* */
+    $query='SELECT * FROM memberpackages where status = 1 GROUP BY userid';
+    $result=mysqli_query($conn,$query);
+  
+        
+       $data=array();
+       while($row=mysqli_fetch_assoc($result)){
+         $data[]=$row;
+       }
+      
+      for($i=0;$i<count($data);$i++)
+      {
+        
+           
+          $sql= "UPDATE member SET status='1' where userid ='".$data[$i]['userid']."'";
+              mysqli_query($conn,$sql);
+       
+             
+      }
+    
+      echo "Member Activeted Successfull";
 
 ?>

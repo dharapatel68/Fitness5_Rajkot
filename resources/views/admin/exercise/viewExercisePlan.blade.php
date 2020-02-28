@@ -14,7 +14,7 @@
     margin: 15px; padding: 10px;"
   }
   .select2-selection__choice{
-background-color: #ffad65 !important;
+background-color: #3a3938 !important;
 }
 .nav-tabs-custom{
   box-shadow: none !important;
@@ -110,13 +110,11 @@ background-color: #ffad65 !important;
             <!--     tab1 -->
                 <table id="tab1">
                   <thead>
-                    <th>Exercise</th>
-                    <th>Time (Min)</th>
-                      <th>Set (12*12*21)</th>
-                    <th>Rep</th>
-                   
-                    <th>Instruction</th>
-             
+                  <th>Exercise</th>
+                  <th>Time (Min)</th>
+                  <th>Rep</th>
+                  <th>Set (15*12*10)</th>
+                  <th>Instruction</th>
                   </thead>
                   <tbody id="firsttd" class="tbodyid">
                     <input class="form-control" style="display: none" type="hidden" value="1" name="tab1mycount" id="mycounttab1">
@@ -173,8 +171,8 @@ background-color: #ffad65 !important;
                   <thead> 
                     <th>Exercise</th>
                     <th>Time (Min)</th>
-                     <th>Set (12*12*21)</th>
                     <th>Rep</th>
+                    <th>Set (15*12*10)</th>
                     
                     <th>Instruction</th>
              
@@ -216,8 +214,8 @@ background-color: #ffad65 !important;
                   <thead> 
                       <th>Exercise</th>
                     <th>Time (Min)</th>
-                         <th>Set (12*12*21)</th>
                     <th>Rep</th>
+                    <th>Set (15*12*10)</th>
                 
                     <th>Instruction</th>
                   </thead>
@@ -259,8 +257,8 @@ background-color: #ffad65 !important;
                     <th>Exercise</th>
                     <th>Time (Min)</th>
 
-                     <th>Set (12*12*21)</th>
                     <th>Rep</th>
+                  <th>Set (15*12*10)</th>
                     <th>Instruction</th>
              
                   </thead>
@@ -268,9 +266,6 @@ background-color: #ffad65 !important;
                     <input class="form-control" style="display: none" type="hidden" value="1" name="tab4mycount" id="mycounttab4">
                       <input type="hidden" name="tab4exerciselevelday" value="4">
                     <tr id="tab4firsttr1" class="tab4item">
-               
-                
-                
               </tr>
         </tbody>
       
@@ -295,46 +290,37 @@ background-color: #ffad65 !important;
               </div>
 
 <!--***********************************tab2************************************************ -->
-  <div class="tab-pane" id="day5">
+          <div class="tab-pane" id="day5">
             <!-- tab5 -->
-             <table id="tab5">
-                  <thead> 
+              <table id="tab5">
+                <thead> 
                     <th>Exercise</th>
                     <th>Time (Min)</th>
-                     <th>Set (12*12*21)</th>
                     <th>Rep</th>
-                    
+                    <th>Set (15*12*10)</th>
                     <th>Instruction</th>
-                    
-             
                   </thead>
                   <tbody id="firsttd">
                     <input class="form-control" style="display: none" type="hidden" value="1" name="tab5mycount" id="mycounttab5">
                       <input type="hidden" name="tab5exerciselevelday" value="5">
                     <tr id="tab5firsttr1" class="tab5item">
-                  
-                
-                
-              </tr>
-        </tbody>
-      
+                    </tr>
+                  </tbody>
               </table>
             <div class="col-lg-12" style="text-align: center;">
-                <div class="col-lg-5"></div>
-                <div class="col-lg-1">
-                   <div class="form-group" >
+              <div class="col-lg-5"></div>
+              <div class="col-lg-1">
+                <div class="form-group" >
                   <button type="button"id="add1" class="btn bg-green addtab5" ><i class="fa fa-plus">Add</i></button>
                 </div>
+              </div>
+              <div class="col-lg-1">
+                <div class="form-group">
+                  <div class="tab5rmvitem">
+                  </div>
                 </div>
-                <div class="col-lg-1">
-                    <div class="form-group"  >
-                  <div class="tab5rmvitem" >
-              
-            </div>
-                </div>
-                </div>
-                <div class="col-lg-5"></div>
-
+              </div>
+              <div class="col-lg-5"></div>
               </div>
               </div>
 
@@ -347,8 +333,8 @@ background-color: #ffad65 !important;
                   <thead> 
                     <th>Exercise</th>
                     <th>Time (Min)</th>
-                     <th>Set (12*12*21)</th>
                     <th>Rep</th>
+                    <th>Set (15*12*10)</th>
                     
                     <th>Instruction</th>
                   </thead>
@@ -390,9 +376,8 @@ background-color: #ffad65 !important;
                   <thead> 
                     <th>Exercise</th>
                     <th>Time (Min)</th>
-                    <th>Set (12*12*21)</th>
                     <th>Rep</th>
-                     
+                  <th>Set (15*12*10)</th>
                     <th>Instruction</th>
              
                   </thead>
@@ -526,12 +511,12 @@ var counttab1=1;
             }
        
         counttab1++;
-    var ap='<tr id="tab1firsttr'+counttab1+'" class="tab1item"><td><div class="form-group"><select class="form-control exercisename" name="tab1exercisename'+counttab1+'"><option value="" disabled="" selected="">--Please select--</option><?php foreach($exercise as $exercisetab1)
+ var ap='<tr id="tab1firsttr'+counttab1+'" class="tab1item"><td><div class="form-group"><select class="form-control exercisename" name="tab1exercisename'+counttab1+'"><option value="" disabled="" selected="">--Please select--</option><?php foreach($exercise as $exercisetab1)
     { 
       echo '<option value="'.$exercisetab1->exerciseid.'">'.$exercisetab1->exercisename.'</option> '; 
     } 
 ?>
-                    </select></div></td><td><div class="form-group"><input type="text" name="tab1time'+counttab1+'" class="form-control"></div></td><td><div class="form-group"><input type="text" name="tab1set'+counttab1+'" class="form-control exerciseset"></div></td><td><div class="form-group"><input id="tab1rep'+counttab1+'"type="text" name="tab1rep'+counttab1+'" class="form-control number"></div></td> <td><div class="form-group"><input type="text" name="tab1instruction'+counttab1+'" class="form-control"></div></td></tr>';
+</select></div></td><td><div class="form-group"><input type="text" name="tab1time'+counttab1+'" class="form-control"></div></td><td><div class="form-group"><input id="tab1rep'+counttab1+'"type="text" name="tab1rep'+counttab1+'" class="form-control number"></div></td><td><div class="form-group"><input type="text" name="tab1set'+counttab1+'" class="form-control exerciseset"></div></td><td><div class="form-group"><input type="text" name="tab1instruction'+counttab1+'" class="form-control"></div></td></tr>';
 
     $('.tab1item:last').after(ap);  
 
@@ -613,7 +598,7 @@ var counttab2=1;
       echo '<option value="'.$exercisetab2->exerciseid.'">'.$exercisetab2->exercisename.'</option> '; 
     } 
 ?>
-                    </select></div></td><td><div class="form-group"><input type="text" name="tab2time'+counttab2+'" class="form-control"></div></td><td><div class="form-group"><input type="text" name="tab2set'+counttab2+'" class="form-control exerciseset"></div></td><td><div class="form-group"><input id="tab2rep'+counttab2+'"type="text" name="tab2rep'+counttab2+'" class="form-control number"></div></td> <td><div class="form-group"><input type="text" name="tab2instruction'+counttab2+'" class="form-control"></div></td></tr>';
+                    </select></div></td><td><div class="form-group"><input type="text" name="tab2time'+counttab2+'" class="form-control"></div></td><td><div class="form-group"><input id="tab2rep'+counttab2+'"type="text" name="tab2rep'+counttab2+'" class="form-control number"></div></td><td><div class="form-group"><input type="text" name="tab2set'+counttab2+'" class="form-control exerciseset"></div></td> <td><div class="form-group"><input type="text" name="tab2instruction'+counttab2+'" class="form-control"></div></td></tr>';
 
     $('.tab2item:last').after(ap);  
 
@@ -694,7 +679,7 @@ var counttab3=1;
       echo '<option value="'.$exercisetab3->exerciseid.'">'.$exercisetab3->exercisename.'</option> '; 
     } 
 ?>
-                    </select></div></td><td><div class="form-group"><input type="text" name="tab3time'+counttab3+'" class="form-control"></div></td> <td><div class="form-group"><input type="text" name="tab3set'+counttab3+'" class="form-control exerciseset"></div></td><td><div class="form-group"><input id="tab3rep'+counttab3+'"type="text" name="tab3rep'+counttab3+'" class="form-control number"></div></td><td><div class="form-group"><input type="text" name="tab3instruction'+counttab3+'" class="form-control"></div></td></tr>';
+                    </select></div></td><td><div class="form-group"><input type="text" name="tab3time'+counttab3+'" class="form-control"></div></td> <td><div class="form-group"><input id="tab3rep'+counttab3+'"type="text" name="tab3rep'+counttab3+'" class="form-control number"></div></td><td><div class="form-group"><input type="text" name="tab3set'+counttab3+'" class="form-control exerciseset"></div></td><td><div class="form-group"><input type="text" name="tab3instruction'+counttab3+'" class="form-control"></div></td></tr>';
 
     $('.tab3item:last').after(ap);  
 
@@ -776,7 +761,7 @@ var counttab4=1;
       echo '<option value="'.$exercisetab4->exerciseid.'">'.$exercisetab4->exercisename.'</option> '; 
     } 
 ?>
-                    </select></div></td><td><div class="form-group"><input type="text" name="tab4time'+counttab4+'" class="form-control"></div></td><td><div class="form-group"><input type="text" name="tab4set'+counttab4+'" class="form-control exerciseset"></div></td><td><div class="form-group"><input id="tab4rep'+counttab4+'"type="text" name="tab4rep'+counttab4+'" class="form-control number"></div></td> <td><div class="form-group"><input type="text" name="tab4instruction'+counttab4+'" class="form-control"></div></td></tr>';
+                    </select></div></td><td><div class="form-group"><input type="text" name="tab4time'+counttab4+'" class="form-control"></div></td><td><div class="form-group"><input id="tab4rep'+counttab4+'"type="text" name="tab4rep'+counttab4+'" class="form-control number"></div></td><td><div class="form-group"><input type="text" name="tab4set'+counttab4+'" class="form-control exerciseset"></div></td> <td><div class="form-group"><input type="text" name="tab4instruction'+counttab4+'" class="form-control"></div></td></tr>';
 
     $('.tab4item:last').after(ap);  
 
@@ -857,7 +842,7 @@ var counttab5=1;
       echo '<option value="'.$exercisetab5->exerciseid.'">'.$exercisetab5->exercisename.'</option> '; 
     } 
 ?>
-                    </select></div></td><td><div class="form-group"><input type="text" name="tab5time'+counttab5+'" class="form-control"></div></td><td><div class="form-group"><input type="text" name="tab5set'+counttab5+'" class="form-control exerciseset"></div></td><td><div class="form-group"><input id="tab5rep'+counttab5+'"type="text" name="tab5rep'+counttab5+'" class="form-control number"></div></td> <td><div class="form-group"><input type="text" name="tab5instruction'+counttab5+'" class="form-control"></div></td></tr>';
+                    </select></div></td><td><div class="form-group"><input type="text" name="tab5time'+counttab5+'" class="form-control"></div></td><td><div class="form-group"><input id="tab5rep'+counttab5+'"type="text" name="tab5rep'+counttab5+'" class="form-control number"></div></td><td><div class="form-group"><input type="text" name="tab5set'+counttab5+'" class="form-control exerciseset"></div></td> <td><div class="form-group"><input type="text" name="tab5instruction'+counttab5+'" class="form-control"></div></td></tr>';
 
     $('.tab5item:last').after(ap);  
 
@@ -938,7 +923,7 @@ var counttab6=1;
       echo '<option value="'.$exercisetab6->exerciseid.'">'.$exercisetab6->exercisename.'</option> '; 
     } 
 ?>
-                    </select></div></td><td><div class="form-group"><input type="text" name="tab6time'+counttab6+'" class="form-control"></div></td><td><div class="form-group"><input type="text" name="tab6set'+counttab6+'" class="form-control exerciseset"></div></td><td><div class="form-group"><input id="tab6rep'+counttab6+'"type="text" name="tab6rep'+counttab6+'" class="form-control number"></div></td> <td><div class="form-group"><input type="text" name="tab6instruction'+counttab6+'" class="form-control"></div></td></tr>';
+                    </select></div></td><td><div class="form-group"><input type="text" name="tab6time'+counttab6+'" class="form-control"></div></td><td><div class="form-group"><input id="tab6rep'+counttab6+'"type="text" name="tab6rep'+counttab6+'" class="form-control number"></div></td><td><div class="form-group"><input type="text" name="tab6set'+counttab6+'" class="form-control exerciseset"></div></td> <td><div class="form-group"><input type="text" name="tab6instruction'+counttab6+'" class="form-control"></div></td></tr>';
 
     $('.tab6item:last').after(ap);  
 
@@ -1019,7 +1004,7 @@ var counttab7=1;
       echo '<option value="'.$exercisetab7->exerciseid.'">'.$exercisetab7->exercisename.'</option> '; 
     } 
 ?>
-                    </select></div></td><td><div class="form-group"><input type="text" name="tab7time'+counttab7+'" class="form-control"></div></td><td><div class="form-group"><input type="text" name="tab7set'+counttab7+'" class="form-control exerciseset"></div></td><td><div class="form-group"><input id="tab7rep'+counttab7+'"type="text" name="tab7rep'+counttab7+'" class="form-control number"></div></td> <td><div class="form-group"><input type="text" name="tab7instruction'+counttab7+'" class="form-control"></div></td></tr>';
+                    </select></div></td><td><div class="form-group"><input type="text" name="tab7time'+counttab7+'" class="form-control"></div></td><td><div class="form-group"><input id="tab7rep'+counttab7+'"type="text" name="tab7rep'+counttab7+'" class="form-control number"></div></td><td><div class="form-group"><input type="text" name="tab7set'+counttab7+'" class="form-control exerciseset"></div></td> <td><div class="form-group"><input type="text" name="tab7instruction'+counttab7+'" class="form-control"></div></td></tr>';
 
     $('.tab7item:last').after(ap);  
 
@@ -1145,25 +1130,25 @@ $('#workout').trigger('change');
                     else{
                       ap+='0';
                     }
-                    ap+='></div></td> <td><div class="form-group"><input type="text" name="tab'+item.exerciseplanday+'set'+counttabedit+'"';
+                    ap+='></div></td> <td><div class="form-group"><input type="text" id="tab'+item.exerciseplanday+'rep'+counttabedit+'"name="tab'+item.exerciseplanday+'rep'+counttabedit+'"';
                       ap+=' value=';
-                    if(item.exerciseplanset !=null)
-                    {
-                       ap+=item.exerciseplanset;
-                    }
-                    else{
-                      ap+='0';
-                    } 
-                     ap+=' class="form-control exerciseset"></div></td><td><div class="form-group"><input id="tab'+item.exerciseplanday+'rep'+counttabedit+'"type="text" name="tab'+item.exerciseplanday+'rep'+counttabedit+'"';
-                       ap+=' value=';
                     if(item.exerciseplanlevelrep !=null)
                     {
                        ap+=item.exerciseplanlevelrep;
                     }
                     else{
                       ap+='0';
+                    } 
+                     ap+=' class="form-control number"></div></td><td><div class="form-group"><input id="tab'+item.exerciseplanday+'set'+counttabedit+'"type="text" name="tab'+item.exerciseplanday+'set'+counttabedit+'"';
+                       ap+=' value=';
+                    if(item.exerciseplanset !=null)
+                    {
+                       ap+=item.exerciseplanset;
                     }
-                     ap+=' class="form-control number"></div></td><td><div class="form-group"><input type="text" name="tab'+item.exerciseplanday+'instruction'+counttabedit+'" class="form-control"';
+                    else{
+                      ap+='0';
+                    }
+                     ap+=' class="form-control number exerciseset"></div></td><td><div class="form-group"><input type="text" name="tab'+item.exerciseplanday+'instruction'+counttabedit+'" class="form-control"';
                      ap+=' value=';
                      if(item.exerciseplanins !=null)
                     {
@@ -1241,7 +1226,7 @@ $('#workout').trigger('change');
       var  pattern=/[0-9]{2}[*][0-9]{2}[*][0-9]{2}$/;
        $.each(value,function(key, data){
 
-          if(data.RoomName== 0 || data.RoomName == ''){
+          if(data.RoomName == 0 || data.RoomName == ''){
             // alert(data.RoomName);
             return true;
          }
@@ -1249,7 +1234,7 @@ $('#workout').trigger('change');
             error.push('error'+key);
                      // alert(JSON.stringify(data.item));
             day.push(data.item);
-            // alert(day);
+             alert(day);
           
           } else {
             // alert('match');

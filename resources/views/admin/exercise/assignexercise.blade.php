@@ -44,7 +44,7 @@ border-style: hidden;
 
 }
 .select2-selection__choice{
-background-color: #ffad65 !important;
+background-color: #3a3938 !important;
 }
 </style>
 

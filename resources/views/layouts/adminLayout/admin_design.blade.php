@@ -60,10 +60,13 @@ bootstrap.datetimepicker.min.js') }}"></script>
 	 .error{
     color : red;
   }.pagination>.active>a{
-      background-color: #ef8216 !important;
-    border-color: #f39c12 !important;
+      background-color: #3a3938  !important;
+    border-color: #3a3938  !important;
   }
-
+  .pagination>.active>span{
+    background-color: #3a3938  !important;
+    border-color: #3a3938  !important;
+  }
   //
 // Modals
 // --------------------------------------------------
