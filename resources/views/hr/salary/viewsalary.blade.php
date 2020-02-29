@@ -144,7 +144,7 @@
                                                                 <td>
                                                                     <a href="{{ route('editsalary', $salary_data->salaryid) }}" title="Edit Salary"><i class="fa fa-edit"></i></a>
                                                                     <a href="{{ route('locksalary', $salary_data->salaryid) }}" title="Lock Salary"><i class="fa fa-lock"></i></a>
-                                                                    <a href="{{ route('printsalaryslip', $salary_data->salaryid) }}" title="printsalaryslip Salary" target="_blank"><i class="fa fa-print"></i></a>                                                                </td> 
+                                                                    {{-- <a href="{{ route('printsalaryslip', $salary_data->salaryid) }}" title="printsalaryslip Salary" target="_blank"><i class="fa fa-print"></i></a>                                                                </td>  --}}
                                                             </tr>
                                                         @endforeach
                                                         <div class="datarender" style="text-align: center">  {!! $salary->render() !!} </div>

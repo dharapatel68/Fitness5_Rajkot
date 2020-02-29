@@ -9,7 +9,6 @@
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css') }}">
 <script src="{{ asset('bower_components/datatables.net/js/jquery.js') }}"></script>
-
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -19,7 +18,6 @@
         <li>Dashboard</li>
       </ol>
     </section>
-
     <!-- Main content -->
     <section class="content">
       <section class="content-header"><h2
@@ -27,7 +25,6 @@
         <br>
       <!-- Info boxes -->
    <div class="box">
-
     <div class="box-body">
        <table id="contractdata" cellspacing="0" width="100%" class="table table-striped table-bordered dt-responsive">
                                             <thead>
