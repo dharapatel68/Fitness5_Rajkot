@@ -892,7 +892,7 @@ class HRController extends Controller
 		}
 		$empdata = Employee::where('employeeid', $employeeid)->first();
 		if($empdata->workinghour <= 0){
-			return redirect('users')->withErrors('Kindly Add working Days');
+			return redirect('users')->withErrors('Kindly Add Working Hours');
 		}
 		if(!empty($employeeid) || !empty($year) || !empty($month)){
 
@@ -968,7 +968,7 @@ class HRController extends Controller
 
 		foreach($employeelog as $emplog){
 
-			$difference = ROUND(ABS(strtotime($emplog->checkout) - strtotime($emplog->checkin))/60);
+			$difference = ROUND(ABS(strtotime($emplog->timeout1) - strtotime($emplog->timein1))/60);
 			$totalminute += abs($difference);
 
 		}
@@ -1077,7 +1077,9 @@ class HRController extends Controller
 				$trainerpercentage=$trainerdata->percentage;
 				$trainerschemes=[];
 
-				$trainersession=Claimptsession::where('trainerid',$empdata->employeeid)->where('status','Active')->whereMonth('actualdate',$cal_month)->whereYear('actualdate',$year)->get()->count();
+				$trainersession=Claimptsession::where('trainerid',$empdata->employeeid)->where('status','Active')->whereMonth('actualdate',$cal_month)->whereYear('actualdate',$year)->where('dutyhours','!=',0)->get()->count();
+				$nondutyhours=Claimptsession::where('trainerid',$empdata->employeeid)->where('status','Active')->whereMonth('actualdate',$cal_month)->whereYear('actualdate',$year)->where('dutyhours',0)->get()->count();
+				$nondutyhoursamount = Claimptsession::where('trainerid',$empdata->employeeid)->where('status','Active')->whereMonth('actualdate',$cal_month)->whereYear('actualdate',$year)->where('dutyhours',0)->sum('amount');
 				
 				$trainersessiondetail=Claimptsession::where('trainerid',$empdata->employeeid)->where('status','Active')->whereMonth('actualdate',$cal_month)->whereYear('actualdate',$year)->orderBy('actualdate','desc')->get()->all();
 				foreach ($trainersessiondetail as $key => $value) {
@@ -1097,15 +1099,16 @@ class HRController extends Controller
 			
 				$perhoursalary = $perdaysalary / $empworkinghour;
 				$totalsessionprice=0;
+				
 				$current_salary = $current_salary - ($perhoursalary*$trainersession);
+			
 				foreach($trainerdetail['trainershemes'] as $schemedetail)  
 				{
-				   
 					$totalsessionprice += $schemedetail->amount;
 				}
 				$current_salary = $current_salary + $totalsessionprice;
 				$current_salary = round($current_salary ,  2);
-				
+				$allsessionprice = $totalsessionprice;
 				
 			}else{
 				Session::flash('message', 'Please assign level to trainer ');
@@ -1116,9 +1119,10 @@ class HRController extends Controller
 		}else{
 			$trainerdetail =[];
 			$trainersession =0;
+			$allsessionprice=0;
 			$trainersessiondetail=[];
 		}
-		
+	
 		/*******************for trainer session wise salary***************************** */
 
 
@@ -1126,7 +1130,7 @@ class HRController extends Controller
 
 		/*******************end if trainer***************************** */
 
-		return view('hr.salary.calculatesalary')->with(compact('attenddays', 'totalminute', 'totalhour', 'totaldays', 'givenleave', 'takenleave', 'empdata', 'empsalary','empattandedhours', 'empworkinghour', 'total_hour', 'year', 'month','cal_month', 'Workindays', 'holidays', 'empworkingminute', 'current_salary', 'employeeid', 'takenleave_display', 'Workindays', 'leavedays_cal', 'totalworkinghour', 'employeelog', 'totalminute_dispaly', 'totalhour_dispaly_model', 'emploanamount', 'lateemployeelog', 'actualdays','trainersession','trainersessiondetail','trainerdetail'));
+		return view('hr.salary.calculatesalary')->with(compact('attenddays', 'totalminute', 'totalhour', 'totaldays', 'givenleave', 'takenleave', 'empdata', 'empsalary','empattandedhours', 'empworkinghour', 'total_hour', 'year', 'month','cal_month', 'Workindays', 'holidays', 'empworkingminute', 'current_salary', 'employeeid', 'takenleave_display', 'Workindays', 'leavedays_cal', 'totalworkinghour', 'employeelog', 'totalminute_dispaly', 'totalhour_dispaly_model', 'emploanamount', 'lateemployeelog', 'actualdays','trainersession','trainersessiondetail','trainerdetail','nondutyhours','nondutyhoursamount','allsessionprice'));
 
 	// }  catch(\Exception $e) {
 
@@ -1290,6 +1294,26 @@ class HRController extends Controller
 	public function editsalary($id, Request $request){
 		
 		$salary = Salary::with('employee')->where('salaryid', $id)->first();
+		$allsession='';
+		$dutyhours=array();
+		$nondutyhours=array();
+		$dutyhourssalary=0;
+$nondutyhourssalary=0;
+		if(!empty($salary->ptsessionid)){
+			$ptsessionarray = explode (",", $salary->ptsessionid);  
+			$allsession=Claimptsession::whereIn('claimptsessionid',$ptsessionarray)->get()->all();
+		}
+		if($allsession){
+			foreach ($allsession as $key => $value) {
+				if($value->dutyhours == 1){
+					$dutyhours[]=$value;
+					$dutyhourssalary+=$value->amount;
+				}else{
+					$nondutyhours[]=$value;
+					$nondutyhourssalary+=$value->amount;
+				}
+			}
+		}
 		
 		$employeeid = $salary->employeeid;
 		$month = $salary->month;
@@ -1325,7 +1349,7 @@ class HRController extends Controller
 		$fromdate = date('Y-m-d',strtotime("$year-$cal_month-01"));
 		$todate = date('Y-m-d',strtotime("$year-$cal_month-$day_in_month"));
 		
-		$employeelog = HR_device_emplog::where('empid', $employeeid)->whereBetween('date', [$fromdate, $todate])->get()->all();
+		$employeelog = HR_device_emplog::where('empid', $employeeid)->whereBetween('dateid', [$fromdate, $todate])->get()->all();
 		$emploanamount = EmployeeAccount::where('employeeid', $employeeid)->orderBy('empaccountid', 'desc')->pluck('amount')->first();
 
 		if($request->isMethod('POST')){
@@ -1394,7 +1418,7 @@ class HRController extends Controller
 		}
 
 
-		return view('hr.salary.editsalary')->with(compact('salary', 'employeelog','emploanamount'));
+		return view('hr.salary.editsalary')->with(compact('salary', 'employeelog','emploanamount','allsession','dutyhours','nondutyhours','dutyhourssalary','nondutyhourssalary'));
 
 	}
 
@@ -1514,7 +1538,6 @@ class HRController extends Controller
 		$employee  = Employee::where('status', 1)->get()->all();
 
 		return view('hr.salary.viewlockedsalary')->with(compact('salary', 'employee', 'employeeid', 'month', 'year'));
-		
 
 	}
 
@@ -2206,9 +2229,12 @@ public function importemppunchcsv(Request $request){
 	////////////////////////////////////////// import punch end/////////////////////////////////////////////////////////////
 	
 	/*****************************Salary Slip************************************** */
-	public function printsalaryslip(){
-		$data = ['title' => 'Welcome to HDTuto.com'];
-        $pdf = PDF::loadView('hr.salary.salaryslip', $data);
+	public function printsalaryslip($id){
+		
+		$salary=Salary::where('salaryid',$id)->get()->first();
+		$employee=Employee::where('employeeid',$salary->employeeid)->get()->first();
+		$employeefullname=ucfirst($employee->first_name).' '.ucfirst($employee->last_name);
+        $pdf = PDF::loadView('hr.salary.salaryslip', compact('salary','employeefullname'));
   
         return $pdf->stream('Salary Slip.pdf');
 	}

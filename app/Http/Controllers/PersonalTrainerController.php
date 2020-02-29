@@ -523,7 +523,7 @@ public function ajaxgetjoindate(Request $request){
       {
         $member=DB::table('ptmember')->where(['ptmemberid'=>$request->ptid])->first();
         $trainer=DB::table('employee')->where('employeeid',$member->trainerid)->get()->first();
-       $member=DB::table('member')->where(['memberid'=>$member->memberid])->get()->first();
+        $member=DB::table('member')->where(['memberid'=>$member->memberid])->get()->first();
         if($request->ptp==$trainer->fitpin)
         {
           // echo "hi";
@@ -540,6 +540,15 @@ public function ajaxgetjoindate(Request $request){
 
       if($request->isMethod('post'))
       {
+        $dutyhours=0;
+        $trainer=DB::table('employee')->where('employeeid',$request->trainerid)->get()->first();
+        if($request->actualtime >= $trainer->workinghourfrom1  &&  $request->actualtime <= $trainer->workinghourto1){
+          $dutyhours=1;
+        }else if($request->actualtime >= $trainer->workinghourfrom2 &&  $request->actualtime <= $trainer->workinghourto2){
+          $dutyhours=1;
+        }else{
+          $dutyhours=0;
+        }
         if($request->has('skip'))
         {
             $query=DB::table('ptmember')->where(['trainerid'=>$request->trainerid,'memberid'=>$request->memberid,'status'=>'Active'])->where('hoursfrom','!=','')->orderBy('date','ASC')->first();
@@ -568,7 +577,7 @@ public function ajaxgetjoindate(Request $request){
             $query1=DB::table('ptmember')->where(['ptmemberid'=>$query->ptmemberid])->update($update);
 
             // dd( $query);
-
+             
             $insert=['trainerid'=>$request->trainerid,
                      'actualtrainerid' => $request->actualtrainerid,
                      'memberid'=>$request->memberid,
@@ -579,6 +588,8 @@ public function ajaxgetjoindate(Request $request){
                      'actualdate'=>$request->actualdate,
                      'comission'=>$comission,
                      'amount'=>$amount,
+                     'dutyhours'=>$dutyhours,
+                    
                     ];
             $query=DB::table('claimptsession')->insert($insert);
             $msg="Claim is Skiped";
@@ -623,6 +634,7 @@ public function ajaxgetjoindate(Request $request){
                     'actualdate'=>$request->actualdate,
                     'comission'=>$comission,
                     'amount'=>$amount,
+                    'dutyhours'=>$dutyhours,
                     ];
             $query=DB::table('claimptsession')->insert($insert);
             $msg="Session is successfully Marked As Conducted";
@@ -675,6 +687,7 @@ public function ajaxgetjoindate(Request $request){
                        'actualdate'=>$request->actualdate,
                        'comission'=>$comission,
                        'amount'=>$amount,
+                       'dutyhours'=>$dutyhours,
                       ];
               $query=DB::table('claimptsession')->insert($insert);
               $msg="Session is successfully Claimed";

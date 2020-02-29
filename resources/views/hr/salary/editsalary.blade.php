@@ -200,10 +200,10 @@ $confirmdate = '';
                                   <div class="form-group">
                                      <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label">Total PT Hours</label>
                                      <div class="col-sm-4 col-lg-3">
-                                        <input type="text" class="form-control" name="totalsession" id="totalsession" placeholder="PT" value="{{ $counttotalsession }}" readonly>
+                                        <input type="text" class="form-control" name="totalsession" id="totalsession" placeholder="PT" value="{{ count($dutyhours) }}" readonly>
                                      </div>
                                      <div class="col-sm-4 col-lg-3">
-                                        <input type="text" class="form-control" name="totalsessionprice" id="totalsessionprice" placeholder="price" value="{{ $salary->ptsessionsalary }}"readonly >
+                                        <input type="text" class="form-control" name="totalsessionprice" id="totalsessionprice" placeholder="price" value="{{ $dutyhourssalary }}"readonly >
                                      </div>
                                      <div class="col-sm-4 col-lg-3">
                                         {{-- <button type="button" class="btn  btn-default"  data-toggle="modal" data-target="#ptlogs" id="ptlogs" value="PT Logs">PT Logs</button> --}}
@@ -228,6 +228,56 @@ $confirmdate = '';
                          </div>
                       </div>
                    </div>
+                   <div class="row">
+                     <div class="box">
+                        <div class="box-header with-border">
+                           <h3 class="box-title">Non Duty Hours<b></b></h3>
+                           <div class="box-tools pull-right">
+                               <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                               <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                           </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                           <div class="row">
+                              <div class="">
+                                 <div class="form-group">
+                                    <label class="col-sm-1  col-lg-2 control-label">Detail</label>
+                                    <div class="col-sm-4 col-lg-3">
+                                       <label class="control-label"> Hours</label>
+                                    </div>
+                                    <div class="col-sm-4 col-lg-3">
+                                       <label class="control-label"> Rs</label>
+                                    </div>
+                                    
+                                 </div>
+                              </div>
+                           </div>
+                           @php
+                           $totalnondutyhours =0;
+                           if(!empty($allsession)){
+                              $totalnondutyhours = count($allsession);
+                              }
+                           @endphp
+                               <div class="row">
+                                   <div class="">
+                                       <div class="form-group">
+                                           <label for="inputEmail3" class="col-sm-1  col-lg-2 control-label">Total Non Duty hours</label>
+                                           <div class="col-sm-4 col-lg-3">
+                                               <input type="text" class="form-control" id="" placeholder="Non Duty" value="{{ count($nondutyhours) }}"readonly >
+                                           </div>
+                                           <div class="col-sm-4 col-lg-3">
+                                          
+                                           <input type="text" class="form-control" id="" placeholder="Non Duty" value="{{ $nondutyhourssalary }}"readonly >
+                                           </div>
+                                           
+                                       </div>
+                                   </div>
+                               </div>
+                              
+                        </div>
+                     </div>
+                  </div>
                    <div class="row">
                       <div class="box">
                          <div class="box-header with-border">
@@ -255,13 +305,13 @@ $confirmdate = '';
                                     <input type="text" class="form-control" id="attenddays23" value="0">
                                  </div>
                               </div>
-                               <div class="col-md-2 col-lg-2 col-xs-6 ">
+                               <div class="col-md-2 col-lg-2 col-xs-6 hide">
                                   <div class="form-group">
                                      <label>Casual leave</label>
                                      <input type="text" class="form-control" autocomplete="off" name="casualleave" id="casualleave" value="{{ $salary->casualleave}}">
                                   </div>
                                </div>
-                               <div class="col-md-2 col-lg-2 col-xs-6 ">
+                               <div class="col-md-2 col-lg-2 col-xs-6 hide">
                                   <div class="form-group">
                                      <label>Medical Leave</label>
                                      <input type="text" class="form-control" autocomplete="off"  name="medicalleave" id="medicalleave" value="{{ $salary->medicalleave}}">
@@ -319,7 +369,7 @@ $confirmdate = '';
                                      <div class="col-sm-4 col-lg-3">
                                         <input type="text" class="form-control" id="loan" placeholder="PT" name="loan" value="{{ $loanamount }}" readonly="">
                                      </div>
-                                     <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label">EMI</label>
+                                     <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label">Return</label>
                                      {{-- <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label"></label> --}}
                                      <div class="col-sm-4 col-lg-3">
                                         <input type="number" name="emi" class="form-control" value="{{ $salary->salaryemi > 0 ? $salary->salaryemi : 0 }}" min="0" id="emi" readonly>
@@ -334,7 +384,7 @@ $confirmdate = '';
                                      <div class="col-sm-4 col-lg-3">
                                         <input type="text" class="form-control hide"  placeholder="PT" value="">
                                      </div>
-                                     <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label">Other Deduction</label>
+                                     <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label">TDS</label>
                                      {{-- <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label"></label> --}}
                                      <div class="col-sm-4 col-lg-3">
                                         <input type="number" name="otheramount" class="form-control" min="0" id="otheramount" onfocusOut="calotheramount()" value="{{ $salary->salaryothercharges > 0 ? $salary->salaryothercharges : 0 }}">
@@ -392,16 +442,24 @@ $confirmdate = '';
                 <table class="table">
                     <thead>
                         <th>Date</th>
-                        <th>Check In</th>
-                        <th>Check Out</th>
+                        <th>Timein1</th>
+                        <th>Timeout1</th>
+                        <th>Timein2</th>
+                        <th>Timeout2</th>
+                        <th>Timein3</th>
+                        <th>Timeout3</th>
                         <th></th>
                     </thead>
                     <tbody>
                         @foreach($employeelog as $emplog)
                             <tr>
-                                <td>{{date('d-m-Y',strtotime($emplog->punchdate))}}</td>
-                                <td>{{$emplog->checkin}}</td>
-                                <td>{{$emplog->checkout}}</td>
+                                <td>{{date('d-m-Y',strtotime($emplog->dateid))}}</td>
+                                <td>{{$emplog->timein1}}</td>
+                                <td>{{$emplog->timeout1}}</td>
+                                <td>{{$emplog->timein2}}</td>
+                                <td>{{$emplog->timeout2}}</td>
+                                <td>{{$emplog->timein3}}</td>
+                                <td>{{$emplog->timeout3}}</td>
                                 
                             </tr>
                             @endforeach

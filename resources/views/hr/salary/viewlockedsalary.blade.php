@@ -145,13 +145,14 @@
                                                                 <td>{{ $salary_data->status }}</td>
                                                                 @else
                                                                 <td>Paid</td>
+                                                               
                                                                 @endif
                                                                 <td>
                                                                     @if($salary_data->ispaid != 1)
                                                                     <a href="{{ route('unlocksalary', $salary_data->salaryid) }}" title="Edit Salary" class="btn btn-success">Unlock</a>
                                                                     <a class="btn btn-danger" id="pay" onclick="account('{{$salary_data->employee->accountno}}', '{{ $emp_name }}', '{{ $salary_data->employee->employeeid }}', '{{ $salary_data->salaryid }}')" data-toggle="modal" data-target="#accountmodel">Pay</a>
                                                                     @else
-                                                                        <a class="btn btn-warning">Paid</a>
+                                                                    <a href="{{ url('printsalaryslip/'.$salary_data->salaryid) }}" class="" target="_blank"><i class="fa fa-print"></i></a>
                                                                     @endif
                                                                 </td> 
                                                             </tr>

@@ -665,7 +665,7 @@ Route::any('viewlockedsalarysearch', 'HRController@viewlockedsalarysearch')->nam
 Route::any('editsalary/{id}', 'HRController@editsalary')->name('editsalary');
 Route::any('confirmsalary', 'HRController@confirmsalary')->name('confirmsalary');
 Route::any('searchsalary', 'HRController@searchsalary')->name('searchsalary');
-Route::any('printsalaryslip', 'HRController@printsalaryslip')->name('printsalaryslip');
+Route::any('printsalaryslip/{id}', 'HRController@printsalaryslip')->name('printsalaryslip');
 /////////////////////////////////////////////// salary end   ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////// Device Start ////////////////////////////////////////////////////

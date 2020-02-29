@@ -222,14 +222,10 @@ background-color: #3a3938 !important;
                   <tbody id="firsttd">
                     <input class="form-control" style="display: none" type="hidden" value="1" name="tab3mycount" id="mycounttab3">
                       <input type="hidden" name="tab3exerciselevelday" value="3">
-                    <tr id="tab3firsttr1" class="tab3item">
-                  
-                
-              </tr>
-        </tbody>
-      
+                    <tr id="tab3firsttr1" class="tab3item"></tr>
+                  </tbody>
               </table>
-         <div class="col-lg-12" style="text-align: center;">
+              <div class="col-lg-12" style="text-align: center;">
                 <div class="col-lg-5"></div>
                 <div class="col-lg-1">
                    <div class="form-group" >
@@ -238,14 +234,12 @@ background-color: #3a3938 !important;
                 </div>
                 <div class="col-lg-1">
                     <div class="form-group"  >
-                  <div class="tab3rmvitem" >
-              
-            </div>
+                  <div class="tab3rmvitem">
+                  </div>
                 </div>
                 </div>
                 <div class="col-lg-5"></div>
-
-              </div>
+                </div>
               </div>
               <!-- /.tab-pane -->
 
