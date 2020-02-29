@@ -93,8 +93,13 @@
 											<tr>
 												<th>Name</th>
 												<th>Mobile No</th>
-												<th>Punchdate</th>
-												<th>Punchtime</th>
+												<th>Date</th>
+												<th>Timein1</th>
+												<th>Timeout1</th>
+												<th>Timein2</th>
+												<th>Timeout2</th>
+												<th>Timein3</th>
+												<th>Timeout3</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -146,8 +151,13 @@
 				columns: [
 				{data: 'fullname', name: 'fullname'},
 				{data: 'mobileno', name: 'mobileno'},
-				{data: 'date', name: 'date'},
-				{data: 'time', name: 'time'},
+				{data: 'dateid', name: 'dateid'},
+				{data: 'timein1', name: 'timein1'},
+				{data: 'timeout1', name: 'timeout1'},
+				{data: 'timein2', name: 'timein2'},
+				{data: 'timeout2', name: 'timeout2'},
+				{data: 'timein3', name: 'timein3'},
+				{data: 'timeout3', name: 'timeout3'},
 				]
 			});
 		});

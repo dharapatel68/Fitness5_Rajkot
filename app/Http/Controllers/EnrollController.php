@@ -11,6 +11,7 @@ use App\HRDeviceInfo;
 use App\HRDeviceFetchlogs;
 use DB;
 use Session;
+use App\HR_device_emplog;
 
 class EnrollController extends Controller
 {
@@ -1012,29 +1013,29 @@ class EnrollController extends Controller
             $query['fromdate']=$fromdate ;
             $query['todate']=$todate;*/
 
-            $fetchlog = HRDeviceFetchlogs::join('employee', 'hr_devicefetchlogs.detail1', 'employee.employeeid');
+            $fetchlog = HR_device_emplog::join('employee', 'hr_device_emplog.empid', 'employee.employeeid');
 
             if($employeeid){
 
-                $fetchlog->where('hr_devicefetchlogs.detail1','=',$employeeid);
+                $fetchlog->where('hr_device_emplog.empid','=',$employeeid);
 
             }
 
             if(!empty($fromdate)){
                 
-                $fetchlog->whereBetween('hr_devicefetchlogs.date', [$fromdate, $todate]);
+                $fetchlog->whereBetween('hr_device_emplog.dateid', [$fromdate, $todate]);
 
             }
 
             if(!empty($todate)){
             
 
-                $fetchlog->whereBetween('hr_devicefetchlogs.date', [$fromdate, $todate]);
+                $fetchlog->whereBetween('hr_device_emplog.dateid', [$fromdate, $todate]);
 
             }
       
 
-            $fetchlog = $fetchlog->where('eventid', 101)->select(DB::raw("CONCAT(employee.first_name,employee.last_name) AS fullname"), 'employee.mobileno', 'hr_devicefetchlogs.date', 'hr_devicefetchlogs.time')->orderBy('deviceeventid', 'desc')->get();
+            $fetchlog = $fetchlog->select(DB::raw("CONCAT(employee.first_name,employee.last_name) AS fullname"), 'employee.mobileno', 'hr_device_emplog.dateid', 'hr_device_emplog.timein1','hr_device_emplog.timeout1','hr_device_emplog.timein2','hr_device_emplog.timeout2','hr_device_emplog.timein3','hr_device_emplog.timeout3')->get();
 /*
             dd($fetchlog->count());*/
             
