@@ -1783,8 +1783,14 @@ public function schemeActualPrice(Request $request)
           'file' => 'mimes:jpeg,bmp,png|max:5000',
           'attachments.*' => 'mimes:jpeg,bmp,png|max:5000',
         ]);
-
-
+        $user = User::where('usermobileno',$request->CellPhoneNumber)->where('userid','!=',$id)->get()->first();
+          if($user){
+            return redirect()->back()->withErrors(['User Mobile No already Exist']);
+          }
+          $member = Member::where('mobileno',$request->CellPhoneNumber)->where('userid','!=',$id)->get()->first();
+          if($member){
+            return redirect()->back()->withErrors(['Member Mobile No already Exist']);
+          }
         /**********************COMMIT ROLLBACK IMP******************************************/
      
         /*************************try code**********************************************/
@@ -1794,7 +1800,7 @@ public function schemeActualPrice(Request $request)
 
           $useredt=User::findOrFail($id);
           $memberedt=$useredt->Member;
-              
+          $oldmobileno =  $memberedt->mobileno;   
 
           $username=$request->get('username');
                     // echo $username;
@@ -1832,6 +1838,10 @@ public function schemeActualPrice(Request $request)
           $memberedt->companyid = $request['bycompany'];
 
           $memberedt->save();
+
+          $notification=Notification::where('mobileno',$oldmobileno)->get()->first();
+          $notification->mobileno = $request['CellPhoneNumber'];
+          $notification->save();
 
           $fitnessgoals = Fitnessgoals::where('memberid',$memberedt->memberid)->get()->first();
 
@@ -2013,7 +2023,7 @@ public function schemeActualPrice(Request $request)
 
        DB::commit();
         $success = true;
-            return redirect()->back();
+            return redirect()->back()->with('message' ,'Member Successfully Updated');
 
         /***********************End **try code**********************************************/
       }

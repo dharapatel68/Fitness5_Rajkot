@@ -485,6 +485,7 @@ Route::group(['middleware' => ['admin']], function() {
    /**********************************************************************************/
   
    Route::any('viewrequests', 'SendMemberFormController@viewrequests');
+   Route::any('viewsentforms', 'SendMemberFormController@viewsentforms');
    Route::any('sendformtonumber', 'SendMemberFormController@sendformtonumber');
    Route::any('changeMemberStatus', 'SendMemberFormController@changeMemberStatus');
    Route::any('rejectrequest/{id}', 'SendMemberFormController@rejectrequest');

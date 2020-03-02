@@ -80,6 +80,10 @@ class SendMemberFormController extends Controller
         $memberdata->save();
         return  redirect()->back()->withSuccess('SuccesFully Rejected');
     }
+    public function viewsentforms(Request $request){
+        $sentforms = ShortLink::orderBy('id','desc')->paginate(10);
+        return view('admin.Memberform.viewsendform',compact('sentforms'));
+    }
     
     
     
