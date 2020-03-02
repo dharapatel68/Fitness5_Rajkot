@@ -81,7 +81,7 @@
   $str = array_reverse($str);
   $result = implode('', $str);
   $points = ($point) ?
-    "And" . $words[$point / 10] . " " . 
+    " And " . $words[$point / 10] . " " . 
           $words[$point = $point % 10] : '';
   $word= $result . "Rupees  " . $points . " Paise";
  ?> 
@@ -124,7 +124,7 @@
 			<table class="table" border="1px" style="width:100%">
 				<thead><tr><th class="th" style="width:80% !important;">PARTICULARS</th><th class="th">AMOUNT  <span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span></th></tr></thead>
 				<tbody><tr class="tr">
-				<td  class="td">SALARY</td><td class="td">{{$amount}}</td></tr>
+				<td  class="td">SALARY</td><td class="td">{{ $salary->currentsalary - $salary->ptsessionsalary}}</td></tr>
 					<tr><td class="td">PT SALARY</td><td class="td">{{$salary->ptsessionsalary}}</td></tr>
 					<tr><td class="td">RETURN</td><td class="td">{{$salary->salaryemi}}</td></tr>
 					<tr><td class="td">TDS</td><td class="td">{{$salary->salaryothercharges}}</td></tr></tbody>

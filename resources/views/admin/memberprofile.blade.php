@@ -822,9 +822,19 @@ textarea.input100 {
     </section>
     <!-- Main content -->
     <section class="content">
+      @if ($errors->any())
+      <div class="alert alert-danger">
+           <button type="button" class="close" data-dismiss="alert">×</button> 
+      <ul>
+      @foreach ($errors->all() as $error)
+      <li>{{ $error }}</li>
+      @endforeach
+      </ul>
+      </div>
+      @endif
         @if ($message = Session::get('message'))
-@if($message)
-      <div class="alert alert-danger alert-block" id="ak">
+      @if($message)
+      <div class="alert alert-success alert-block" id="ak">
         <button type="button" class="close" data-dismiss="alert">×</button> 
               <strong>{{ $message }}</strong>
       </div>
@@ -1075,7 +1085,7 @@ textarea.input100 {
                     </div>
                     <div class="form-group">
                       <label>Cell Phone Number</label>
-                      <input type="text" value="{{$member->mobileno}}" name="CellPhoneNumber" id="MobileNo" minlength="10" maxlength="10" readonly="" class="form-control number" placeholder="Mobile No" required="" class="span11" /><span class="errmsg"></span>
+                      <input type="text" value="{{$member->mobileno}}" name="CellPhoneNumber" id="MobileNo" minlength="10" maxlength="10"  class="form-control number" placeholder="Mobile No" required="" class="span11" /><span class="errmsg"></span>
                     </div>
                     <div class="form-group">
                       <label>Birthdate</label>
@@ -1634,7 +1644,7 @@ textarea.input100 {
                         <td>{{ $payment->discountamount > 0 ? $payment->discountamount : '0' }}</td>
                         <td>{{ $payment->receiptno}}</td>
                         
-                        <td> @if($payment->invoicetype == 'm') <a href="{{url('transactionpaymentreceipt/'.$payment->invoiceno.'/'.$member->mobileno)}}"><i class="fa fa-print"></i></a> @endif
+                        <td> @if($payment->invoicetype == 'm') <a href="{{url('transactionpaymentreceipt/'.$payment->invoiceno.'/'.$member->mobileno)}}" target="_blank"><i class="fa fa-print"></i></a> @endif
                         </td>
                         </td>
                       </tr>@endif @endforeach</tbody>
