@@ -487,7 +487,7 @@ $users=Employee::get()->all();
             $expensepayment->expensecategoryid=$request->expensecategoryid;
 
             $expensepayment->dte=$dte;
-            $expensepayment->dte=$request->remark;
+            $expensepayment->remark=$request->remark;
             $expensepayment->save();
            
 

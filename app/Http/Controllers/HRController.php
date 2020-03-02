@@ -1131,7 +1131,7 @@ class HRController extends Controller
 		/*********************for trainer session wise salary*************************** */
 
 		/*******************end if trainer***************************** */
-
+	
 		return view('hr.salary.calculatesalary')->with(compact('attenddays', 'totalminute', 'totalhour', 'totaldays', 'givenleave', 'takenleave', 'empdata', 'empsalary','empattandedhours', 'empworkinghour', 'total_hour', 'year', 'month','cal_month', 'Workindays', 'holidays', 'empworkingminute', 'current_salary', 'employeeid', 'takenleave_display', 'Workindays', 'leavedays_cal', 'totalworkinghour', 'employeelog', 'totalminute_dispaly', 'totalhour_dispaly_model', 'emploanamount', 'lateemployeelog', 'actualdays','trainersession','trainersessiondetail','trainerdetail','nondutyhours','nondutyhoursamount','allsessionprice'));
 
 	// }  catch(\Exception $e) {
