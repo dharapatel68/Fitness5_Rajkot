@@ -1064,6 +1064,8 @@ class HRController extends Controller
 		$store = !empty($request->store) ? $request->store : 0;
 
 		$success = true;
+		$nondutyhours=0;
+		$nondutyhoursamount=0;
 
 		$emploanamount = EmployeeAccount::where('employeeid', $employeeid)->orderBy('empaccountid', 'desc')->first();
 
