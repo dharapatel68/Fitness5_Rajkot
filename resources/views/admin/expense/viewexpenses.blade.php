@@ -156,6 +156,9 @@
                 
                               </tbody>
                             </table>
+                            <center>
+                            {{ $expensepayment->links() }}
+                            </center>
                           </div>
                           <!-- /.box-body -->
                         </div>
@@ -169,10 +172,10 @@
                   <script>
   $(function () {
     $('#expensepayment23').DataTable()
-    $('#example23').DataTable({
+    $('#expensepayment').DataTable({
       'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
+      'lengthChange': true,
+      'searching'   : true,
       'ordering'    : true,
       'info'        : true,
       'autoWidth'   : false
