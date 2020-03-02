@@ -109,6 +109,16 @@
                        @endif
                     </div>
                     <div class="form-group">
+                     <label>Remarks
+                     </label>
+                  <textarea name="remark" class="form-control"  placeholder="Remarks">{{$categoryname->remark}}</textarea>
+                     @if($errors->has('remark'))
+                     <span class="help-block">
+                     <strong>{{ $errors->first('remark') }}</strong>
+                     </span>
+                     @endif
+                  </div>
+                    <div class="form-group">
                        <div class="col-sm-6">
                           <button type="submit" class="btn bg-orange btn-block">
                           Save</button>

@@ -132,6 +132,16 @@
                     </span>
                     @endif
                  </div>
+                 <div class="form-group">
+                  <label>Remarks
+                  </label>
+                  <textarea name="remark" class="form-control"  placeholder="Remarks"></textarea>
+                  @if($errors->has('remark'))
+                  <span class="help-block">
+                  <strong>{{ $errors->first('remark') }}</strong>
+                  </span>
+                  @endif
+               </div>
                  <div class="col-lg-12">
                     <div class="col-lg-2"></div>
                     <div class="form-group">

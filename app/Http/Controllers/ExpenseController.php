@@ -431,8 +431,8 @@ $users=Employee::get()->all();
               'billno'=> $request['billno'],
               'gstamount'=> $request['gstamount'],
               'bankname'=> $request['bankname'],
-              'Chequeno'=> $request['Chequeno']
-
+              'Chequeno'=> $request['Chequeno'],
+              'remark'=>$request['remark'],
 
             ]);
             $loginuser = session()->get('username');
@@ -487,7 +487,7 @@ $users=Employee::get()->all();
             $expensepayment->expensecategoryid=$request->expensecategoryid;
 
             $expensepayment->dte=$dte;
-
+            $expensepayment->dte=$request->remark;
             $expensepayment->save();
            
 
