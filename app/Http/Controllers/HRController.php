@@ -1078,7 +1078,7 @@ class HRController extends Controller
 				$trainerlevel=$trainerdata->level;
 				$trainerpercentage=$trainerdata->percentage;
 				$trainerschemes=[];
-
+				
 				$trainersession=Claimptsession::where('trainerid',$empdata->employeeid)->where('status','Active')->whereMonth('actualdate',$cal_month)->whereYear('actualdate',$year)->where('dutyhours','!=',0)->get()->count();
 				$nondutyhours=Claimptsession::where('trainerid',$empdata->employeeid)->where('status','Active')->whereMonth('actualdate',$cal_month)->whereYear('actualdate',$year)->where('dutyhours',0)->get()->count();
 				$nondutyhoursamount = Claimptsession::where('trainerid',$empdata->employeeid)->where('status','Active')->whereMonth('actualdate',$cal_month)->whereYear('actualdate',$year)->where('dutyhours',0)->sum('amount');

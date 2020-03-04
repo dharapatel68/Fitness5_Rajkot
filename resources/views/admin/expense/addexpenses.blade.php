@@ -45,7 +45,7 @@
                     <div class="col-md-12">
                        <div class="form-group">
                           <label>Company</label>
-                          <input type="text"name="companyname" value="{{ old('company') }}" class="form-control"autocomplete="off" placeholder="Enter Company"  class="span11" maxlength="18" />
+                          <input type="text"name="companyname" value="{{ old('company') }}" class="form-control"autocomplete="off" placeholder="Enter Company"  class="span11" maxlength="255" />
                        </div>
                     </div>
                  </div>
@@ -99,7 +99,7 @@
                        <option value="" selected >--Please choose an option--</option>
                        @foreach($Employee as $Employee)
                        <option value="{{ $Employee->employeeid }}" 
-                          <?php if( Session::get('admin_id')== $Employee->employeeid){ echo 'selected'; } ?> >{{ $Employee->username }}
+                          <?php if( Session::get('employeeid')== $Employee->employeeid){ echo 'selected'; } ?> >{{ $Employee->username }}
                        </option>
                        @endforeach
                     </select>

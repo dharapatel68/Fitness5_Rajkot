@@ -99,7 +99,7 @@ class ExpenseController extends Controller
           $expensepaymentall=$expensepayment;
            $dataall=$expensepaymentall->get()->all();
           // dd($dataall);
-          $expensepayment=$expensepayment->paginate(8)->appends('query');
+          $expensepayment=$expensepayment->paginate(1000)->appends('query');
          
              return view('admin.expense.viewexpenses',compact('expensepayment','dataall','query','users','modes'));  
      
