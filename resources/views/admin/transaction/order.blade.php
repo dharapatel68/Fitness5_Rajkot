@@ -280,12 +280,11 @@
                         </select>
                      </div>
                      <div class="form-group">
-                        <label>Select Package<span style="color: red">*</span></label>
-                        <select name="SchemeID" id="scheme" onchange="assigndate()" class="form-control"class="span11" required="">
-                           <option value="" selected readonly>--Please choose an option--</option>
-                        </select>
-                        <span id="package_error" style="color:red"></span>
-                     </div>
+                      <label>Join Date</label>
+                      <input placeholder="Joining date" onchange="changedate()" type="date" readonly id="startingdate"  value="<?php echo date('Y-m-d'); ?>"class="form-control" name="Join_date" class="span11">
+ 
+                    </div>
+                    
                      <div class="form-group">
                         <label>Base Amount</label>
                         <input type="hidden" name="BasePrice_hidden" id="BasePrice_hidden" />
@@ -324,13 +323,14 @@
                     
                   </div>
                   <div class="col-md-5">
-
                     <div class="form-group">
-                     <label>Join Date</label>
-
-                     <input placeholder="Joining date" onchange="changedate()" type="date" id="startingdate"  value="<?php echo date('Y-m-d'); ?>"class="form-control" name="Join_date" class="span11">
-
+                      <label>Select Package<span style="color: red">*</span></label>
+                      <select name="SchemeID" id="scheme" onchange="assigndate()" class="form-control"class="span11" required="">
+                         <option value="" selected readonly>--Please choose an option--</option>
+                      </select>
+                      <span id="package_error" style="color:red"></span>
                    </div>
+                    
                    <div class="form-group">
                      <label>Finish Date</label>
                      <input placeholder="Finishing date"  id="finishdate" class="form-control" name="Expire_date" class="span11" readonly="" >
@@ -697,7 +697,7 @@ var _token = $('input[name="_token"]').val();
                     $('#total_hidden').attr("value", item.schemeid).val(Math.ceil(baseprice_final));
                     $('#amount_paid').val('');
                     $('#remainingamount').val(Math.ceil(baseprice_final));
-
+                    $('#startingdate').attr('readonly',false);
                     var x = document.getElementById("startingdate").value;
 
                     var date = new Date();
