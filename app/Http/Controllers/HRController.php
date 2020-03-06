@@ -1144,6 +1144,7 @@ class HRController extends Controller
 			$trainersession =0;
 			$allsessionprice=0;
 			$trainersessiondetail=[];
+			$ptlogs = array();
 		}
 	
 		/*******************for trainer session wise salary***************************** */

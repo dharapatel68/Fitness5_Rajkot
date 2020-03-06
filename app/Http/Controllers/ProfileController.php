@@ -317,8 +317,9 @@ public function pinchange($id,Request $request){
 
     public function Printconsentform(Request $request){
         
-    $pdf = new \App\Printconsentform;
-    $pdf->generate($request);
+      $pdf = PDF::loadView('admin.consentformprint',compact('request'));
+  
+      return $pdf->stream(''.$request->firstname.' '.$request->lastname.'.pdf');
 
     }
     public function paymentreceipt(Request $request){
