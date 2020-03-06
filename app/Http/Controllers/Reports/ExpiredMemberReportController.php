@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\MemberPackages;
 use DB;
 use Carbon\Carbon;
+use App\RootScheme;
+use App\Scheme;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Excel;
 
@@ -20,16 +22,27 @@ class ExpiredMemberReportController extends Controller
         $tdate =$request->get('tdate');
         $username=$request->get('username');
         $day=$request->get('day');
- 
+        
         $keyword =$request->get('keyword');
         $query['fdate']=$request->fdate;
         $query['tdate']=$request->tdate;
         $query['day']=$request->day;
         $query['username']=$request->username;
         $query['keyword']=$request->keyword;
+        $query['rootschemeid']=$request->rootschemeid;
+        $query['schemeid']=$request->schemeid; 
+        $query['gender']=$request->gender; 
+        $query['status']=$request->status; 
+            
+
         $users= DB::table('users')->Join('member', 'member.userid', '=', 'users.userid')->get()->all();
+        $rootschemes = RootScheme::where('status',1)->get()->all();
+        $schemes= Scheme::where('status',1)->get()->all();
+       
         DB::enableQueryLog();
-        $grid=MemberPackages::leftjoin('users','users.userid','memberpackages.userid')->leftjoin('schemes','schemes.schemeid','memberpackages.schemeid');
+        $grid=MemberPackages::leftjoin('users','users.userid','memberpackages.userid')
+        ->leftjoin('member', 'member.userid','users.userid')
+        ->leftjoin('schemes','schemes.schemeid','memberpackages.schemeid');
 
         if ($request->isMethod('post')){
 
@@ -45,6 +58,7 @@ class ExpiredMemberReportController extends Controller
                 $grid->whereBetween('memberpackages.expiredate', [$from, $to]);
               
             }
+
             if ($tdate != "") {
                         $to = date($tdate);
                         if (!empty($fdate)) {
@@ -61,19 +75,34 @@ class ExpiredMemberReportController extends Controller
               $grid->where('users.userid',$username);
             }
             // dd($paymentdata->paginate(5));
-         
+            
+            
+            if($query['rootschemeid'] != ""){
+             
+                $grid->where('schemes.rootschemeid',$query['rootschemeid']);
+            }
+            if($query['schemeid'] != ""){
+                $grid->where('memberpackages.schemeid',$query['schemeid']);
+            }
+            if($query['gender'] != ""){
+                $grid->where('member.gender',$query['gender']);
+            }
+            if($query['status'] != ""){
+                $grid->where('member.status',$query['status']);
+            }
             if($day != ""){
                 $date=Carbon::now()->addDays($day);
                 $today=date('Y-m-d');
                 $grid->whereBetween('memberpackages.expiredate',[$today, $date]);
             }
-            // dd(DB::getQueryLog()); 
-            $paymentdata=$grid->orderBy('memberpackages.expiredate','asc')->get()->all();
+        
             
-            return view('admin.Reports.expiredmembershiplist',compact('query','paymentdata','users'));
+            $paymentdata=$grid->orderBy('memberpackages.expiredate','asc')->get()->all();
+          
+            return view('admin.Reports.expiredmembershiplist',compact('query','paymentdata','users','rootschemes','schemes'));
         }else{
             
-            return view('admin.Reports.expiredmembershiplist',compact('query','users','paymentdata'));
+            return view('admin.Reports.expiredmembershiplist',compact('query','users','paymentdata','rootschemes','schemes'));
         }
     }
     public function expiredmemberexcel(Request $request){

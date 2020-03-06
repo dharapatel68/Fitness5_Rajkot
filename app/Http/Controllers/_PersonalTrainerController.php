@@ -1322,10 +1322,10 @@ return response()->json($response);
  
 
 }
-public function getqueryresultforexcel(Request $request){
-          $packageid=$request->packageid;
-          $traineridgen=$request->trainerid;
-          $memberidgen=$request->memberid;
+    public function getqueryresultforexcel(Request $request){
+      $packageid=$request->packageid;
+      $traineridgen=$request->trainerid;
+      $memberidgen=$request->memberid;
 
       $grid = DB::select( DB::raw("select `ptmember`.*,claimptsession.*,ptmember.memberid AS 'pmemberid',ptmember.trainerid AS 'ptrainerid',ptmember.packageid AS 'ppackageid',ptmember.status AS 'ptmemberstatus', `employee`.`username`, `employee`.`employeeid` from `ptmember` left join `employee` on `employee`.`employeeid` = `ptmember`.`trainerid` left join claimptsession on ptmember.trainerid=claimptsession.trainerid AND ptmember.memberid=claimptsession.memberid AND ptmember.date=claimptsession.scheduledate  where `ptmember`.`memberid` = '".$memberidgen."' and `ptmember`.`packageid` = '".$packageid."' and `ptmember`.`trainerid` = '".$traineridgen."' and (`ptmember`.`status` = 'Active' or `ptmember`.`status` = 'Pending' or `ptmember`.`status` = 'Conducted')"));
       echo json_encode($grid);
