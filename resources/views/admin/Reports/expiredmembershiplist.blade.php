@@ -51,9 +51,10 @@
                            <table class="table no-margin">
                               <thead>
                                  <tr>
-                                    <th>From :</th>
+                                    <th>Expire Date <br>From :</th>
                                     <th>To :</th>
                                     <th>Username</th>
+                                    
                                     <th>Day</th>
                                  </tr>
                               </thead>
@@ -72,12 +73,49 @@
                                     <td><input type="text" name="day" class="form-control" placeholder="Day" value="{{$query['day']}}"></td>
                                  </tr>
                                  <tr>
-                                    <td><input type="text" name="keyword" placeholder="Search Keyword" class="form-control" value="{{$query['keyword']}}" id="keyword"></td>
-                                    <td style="text-align: left" colspan="4">
-                                       <button type="submit" name="search" class="btn bg-orange"><i class="fa fa-filter"></i>   Filters</button>
-                                       <a href="{{ url('expiredmemberreport') }}" class="btn bg-red">Clear</a></td>
+                                 <th>Root Scheme</th>
+                                    <th>Package</th>
+                                    <th>Gender</th>
+                                    <th>Status</th>
+                               
                                  </tr>
-                              </tbody>
+                                 <tr>
+                                    <td><select name="rootschemeid" class="form-control select2 span8" data-placeholder="Select a RootScheme" >
+                                       <option value="" selected="" disabled="">Select a RootScheme</option>
+                                       @foreach($rootschemes as $rootscheme)
+                                          <option value="{{$rootscheme->rootschemeid}}" {{ $query['rootschemeid'] ==  $rootscheme->rootschemeid ? 'selected' : ''}}>{{$rootscheme->rootschemename}}</option>
+                                       @endforeach
+                                    </select></td>
+                                    <td><select name="schemeid" class="form-control select2 span8" data-placeholder="Select a Package" >
+                                       <option value="" selected="" disabled="">Select a Package</option>
+                                       @foreach($schemes as $scheme)
+                                          <option value="{{$scheme->schemeid}}" {{ $query['schemeid'] ==  $scheme->schemeid ? 'selected' : ''}}>{{$scheme->schemename}}</option>
+                                       @endforeach
+                                    </select></td>
+                                    <td>
+                                       <select name="gender" class="form-control select2 span8" data-placeholder="Select a Gender" >
+                                          <option value="" selected="" disabled="">Select a Gender</option>
+                                             <option value="Female" {{ $query['gender'] == 'Female' ? 'selected' : ''}}>Female</option>
+                                             <option value="Male" {{ $query['gender'] == 'Male' ? 'selected' : ''}}>Male</option>
+                                       </select>
+                                    </td>
+                                    <td>
+                                       <select name="status" class="form-control select2 span8" data-placeholder="Select a Status" >
+                                          <option value="" selected="" disabled="">Select a Status</option>
+                                             <option value="1" {{ $query['status'] == '1' ? 'selected' : ''}}>Active</option>
+                                             <option value="0" {{ $query['status'] == '0' ? 'selected' : ''}}>Expired</option>
+                                       </select>
+                                       
+                                    </td>
+                                   
+                                 </tr>
+                                 <tr>
+                                 <td><input type="text" name="keyword" placeholder="Search Keyword" class="form-control" value="{{$query['keyword']}}" id="keyword"></td>
+                                 <td style="text-align: left" colspan="4">
+                                    <button type="submit" name="search" class="btn bg-orange"><i class="fa fa-filter"></i>   Filters</button>
+                                    <a href="{{ url('expiredmemberreport') }}" class="btn bg-red">Clear</a></td>
+                                 </tr>
+                                 </tbody>
                            </table>
                         </div>
                      </form>

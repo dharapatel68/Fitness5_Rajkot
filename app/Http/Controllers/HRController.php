@@ -1072,7 +1072,7 @@ class HRController extends Controller
 		/*******************if trainer***************************** */
 		
 		if($empdata->role == 'trainer' || $empdata->role == 'Trainer' ){
-			
+			$ptlogs=array();
 			$trainerdata=Ptassignlevel::where('trainerid',$empdata->employeeid)->leftjoin('ptlevel','ptassignlevel.levelid','ptlevel.id')->get()->first();
 			if($trainerdata){
 				$trainerlevel=$trainerdata->level;
@@ -1086,14 +1086,35 @@ class HRController extends Controller
 				$trainersessiondetail=Claimptsession::where('trainerid',$empdata->employeeid)->where('status','Active')->whereMonth('actualdate',$cal_month)->whereYear('actualdate',$year)->orderBy('actualdate','desc')->get()->all();
 				foreach ($trainersessiondetail as $key => $value) {
 					
-					$package=MemberPackages::where('memberpackagesid',$value->packageid)->leftjoin('schemes','memberpackages.schemeid','schemes.schemeid')->get()->first();
+					$package=MemberPackages::where('memberpackagesid',$value->packageid)
+					->leftjoin('schemes','memberpackages.schemeid','schemes.schemeid')
+					->get()->first();
 					$member=Member::where('memberid',$value->memberid)->get(['member.firstname','member.lastname'])->first();
+				
 					$value['schemename']=$package->schemename;
 					$value['firstname']=$member->firstname;
 					$value['lastname']=$member->lastname;
+				
 
 				}
-			
+				$ptlogs = Claimptsession::where('trainerid',$empdata->employeeid)->where('status','Active')
+				->whereMonth('actualdate',$cal_month)
+				->whereYear('actualdate',$year)
+				->groupBy('memberid')
+				->orderBy('actualdate','desc')->get()->all();
+				foreach($ptlogs as $ptlog){
+					$ptlogcount = 	$trainersessioncount=Claimptsession::where('trainerid',$empdata->employeeid)->where('status','Active')
+							->whereMonth('actualdate',$cal_month)
+							->whereYear('actualdate',$year)
+							->orderBy('actualdate','desc')
+							->where('memberid',$ptlog->memberid)->get()->count();
+					$member=Member::where('memberid',$ptlog->memberid)->get(['member.firstname','member.lastname'])->first();
+					$ptlog['schemename']=$package->schemename;
+					$ptlog['firstname']=$member->firstname;
+					$ptlog['lastname']=$member->lastname;
+					$ptlog['count']=$ptlogcount;
+				}
+				
 				$trainerdetail=[];
 				$trainerdetail['trainerlevel']=$trainerlevel;
 				$trainerdetail['trainerpercentage']=$trainerpercentage;
@@ -1132,7 +1153,7 @@ class HRController extends Controller
 
 		/*******************end if trainer***************************** */
 	
-		return view('hr.salary.calculatesalary')->with(compact('attenddays', 'totalminute', 'totalhour', 'totaldays', 'givenleave', 'takenleave', 'empdata', 'empsalary','empattandedhours', 'empworkinghour', 'total_hour', 'year', 'month','cal_month', 'Workindays', 'holidays', 'empworkingminute', 'current_salary', 'employeeid', 'takenleave_display', 'Workindays', 'leavedays_cal', 'totalworkinghour', 'employeelog', 'totalminute_dispaly', 'totalhour_dispaly_model', 'emploanamount', 'lateemployeelog', 'actualdays','trainersession','trainersessiondetail','trainerdetail','nondutyhours','nondutyhoursamount','allsessionprice'));
+		return view('hr.salary.calculatesalary')->with(compact('attenddays', 'totalminute', 'totalhour', 'totaldays', 'givenleave', 'takenleave', 'empdata', 'empsalary','empattandedhours', 'empworkinghour', 'total_hour', 'year', 'month','cal_month', 'Workindays', 'holidays', 'empworkingminute', 'current_salary', 'employeeid', 'takenleave_display', 'Workindays', 'leavedays_cal', 'totalworkinghour', 'employeelog', 'totalminute_dispaly', 'totalhour_dispaly_model', 'emploanamount', 'lateemployeelog', 'actualdays','trainersession','trainersessiondetail','trainerdetail','nondutyhours','nondutyhoursamount','allsessionprice','ptlogs'));
 
 	// }  catch(\Exception $e) {
 

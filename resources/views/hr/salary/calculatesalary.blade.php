@@ -489,18 +489,16 @@ $confirmdate = '';
                         <th>Session Amount</th>
                     </thead>
                     <tbody>
-                        @if(!empty($trainerdetail['trainershemes']))
-                            @if(count($trainerdetail['trainershemes']) > 0)
-                                @foreach($trainerdetail['trainershemes'] as $key => $tsession)
-                                 @if($key == 0)
+                        @if(!empty($ptlogs))
+                            @if(count($ptlogs) > 0)
+                                @foreach($ptlogs as $key => $ptlog)
                                   <tr>
-                                    <td>{{count($trainerdetail['trainershemes'])}}</td>
-                                    <td>{{$tsession->firstname}} {{$tsession->lastname}}</td>
-                                    <td>{{$tsession->schemename}}</td>
-                                    
-                                    <td>{{$tsession->amount}}</td>
+                                    <td>{{$ptlog->count}}</td>
+                                    <td>{{$ptlog->firstname}} {{$ptlog->lastname}}</td>
+                                    <td>{{$ptlog->schemename}}</td>
+                                    <td>{{$ptlog->amount}}</td>
                                 </tr>
-                                @endif
+                           
                                 @endforeach
                             @endif
                         @endif
