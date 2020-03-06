@@ -2060,7 +2060,8 @@ textarea.input100 {
                       </div>
                     </article>
                     <article class="content-entry">
-                      <form action="{{ url('Printconsentform')}}">
+                      <form action="{{ url('Printconsentform')}}" method="post"  target="_blank">
+                        @csrf
                         <h4 class="article-title"><i></i>Consent From</h4>
                         <div class="accordion-content">
                           <br/>
@@ -2072,7 +2073,7 @@ textarea.input100 {
                               <div class="table-wrapper">
                                 <div class="table-title">
                                   <div class="box-header">
-                                    <!-- <a href="{{ url('addterms') }}" class="btn add-new bg-navy"><i class="fa fa-plus"></i>Add New</a> -->
+                                   
                                   </div>
                                   <!-- /.box-header -->
                                   <div class="box-body" style="font-family: Calibri; display: none">
@@ -2084,7 +2085,7 @@ textarea.input100 {
                                     <h3>Consent Form</h3>
                                   </span>
                                     </div>
-                                    <form class="contact100-form validate-form" action="{{ url('Printconsentform')}}" method="get">
+                                    <form class="contact100-form validate-form" action="{{ url('Printconsentform')}}" method="post"  target="_blank" >
                                       <div class="wrap-input100 validate-input" data-validate="Name is required"> <span class="label-input100">Date</span>
                                         <input class="input100 form-control" type="date" onkeypress="return false" name="date" placeholder="Enter full name" value="{{Carbon\Carbon::today()->format('Y-m-d')}}"> <span class="focus-input100"></span>
                                       </div>

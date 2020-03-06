@@ -161,14 +161,10 @@ class ExpiredMemberReportController extends Controller
                 $date=Carbon::now()->addDays($day);
                 $today=date('Y-m-d');
                 $grid->whereBetween('memberpackages.expiredate',[$today, $date]);
-
             }
-               
  
                $gridexcel=$grid->orderBy('memberpackages.expiredate','asc')->get()->all();
             
-
-       
           if($gridexcel){
              // $student_array[] = array('InvoiceID','Member','Payment Date', 'Amount','type','GST (%)', 'Gst Amount','GST NO','Companyname', );
       
