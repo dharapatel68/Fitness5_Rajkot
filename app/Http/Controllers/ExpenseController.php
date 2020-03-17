@@ -59,7 +59,7 @@ class ExpenseController extends Controller
       $users=Employee::get()->all();
       $modes=expensepayment::distinct('paymenttype')->get(['paymenttype'])->all();
 
-         $expensepayment= expensepayment::leftjoin('employee','expensepayment.employeeid','employee.employeeid')->leftjoin('expensemaster','expensemaster.expensecategoryid','expensepayment.expensecategoryid')->where('expensepayment.status','Active')->select('expensepayment.created_at as timestamp','employee.*','expensepayment.*','expensemaster.*');
+         $expensepayment= expensepayment::leftjoin('employee','expensepayment.employeeid','employee.employeeid')->leftjoin('expensemaster','expensemaster.expensecategoryid','expensepayment.expensecategoryid')->where('expensepayment.status','Active')->select('expensepayment.created_at as timestamp','employee.*','expensepayment.*','expensemaster.*')->orderBy('expensepayment.dte', 'desc');
 
            if ($fdate != "") {
                      $from = date($fdate);
@@ -70,7 +70,7 @@ class ExpenseController extends Controller
                          $to = date('Y-m-d');
                      }
                      // ->whereBetween('followupdays', [$from, $to])
-                     $expensepayment->whereBetween('expensepayment.dte', [$from, $to]);
+                     $expensepayment->whereBetween('expensepayment.dte', [$from, $to])->orderBy('expensepayment.dte', 'desc');
                    
          }
          if ($tdate != "") {
@@ -80,7 +80,7 @@ class ExpenseController extends Controller
                      }else{
                          $from = '';
                      }
-                       $expensepayment->whereBetween('expensepayment.dte', [$from, $to]);
+                       $expensepayment->whereBetween('expensepayment.dte', [$from, $to])->orderBy('expensepayment.dte', 'desc');
          }
           if ($keyword != ""){
                $expensepayment->where ( 'expensepayment.paymenttype', 'LIKE', '%' . $keyword . '%' )->orwhere ( 'expensepayment.amount', 'LIKE', '%' . $keyword . '%' )->orwhere ( 'employee.username', 'LIKE', '%' . $keyword . '%' )->orWhere ('expensemaster.categoryname', 'LIKE', '%' . $keyword . '%' );
@@ -99,7 +99,7 @@ class ExpenseController extends Controller
           $expensepaymentall=$expensepayment;
            $dataall=$expensepaymentall->get()->all();
           // dd($dataall);
-          $expensepayment=$expensepayment->paginate(1000)->appends('query');
+          $expensepayment=$expensepayment->orderBy('expensepayment.dte', 'desc')->paginate(1000)->appends('query');
          
              return view('admin.expense.viewexpenses',compact('expensepayment','dataall','query','users','modes'));  
      
@@ -113,7 +113,7 @@ class ExpenseController extends Controller
   
 $users=Employee::get()->all();
 
- $expensepayment= expensepayment::leftjoin('employee','expensepayment.employeeid','employee.employeeid')->leftjoin('expensemaster','expensemaster.expensecategoryid','expensepayment.expensecategoryid')->where('expensepayment.status','Active')->select('expensepayment.created_at as timestamp','employee.*','expensepayment.*','expensemaster.*')->get()->all();
+ $expensepayment= expensepayment::leftjoin('employee','expensepayment.employeeid','employee.employeeid')->leftjoin('expensemaster','expensemaster.expensecategoryid','expensepayment.expensecategoryid')->where('expensepayment.status','Active')->select('expensepayment.created_at as timestamp','employee.*','expensepayment.*','expensemaster.*')->orderBy('expensepayment.dte', 'desc')->get()->all();
  $modes=expensepayment::distinct('paymenttype')->get(['paymenttype'])->all();
  // dd($modes);
    $dataall=$expensepayment;
