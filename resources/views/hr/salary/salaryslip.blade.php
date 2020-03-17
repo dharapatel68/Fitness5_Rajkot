@@ -87,10 +87,13 @@
  ?> 
     <body>
         <div>
+		
             <div style="float: left">
                 <img style="width: 100px" src="images/fitness5.png">
-            </div>
-            <div style="float: left;margin-left: 8px;">
+			</div>
+		
+		
+            <div style="float: right;margin-left: 8px;">
                 <b><font size="3">Fitness5</font></b>
             	<font size="2">
  				<br>
@@ -101,6 +104,7 @@
 					Email:info@fitness5.in <br/>
 					Mo. : 0281 2583005/2587005 <br></font>
 			</div>
+			
 		</div>
 		<br>
 		<br>
@@ -110,25 +114,31 @@
 		<br>
 		<br>
 		<div style="float:center;">
-			<b style="padding:8px;"> VOUCHER No.</b>__________________   &nbsp;&nbsp; &nbsp;      Date: {{ date('d-m-Y',strtotime($salary->paiddate))}} &nbsp;&nbsp; &nbsp; Time:_______AM/PM  
+			<div style="padding-left:240px;padding-top:-30px; font-size:20;">
+			<b> Salary Slip  {{ $salary->month }}</b>
+			</div>
+			<br>
+			<br>
+			   <font style="float:right;margin-left: 8px;"> Date: {{ date('d-m-Y',strtotime($salary->paiddate))}} &nbsp;&nbsp; &nbsp;  </font>
 			<br>
 			<br>
 			<table>
-				<tr><td style="padding: 8px;">PAID TO</td> &nbsp;<td><u>{{$employeefullname}}</u>__________________________________________________________</td></tr>
-				<tr><td style="padding: 8px;">DEBIT</td> &nbsp; <td>______________________________________________________________</td></tr>
-				<tr><td style="padding: 8px;">ON A/C. OF</td> &nbsp; <td>______________________________________________________________</td></tr>
-
+				<tr><td style="padding: 8px;">NAME: </td> &nbsp;<td style="font-size:15;"><u><b>{{$employeefullname}}</b></u></td></tr>
+				
 			</table>
 			<br>
 			<br>
 			<table class="table" border="1px" style="width:100%">
 				<thead><tr><th class="th" style="width:80% !important;">PARTICULARS</th><th class="th">AMOUNT  <span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span></th></tr></thead>
-				<tbody><tr class="tr">
-				<td  class="td">SALARY</td><td class="td">{{ $salary->currentsalary - $salary->ptsessionsalary}}</td></tr>
-					<tr><td class="td">PT SALARY</td><td class="td">{{$salary->ptsessionsalary}}</td></tr>
-					<tr><td class="td">RETURN</td><td class="td">{{$salary->salaryemi}}</td></tr>
+				<tbody><tr><td colspan="2" class="th">EARNINGS</td></tr><tr class="tr">
+				<td  class="td">Salary</td><td class="td">{{ $salary->currentsalary - $salary->ptsessionsalary}}</td></tr>
+					<tr><td class="td">PT salary</td><td class="td">{{$salary->ptsessionsalary}}</td></tr>
+					<tr><td colspan="2" class="th">DEDUCTION</td></tr>
+					<tr><td class="td">loan</td><td class="td">{{$salary->salaryemi}}</td></tr>
 					<tr><td class="td">TDS</td><td class="td">{{$salary->salaryothercharges}}</td></tr></tbody>
-				<tfoot><tr><td class="th"><b>IN WORDS  </b> &nbsp;&nbsp; {{ $word }}</td><td>{{$salary->currentsalary}}</td></tr></tfoot>
+					<tr><td class="td">Remarks</td><td class="td">{{$salary->remark}}</td></tr>
+					<tfoot><tr><td class="th"><b>IN WORDS  </b> &nbsp;&nbsp; {{ $word }}</td><td>{{$salary->currentsalary}}</td></tr></tfoot>
+				
 			</table>
 			<br>
 			<table>

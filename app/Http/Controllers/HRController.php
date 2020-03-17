@@ -1245,6 +1245,7 @@ class HRController extends Controller
 			
 			
 			$salary = new Salary();
+			$salary->remark = $request->remark;
 			$salary->employeeid = $request->employeeid;
 			$salary->workingdays = $request->Workindays;
 			$salary->attenddays = $request->attenddays_display;
@@ -1413,6 +1414,7 @@ $nondutyhourssalary=0;
 			$salary->salaryemi = $request->emi;
 			$salary->salaryothercharges = $request->otheramount;
 			$salary->loanamount = $request->loan;
+					$salary->remark = $request->remark;
 			$salary->status = 'Unlocked';
 			$salary->actionby = session()->get('admin_id');
 

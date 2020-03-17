@@ -404,6 +404,19 @@ $confirmdate = '';
                                   </div>
                                </div>
                             </div>
+                            <div class="row">
+                              <div class="">
+                                 <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label"></label>
+                                    <div class="col-sm-4 col-lg-3">
+                                    </div>
+                                    <label for="inputEmail3" class="col-sm-1 col-lg-2 control-label">Remarks</label>
+                                    <div class="col-sm-4 col-lg-3">
+                                           <textarea name="remark" class="form-control"  placeholder="Remarks"></textarea>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
                             <center>
                                 <div class="form-row" style="margin-top: 35px; margin-left: 15px;">
                                     <button type="submit" class="btn btn-primary bg-orange" id="submit">Save Salary</button>
