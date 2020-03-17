@@ -1383,9 +1383,6 @@ function calculate(){
   //with tax end 
 
 
-  
-
-
 
 }
 
