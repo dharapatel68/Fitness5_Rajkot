@@ -917,7 +917,7 @@ public function pinchange($id,Request $request){
     }
 
     public function activedeviceuser(Request $request){
-       $portno_const = config('constants.port');
+      $portno_const = config('constants.port');
       $setuserid = $request->get('setuserid');
       $devicemobileno = $request->get('devicemobileno');
 
@@ -1099,6 +1099,8 @@ public function sendotp(Request $request){
       $action->action = 'OTP';
       $action->action_on = $last_id;
       $action->save();
+      $otpsend='';
+      $success='';
       $msg=   DB::table('messages')->where('messagesid','22')->get()->first();
    
       $msg =$msg->message;         
@@ -1106,9 +1108,18 @@ public function sendotp(Request $request){
       $msg= str_replace("[LastName]",ucfirst($lname),$msg);
       $msg= str_replace("[otp]",$rndno,$msg);
       $msg = urlencode($msg);
+      $smssetting = Smssetting::where('status',1)->where('smsonoff','Active')->first();
 
-     $otpsend = Curl::to('http://vsms.vr4creativity.com/api/mt/SendSMS?user=feetness5b&password=five@feetb&senderid=FITFIV&channel=Trans&DCS=0&flashsms=0&number='.$mobileno.'&text='.$msg.'&route=6')->get();
-      
+      if ($smssetting) {
+       
+      $u = $smssetting->url;
+      $url= str_replace('$mobileno', $mobileno, $u);
+      $url=str_replace('$msg', $msg, $url);
+      $otpsend = Curl::to($url)->get();
+
+     
+      }
+     
       if (strpos($otpsend, '"ErrorCode":"000"') !== false) {
           $success = true;
       }
