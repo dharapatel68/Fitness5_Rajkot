@@ -22,7 +22,7 @@ class SendPaymentSMSController extends Controller
             $u = $smssetting->url;
             $url= str_replace('$mobileno', $mobileno, $u);
             $url=str_replace('$msg', $msg, $url);
-    
+            
             $otpsend = Curl::to($url)->get();
     
             $action = new Notificationmsgdetails();

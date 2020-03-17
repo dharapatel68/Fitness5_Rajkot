@@ -33,7 +33,7 @@ class SendMemberFormController extends Controller
             ]);
             $msg= str_replace("[url]", $bitlylink,$msg); 
             // $smssetting = Smssetting::where('status',1)->where('smsonoff','Active')->first();
-            $u = "http://vsms.vr4creativity.com/api/mt/SendSMS?number=mobileno&text=msg&user=feetness5b&password=five@feetb&senderid=FITFIV&channel=Trans&DCS=0&flashsms=0&route=6";
+            $u = "http://vsms.vr4creativity.com/api/mt/SendSMS?number=mobileno&text=msg&senderid=FITFIV&channel=Trans&DCS=0&flashsms=0&route=6&APIKey=6t12fzBk6EaTrWeGhBsS9g";
             $msg = urlencode($msg);
             $url= str_replace('mobileno',$id, $u);
             $url=str_replace('msg', $msg, $url);
