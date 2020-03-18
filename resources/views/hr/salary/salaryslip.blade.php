@@ -115,7 +115,9 @@
 		<br>
 		<div style="float:center;">
 			<div style="padding-left:240px;padding-top:-30px; font-size:20;">
-			<b> Salary Slip  {{ $salary->month }}</b>
+			<b> Salary Slip </b>
+			<br>
+			 {{ $salary->month}}  : {{ $salary->year}}
 			</div>
 			<br>
 			<br>
@@ -135,14 +137,17 @@
 					<tr><td class="td">PT salary</td><td class="td">{{$salary->ptsessionsalary}}</td></tr>
 					<tr><td colspan="2" class="th">DEDUCTION</td></tr>
 					<tr><td class="td">loan</td><td class="td">{{$salary->salaryemi}}</td></tr>
-					<tr><td class="td">TDS</td><td class="td">{{$salary->salaryothercharges}}</td></tr></tbody>
-					<tr><td class="td">Remarks</td><td class="td">{{$salary->remark}}</td></tr>
-					<tfoot><tr><td class="th"><b>IN WORDS  </b> &nbsp;&nbsp; {{ $word }}</td><td>{{$salary->currentsalary}}</td></tr></tfoot>
-				
+					<tr><td class="td">TDS</td><td class="td">{{$salary->salaryothercharges}}</td></tr>
+										<tr><td class="td">Payment Type</td><td class="td">{{$salary->paymenttype}}</td></tr>
+										<tr><td class="td">Payment Remarks</td><td class="td">{{$salary->remark2}}</td></tr>
+
+						<tr><td class="td">Salary Remarks</td><td class="td">{{$salary->remark}}</td></tr>
+				</tbody>
+				<tfoot><tr><td class="th"><b>IN WORDS  </b> &nbsp;&nbsp; {{ $word }}</td><td>{{$salary->currentsalary}}</td></tr></tfoot>
 			</table>
 			<br>
 			<table>
-				<tr><th style="padding: 8px;">MODE OF PAYMENT</th> <td><span style="font-family: DejaVu Sans; sans-serif;">&#9633; </span> Cash  <span style="font-family: DejaVu Sans; sans-serif;">&#9633; </span> Credit Card  <span style="font-family: DejaVu Sans; sans-serif;">&#9633; </span> Cheque</td></tr>
+				<!-- <tr><th style="padding: 8px;">MODE OF PAYMENT</th> <td><span style="font-family: DejaVu Sans; sans-serif;">&#9633; </span> Cash  <span style="font-family: DejaVu Sans; sans-serif;">&#9633; </span> Credit Card  <span style="font-family: DejaVu Sans; sans-serif;">&#9633; </span> Cheque</td></tr> -->
 				<tr><td style="padding: 8px;">Cheque No.</td> &nbsp;<td>_______________ Date_________________ Amount______________</td></tr>
 				<tr><td style="padding: 8px;">Bank</td> &nbsp;		<td>_________________________________________________________</td></tr>
 

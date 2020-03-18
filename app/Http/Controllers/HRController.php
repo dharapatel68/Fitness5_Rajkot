@@ -1523,6 +1523,9 @@ $nondutyhourssalary=0;
 		$salary->ispaid = 1;
 		$emi = $salary->salaryemi;
 		$employeeid = $salary->employeeid;
+		$salary->paymenttype = $request->paymenttype;
+				$salary->remark2 = $request->remark2;
+
 		$salary->paidby = session()->get('admin_id');
 		$salary->paiddate = date('Y-m-d');
 		$salary->save();
