@@ -123,7 +123,7 @@
                                                     <th>Paid Leave</th>
                                                     <th>EMI</th>
                                                     <th>Status</th>
-                                                    <th>Action</th>
+                                                    <th>    Action</th>
                                                 </thead>
                                                 <tbody>
                                                     @if(!empty($salary))
@@ -150,7 +150,7 @@
                                                                 <td>
                                                                     @if($salary_data->ispaid != 1)
                                                                     <a href="{{ route('unlocksalary', $salary_data->salaryid) }}" title="Edit Salary" class="btn btn-success">Unlock</a>
-                                                                    <a class="btn btn-danger" id="pay" onclick="account('{{$salary_data->employee->accountno}}', '{{ $emp_name }}', '{{ $salary_data->employee->employeeid }}', '{{ $salary_data->salaryid }}')" data-toggle="modal" data-target="#accountmodel">Pay</a>
+                                                                    <a class="btn btn-danger" id="pay" onclick="account('{{$salary_data->employee->accountno}}', '{{$salary_data->paymenttype}}', '{{$salary_data->remark2}}','{{ $emp_name }}', '{{ $salary_data->employee->employeeid }}', '{{ $salary_data->salaryid }}')" data-toggle="modal" data-target="#accountmodel">Pay</a>
                                                                     @else
                                                                     <a href="{{ url('printsalaryslip/'.$salary_data->salaryid) }}" class="" target="_blank"><i class="fa fa-print"></i></a>
                                                                     @endif
@@ -201,7 +201,29 @@
                     <label>Account No</label>
                     <input type="text" name="accountno" id="accountno" class="form-control" readonly="">
                 </div>
-            </div>
+                  <div class="form-group">
+                    <label>Mode of Payment
+                    <span style="color: red">*</span>
+                    </label>
+                    <br>
+                    <input type="radio" name="paymenttype"  value="Cash" class="paymenttype">
+                    <label>Cash</label>
+                    <input type="radio"   value="Cheque" name="paymenttype" 
+                   
+                       class="paymenttype">
+                    <label>Cheque </label>
+                    <input type="radio"  name="paymenttype" value="Bank" class="paymenttype">
+                    <label>Bank</label>
+                    <input type="radio"  name="paymenttype" value="Credit Card" class="paymenttype">
+                    <label>Credit Card </label>
+        
+                 </div>
+                   <div class="form-group">
+                 <label>Remarks</label>
+                                            <textarea name="remark2" class="form-control"  placeholder="Remarks"></textarea>
+
+                                </div>
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="pay_emp">Pay</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -225,7 +247,11 @@
 
         $('#pay_emp').click(function(){
             let accountno = $('#accountno').val();
+            var paymenttype = $(".paymenttype:checked").val();
             let empname = $('#empname').val();
+             var remark2 =$('textarea').val()
+
+
             let empid = $('#empid').val();
             let salaryid = $('#salaryid').val();
 
@@ -233,9 +259,10 @@
 
                 type : 'POST',
                 url : '{{ route('confirmsalary') }}',
-                data : {accountno:accountno, empname:empname, empid:empid, salaryid:salaryid, _token : '{{ csrf_token() }}'},
+                data : {accountno:accountno,paymenttype:paymenttype,remark2:remark2, empname:empname, empid:empid, salaryid:salaryid, _token : '{{ csrf_token() }}'},
                 success : function(data){
                     if(data == 201){
+                        //  alert(paymenttype);
                         alert('Salary is paid');
                         window.location.href = '';
                     }
@@ -246,8 +273,11 @@
 
     });
 
-    function account(account, empname, empid, salaryid){
+    function account(account,paymenttype,remark2,empname, empid, salaryid){
         $('#accountmodel #accountno').val(account);
+          $('#accountmodel #paymenttype').val(paymenttype);
+                    $('#accountmodel #remark2').val(remark2);
+
         $('#accountmodel #empname').val(empname);
         $('#accountmodel #empid').val(empid);
         $('#accountmodel #salaryid').val(salaryid);
