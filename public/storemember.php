@@ -28,7 +28,7 @@ $today=date('Y-m-d');
  $workinghourfrom = date("Y-m-d H:i:s", strtotime($_POST["working_hour_from_1"]));
  $workinghourto = date("Y-m-d H:i:s", strtotime($_POST["working_hour_to_1"]));
 
-
+$photo='';
  if ($_FILES['profileimage']['name'] != "") {
  	$photo=$_FILES['profileimage']['name'];
  	}
@@ -45,10 +45,56 @@ $today=date('Y-m-d');
   
     
  }
+
+
+
+
 $files = implode(',', $data); 
-$username=$_POST["username"];
-$sql = "INSERT INTO `memberdata` (`memberid`, `userid`, `firstname`, `lastname`, `username`,`address`, `city`, `gender`, `email`, `createddate`, `hearabout`, `bloodgroup`, `other`, `formno`, `mobileno`, `homephonenumber`, `officephonenumber`, `profession`, `birthday`, `anniversary`, `emergancyname`, `emergancyrelation`, `emergancyaddress`, `emergancyphonenumber`, `workinghourfrom`, `workinghourto`, `amount`, `companyid`, `photo`, `files`, `memberpin`, `extra1`, `extra2`, `status`, `created_at`, `updated_at`) VALUES (NULL,NULL, '".$_POST["firstname"]."','".$_POST["lastname"]."','".$_POST["username"]."', '".$_POST["Address"]."', '".$_POST["City"]."', '".$_POST["gender"]."', '".$_POST["email"]."', '".$today."', '".$_POST["HearAbout"]."', '".$_POST["bloodgroup"]."', 'NULL', 'NULL', '".$_POST["CellPhoneNumber"]."', '".$_POST["HomePhoneNumber"]."', '".$_POST["OfficePhoneNumber"]."', '".$_POST["profession"]."', '".$_POST["birthday"]."', '".$_POST["anniversary"]."', '".$_POST["emergancyname"]."', '".$_POST["emergancyrelation"]."', '".$_POST["emergancyaddress"]."', '".$_POST["EmergancyPhoneNumber"]."', '".$workinghourfrom."', '". $workinghourto."', NULL, '".$_POST["bycompany"]."', '".$photo."','".$files."', '".$mpin."', NULL, NULL, '1', '".$today."', NULL)";
-if (mysqli_query($conn, $sql)) {
+$sql = "INSERT INTO memberdata(memberid, userid, firstname, lastname, username,address, city, gender, email, createddate, hearabout, bloodgroup, other, formno, mobileno, homephonenumber, officephonenumber, profession, birthday,anniversary, emergancyname, emergancyrelation,emergancyaddress, emergancyphonenumber, workinghourfrom, workinghourto, amount,companyid, photo, files,memberpin, extra1, extra2, status, created_at, updated_at) VALUES 
+		
+	(NULL,
+	NULL, 
+	'".mysqli_real_escape_string($conn,$_POST["firstname"]) ."',
+	'".mysqli_real_escape_string($conn,$_POST["lastname"])."',
+	'".mysqli_real_escape_string($conn,$_POST["username"])."',
+
+ 	'".mysqli_real_escape_string($conn,$_POST["Address"]) ."', 
+ 	 	'".mysqli_real_escape_string($conn,$_POST["City"]) ."', 
+ 	 	 	 	'".mysqli_real_escape_string($conn,$_POST["gender"]) ."', 
+
+ 	'".mysqli_real_escape_string($conn,$_POST["email"]) ."', 
+
+ '".$today."',
+ 	'".mysqli_real_escape_string($conn,$_POST["HearAbout"]) ."', 
+
+ 	'".mysqli_real_escape_string($conn,$_POST["bloodgroup"]) ."', 
+
+		'NULL', 'NULL',
+
+ 	'".mysqli_real_escape_string($conn,$_POST["CellPhoneNumber"]) ."', 
+ 	 	'".mysqli_real_escape_string($conn,$_POST["HomePhoneNumber"]) ."', 
+
+ 	'".mysqli_real_escape_string($conn,$_POST["OfficePhoneNumber"]) ."', 
+
+ 	'".mysqli_real_escape_string($conn,$_POST["profession"]) ."', 
+ 	'".$_POST["birthday"]."',
+ 	  	'".$_POST["anniversary"]."',
+ 	'".mysqli_real_escape_string($conn,$_POST["emergancyname"]) ."', 
+ 	'".mysqli_real_escape_string($conn,$_POST["emergancyrelation"]) ."', 
+ 	'".mysqli_real_escape_string($conn,$_POST["emergancyaddress"]) ."', 
+ 	 	'".mysqli_real_escape_string($conn,$_POST["EmergancyPhoneNumber"]) ."', 
+ 	 		'".mysqli_real_escape_string($conn,$workinghourfrom) ."', 
+ 	 			'".mysqli_real_escape_string($conn,$workinghourto) ."', 
+ 	 			'NULL', 'NULL',
+ 	 			 '".$photo."','".$files."',
+ 	 				'".mysqli_real_escape_string($conn,$mpin) ."', 
+ 	 				 NULL, NULL, '1', '".$today."', NULL)";
+
+
+
+ // '".$_POST["CellPhoneNumber"]."', '".$_POST["HomePhoneNumber"]."', '".$_POST["OfficePhoneNumber"]."', '".$_POST["profession"]."', '".$_POST["birthday"]."', '".$_POST["anniversary"]."', '".$_POST["emergancyname"]."', '".$_POST["emergancyrelation"]."', '".$_POST["emergancyaddress"]."', '".$_POST["EmergancyPhoneNumber"]."', '".$workinghourfrom."', '". $workinghourto."', NULL, NULL, '".$photo."','".$files."', '".$mpin."', NULL, NULL, '1', '".$today."', NULL)";
+if (mysqli_query($conn, $sql)) 
+{
     echo "New record created successfully";
     $sql2 = "UPDATE `short_links` SET `status` = '0' WHERE  code='".$_POST["code"]."'";
 		if (mysqli_query($conn, $sql2)) {
