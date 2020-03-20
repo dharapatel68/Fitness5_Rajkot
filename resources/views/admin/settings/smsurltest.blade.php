@@ -79,14 +79,17 @@
    $('#saveurl').prop('disabled', true);
  }); 
 
-  $('#testurl').click(function(){
+  $('#testurl').click(function()
+  {
       $.ajax({
             url : '{{url("urltest")}}',
             type : 'post',
-            data : { _token:'{{ csrf_token() }}',testurl:$('#testurl').val(),turl:$('#turl').val()},
+            data : { _token:'{{ csrf_token() }}',testurl:$('#testurl').val(),saveurl:$('#saveurl').val(),turl:$('#turl').val()},
             success : function(data){
 
               var a = JSON.parse(data.smsrequestid);
+              console.log(data.smsrequestid);
+
 
                if (a['ErrorCode'] == '000') {
                       alert('sms send successfully');
