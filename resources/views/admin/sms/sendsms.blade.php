@@ -98,7 +98,7 @@
 
 <script type="text/javascript">
    $(document).ready(function(){
-    $('#example2').DataTable();
+    $('#example1').DataTable();
    });
 </script>
 <!-- left column -->
@@ -366,6 +366,7 @@
                 </div>
                 <input type="hidden" id="response" name="response[]">
                 <input type="hidden" id="failres" name="failres[]">
+                <input type="hidden" id="demo" name="demo">
 
                 <div class="row">
                   <div class="form-group">
@@ -478,7 +479,10 @@ var table = document.getElementById("tbody");
 
 var dx = [];
 var failres = [];
-
+  var res=[];
+     var total = 0;
+  var res1=[];
+var response=0;
     for (var i = 0, row; row = table.rows[i]; i++) {
      
                       var textareasmsotp = $('#textareasmsotp').val();
@@ -488,6 +492,7 @@ var failres = [];
                       var mobileno = $('#mobileno'+i+'').val();
                       var memail = $('#memail'+i+'').val();
                       var lastname = $('#lastname'+i+'').val();
+
                       // alert(lastname);
                       //var mobileno = ajaxmlist.replace(/\D/g, "");
                          
@@ -498,67 +503,56 @@ var failres = [];
                       type:'post',
                       url : '{{url("sendsmsuser")}}',
                       data : {  _token:'{{ csrf_token() }}',ajaxmlist:ajaxmlist,textareasmsotp:textareasmsotp,mobileno:mobileno,memail:memail,lastname:lastname},
-                      success : function(data){
+                      success : function(data)
+                      {
+                     //   console.log(data);
+                        if(data)
+                        {
+                              if(data == 'Success')
+                              {
+                                      total=total+1;     
+                             $('#demo').val(total);
+                                response=$('#demo').val();
 
-                         dx.push(data);
-                         failres.push(data);
 
-                         $('#response').val(dx);
+                         }
+                         else if(data == 'Failure'){
+                           failres.push(data);
+                         }
+                      
+                         }else
 
-
-                         if (data == 'Failure') {
-                           $('#failres').val(failres);
+                         {
+                          failres.push(data);
                          }
 
-                          // var table = document.getElementById("tbody");
-                          //  for (var i = 0, row; row = table.rows[i]; i++) {
-                          //   var mobileno = $('#mobileno'+i+'').val();
-                            
-                           
-                          //      $.ajax({
-                          //         url : '{{url("smsresponse")}}',
-                          //         type : 'get',
-                          //         data : {_token:'{{ csrf_token() }}',mobileno:mobileno},
-                          //         success : function(data){
-
-                          //           var a = JSON.parse(data.smsrequestid);
-
-                          //           if (a['ErrorCode'] == '000') {
-                          //             // alert('sms send successfully')
-                          //           }else{
-                          //             // alert('Something Wrong ! Sms Not Send')
-                          //           }
-                          //           // alert(a['ErrorCode']);
-                          //         },
-                          //         dataType : 'json',
-                          //      });
-                          //   // alert(mobileno);
-                          //   }
-                            // if (data != 'Success') {
-
-                            // }
-
-
-                            
+                        res1=$('#failres').val(failres);
+                       //   res1=$('#response').val();
+                   alert(response+' '+"Messages are successfully Send");
+                     
                         },
                       });
                      
                   }
                    // alert(i);
                   }
-                  setTimeout(function() {
-                    var res = $('#response').val().split(',');
-                    var fai = $('#failres').val().split(',');
-                       // console.log(fai.length);
-                       call(res);
-                      // console.log($('#failres').length +'Messages Is Failres');
-                  }, 2000);
+
+                   // call(total);
+                  // setTimeout(function() {
+                  //   var res = $('#response').val().split(',');
+                  //   var fai = $('#failres').val().split(',');
+                  //      // console.log(fai.length);
+                  //      call(total);
+                  //     // console.log($('#failres').length +'Messages Is Failres');
+                  // }, 2000);
                   // window.location.reload();   
                });
 
-function call(res){
-  alert(res.length+' '+"Messages are successfully Send");
-  window.location.reload();
+function call(total){
+   // console.log(res);
+    //console.log($('#response').val());
+  alert(total+' '+"Messages are successfully Send");
+  // window.location.reload();
 }
 
 
