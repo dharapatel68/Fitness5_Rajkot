@@ -178,7 +178,7 @@ class NotificationControllerajax extends Controller
          
        
             // $query1->toSql();
-       $query1 =  $query->distinct()->get(['member.mobileno','member.firstname','member.lastname'])->all();
+       $query1 =  $query->distinct()->get(['member.mobileno','member.firstname','member.lastname','member.email'])->all();
           // $queryy->get()->all();
 
 
@@ -208,7 +208,6 @@ class NotificationControllerajax extends Controller
 
         $member = Member::where('mobileno',$mobileno)->first();
 
-
          $action = new Actionlog();
               $action->user_id = session()->get('admin_id');
               $action->ip = $request->ip();
@@ -220,7 +219,7 @@ class NotificationControllerajax extends Controller
             // $msg = urlencode($msg);
 
          $dnd =  DB::table('notification')->where('mobileno',$mobileno)->first();
-
+        
          if ($dnd) {
              
              if ($dnd->sms == 1) {
@@ -234,13 +233,17 @@ class NotificationControllerajax extends Controller
 
                  $smssetting = Smssetting::where('status',1)->where('smsonoff','Active')->first();
                  
-                 if ($smssetting) {
+                 if ($smssetting)
+                  {
                  
                    $u = $smssetting->url;
                    $url= str_replace('$mobileno', $mobileno, $u);
                    $url=str_replace('$msg', $msg, $url);
          
-                  $otpsend = Curl::to($url)->get();
+                    // echo $mobileno;
+                    $otpsend='';
+                 
+                 $otpsend = Curl::to($url)->get();
 
                   $action = new Notificationmsgdetails();
                   $action->user_id = session()->get('admin_id');
@@ -253,6 +256,7 @@ class NotificationControllerajax extends Controller
                  }
 
                  $response = json_decode($otpsend,true);
+                
 
                  if(!empty($response['ErrorCode'] == '000')) {
                     if ($response) {
@@ -260,29 +264,11 @@ class NotificationControllerajax extends Controller
                     }else{
                         echo "Failure";
                     }
+                 }else{
+                    echo 'Failure';
                  }
 
 
-                // $nmsg = Curl::to('http://sms.weybee.in/api/sendapi.php?auth_key=2169KrEMnx2ZgAqSfavSSC&mobiles='.$mobileno.'&message='.$msg.'&sender=PYOFIT&route=4')->get();
-
-                // print_r($nmsg);
-
-                // $nmsg = [
-
-                //                       'mobileno' => $mobileno,
-                //                       'smsmsg' => $msg,
-                //                       'mailmsg' => '0',
-                //                       'callnotes' => '0',
-                //          ];
-
-                      // $action = new Notificationmsgdetails();
-                      // $action->user_id = session()->get('admin_id');
-                      // $action->mobileno = $mobileno;
-                      // $action->smsmsg = $msg;
-                      // $action->smsrequestid = $nmsg;
-                      // $action->save();
-
-                 // print_r($msg);
                  
              }
 
@@ -301,7 +287,7 @@ class NotificationControllerajax extends Controller
                            'senderemail'=> $emailsetting->senderemailid,
                         ];
 
-
+//dd($data);
                 Mail::send('admin.name', ["data1"=>$data], function($message) use ($data){
 
                     // $file = public_path("/images/consentform.pdf");

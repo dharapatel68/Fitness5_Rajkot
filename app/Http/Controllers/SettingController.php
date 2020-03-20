@@ -177,6 +177,7 @@ class SettingController extends Controller
       return view('admin.viewdevice',compact('dinfo'));
 
     }
+    // Notification Settings ( SMS Setting ) function Start
 
     public function msgsettings(Request $request){
 
@@ -187,6 +188,9 @@ class SettingController extends Controller
 
         return view('admin.settings.msgsettings');
     }
+
+        // Notification Settings ( SMS Setting ) function End
+
 
     public function smsbalance(Request $request){
 
@@ -343,17 +347,22 @@ class SettingController extends Controller
 
     }
 
+    // SMS Setting Function Start
+
     public function smssettings(Request $request){
 
       if ($request->isMethod('post')) {
 
-         $data = ['status'=> 0];
+         $data = ['status'=> 0,
+         'smsonoff'=> 'Deactive' ];
 
          $smssetting = Smssetting::where('status',1)->update($data);
 
          $i = $request->input('i');
          $maddpn = $request->input('addpn');
          $maddv = $request->input('addv');
+                  $urlstatus = $request->input('urlstatus');
+
          $urlbyuser = $request->input('url');
          $pfmobile = $request->input('pfmobile');
          $pfmessage = $request->input('pfmessage');
@@ -362,6 +371,7 @@ class SettingController extends Controller
          $addpn = $request->input('addpn1');
          $addv = $request->input('addv1');
          $url = '';
+         $originalurl = '';
          $pfmo = $pfmobile.'='.$mobileno;
          $pfm  = $pfmessage.'='.$msg;
          $madd = $maddpn.'='.$maddv;
@@ -409,6 +419,7 @@ class SettingController extends Controller
            }
 
           $url = $urlbyuser.'?'.$pfmobile.'='.$mobileno.'&'.$pfmessage.'='.$msg.'&'.$maddpn.'='.$maddv.'';
+          $originalurl = $urlbyuser.'?'.$pfmobile.'='.'$mobileno'.'&'.$pfmessage.'='.'$msg'.'&'.$maddpn.'='.$maddv.'';
 
 
            for ($i=0; $i <$n-1 ; $i++) {
@@ -423,17 +434,37 @@ class SettingController extends Controller
             
            }
 
+
+
+           for ($i=0; $i <$n-1 ; $i++) {
+ 
+            $originalurl = $originalurl.'&'.$url1[$i].'';
+
+            if (strpos($originalurl, '=&') !== false) {
+                for ($n=1; $n<=$i; $n++) {
+              $originalurl = str_replace('=&', $r, $originalurl);
+                }
+              }
+            
+           }
+
          
-           // print_r($url);
+           // echo $originalurl;
+           // exit();
           $data = [
 
                     'domailname' =>$urlbyuser,
                     'parameters'=> $urlstore,
                     'testurl' => $url,
+                     'url' => $originalurl,
                     'status' => '1', 
+                     'smsonoff' => $urlstatus,
                   ];
 
             Smssetting::insert($data);
+            
+           // print_r($data);
+           // exit();
 
            $action = new Actionlog();
                   $action->user_id = session()->get('admin_id');
@@ -450,7 +481,7 @@ class SettingController extends Controller
              return redirect('msgsettings');
         }
 
-          $urlstatus = 'done';
+        //  $urlstatus = 'done';
 
        return view('admin.settings.smsurltest',compact('url','urlstatus'));
       }
@@ -473,21 +504,34 @@ class SettingController extends Controller
 
     }
 
+        // SMS Setting Function End
+
+
+
+
+    // Edit SMS Function editsmssettings Start
+
+
     public function editsmssettings(Request $request){
 
       $edit = Smssetting::all();
 
-      if ($request->isMethod('post')) {
+      if ($request->isMethod('post'))
+       {
      
         
          $i = $request->input('i');
+
          $urlbyuser = $request->input('url');
          $pfmobile = $request->input('pfmobile');
+
          $pfmessage = $request->input('pfmessage');
          $mobileno = $request->input('vfmobile');
          $msg = $request->input('vfmessage');
          $hid = $request->input('hid');
          $url = '';
+                  $originalurl = '';
+
          $urlstatus = $request->input('urlstatus');
          $pfmo = $pfmobile.'='.$mobileno;
          $pfm  = $pfmessage.'='.$msg;
@@ -515,6 +559,7 @@ class SettingController extends Controller
             //$urlstore[] = $url1;
 
           }
+         
 
           $urlstore = implode(',', $url1);
           $urlstore=trim($urlstore,',=');
@@ -528,31 +573,67 @@ class SettingController extends Controller
           }
 
           $urlstore=trim($urlstore,',=');
+
          
           $url = $urlbyuser.'?'.$pfmobile.'='.$mobileno.'&'.$pfmessage.'='.$msg.'';
 
-          $url=trim($url,'&=');
+          $originalurl = $urlbyuser.'?'.$pfmobile.'='.'$mobileno'.'&'.$pfmessage.'='.'$msg'.'';
 
-           for ($i=2; $i <$n-1 ; $i++) {
+
+          // echo $originalurl;
+          // exit();
+          $url=trim($url,'&=');
+            $originalurl=trim($originalurl,'&=');
+
+
+           for ($i=2; $i <$n-1 ; $i++)
+            {
  
             $url = $url.'&'.$url1[$i].'';
 
-            if (strpos($url, '=&') !== false) {
-                for ($n=1; $n<=$i; $n++) {
+            if (strpos($url, '=&') !== false) 
+            {
+                for ($n=1; $n<=$i; $n++) 
+                {
               $url = str_replace('=&','', $url);
                 }
-              }
-            // print_r($url);
-            
+             }
            }
-           $url=trim($url,'&=');
 
+
+           for ($i=2; $i <$n-1 ; $i++)
+            {
+ 
+            $originalurl = $originalurl.'&'.$url1[$i].'';
+
+            if (strpos($originalurl, '=&') !== false) 
+            {
+                for ($n=1; $n<=$i; $n++) 
+                {
+              $originalurl = str_replace('=&','', $originalurl);
+                }
+             }
+            }
+
+
+
+
+
+            
+         
+           $url=trim($url,'&=');
+                      $originalurl=trim($originalurl,'&=');
+
+
+          //      echo $originalurl;
+          // exit();
 
            $data = [
 
                     'domailname' =>$urlbyuser,
                     'parameters'=> $urlstore,
                     'testurl' => $url,
+                     'url' => $originalurl,
                     'smsonoff' => $urlstatus,
                   ];
                
@@ -573,6 +654,12 @@ class SettingController extends Controller
      return view('admin.settings.editmsgsettings',compact('edit'));
 
     }
+
+          // Edit SMS Function editsmssettings Start
+
+
+
+     // Edit SMS Function Settings geteditsmssettings Start
 
     public function geteditsmssettings(Request $request){
 
@@ -597,6 +684,7 @@ class SettingController extends Controller
       json_encode($editsms);
 
     }
+     // Edit SMS Function Settings geteditsmssettings End
 
 
     public function urltest(Request $request){
@@ -605,6 +693,8 @@ class SettingController extends Controller
       $saveurl = $request->get('saveurl');
       $turl = $request->get('turl');
 
+
+
       $data = [ 'testurl' => $turl ];
 
       $smssetting2 = Smssetting::where('status',1)->update($data);
@@ -612,15 +702,27 @@ class SettingController extends Controller
 
      
 
-      if ($testurl) {
+      if ($testurl)
+       {
+        // echo $testurl;
+        // exit();
+        //  $testurlsms = Curl::to($url)->get();
         $testurlsms = Curl::to(''.$smssetting->testurl.'')->get();
+
+
         $urlreplace = $smssetting->testurl;
-        $rmmobile=substr($urlreplace,45,10);
+
+
+        $rmmobile=substr($urlreplace,52,10);
+      
 
         $action = new Notificationmsgdetails();
         $action->user_id = session()->get('admin_id');
+       // $acc=session()->get('admin_id');
+       
         $action->mobileno = $rmmobile;
         $action->smsmsg = $smssetting->testurl;
+
         $action->smsrequestid = $testurlsms;
         $action->subject = 'Test Url From Sms Settings';
         $action->save();

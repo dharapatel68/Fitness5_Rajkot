@@ -60,14 +60,14 @@
             {{ csrf_field() }}
             <div class="row">
               <div class="col-lg-5"><label>URL :</label></div>
-              <div class="col-lg-5"><input type="text" class="form-control" name="url" id="url" placeholder="Enter SMS URL" value="http://sms.weybee.in/api/sendapi.php"></div>
+              <div class="col-lg-5"><input type="text" class="form-control" name="url" id="url" placeholder="Enter SMS URL" value="http://vsms.vr4creativity.com/api/mt/SendSMS"></div>
             </div>
 
             <div class="mt-2 col-md-12" style="padding: 10px;"></div>
 
             <div class="row">
               <div class="col-lg-5"><label>Parameter & value For Mobile :</label></div>
-              <div class="col-lg-2"><input type="text" class="form-control" id="pfmobile" name="pfmobile" placeholder="Set Parameter For Mobile" value="mobiles"></div>
+              <div class="col-lg-2"><input type="text" class="form-control" id="pfmobile" name="pfmobile" placeholder="Set Parameter For Mobile" value="number"></div>
               <div class="col-lg-3"><input type="text" class="form-control" id="vfmobile" name="vfmobile" placeholder="Set Parameter For Mobile" value="8200406933"></div>
             </div>
 
@@ -75,11 +75,21 @@
 
             <div class="row">
               <div class="col-lg-5"><label>Parameter & value For Message :</label></div>
-              <div class="col-lg-2"><input type="text" class="form-control" name="pfmessage" placeholder="Set Parameter For Message" value="message"></div>
-              <div class="col-lg-3"><input type="text" class="form-control" name="vfmessage" placeholder="Set Parameter For Message" value="Message" readonly=""></div>
+              <div class="col-lg-2"><input type="text" class="form-control" name="pfmessage" placeholder="Set Parameter For Message" value="text"></div>
+              <div class="col-lg-3"><input type="text" class="form-control" name="vfmessage" placeholder="Set Parameter For Message" value="Message"></div>
             </div>
 
+            <div class="mt-2 col-md-12" style="padding: 10px;"></div>
 
+  <div class="row">
+              <div class="col-lg-5"><label>Status</label></div>
+              <div class="col-lg-5">
+                <select name="urlstatus" class="form-control">
+                  <option value="Active" id="ac">Active</option>
+                  <option value="Deactive" id="dac">Deactive</option>
+                </select>
+              </div>
+            </div>
 
 
             <!-- <div class="mt-2 col-md-12" style="padding: 10px;"></div>
@@ -93,7 +103,7 @@
 
             <div class="row">
               <div class="col-lg-5"><label>Message Parameter</label></div>
-              <div class="col-lg-5"><input type="text" name="message" class="form-control" placeholder="Set Message Parameter"></div>
+              <div class="col-lg-5"><input type="text" name="text" class="form-control" placeholder="Set Message Parameter"></div>
             </div> -->
 
             <div class="mt-2 col-md-12" style="padding: 10px;"></div>
