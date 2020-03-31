@@ -47,7 +47,7 @@ table td{
 			            </div>
 			            <!-- /.box-header -->
 			            <div class="box-body">
-			            	<form action="{{url('activityreport')}}" method="post">
+			            	<form action="{{url('activityreport')}}" method="post" id="gstform">
 			            		{{csrf_field()}}
 							<div class="table-responsive">
 							  <table class="table no-margin">
@@ -85,7 +85,7 @@ table td{
 							</tr>
 							<tr>
 							
-								<td style="text-align: left" colspan="4"><button type="submit" name="search" class="btn bg-orange"><i class="fa fa-filter"></i>   Filters</button><a href="{{ url('activityreport') }}" class="btn bg-red">Clear</a></td>
+								<td style="text-align: left" colspan="4"><button type="submit" id="submitbutton" name="search" class="btn bg-orange"><i class="fa fa-filter"></i>   Filters</button><a href="{{ url('activityreport') }}" class="btn bg-red">Clear</a></td>
 								
 							</tr>
 							
@@ -94,23 +94,28 @@ table td{
 							</table>
 
 							</div>
-						</form>
 			            </div>	
      	 			</div>
      	 			<div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title"></h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
+ <input type="hidden" name="excel" value="0" id="excel">
+               <button type="button" class="btn btn-warning fa fa-file-excel-o" id="modalpopup" style="float: right; margin-right: 15px;"  data-toggle="modal" data-target="#exampleModalLong">
+                  Excel</button> 
+              <button type="button" class="btn btn-default" id="getexcel" style="display:none;" ><i class="fa fa-minus"></i>
+                 Get Excel</button> 
+                  {{-- <button id="getexcel" type="submit" class="btn bg-orange" style="float: right; margin-right: 15px;"><i class="fa fa-file-excel-o"></i>   getexcel </button> --}}
+                  <h3 class="box-title">Activity Report</h3>
+            
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
+        <div class="box-body">
+                  @foreach($data as $data1)
+                  <input type="hidden" name="activityreport[]" value="{{$data1}}">
+                  @endforeach
+                </form>
+                  {{ csrf_field() }}
               <div class="table-responsive">
-                <table class="table no-margin">
+                <table  id="activityreport"  class="table no-margin">
                   <thead>
                   <tr>
                   	<th>Date</th>
@@ -121,6 +126,8 @@ table td{
                   </tr>
                   </thead>
                   <tbody>
+                      @if(count($data)>0)
+
                     @foreach($data as $data1)  
                      <tr>
 
@@ -131,13 +138,14 @@ table td{
                      </tr>
      		           @endforeach
 
-	
+	 @else <tr><td colspan="8" style="text-align: center">{{ 'No Data Found'}}</td></tr>
+                    @endif
                   	
                   </tbody>
                 </table>
-                    <div class="datarender" style="text-align: center">
-                         {{ $data->links() }}    
-          </div>
+                    <<div class="datarender" style="text-align: center">
+          {!! $data->render() !!}  </div>
+            </div>
               </div>
               <!-- /.table-responsive -->
             </div>
@@ -148,6 +156,27 @@ table td{
 
       	 </div>
  	  </section>
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLongTitle">Password</h5>
+         <button type="button" class="close" id="closemodal" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body">
+          <label>Enter Excel Password</label>
+         <input type="password" class="form-control" name="pwd" id="pwd">
+         <span id="wrongpwd" style="color:red"></span>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+         <button type="button" class="btn btn-primary" id="checkpwd">Submit</button>
+       </div>
+     </div>
+   </div>
+</div>
 </div>
 <script type="text/javascript">
 
@@ -216,6 +245,47 @@ table td{
       showInputs: false
     })
   })
+</script>
+<script type="text/javascript">
+  $('#getexcel').click(function(e){
+  e.preventDefault();
+  $('#excel').val(1);
+
+  $('#gstform').submit();
+
+});
+$('#submitbutton').click(function(e){
+  e.preventDefault();
+  $('#excel').val(0);
+  $('#gstform').submit();
+
+});
+
+$('#checkpwd').on('click',function(){
+      var password=$('#pwd').val();
+
+      var pwdchecked='false';
+      $.ajax({
+            url:"{{ url('checkexcelpwd') }}",
+            method:"POST",
+            data:{excelpassword:password,"_token": "{{ csrf_token() }}"},
+            success: function (response) {
+              var res=response;
+               if(res == true){
+                  console.log('pwdcheck  :'+res);
+                  pwdchecked='true';
+                  $('#pwd').removeClass('error');
+                  $('#getexcel').trigger('click');
+                  $('#closemodal').trigger('click');
+               }else{
+                  $('#wrongpwd').html('wrong password');
+                  $('#pwd').addClass('error');
+               }
+            },
+            dataType:"json"
+      });
+  }); 
+
 </script>
 <script type="text/javascript">
 	$("#mode").select2({

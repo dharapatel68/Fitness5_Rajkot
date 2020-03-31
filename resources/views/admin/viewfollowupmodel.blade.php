@@ -135,7 +135,7 @@ h4 b{
     <div class="modal-header">
       <a href="{{url('inquiry')}}"><span class="close">&times;</span></a>
 
-         <h3 class="text-uppercase"><b> {{$followupid->firstname}} &nbsp;{{$followupid->lastname}}</b><b>&nbsp;#+91&nbsp;{{$followupid->mobileno}}</b> <span class="pull-right text-uppercase"><b> Date : {{date('j F, Y', strtotime($followupid->createddate))}} </b></span></h3>
+         <h3 class="text-uppercase"><b> {{$followupid->firstname}} &nbsp;{{$followupid->lastname}}</b><b>&nbsp;#+91&nbsp;{{$followupid->mobileno}}</b> <span class="pull-right text-uppercase"><b> Date : {{date('d-m-Y', strtotime($followupid->createddate))}} </b></span></h3>
       
      
     </div>

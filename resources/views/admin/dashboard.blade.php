@@ -299,7 +299,7 @@ $(document).ready( function () {
                     
                     <tr>
                       <td>{{$payremain['firstname']}} {{$payremain['lastname']}}</td>
-                      <td>{{date('j F, Y', strtotime($payremain['duedate']))}}</td>
+                      <td>{{date('d-m-Y', strtotime($payremain['duedate']))}}</td>
                      <td> <a  class="btn bg-light-navy" href="{{url('remainingplaceorder/'.$payremain['invoiceno'])}}"> <span class="label label-danger">{{$payremain['remainingamount']}}  <span style="font-family: DejaVu Sans; sans-serif;"> &#8377;</span></a></span> 
                  </td>
 

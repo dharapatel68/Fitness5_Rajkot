@@ -73,18 +73,6 @@ class ProfileController extends Controller
    public function profile($id,Request $request)
     {   
 
-      //         $method = $request->method();
-      //       if ($request->isMethod('post')){
-      //                $request->validate([
-        // 'PaymentType' => 'required',
-        // 'description' => 'max:255',
-      //   ]);
-      //     PaymentType::create([
-      //       'PaymentType' => $request['PaymentType'],
-      //        'description' => $request['description'],
-      //   ]);
-      //    return redirect('paymenttypes')->with('message','Succesfully added');
-      //   }
       
  $member = DB::table('member')->select('member.memberid AS mid','member.workinghourfrom AS mworkinghourfrom','member.workinghourto AS mworkinghourto','member.*','users.*','schemes.*','fitnessgoals.other AS fother','fitnessgoals.*','exerciseprogram.other As eother','exerciseprogram.*','member.anniversary as anniversarydate','member.status AS mstatus' )
     ->leftJoin('users','member.userid','=','users.userid')
@@ -917,7 +905,7 @@ public function pinchange($id,Request $request){
     }
 
     public function activedeviceuser(Request $request){
-      $portno_const = config('constants.port');
+       $portno_const = config('constants.port');
       $setuserid = $request->get('setuserid');
       $devicemobileno = $request->get('devicemobileno');
 

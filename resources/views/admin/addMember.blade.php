@@ -338,6 +338,11 @@ color: black;
                <option value="22:00" @if(old( 'working_hour_to_1')=='23:00' ) selected @endif {{$memberdata->workinghourto == '23:00' ? 'selected': ''}}>11:00 PM</option>
                </select>
             </div>
+            <div class="form-group">
+               <label>Add Ref Number<span style="color: red">*</span>
+               </label>
+               <input type="number" name="refno" id="refno" class="form-control" placeholder="Ref Number" class="span11"/>
+            </div>
          </div>
       </article>
       <article class="content-entry">

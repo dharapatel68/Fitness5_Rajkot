@@ -141,6 +141,8 @@
                            <thead>
                               <tr>
                                  <th>Memeber Name</th>
+                                   <th>Mobileno</th>
+
                                  <th>Scheme Name</th>
                                  <th>Days</th>
                                  <th>Invoice No</th>
@@ -153,6 +155,8 @@
                                  @foreach($paymentdata as $pdata)
                                     <tr>
                                        <td>{{$pdata->username}}</td>
+                                              <td>{{$pdata->usermobileno}}</td>
+
                                        <td>{{$pdata->schemename}}</td>
                                        @php 
                                        $diff = strtotime($pdata->expiredate) - strtotime(date('Y-m-d')); 
@@ -200,7 +204,7 @@
        </div>
        <div class="modal-body">
           <label>Enter Excel Password</label>
-         <input type="text" class="form-control" name="pwd" id="pwd">
+         <input type="password" class="form-control" name="pwd" id="pwd">
          <span id="wrongpwd" style="color:red"></span>
        </div>
        <div class="modal-footer">

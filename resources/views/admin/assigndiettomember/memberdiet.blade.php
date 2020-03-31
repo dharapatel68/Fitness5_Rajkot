@@ -124,7 +124,7 @@ background-color: #ffad65 !important;
               </div>
                <div class="form-group">
                   <label>Package</label>
-                   <select name="packageid" class="form-control " id="packageid"  required>
+                   <select name="packageid" class="form-control select2" id="packageid"  required>
                     <option value="">--Select Member Package--</option>
                   </select>
                 </div>

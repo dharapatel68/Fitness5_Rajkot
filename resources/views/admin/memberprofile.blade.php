@@ -860,6 +860,18 @@ textarea.input100 {
         <center>
           <div class="btn btn-success" style="background: #1788f7;">Freezed</div>
         </center>
+        @elseif($member->mstatus == 1)
+        <center>
+          <div class="btn btn-success" style="background: #1788f7;">Active</div>
+        </center>
+
+
+ @elseif($member->mstatus == 0)
+        <center>
+          <div class="btn btn-success" style="background: #1788f7;">Deactive</div>
+        </center>
+
+
         <br/>@endif
         <div class="nav-tabs-custom">
           <ul class="">
@@ -1139,6 +1151,10 @@ textarea.input100 {
                         <option value="22:00" {{$date=='22:00' ? 'selected': ''}}>10:00 PM</option>
                         <option value="22:00" {{$date=='23:00' ? 'selected': ''}}>11:00 PM</option>
                       </select>
+                    </div>
+                     <div class="form-group">
+                      <label>Ref Number</label>
+                      <input type="number" name="refno" id="refno" class="form-control" placeholder="Ref Number" class="span11" required="" value="{{$member->refno}}" />
                     </div>
                 </div>
               </div>

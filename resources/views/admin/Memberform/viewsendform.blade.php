@@ -48,6 +48,7 @@ td{
                 <table class="table no-margin">
                   <thead>
                   <tr>
+                    <th>Username</th>
                     <th>Mobileno</th>
                     <th>Date</th>
                     <th>Time</th>
@@ -56,6 +57,7 @@ td{
                   <tbody>
                     @foreach($sentforms as $sentform)
                     <tr>
+                         <td>{{$sentform->firstname}} {{$sentform->lastname}}</td>
                         <td>{{ $sentform->code }}</td>
                         <td>{{ date('d-m-Y',strtotime($sentform->created_at))}}</td>
                         <td>{{ date('H:m:s',strtotime($sentform->created_at))}}</td>

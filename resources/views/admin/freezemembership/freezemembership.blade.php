@@ -52,7 +52,7 @@
                     <div class="col-md-6 col-lg-6">
                      <div class="form-group">
                         <label>Member<span style="color: red">*</span></label>
-                        <select name="userid" id="memberfrom" class="form-control"class="span11" required>
+                        <select name="userid" id="memberfrom" class="form-control select2 span8" class="span11" required>
                            @if($member_data)
                            <option value="" selected readonly>--Please choose an option--</option>
                            @foreach($member_data as $member)
@@ -432,5 +432,16 @@ function changes(){
 
 }
 /////////////////////////////////////////////////// common function end////////////////////////////////////////////
+</script>
+
+<script type="text/javascript">
+
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Datemask dd/mm/yyyy
+  
+  })
 </script>
 @endpush

@@ -146,7 +146,7 @@
                  </div>
                  <div class="form-group">
                     <label>Member<span style="color: red;">*</span></label>
-                    <select name="memberid" class="form-control " id="memberid" title="Select Memeber" data-live-search="true" data-selected-text-format="count"  data-actions-box="true" data-count-selected-text="{0} Memeber Selected" data-header="Select Memeber" required>
+                    <select name="memberid" class="form-control select2 " id="memberid" title="Select Memeber" data-live-search="true" data-selected-text-format="count"  data-actions-box="true" data-count-selected-text="{0} Memeber Selected" data-header="Select Memeber" required>
                        <option value="">--Select Member--</option>
                        @foreach ($members as $member)
                        <option value="{{$member->memberid}}"  @if(old('memberid') == $member->memberid) selected @endif>{{$member->firstname .' '. $member->lastname}}</option>
@@ -160,7 +160,7 @@
                  </div>
                  <div class="form-group">
                     <label>Package<span style="color: red;">*</span></label>
-                    <select name="packageid" class="form-control " id="packageid" required="">
+                    <select name="packageid" class="form-control select2" id="packageid" required="">
                        <option value="">--Select Member Package--</option>
                     </select>
                  </div>
@@ -423,6 +423,17 @@
       } 
     })
   });
+</script>
+
+<script type="text/javascript">
+
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Datemask dd/mm/yyyy
+  
+  })
 </script>
 <script type="text/javascript">
    $('#packageid').on('change',function(){
