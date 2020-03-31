@@ -56,7 +56,7 @@ background-color: #3a3938 !important;
                 <div class="col-lg-4">
                     <div class="form-group">
                   <label>WorkOut</label>
-                <select name="workout" class="form-control" id="workout">
+                <select name="workout" class="form-control select2" id="workout">
                   <option value="" disabled="" selected="">--Please Select--</option>
                   @foreach($workout as $workout1)
                  <option value="{{$workout1->workoutid}}">{{$workout1->workoutname}}</option> 

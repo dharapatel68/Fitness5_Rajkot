@@ -68,7 +68,10 @@ Route::group(['middleware' => ['admin']], function() {
    Route::any('editMember/{id1}', 'MemberController@editMember');
    Route::get('deleterole/{id}', 'RoleController@destroy');
    Route::any('addrole', 'RoleController@create');
-   Route::get('roles', 'RoleController@index');
+   Route::any('roles', 'RoleController@index');
+   Route::any('deactiverole/{id}', 'RoleController@deactiverole')->name('deactiverole');
+   Route::any('deactivateuser/{id}', 'UserController@deactivateuser')->name('deactivateuser');
+
    Route::get('users', 'UserController@index');
    Route::any('addUser', 'UserController@create');
    Route::any('edituser/{id}', 'UserController@edituser');
@@ -349,30 +352,30 @@ Route::group(['middleware' => ['admin']], function() {
    Route::any('userenrollmemberpackagesdetails','DeviceController@userenrollmemberpackagesdetails');
    Route::any('summarymaxexpiry','DeviceController@summarymaxexpiry');
    ///////////////// Settings Routes //////////////////////
-   Route::get('msgsettings', 'SettingController@msgsettings');
-   Route::get('smsbalance', 'SettingController@smsbalance');
+   Route::any('msgsettings', 'SettingController@msgsettings');
+   Route::any('smsbalance', 'SettingController@smsbalance');
    Route::any('emailsettings', 'SettingController@emailsettings');
    Route::any('smssettings', 'SettingController@smssettings');
    Route::any('editsmssettings', 'SettingController@editsmssettings');
-   Route::get('geteditsmssettings', 'SettingController@geteditsmssettings');
-   Route::post('urltest', 'SettingController@urltest');
-   Route::post('urltestsave', 'SettingController@urltestsave');
-   Route::get('urltestdemo', 'SettingController@urltestdemo');
+   Route::any('geteditsmssettings', 'SettingController@geteditsmssettings');
+   Route::any('urltest', 'SettingController@urltest');
+   Route::any('urltestsave', 'SettingController@urltestsave');
+   Route::any('urltestdemo', 'SettingController@urltestdemo');
    /////////// SMS(Notification) Dashboard ///////////////
    //Route::any('addsms', 'sms\NotificationController@index')->name('addsms');
    Route::any('editsms', 'sms\NotificationController@editsms')->name('editsms');
    Route::any('addnewtemplate', 'sms\NotificationController@addnewtemplate')->name('addnewtemplate');
-   Route::get('getsmsdata', 'sms\NotificationController@getsmsdata')->name('getsmsdata');
-   Route::post('editsmsdata', 'sms\NotificationController@editsmsdata')->name('editsmsdata');
+   Route::any('getsmsdata', 'sms\NotificationController@getsmsdata')->name('getsmsdata');
+   Route::any('editsmsdata', 'sms\NotificationController@editsmsdata')->name('editsmsdata');
    Route::any('sendsms', 'sms\NotificationController@sendsms')->name('sendsms');
    Route::any('sendinquirysms', 'sms\NotificationController@sendinquirysms')->name('sendinquirysms');
    Route::any('directmessage', 'sms\NotificationController@directmessage')->name('directmessage');
    Route::any('sendregistrationsms', 'sms\NotificationController@sendregistrationsms')->name('sendregistrationsms');
-   Route::get('smssearch', 'sms\NotificationControllerajax@smssearch')->name('smssearch');
+   Route::any('smssearch', 'sms\NotificationControllerajax@smssearch')->name('smssearch');
    Route::any('sendsmsuser', 'sms\NotificationControllerajax@sendsmsuser')->name('sendsmsuser');
    Route::any('reminder', 'sms\NotificationController@reminder')->name('reminder');
    Route::any('fetchsmslogs', 'sms\NotificationController@fetchsmslog')->name('fetchsmslogs');
-   Route::get('smsresponse', 'sms\NotificationControllerajax@smsresponse')->name('smsresponse');
+   Route::any('smsresponse', 'sms\NotificationControllerajax@smsresponse')->name('smsresponse');
    Route::any('sendsmsinquirytouser', 'sms\NotificationController@sendsmsinquirytouser')->name('sendsmsinquirytouser');
    ////////////// Payment Modual //////////////////////////////
    Route::get('demopayment','PaymentController@demopayment')->name('demopayment');
@@ -410,7 +413,7 @@ Route::group(['middleware' => ['admin']], function() {
    Route::get('editregistration/{id}', 'RegistrationController@editregistration')->name('editregistration');
    Route::post('sendotptoadminforpackagedate', 'ProfileController@sendotptoadminforpackagedate')->name('sendotptoadminforpackagedate');
    Route::any('memberreport','MemberReportController@memberreport');
-   Route::any('memberreport','MemberReportController@memberreport');
+ //  Route::any('memberreport','MemberReportController@memberreport');
    ////////////////////////////////////////////////// Freeze Membership start /////////////////////////////////////////////////
    Route::get('freezemembership', 'FreezemembershipController@freezemembership')->name('freezemembership');
    Route::get('freezemembershipreceipt/{id}', 'FreezemembershipController@freezemembershipreceipt')->name('freezemembershipreceipt');
@@ -418,7 +421,7 @@ Route::group(['middleware' => ['admin']], function() {
    Route::post('checkfreezedate', 'FreezemembershipController@checkfreezedate')->name('checkfreezedate');
    Route::post('freezemembershippayment', 'FreezemembershipController@freezemembershippayment')->name('freezemembershippayment');
    Route::post('freezemembershippaymentstore', 'FreezemembershipController@freezemembershippaymentstore')->name('freezemembershippaymentstore');
-   Route::get('viewfreezemembeship', 'FreezemembershipController@viewfreezemembeship')->name('viewfreezemembeship');
+   Route::any('viewfreezemembeship', 'FreezemembershipController@viewfreezemembeship')->name('viewfreezemembeship');
    Route::post('freezemembershipdevice', 'FreezemembershipController@freezemembershipdevice')->name('freezemembershipdevice');
    Route::post('unfreezemembership', 'FreezemembershipController@unfreezemembership')->name('unfreezemembership');
    Route::get('freezemembershippaymentstore', function(){
@@ -463,6 +466,7 @@ Route::group(['middleware' => ['admin']], function() {
    Route::any('addexpenses', 'ExpenseController@addDietitem1');
    Route::any('monthlyreport', 'ExpenseController@monthlyreport');
    Route::any('/expensegstreport/excel', 'ExpenseController@expensegstreport')->name('expensegstreport.excel');
+   Route::any('/expensegstreport1/excel', 'PaymentReportController@expensegstreport1')->name('expensegstreport1.excel');
    /*********************End **Expense**********************************/
   
    /************************************start dashboard route****************************/

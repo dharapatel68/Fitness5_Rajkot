@@ -1,8 +1,21 @@
 @extends('layouts.adminLayout.admin_design') @section('content')
-
+<style type="text/css">
+    .select2{
+  width: 100% !important;
+  
+}
+.select2-container--default .select2-selection--single{
+  border-radius: 2px !important;
+  max-height: 100% !important;
+      border-color: #d2d6de !important;
+          height: 32px;
+          max-width: 100%;
+          min-width: 100% !important;
+}
+</style>
 <div class="content-wrapper">
     <section class="content-header">
-        <h2>Freemembership Detail</h2></section>
+        <h2>Freezemembership Detail</h2></section>
     <div class="container-fluid">
         @if ($message = Session::get('message'))
         <div class="alert alert-success alert-block">
@@ -20,6 +33,69 @@
                 <section class="content">
                     <div class="row">
                         <div class="col-xs-12">
+                             <div class="box box-info">
+               <div class="box-header with-border">
+                    <h3 class="box-title">Filters</h3>
+
+                    <div class="box-tools pull-right">
+                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                      </button>
+                      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+
+
+                    <form action="{{url('viewfreezemembeship')}}" method="post">
+                      {{csrf_field()}}
+              <div class="table-responsive">
+                <table class="table no-margin">
+                <thead>
+                <tr>
+                 
+                  <th>Username</th>
+                
+                  
+                </tr>
+              </thead>
+              <tbody>
+          
+              <tr>
+               <div class="col-xs-4">
+              <td><select name="username" class="form-control select2 span8" data-placeholder="Select a Username" >
+                <option value="" selected="" disabled="">Select a Username</option>
+                @foreach($users as $user)
+
+                <option value="{{$user->userid}}"  @if(isset($query['username'])) {{$query['username'] == $user->userid ? 'selected':''}} @endif>
+                  
+                  {{ $user->username }} 
+              
+              
+                   </option>
+                  @endforeach
+               </select></td>
+                 </div> 
+              
+              </tr>
+              <tr>
+                
+            
+                <td style="text-align: left" colspan="4"><button type="submit" name="search" class="btn bg-orange"><i class="fa fa-filter"></i>   Filters</button><a href="{{ url('viewfreezemembeship') }}" class="btn bg-red">Clear</a></td>
+                
+              </tr>
+              
+
+              </tbody>
+              </table>
+
+              </div>
+            </form>
+                              {{ csrf_field() }}
+
+                  </div>  
+            </div>
+          
 
                             <div class="box">
                                 <div class="box-header">
@@ -63,6 +139,13 @@
                                         </tbody>
 
                                     </table>
+                                 <div class="datarender" style="text-align: center">
+                      
+                      @if(isset($query)) 
+                      @else 
+                        {{ $gst->links() }}
+                      @endif  
+                     </div>
                                 </div>
                                 <!-- /.box-body -->
                             </div>
@@ -157,5 +240,16 @@
             });
         });
     });
+</script>
+
+<script type="text/javascript">
+
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Datemask dd/mm/yyyy
+  
+  })
 </script>
 @endpush

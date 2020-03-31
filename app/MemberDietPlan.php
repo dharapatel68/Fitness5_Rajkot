@@ -11,7 +11,7 @@ class MemberDietPlan extends Model
      protected $primaryKey = 'memberdietplanid';
    protected $fillable = [
    	
-        'memberid','plannameid','status','fromdate','todate'];
+        'memberid','plannameid','status','fromdate','todate','created_at','updated_at'];
 
   	 public function DietPlanname(){
 

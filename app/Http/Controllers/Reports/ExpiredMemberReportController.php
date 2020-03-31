@@ -170,7 +170,7 @@ class ExpiredMemberReportController extends Controller
       
             
       
-                      $gridexcel_array[] = array('User','Scheme','Day', 'Invoice No','JoinDate','ExpireDate');
+                      $gridexcel_array[] = array('User',  'Mobile No','Scheme','Day', 'Invoice No','JoinDate','ExpireDate');
       
                       // dd($expensepayment);
                       
@@ -184,6 +184,8 @@ class ExpiredMemberReportController extends Controller
 
                         $gridexcel_array[] = array(
                             'User' => $gridexcel1->username,
+                            'Mobile No'  => $gridexcel1->usermobileno,
+
                             'Scheme' => $gridexcel1->schemename,
                             'day' => $d,
                             'Invoice No' => date('d-m-Y', strtotime($gridexcel1->memberpackagesid)),

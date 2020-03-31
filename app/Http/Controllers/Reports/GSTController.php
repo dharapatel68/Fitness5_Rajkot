@@ -33,9 +33,9 @@ class GSTController extends Controller
     $query['keyword']= $keyword;
     $users1=  DB::table('users')->join('registration','registration.id','users.regid')->where('users.regid','!=',0)->where('registration.is_member','!=',1)->where('users.useractive',1)->get();
 
-		$users2= DB::table('users')->Join('member', 'member.userid', '=', 'users.userid')->get();
-		$merged = $users1->merge($users2);
-		$users = $merged->all();
+    $users2= DB::table('users')->Join('member', 'member.userid', '=', 'users.userid')->get();
+    $merged = $users1->merge($users2);
+    $users = $merged->all();
 
     $modes=PaymentType::get(['paymenttype','paymenttypeid'])->all();
     
@@ -97,13 +97,13 @@ class GSTController extends Controller
             $gstno='';
             $companyname='';
             if ($student->companyid!='' || $student->companyid!= null) {
-              $companyname1=	Company::where('companyid',$student->companyid)->get()->first();
+              $companyname1=  Company::where('companyid',$student->companyid)->get()->first();
               $companyname=$companyname1->companyname;
               $gstno=$companyname1->gstno;
             }
             $amount='';
             if ($student->pamount == 0 || $student->pamount == null || $student->pamount =='') {
-              $amount=0;	
+              $amount=0;  
             }
             else{
               $amount=$student->pamount;
@@ -149,7 +149,7 @@ class GSTController extends Controller
 
       $currentPage = LengthAwarePaginator::resolveCurrentPage();
             $itemCollection = collect($gst);
-            $perPage = 10;
+            $perPage = 16;
             $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
             $paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
             $paginatedItems->setPath($request->url());

@@ -61,6 +61,8 @@
                              <th>City</th>
                              <th>Department</th>
                              <th>Salary</th>
+                                             <th>Deactive  User</th>
+
                              <!-- <th colspan="2">Working Hour</th> -->
                              <!--  <th>Birthdate</th> -->
                              <!-- <th>Gender</th>
@@ -81,6 +83,7 @@
                              <td> {{ $user->city }}</td>
                              <td> {{ $user->department }}</td>
                              <td> {{ $user->salary }}</td>
+                              <td> <a href="{{url('deactivateuser/'.$user->employeeid)}}"  class="btn bg-light-navy" > <span class="label label-warning" >Deactive</a></span> </td>
                              <td>
                                 @if(isset($permission["'edit_employee'"]))
                                 <a href="{{ url('edituser/'.$user->employeeid) }}"class="edit" title="Edit"><i class="fa fa-edit"></i></a>

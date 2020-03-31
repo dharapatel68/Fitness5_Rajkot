@@ -1,24 +1,24 @@
 @extends('layouts.adminLayout.admin_design')
 @section('content')
 <style type="text/css">
-	.content-wrapper{
-		padding-right: 15px !important;
-		padding-left: 15px !important;
-	}
+  .content-wrapper{
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+  }
 td{
-	max-width: 20%;
+  max-width: 20%;
 }
 .select2{
-	width: 100% !important;
-	
+  width: 100% !important;
+  
 }
 .select2-container--default .select2-selection--single{
-	border-radius: 2px !important;
-	max-height: 100% !important;
-	    border-color: #d2d6de !important;
-	        height: 32px;
-	        max-width: 100%;
-	        min-width: 100% !important;
+  border-radius: 2px !important;
+  max-height: 100% !important;
+      border-color: #d2d6de !important;
+          height: 32px;
+          max-width: 100%;
+          min-width: 100% !important;
 }
 </style>
 <div class="content-wrapper">
@@ -43,7 +43,7 @@ td{
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                  <form action="{{url('paymentreport')}}" method="post">
+                  <form action="{{url('paymentreport')}}" method="post"  id="gstform">
                     {{csrf_field()}}
             <div class="table-responsive">
               <table class="table no-margin">
@@ -90,7 +90,7 @@ td{
             <tr>
               
               <td><input type="text" name="keyword" placeholder="Search Keyword" class="form-control" value="{{$query['keyword']}}"></td>
-              <td style="text-align: left" colspan="4"><button type="submit" name="search" class="btn bg-orange"><i class="fa fa-filter"></i>   Filters</button><a href="{{ url('paymentreport') }}" class="btn bg-red">Clear</a></td>
+              <td style="text-align: left" colspan="4"><button type="submit"  id="submitbutton" name="search" class="btn bg-orange"><i class="fa fa-filter"></i>   Filters</button><a href="{{ url('paymentreport') }}" class="btn bg-red">Clear</a></td>
               
             </tr>
             
@@ -99,23 +99,29 @@ td{
             </table>
 
             </div>
-          </form>
-                </div>	
+        
+                </div>  
             </div>
             <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">All Payments</h3>
-
-            <div class="box-tools pull-right">
-              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-            </div>
+ <input type="hidden" name="excel" value="0" id="excel">
+               <button type="button" class="btn btn-warning fa fa-file-excel-o" id="modalpopup" style="float: right; margin-right: 15px;"  data-toggle="modal" data-target="#exampleModalLong">
+                  Excel</button> 
+              <button type="button" class="btn btn-default" id="getexcel" style="display:none;" ><i class="fa fa-minus"></i>
+                 Get Excel</button> 
+                  {{-- <button id="getexcel" type="submit" class="btn bg-orange" style="float: right; margin-right: 15px;"><i class="fa fa-file-excel-o"></i>   getexcel </button> --}}
+                  <h3 class="box-title">Activity Report</h3>
+           
           </div>
           <!-- /.box-header -->
-          <div class="box-body">
+         <div class="box-body">
+                  @foreach($paymentdatahidden as $paymentdatahidden1)
+                  <input type="hidden" name="paymentreport[]" value="{{$paymentdatahidden1}}">
+                  @endforeach
+                </form>
+                 
             <div class="table-responsive">
-              <table class="table no-margin">
+              <table id="paymentreport" class="table no-margin">
                 <thead>
                 <tr>
                   <th>Date</th>
@@ -132,18 +138,18 @@ td{
              
                   @if(count($paymentdata)>0)
 
-                  @foreach($paymentdata as $paymentreport)
+                  @foreach($paymentdata as $paymentreport1)
                   <tr>
-                    <td>{{date('d-m-Y',strtotime($paymentreport->date))}}</td>
-                    <td>{{$paymentreport->invoiceno}}</td>
+                    <td>{{date('d-m-Y',strtotime($paymentreport1->date))}}</td>
+                    <td>{{$paymentreport1->invoiceno}}</td>
           <td>
-            @if($paymentreport->firstname) {{ucwords( $paymentreport->firstname )}} {{ucwords($paymentreport->lastname)}}
-              @else {{ ucwords( $paymentreport->rfirstname )}} {{ucwords($paymentreport->rlastname)}} @endif </td>
-                    <td>{{$paymentreport->mode}}</td>
-                    <td>{{$paymentreport->pamount}}</td>
-                    <td>{{$paymentreport->name}}</td>
-                    <td>{{$paymentreport->receiptno}}</td>
-                    <td>{{$paymentreport->companyname}}</td>
+            @if($paymentreport1->firstname) {{ucwords( $paymentreport1->firstname )}} {{ucwords($paymentreport1->lastname)}}
+              @else {{ ucwords( $paymentreport1->rfirstname )}} {{ucwords($paymentreport1->rlastname)}} @endif </td>
+                    <td>{{$paymentreport1->mode}}</td>
+                    <td>{{$paymentreport1->pamount}}</td>
+                    <td>{{$paymentreport1->name}}</td>
+                    <td>{{$paymentreport1->receiptno}}</td>
+                    <td>{{$paymentreport1->companyname}}</td>
                     
                   </tr>
                     @endforeach
@@ -170,6 +176,27 @@ td{
 
        </div>
    </section>
+   <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLongTitle">Password</h5>
+         <button type="button" class="close" id="closemodal" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body">
+          <label>Enter Excel Password</label>
+         <input type="password" class="form-control" name="pwd" id="pwd">
+         <span id="wrongpwd" style="color:red"></span>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+         <button type="button" class="btn btn-primary" id="checkpwd">Submit</button>
+       </div>
+     </div>
+   </div>
+</div>
 </div>
 <script type="text/javascript">
 
@@ -240,7 +267,48 @@ td{
   })
 </script>
 <script type="text/javascript">
-	$("#mode").select2({
+  $('#getexcel').click(function(e){
+  e.preventDefault();
+  $('#excel').val(1);
+
+  $('#gstform').submit();
+
+});
+$('#submitbutton').click(function(e){
+  e.preventDefault();
+  $('#excel').val(0);
+  $('#gstform').submit();
+
+});
+
+$('#checkpwd').on('click',function(){
+      var password=$('#pwd').val();
+
+      var pwdchecked='false';
+      $.ajax({
+            url:"{{ url('checkexcelpwd') }}",
+            method:"POST",
+            data:{excelpassword:password,"_token": "{{ csrf_token() }}"},
+            success: function (response) {
+              var res=response;
+               if(res == true){
+                  console.log('pwdcheck  :'+res);
+                  pwdchecked='true';
+                  $('#pwd').removeClass('error');
+                  $('#getexcel').trigger('click');
+                  $('#closemodal').trigger('click');
+               }else{
+                  $('#wrongpwd').html('wrong password');
+                  $('#pwd').addClass('error');
+               }
+            },
+            dataType:"json"
+      });
+  }); 
+
+</script>
+<script type="text/javascript">
+  $("#mode").select2({
     placeholder: "Select a Mode"
 });
 </script>

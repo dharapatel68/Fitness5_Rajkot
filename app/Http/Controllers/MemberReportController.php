@@ -4,8 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Maatwebsite\Excel\Concerns\FromCollection;
+use Excel;
+use App\Company;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Payment;
+use App\Member;
+use App\MemberDietPlan;
+use App\DietPlanname;
+use App\MemberWorkout;
+use App\Workout;
+use App\User;
 
+
+
+use App\CustomCollection;
+use Illuminate\Database\Eloquent\Model;
 class MemberReportController extends Controller
 {	
     public function memberreport(Request $request){
@@ -21,14 +35,35 @@ class MemberReportController extends Controller
 		$query['username']=$username;
 		$query['keyword']= $keyword;
 
+		
+
 			$users1=  DB::table('users')->join('registration','registration.id','users.regid')->where('users.regid','!=',0)->where('registration.is_member','!=',1)->where('users.useractive',1)->get();
 		$users2= DB::table('users')->Join('member', 'member.userid', '=', 'users.userid')->get();
 		$merged = $users1->merge($users2);
 		$users = $merged->all();
 
+
+
+
+
+ $freezememberships =  Member::select('member.memberid as memid','memberdietplan.memberdietplanid as memmid','member.createddate','member.firstname','member.lastname','dietplanname.dietplanname','workout.workoutname','memberworkout.workoutid as word','memberdietplan.created_at as dietassigndate','memberworkout.created_at as workoutassigndate')->
+	       leftJoin('memberdietplan', 'memberdietplan.memberid', '=', 'member.memberid')->where('memberdietplan.status',1)
+	       ->leftJoin('dietplanname', 'memberdietplan.plannameid', '=', 'dietplanname.dietplannameid')
+	        ->leftJoin('memberworkout', 'member.memberid', '=',  'memberworkout.memberid' )->where('memberworkout.status',1)->leftJoin('workout', 'workout.workoutid', '=', 'memberworkout.workoutid')  ->leftJoin('users', 'member.userid', '=', 'users.userid')
+	        ->groupBy('memberdietplan.memberid','member.memberid','memberdietplan.memberdietplanid','member.createddate','member.firstname','member.lastname','dietplanname.dietplanname','workout.workoutname','memberworkout.workoutid', 'memberdietplan.created_at','memberworkout.created_at')
+	      ->orderBy('member.createddate', 'desc');
+
+
+ $data = Member::select('member.memberid as memid','memberdietplan.memberdietplanid as memmid','member.createddate','member.firstname','member.lastname','dietplanname.dietplanname','workout.workoutname','memberworkout.workoutid as word','memberdietplan.created_at as dietassigndate','memberworkout.created_at as workoutassigndate')->
+	       leftJoin('memberdietplan', 'memberdietplan.memberid', '=', 'member.memberid')->where('memberdietplan.status',1)
+	       ->leftJoin('dietplanname', 'memberdietplan.plannameid', '=', 'dietplanname.dietplannameid')
+	        ->leftJoin('memberworkout', 'member.memberid', '=',  'memberworkout.memberid' )->where('memberworkout.status',1)->leftJoin('workout', 'workout.workoutid', '=', 'memberworkout.workoutid')->leftJoin('users', 'member.userid', '=', 'users.userid')
+	        ->groupBy('memberdietplan.memberid','member.memberid','memberdietplan.memberdietplanid','member.createddate','member.firstname','member.lastname','dietplanname.dietplanname','workout.workoutname','memberworkout.workoutid', 'memberdietplan.created_at','memberworkout.created_at')
+	      ->orderBy('member.createddate', 'desc')->get()->all();
+
    		if($request->isMethod('post'))
     	{	
-   	
+   
     			 if ($fdate != "") 
     			 {
 	                   $from = date($fdate);
@@ -40,16 +75,10 @@ class MemberReportController extends Controller
 	                   }
 	                   // ->whereBetween('followupdays', [$from, $to])
 	                  
-    				$data=	 DB::select( DB::raw("select   `member`.memberid as memid,`memberdietplan`.`memberdietplanid`,`member`.`createddate`,`member`.`firstname`,`member`.`lastname`,dietplanname.dietplanname,workout.workoutname,memberworkout.workoutid,memberdietplan.created_at as dietassigndate,memberworkout.created_at as workoutassigndate from `member` left join `memberdietplan` on `memberdietplan`.`memberid` = `member`.`memberid` AND memberdietplan.status='1' left join dietplanname on memberdietplan.plannameid=dietplanname.dietplannameid  left join memberworkout on member.memberid = memberworkout.memberid AND memberworkout.status='1' left join workout on workout.workoutid= memberworkout.workoutid WHERE `member`.`createddate` BETWEEN '".$from."' AND '".$to."' GROUP BY memid,`memberdietplan`.`memberdietplanid`,`member`.`createddate`,`member`.`firstname`,`member`.`lastname`,dietplanname.dietplanname,workout.workoutname,memberworkout.workoutid,dietassigndate,workoutassigndate ORDER BY member.createddate  ASC") );
-    					$currentPage = LengthAwarePaginator::resolveCurrentPage();
-						$itemCollection = collect($data);
-						$perPage = 10;
-						$currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
-						$paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
-						$paginatedItems->setPath($request->url());
-						$data =  $paginatedItems;
+    			      $freezememberships->whereBetween('member.createddate', [$from, $to]);
+	                 
 
-    				 	return view('admin.memberreport.memberreport',compact('query','data','users'));
+    				 //	return view('admin.memberreport.memberreport',compact('query','data','users'));
 	                 
 	      	 	 }
 	      	 	 if ($tdate != "") {
@@ -60,69 +89,89 @@ class MemberReportController extends Controller
 	                       $from = date('Y-m-d');
 	                   }
 
-	                  $data=	 DB::select( DB::raw("select   `member`.memberid as memid,`memberdietplan`.`memberdietplanid`,`member`.`createddate`,`member`.`firstname`,`member`.`lastname`,dietplanname.dietplanname,workout.workoutname,memberworkout.workoutid,memberdietplan.created_at as dietassigndate,memberworkout.created_at as workoutassigndate from `member` left join `memberdietplan` on `memberdietplan`.`memberid` = `member`.`memberid` AND memberdietplan.status='1' left join dietplanname on memberdietplan.plannameid=dietplanname.dietplannameid  left join memberworkout on member.memberid = memberworkout.memberid AND memberworkout.status='1' left join workout on workout.workoutid= memberworkout.workoutid WHERE `member`.`createddate` BETWEEN '".$from."' AND '".$to."' GROUP BY  memid,`memberdietplan`.`memberdietplanid`,`member`.`createddate`,`member`.`firstname`,`member`.`lastname`,dietplanname.dietplanname,workout.workoutname,memberworkout.workoutid,dietassigndate,workoutassigndate ORDER BY member.createddate  ASC") );
+	              $freezememberships->whereBetween('member.createddate', [$from, $to]);
 
-	                  $currentPage = LengthAwarePaginator::resolveCurrentPage();
-						$itemCollection = collect($data);
-						$perPage = 10;
-						$currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
-						$paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
-						$paginatedItems->setPath($request->url());
-						$data =  $paginatedItems;
-	                  	return view('admin.memberreport.memberreport',compact('query','data','users'));
+
+	               
+	                 // 	return view('admin.memberreport.memberreport',compact('query','data','users'));
 	      		 }
-	      		 if($username != ""){
+	      		if($username != ""){
 
-	        		$data=	 DB::select( DB::raw("select  `member`.`memberid` as memid, `memberdietplan`.`memberdietplanid`,`member`.`createddate`,`member`.`firstname`,`member`.`lastname`,dietplanname.dietplanname,workout.workoutname,memberworkout.workoutid,memberdietplan.created_at as dietassigndate,memberworkout.created_at as workoutassigndate from `member` left join `memberdietplan` on `memberdietplan`.`memberid` = `member`.`memberid` AND memberdietplan.status='1' left join dietplanname on memberdietplan.plannameid=dietplanname.dietplannameid  left join memberworkout on member.memberid = memberworkout.memberid AND memberworkout.status='1' left join workout on workout.workoutid= memberworkout.workoutid  left join users on member.userid=users.userid WHERE `users`.`userid` = '".$username."' GROUP BY   `member`.`memberid`, `memberdietplan`.`memberdietplanid`,`member`.`createddate`,`member`.`firstname`,`member`.`lastname`,dietplanname.dietplanname,workout.workoutname,memberworkout.workoutid,dietassigndate, workoutassigndate  ORDER BY member.createddate  ASC") );
+	        		$freezememberships->where('users.userid',$username);
+    				 //	return view('admin.memberreport.memberreport',compact('query','data','users'));
 
-						$currentPage = LengthAwarePaginator::resolveCurrentPage();
-						$itemCollection = collect($data);
-						$perPage = 10;
-						$currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
-						$paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
-						$paginatedItems->setPath($request->url());
-						$data =  $paginatedItems;
-
-	                  	return view('admin.memberreport.memberreport',compact('query','data','users'));
+			
 	       		 }
 	       		 if($keyword != ""){
 
-	       		 			$data=	 DB::select( DB::raw("select   `member`.memberid as memid,`memberdietplan`.`memberdietplanid`,`member`.`createddate`,`member`.`firstname`,`member`.`lastname`,dietplanname.dietplanname,workout.workoutname,memberworkout.workoutid,memberdietplan.created_at as dietassigndate,memberworkout.created_at as workoutassigndate from `member` left join `memberdietplan` on `memberdietplan`.`memberid` = `member`.`memberid` AND memberdietplan.status='1' left join dietplanname on memberdietplan.plannameid=dietplanname.dietplannameid  left join memberworkout on member.memberid = memberworkout.memberid AND memberworkout.status='1' left join workout on workout.workoutid= memberworkout.workoutid  left join users on member.userid=users.userid WHERE `member`.`firstname` Like '%".$keyword."%' or  `member`.`lastname` Like '%".$keyword."%' GROUP BY  memid,`memberdietplan`.`memberdietplanid`,`member`.`createddate`,`member`.`firstname`,`member`.`lastname`,dietplanname.dietplanname,workout.workoutname,memberworkout.workoutid,dietassigndate, workoutassigndate  ORDER BY member.createddate  ASC") );
+	       		 				$freezememberships->where ('member.firstname', 'LIKE', '%' . $keyword . '%' )->orWhere('member.lastname', 'LIKE', '%' . $keyword . '%' );
 
 
-					$currentPage = LengthAwarePaginator::resolveCurrentPage();
-					$itemCollection = collect($data);
-					$perPage = 10;
-					$currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
-					$paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
-					$paginatedItems->setPath($request->url());
-					$data =  $paginatedItems;
-	                  	return view('admin.memberreport.memberreport',compact('query','data','users'));
+	                  	//return view('admin.memberreport.memberreport',compact('query','data','users'));
 	       		 }
 
+
+
+
+			$data=$freezememberships->get()->all();
+        $paymentdatahidden=$data;
+	        // dd($paymentdata);
+ 			
+
+
+
+
+
+
+
+  if($request->excel == 1){
+          $grid =json_decode(json_encode($request->memberreport));
+     
+          if($grid){
+            $student_array[] = array('Date','Name','Diet', 'Exercise','Diet AssignDate','Workout AssignDate');
+  
+          foreach ($grid as $student)
+          {
+            $student=json_decode($student);
+        
+            $student_array[] = array(
+              'Date' => date('d-m-Y', strtotime($student->createddate)),
+              'Name'=>$student->firstname.$student->lastname,
+              'Diet' => date('d-m-Y', strtotime($student->paymentdate)),
+              'Diet AssignDate' => date('d-m-Y', strtotime($student->paymentdate)),
+              'Workout AssignDate' => date('d-m-Y', strtotime($student->paymentdate)),
+             
+            );
+          }
+  
+          $myFile=  Excel::create('data Report', function($excel) use ($student_array) {
+                          $excel->sheet('mySheet', function($sheet) use ($student_array)
+                          {
+  
+                            $sheet->fromArray($student_array);
+  
+                          });
+                    
+  
+          })->download('xlsx');
+        
+          }
+        }
+
+
+
+
     			
-		return view('admin.memberreport.memberreport',compact('query','data','users'));
+		return view('admin.memberreport.memberreport',compact('query','paymentdatahidden','data','users','freezememberships'));
 
     	}
 
-			$data=	 DB::select( DB::raw("select  `member`.memberid as memid,`memberdietplan`.`memberdietplanid`,`member`.`createddate`,`member`.`firstname`,`member`.`lastname`,dietplanname.dietplanname,workout.workoutname,memberworkout.workoutid,memberdietplan.created_at as dietassigndate,memberworkout.created_at as workoutassigndate from `member` left join `memberdietplan` on `memberdietplan`.`memberid` = `member`.`memberid` AND memberdietplan.status='1' left join dietplanname on memberdietplan.plannameid=dietplanname.dietplannameid  left join memberworkout on member.memberid = memberworkout.memberid AND memberworkout.status='1' left join workout on workout.workoutid= memberworkout.workoutid GROUP BY  `memberdietplan`.`memberid`,memid,`memberdietplan`.`memberdietplanid`,`member`.`createddate`,`member`.`firstname`,`member`.`lastname`,dietplanname.dietplanname,workout.workoutname,memberworkout.workoutid, dietassigndate,workoutassigndate ORDER BY member.createddate ASC") );
-
 	
-		$users1=  DB::table('users')->join('registration','registration.id','users.regid')->where('users.regid','!=',0)->where('registration.is_member','!=',1)->where('users.useractive',1)->get();
-		$users2= DB::table('users')->Join('member', 'member.userid', '=', 'users.userid')->get();
-		$merged = $users1->merge($users2);
-		$users = $merged->all();
 
-  $currentPage = LengthAwarePaginator::resolveCurrentPage();
-  $itemCollection = collect($data);
-   $perPage = 10;
-    $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
-      $paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
-       $paginatedItems->setPath($request->url());
-       $data =  $paginatedItems;
+ 			$paymentdatahidden=$data;
 
 
-		return view('admin.memberreport.memberreport',compact('query','data','users'));
+		return view('admin.memberreport.memberreport',compact('query','paymentdatahidden','data','users','freezememberships'));
 	}
 	
 }

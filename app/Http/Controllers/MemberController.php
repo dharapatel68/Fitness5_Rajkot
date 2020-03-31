@@ -103,7 +103,8 @@ class MemberController extends Controller
          if ($username != "") {
                   $members->where('member.userid','=',$username);
           }
-        if ($mobileno != "") {
+        if ($mobileno != "")
+         {
                   $members->where('member.userid','=',$mobileno);
           } 
 
@@ -122,108 +123,6 @@ class MemberController extends Controller
          return view('admin.members',compact('members','users'));
     }
   }
-//   public function index45(Request $request)
-//   {
-
-
-//     if($request->isMethod('post'))
-//     {
-
-//       if($request->get('username')!="")
-//       {
-//         $userid=$request->get('username');
-
-//         $members = Member::leftJoin('users','member.userid','=','users.userid')->where('member.userid','=',$userid)->paginate();
-
-//         $userid_con=$request->get('username');
-        
-
-//           // dd($members);
-//          $users= DB::table('member')->join('users', 'member.userid', '=', 'users.userid')->get()->all();
-//         return view('admin.members',compact('members','users', 'userid_con'));
-//       }
-//       elseif($request->get('mobileno')!="")
-//       {
-//         $userid=$request->get('mobileno');
-
-//         $members = Member::leftJoin('users','member.userid','=','users.userid')->where('member.userid','=',$userid)->paginate();
-
-//         $userid_mobile=$request->get('mobileno');
-      
-
-//           // dd($members);
-//          $users= DB::table('member')->join('users', 'member.userid', '=', 'users.userid')->get()->all();
-//         return view('admin.members',compact('members','users', 'userid_mobile'));
-//       }
-//       elseif($request->get('from')!="")
-//       {
-
-//         $from_display = date($request->get('from'));
-//         $to_display = $request->get('to');
-//         if($request->get('to')){
-//           $to = date($request->get('to'));
-//         }
-//         else{
-//           $to = date('Y-m-d');
-//         }
-//         $members = Member::leftJoin('users','member.userid','=','users.userid')->whereBetween('createddate', [$from_display, $to])->paginate(8);
-//           //dd($members);
-//          $users= DB::table('member')->join('users', 'member.userid', '=', 'users.userid')->get()->all();
-//         return view('admin.members',compact('members','users', 'from_display', 'to_display'));
-//       }
-//        elseif($request->get('to')!="")
-//       {
-
-//         $to_display = date($request->get('to'));
-//         $from_display = date($request->get('from'));
-//         if($request->get('from')){
-//           $from = date($request->get('from'));
-//         }
-//         else{
-//           $from = date('Y-m-d');
-//         }
-//         $members = Member::leftJoin('users','member.userid','=','users.userid')->whereBetween('createddate', [$from, $to_display])->paginate(8);
-//           // dd($members);
-//          $users= DB::table('member')->join('users', 'member.userid', '=', 'users.userid')->get()->all();
-//         return view('admin.members',compact('members','users', 'from_display', 'to_display'));
-//       }
-//       elseif($request->get('keyword')!="")
-//       {
-//         $userid=$request->get('keyword');
-//         $key_word = $request->get('keyword');
-//         $members = Member::leftJoin('users','member.userid','=','users.userid')->where ( 'firstname', 'LIKE', '%' . $userid . '%' )->orWhere ( 'member.email', 'LIKE', '%' . $userid . '%' )->orWhere ( 'lastname', 'LIKE', '%' . $userid . '%' )->orWhere ( 'city', 'LIKE', '%' . $userid . '%' )->paginate(6);
-//          $users= DB::table('member')->join('users', 'member.userid', '=', 'users.userid')->get()->all();
-//         if (count ($members) > 0)
-//          return view('admin.members',compact('members','users', 'key_word'));
-//        else
-//         $members ='';
-//       return view('admin.members',compact('members','users','key_word'));
-      
-//         //return view('admin.members',compact('members','users'));
-//     }
-
-
-//     $members = Member::leftJoin('users','member.userid','=','users.userid')->paginate(8);
-//    $users= DB::table('member')->join('users', 'member.userid', '=', 'users.userid')->get()->all();
-
-
-      
-//        // $members = Member::sortable()->paginate(6);
-  
-//     return view('admin.members',compact('members','users'));
-//   }
-
-//   else
-//   {
-
-//   $members = Member::leftJoin('users','member.userid','=','users.userid')->orderBy('member.created_at', 'desc')->paginate(8);
-
-//      $users= DB::table('member')->join('users', 'member.userid', '=', 'users.userid')->get()->all();
-
-//     return view('admin.members',compact('members','users'));
-//   }
-// }
-
 public function scheme(Request $request)
 {
   $id=$request->get('name');
@@ -464,6 +363,7 @@ public function otpverify(Request $request){
       'gender' => $request['gender'],
       'address' => $request['Address'],
       'city' => $request['City'],
+        'refno' => $request['refno'],
       'email' => $request['email'],
       'hearabout' => $request['HearAbout'],
       'formno' => $request['FormNo'],
@@ -1818,6 +1718,8 @@ public function schemeActualPrice(Request $request)
           $memberedt->gender = $request['gender'];
           $memberedt->address= $request['Address'];
           $memberedt->city = $request['City'];
+                    $memberedt->refno = $request['refno'];
+
           $memberedt->email = $request['email'];
           $memberedt->hearabout = $request['HearAbout'];
           $memberedt->bloodgroup = $request['bloodgroup'];
@@ -1841,6 +1743,7 @@ public function schemeActualPrice(Request $request)
 
           $notification=Notification::where('mobileno',$oldmobileno)->get()->first();
           $notification->mobileno = $request['CellPhoneNumber'];
+
           $notification->save();
 
           $fitnessgoals = Fitnessgoals::where('memberid',$memberedt->memberid)->get()->first();
