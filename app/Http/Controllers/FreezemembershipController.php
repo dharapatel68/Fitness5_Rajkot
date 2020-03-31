@@ -611,14 +611,52 @@ class FreezemembershipController extends Controller
 
     }
 
-    public function viewfreezemembeship(){
-
-    	$freezemembership_data = FreezeMembershipModal::leftjoin('member', 'freezemembership.freezememberhipuserid', 'member.userid')->get()->where('freezemembershipstatus', 1)->all();
-
-    	return view('admin.freezemembership.freezemembershipview')->with(compact('freezemembership_data'));
+    public function viewfreezemembeship(Request $request)
+    {
 
 
-    }
+    $username=$request->get('username');
+ 
+/*for pass to bladefile */
+    $query=[];
+   
+    $query['username']=$username;
+
+
+    $freezememberships= FreezeMembershipModal::leftjoin('member', 'freezemembership.freezememberhipuserid', 'member.userid')->where('freezemembershipstatus', 1);
+    
+        $freezemembership_data = FreezeMembershipModal::leftjoin('member', 'freezemembership.freezememberhipuserid', 'member.userid')->get()->where('freezemembershipstatus', 1)->all();
+
+        
+        $users1=  DB::table('users')->join('registration','registration.id','users.regid')->where('users.regid','!=',0)->where('registration.is_member','!=',1)->where('users.useractive',1)->get();
+            
+            $users2= DB::table('users')->Join('member', 'member.userid', '=', 'users.userid')->get();
+            $merged = $users1->merge($users2);
+            $users = $merged->all();    
+    
+    if ($request->isMethod('post'))
+    {     
+     
+        // dd($username);
+        if($username != "")
+        {
+          $freezememberships->where('member.userid',$username);
+        }
+        // dd($paymentdata->paginate(5));
+      
+           $freezemembership_data=$freezememberships->get()->all();
+
+        return view('admin.freezemembership.freezemembershipview')->with(compact('freezemembership_data','query','users','freezememberships'));
+
+     }
+
+        return view('admin.freezemembership.freezemembershipview')->with(compact('freezemembership_data','query','users','freezememberships'));
+
+     
+  }
+
+
+    
 
     /*public function freezemembershipdevice(){
 

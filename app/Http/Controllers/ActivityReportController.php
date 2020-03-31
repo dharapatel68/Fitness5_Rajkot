@@ -7,19 +7,18 @@ use App\Employee;
 use App\Notify;
 use App\MemberPackages;
 use App\Member;
-
+use App\Payment;
+use Maatwebsite\Excel\Concerns\FromCollection;
+use Excel;
+use App\Company;
+use Illuminate\Pagination\LengthAwarePaginator;
+use DB;
+use App\PaymentType;
 class ActivityReportController extends Controller
 {
     public function activityreport(Request $request)
     {	
-    	/*$today=date('Y-m-d');
-
-    	$data=Member::leftjoin('memberpackages','memberpackages.userid','member.userid')->where('memberpackages.expiredate' ,'>=',$today )->get(['member.*','member.status as mstatus','memberpackages.*'])->all();
-    	   	foreach ($data as $key => $value) {
-	   		$value->status=1;
-	   		$value->save();
-	   	}
-	   	dd('df');*/
+    	
     	$fdate =$request->get('fdate');
 		$tdate =$request->get('tdate');
 		$username=$request->get('username');
@@ -66,15 +65,78 @@ class ActivityReportController extends Controller
 	        // dd($paymentdata->paginate(5));
 	       
 
-	        $data=$data->paginate(8)->appends('query');
+	        $data=$data->paginate(1000)->appends('query');
+
+
+
+
+
+        if($request->excel == 1){
+          $grid =json_decode(json_encode($request->activityreport));
+     
+          if($grid){
+            $student_array[] = array('Date','User','Action' );
+  
+          foreach ($grid as $student)
+          {
+            $student=json_decode($student);
+          
+            $student_array[] = array(
+              'Date' => date('d-m-Y', strtotime($student->created_at)),
+              'User'=>$student->first_name.$student->last_name,
+              'Action' => $student->details
+  
+            );
+          }
+  
+          $myFile=  Excel::create('Activity Report', function($excel) use ($student_array) {
+                          $excel->sheet('mySheet', function($sheet) use ($student_array)
+                          {
+  
+                            $sheet->fromArray($student_array);
+  
+                          });
+                    
+  
+          })->download('xlsx');
+        
+          }
+        }
    		 	
    		 	return view('admin.activityreport.activityreport',compact('query','data','users'));
    		 }
+
+
+
+
+
+
+
+
+
+
    		 else
    		 {
-   		 	$data=Notify::select('notify.*','employee.first_name','employee.last_name')->leftjoin('employee','employee.employeeid','notify.actionby')->orderBy('notifyid','desc')->paginate(8);
+   		 	$data=Notify::select('notify.*','employee.first_name','employee.last_name')->leftjoin('employee','employee.employeeid','notify.actionby')->orderBy('notifyid','desc')->get()->all();
+
+
+
+
+      $currentPage = LengthAwarePaginator::resolveCurrentPage();
+            $itemCollection = collect($data);
+            $perPage = 15;
+            $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+            $paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
+            $paginatedItems->setPath($request->url());
+            $data =  $paginatedItems;
+
+
+
    		 //dd($data);
    		 	return view('admin.activityreport.activityreport',compact('query','data','users'));
    		 }
+
+
+
     }
 }

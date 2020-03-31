@@ -205,7 +205,7 @@
                 <div class="col-md-3">
                 <div class="form-group">
                   <label>Member</label>
-                   <select name="memberid" class="form-control" id="memberid" required>
+                   <select name="memberid" class="form-control select2" id="memberid" required>
                       <option value="">--Select Member--</option>
                     </select>
                 </div>

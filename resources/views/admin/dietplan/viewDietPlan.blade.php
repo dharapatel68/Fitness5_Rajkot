@@ -128,7 +128,7 @@ input:checked + .slider:before {
                 <div class="col-lg-3">
                     <div class="form-group">
                   <label>Diet</label>
-                <select name="dietplanname" class="form-control" id="dietplan">
+                <select name="dietplanname" class="form-control select2" id="dietplan">
                   <option value="" disabled="" selected="">--Please Select--</option>
                   @foreach($dietplaname as $dietplanname1)
                  <option value="{{$dietplanname1->dietplannameid}}">{{$dietplanname1->dietplanname}}</option> 

@@ -80,23 +80,23 @@
    transform: rotate(45deg);
    }
    .content-wrapper{
-		padding-right: 15px !important;
-		padding-left: 15px !important;
-	}
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+  }
 td{
-	max-width: 20%;
+  max-width: 20%;
 }
 .select2{
-	width: 100% !important;
-	
+  width: 100% !important;
+  
 }
 .select2-container--default .select2-selection--single{
-	border-radius: 2px !important;
-	max-height: 100% !important;
-	    border-color: #d2d6de !important;
-	        height: 32px;
-	        max-width: 100%;
-	        min-width: 100% !important;
+  border-radius: 2px !important;
+  max-height: 100% !important;
+      border-color: #d2d6de !important;
+          height: 32px;
+          max-width: 100%;
+          min-width: 100% !important;
 }
 </style>
 <div class="content-wrapper">
@@ -263,7 +263,7 @@ td{
        </div>
        <div class="modal-body">
           <label>Enter Excel Password</label>
-         <input type="text" class="form-control" name="pwd" id="pwd">
+         <input type="password" class="form-control" name="pwd" id="pwd">
          <span id="wrongpwd" style="color:red"></span>
        </div>
        <div class="modal-footer">
@@ -320,5 +320,16 @@ $('#checkpwd').on('click',function(){
   }); 
 
  
+</script>
+
+<script type="text/javascript">
+
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Datemask dd/mm/yyyy
+  
+  })
 </script>
 @endsection

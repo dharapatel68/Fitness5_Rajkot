@@ -27,6 +27,8 @@ class SendMemberFormController extends Controller
             $bitlylink = app('bitly')->getUrl($link_send);
             ShortLink::create([
                 'code'=>$id,
+                'firstname'=>$firstname,
+                'lastname'=>$lastname,
                 'link'=>$link_send,
                 'shortenlink'=>$bitlylink,
                 'status'=>1

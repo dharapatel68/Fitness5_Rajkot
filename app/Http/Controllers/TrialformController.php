@@ -7,6 +7,10 @@ use App\Notify;
 use App\Ptlevel;
 use App\trialform;
 use DB;
+use Maatwebsite\Excel\Concerns\FromCollection;
+use Excel;
+use App\Company;
+use Illuminate\Pagination\LengthAwarePaginator;
 use App\Ptassignlevel;
 class TrialformController extends Controller
 {
@@ -36,22 +40,25 @@ return view('admin.trail.edittrialform',compact('trialform','trainer','levels'))
 public function viewtrialform(Request $request)
 {
 
-
     	$fdate =$request->get('fdate');
 		$tdate =$request->get('tdate');
-		
-		
+		$clientname=$request->get('clientname');
+		$mobileno =$request->get('mobileno');
+		/*for pass to bladefile */
 		$query=[];
 		$query['fdate']=$fdate ;
 		$query['tdate']=$tdate ;
+		$query['clientname']=$clientname;
+		$query['mobileno']= $mobileno;
 		
-		
-		
+				$users=trialform::where('status','Active')->get()->all();
+
+
     	 if ($request->isMethod('post'))
    		 { 	
-   		 	$data=trialform::select('trialform.*','employee.first_name','employee.last_name')->join('employee', 'employee.employeeid', '=', 'trialform.employeeid')->where('trialform.status', '=','Active')->orderBy('trailformid','desc')->paginate(8);
+   		 	$data=trialform::select('trialform.*','employee.first_name','employee.last_name')->join('employee', 'employee.employeeid', '=', 'trialform.employeeid')->where('trialform.status', '=','Active')->orderBy('trailformid','desc');
 
-		$trialform1=trialform::where('status','Active')->orderBy('trailformid','desc')->paginate(8);
+		$trialform1=trialform::where('status','Active')->orderBy('trailformid','desc');
    		 	   if ($fdate != "")
    		 	    {
 	                   $from = date($fdate);
@@ -78,17 +85,42 @@ public function viewtrialform(Request $request)
 	                     $data->whereBetween('trialform.date', [$from, $to]);
 	       }
 	       
+	     if ($mobileno != "")
+         {
+                  $data->where('trialform.mobileno','=',$mobileno);
+          } 
+
+	        // dd($clientname);
+	        if($clientname != ""){
+	        	$data->where('trialform.trailformid',$clientname);
+	        }
+	        // dd($paymentdata->paginate(5));
 	       
-	        $data=$data->paginate(8)->appends('query');
+	        $data=$data->paginate(1000)->appends('query');
    		 	
-   		 	return view('admin.trail.viewtrialform',compact('query','data','trialform1'));
+   		 	return view('admin.trail.viewtrialform',compact('query','data','trialform1','users'));
    		 }
    		 else
    		 {
    		 	
-	$data=trialform::select('trialform.*','employee.first_name','employee.last_name')->join('employee', 'employee.employeeid', '=', 'trialform.employeeid')->where('trialform.status', '=','Active')->orderBy('trailformid','desc')->paginate(8);
-	$trialform1=trialform::where('status','Active')->orderBy('trailformid','desc')->paginate(8);
-   		 	return view('admin.trail.viewtrialform',compact('query','data','trialform1'));
+	$data=trialform::select('trialform.*','employee.first_name','employee.last_name')->join('employee', 'employee.employeeid', '=', 'trialform.employeeid')->where('trialform.status', '=','Active')->orderBy('trailformid','desc')->get()->all();
+	$trialform1=trialform::where('status','Active')->orderBy('trailformid','desc')->get()->all();
+
+
+
+
+      $currentPage = LengthAwarePaginator::resolveCurrentPage();
+            $itemCollection = collect($data);
+            $perPage = 15;
+            $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+            $paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
+            $paginatedItems->setPath($request->url());
+            $data =  $paginatedItems;
+
+
+
+
+   		 	return view('admin.trail.viewtrialform',compact('query','data','trialform1','users'));
    		 }
 
 }

@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\PaymentType;
 use DB;
+use Maatwebsite\Excel\Concerns\FromCollection;
+use Excel;
+use App\Company;
+use Illuminate\Pagination\LengthAwarePaginator;
+use App\Payment;
 
 class PaymentReportController extends Controller
 {
@@ -39,8 +44,8 @@ class PaymentReportController extends Controller
         
         	$modes=PaymentType::get(['paymenttype','paymenttypeid'])->all();
 
-	        $paymentdata = DB::table('payments')
-	        ->leftJoin('users', 'users.userid', '=', 'payments.userid')
+	        $paymentdata = Payment::
+	       leftJoin('users', 'users.userid', '=', 'payments.userid')
 	        ->leftJoin('member', 'member.memberid', '=', 'payments.memberid')
 	        ->leftJoin('registration', 'registration.id', '=',  'users.regid')
 	        ->leftJoin('company', 'company.companyid', '=', 'member.companyid')
@@ -83,10 +88,72 @@ class PaymentReportController extends Controller
 	        if($mode != ""){
 	        	$paymentdata->where('payments.mode',$mode);
 	        }
-
+			$paymentdatahidden=$paymentdata->get()->all();
+		
 	        $paymentdata=$paymentdata->paginate(1000)->appends('query');
 	        // dd($paymentdata);
-	        return view('admin.paymentreport.paymentreport',compact('paymentdata','users','modes','query'));
+ 			
+
+
+
+
+
+
+
+
+        if($request->excel == 1){
+          $grid =json_decode(json_encode($request->paymentreport));
+     
+          if($grid){
+            $student_array[] = array('Date','Invoice ID'	,'Name'	,'Mode'	,'Amount'	,'TakenBy'	,'ReceiptNo	','Company Name');
+  
+          foreach ($grid as $student)
+          {
+            $student=json_decode($student);
+          
+            $student_array[] = array(
+              'Date' => date('d-m-Y', strtotime($student->date)),
+              'Invoice ID'=>$student->invoiceno,
+                            'Name' =>  $student->rfirstname.$student->rlastname,
+
+
+              'Mode' => $student->mode,
+
+              'Amount' => $student->pamount,
+              'TakenBy' => $student->name,
+
+              'ReceiptNo' => $student->receiptno,
+
+              'Company Name' => $student->companyname
+
+  
+            );
+          }
+  
+          $myFile=  Excel::create('Payment Report', function($excel) use ($student_array) {
+                          $excel->sheet('mySheet', function($sheet) use ($student_array)
+                          {
+  
+                            $sheet->fromArray($student_array);
+  
+                          });
+                    
+  
+          })->download('xlsx');
+        
+          }
+        }
+
+
+
+
+
+
+
+
+
+
+	        return view('admin.paymentreport.paymentreport',compact('paymentdata','paymentdatahidden','users','modes','query'));
 
 
     	}
@@ -101,19 +168,28 @@ class PaymentReportController extends Controller
 
 		$modes=PaymentType::get(['paymenttype','paymenttypeid'])->all();
 
-   		$paymentdata = DB::table('payments')
-        ->leftJoin('users', 'users.userid', '=', 'payments.userid')
+   		$paymentdata = Payment::
+    	leftJoin('users', 'users.userid', '=', 'payments.userid')
         ->leftJoin('member', 'member.memberid', '=', 'payments.memberid')
         ->leftJoin('registration', 'registration.id', '=', 'users.regid')
         ->leftJoin('company', 'company.companyid', '=', 'member.companyid')
         ->leftJoin('admin', 'admin.adminid', '=', 'payments.takenby')
         ->where('payments.mode', '!=', 'total')
         ->select('users.userid as usertableuserid','users.*','payments.*','member.*','registration.firstname as rfirstname','registration.lastname as rlastname','payments.amount as pamount','company.companyname as companyname','admin.name as name')
-        ->paginate(8);
+        ->get()->all();
            /* dd($paymentdata);*/
+ 			$paymentdatahidden=$paymentdata;
 
    		
-   		return view('admin.paymentreport.paymentreport',compact('paymentdata','users','modes','query'));
+      $currentPage = LengthAwarePaginator::resolveCurrentPage();
+            $itemCollection = collect($paymentdata);
+            $perPage = 15;
+            $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+            $paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
+            $paginatedItems->setPath($request->url());
+            $paymentdata =  $paginatedItems;
+
+   		return view('admin.paymentreport.paymentreport',compact('paymentdata','paymentdatahidden','users','modes','query'));
 
    
 

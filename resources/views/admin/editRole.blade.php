@@ -166,7 +166,7 @@
                         <td><input type="checkbox" class="check" name="permission['delete_confirminquiry']" @if(isset($permission["'delete_confirminquiry'"])) checked @endif ></td>
                       </tr>
                       <tr>
-                        <th>PT Trail Form</th>
+                        <th>PT Trial Form</th>
                         <td><input type="checkbox" class="check addall" name="permission['add_trial_form_all']" @if(isset($permission["'add_trial_form_all'"])) checked @endif></td>
                         <td><input type="checkbox" class="check" name="permission['add_trial_form']" @if(isset($permission["'add_trial_form'"])) checked @endif></td>
                         <td><input type="checkbox" class="check" name="permission['view_trial_form']" @if(isset($permission["'view_trial_form'"])) checked @endif></td>

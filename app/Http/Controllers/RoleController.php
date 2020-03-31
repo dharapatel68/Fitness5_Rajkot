@@ -16,10 +16,21 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-            $roles = Role::get()->all();
+            $roles = Role::where('status',1)->get()->all();
             return view('admin.roles',compact('roles'));
     }
+    
+  public function deactiverole(Request $request,$id)
+    {
+            
 
+        $memberdata=Role::where('roleid',$id)->get()->first();
+        $memberdata->status=0;
+        $memberdata->save();
+        
+                return redirect()->back()->withSuccess('Role Deactivated');
+
+    }
     /**
      * Show the form for creating a new resource.
      *

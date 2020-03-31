@@ -63,7 +63,7 @@
               <tr>
               <td><input type="date" name="fdate" class="form-control" id="fdate" value="{{$query['fdate']}}"></td>
               <td><input type="date" name="tdate" class="form-control" id="tdate" value="{{$query['tdate']}}"></td>
-              <td><select name="mode" class="form-control select2" id="mode" data-placeholder="Select a Mode" >
+              <td><select name="mode" class="form-control " id="mode" data-placeholder="Select a Mode" >
                 <option value="" selected="" disabled="">Select a Mode</option>
                   @foreach($modes as $mode)
                 <option value="{{$mode->paymenttype}}" @if(isset($query['mode'])) {{$query['mode'] == $mode->paymenttype ? 'selected':''}} @endif>
@@ -240,6 +240,17 @@
                    });
             });
           </script>
+
+<script type="text/javascript">
+
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Datemask dd/mm/yyyy
+  
+  })
+</script>
 @endsection
 
  

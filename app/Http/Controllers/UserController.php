@@ -24,11 +24,28 @@ class UserController extends Controller
     public function index(Request $request)
     {
 
-        $users = Employee::leftjoin('roles', 'roles.roleid', '=', 'employee.roleid')->leftjoin('deviceusers', 'employee.userid', '=', 'deviceusers.userid')
+        // $users = Employee::where('employee.status',1)->leftjoin('roles', 'roles.roleid', '=', 'employee.roleid')->leftjoin('deviceusers', 'employee.userid', '=', 'deviceusers.userid')
+        //     ->select('roles.*', 'employee.*', 'employee.status as emp_status', 'deviceusers.enroll')
+        //     ->paginate(8);
+
+        // return view('admin.users', compact('users'));
+         $users = Employee::where('employee.status',1)->leftjoin('roles', 'roles.roleid', '=', 'employee.roleid')->where('roles.status',1)->leftjoin('deviceusers', 'employee.userid', '=', 'deviceusers.userid')
             ->select('roles.*', 'employee.*', 'employee.status as emp_status', 'deviceusers.enroll')
             ->paginate(8);
 
         return view('admin.users', compact('users'));
+    }
+
+  public function deactivateuser(Request $request,$id)
+    {
+            
+
+        $memberdata=Employee::where('employeeid',$id)->get()->first();
+        $memberdata->status=0;
+        $memberdata->save();
+        
+                return redirect()->back()->withSuccess('User Deactivated');
+
     }
     public function create(Request $request)
     {
