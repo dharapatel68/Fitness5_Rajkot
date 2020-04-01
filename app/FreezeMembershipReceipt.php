@@ -64,6 +64,7 @@ class FreezeMembershipReceipt
       $freezemembership_data = FreezeMembershipModal::where('freezemembershipid', $freezemembershipid)->first();
       if(!empty($freezemembership_data)){
         $freezememberhipstartdate = $freezemembership_data->freezememberhipstartdate;
+        $enddate=$freezemembership_data->freezememberhipenddate;
       }
 
       $transaction_data = TransactionModel::where('transactionid', $transactionid)->first();
@@ -195,7 +196,7 @@ class FreezeMembershipReceipt
   // $request->username=$user->username;
      
        $this->pdf->loadHtml(
-        View::make('admin.freezemembership.freezemembershipreceipt')->with(['member_data'=>$member_data,'totalpay'=>$totalpay,'request'=>$request,'payment'=>$payment,'phoneno'=> $phoneno,'word'=>$word,'companyName'=>$companyName,'Gstno'=>$Gstno,'takenby'=>$takenby,'tax'=>$payment_tax, 'total_payment' => $total_payment, 'freezememberhipstartdate' => $freezememberhipstartdate, 'transaction_data'=>$transaction_data])->render());
+        View::make('admin.freezemembership.freezemembershipreceipt')->with(['member_data'=>$member_data,'totalpay'=>$totalpay,'request'=>$request,'payment'=>$payment,'phoneno'=> $phoneno,'word'=>$word,'companyName'=>$companyName,'Gstno'=>$Gstno,'takenby'=>$takenby,'tax'=>$payment_tax, 'total_payment' => $total_payment, 'freezememberhipstartdate' => $freezememberhipstartdate,'freezememberhipenddate' => $enddate, 'transaction_data'=>$transaction_data])->render());
        
       $this->pdf->render();
      

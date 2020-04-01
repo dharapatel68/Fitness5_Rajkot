@@ -120,11 +120,11 @@ class FreezemembershipController extends Controller
     }
 
     public function freezemembershippayment(Request $request){
-       
+      
     	$userid = $request->userid;
     	$noofdays = $request->noofdays;
     	$startdate = $request->startdate;
-    	$enddate = $request->userid;
+    	$enddate = $request->enddate;
     	$amount_paid = $request->amount_paid;
     	$final_amount = $request->finalamount;
         $admin_id = $request->admin;
@@ -134,6 +134,7 @@ class FreezemembershipController extends Controller
     	$packages = [];
     	$schemes = '';
         $admin_mobileno = '';
+        $freezedate='';
 
         $admin_data = Employee::where('employeeid', $admin_id)->first();
         if(!empty($admin_data)){
@@ -239,7 +240,8 @@ class FreezemembershipController extends Controller
 
     	$freezemembership = new FreezeMembershipModal();
     	$freezemembership->freezememberhipuserid = $userid;
-    	$freezemembership->freezememberhipstartdate = date('Y-m-d', strtotime($startdate));
+        $freezemembership->freezememberhipstartdate = date('Y-m-d', strtotime($startdate));
+        $freezemembership->freezememberhipenddate = date('Y-m-d', strtotime($enddate));
     	$freezemembership->freezeamount = $total_amount;
     	$freezemembership->freezemembershiptid = $last_transaction_id;
     	$freezemembership->freezemembershippackageid = $schemes;
@@ -327,6 +329,28 @@ class FreezemembershipController extends Controller
                 $member_data->save();
             }
 
+            /****************for add freeze date diff into current package duration******************** */
+            
+            $freezeenddate = new DateTime($enddate);
+            $freezedate_diff = new DateTime($freezedate);
+    
+            if($freezedate_diff > $freezeenddate){
+                $diff = $freezedate_diff->diff($freezeenddate)->format("%a");
+            }else{
+                $diff = $freezeenddate->diff($freezedate_diff)->format("%a");
+            }
+          
+            $memberpackages_data = Memberpackages::where('userid', $userid)->where('status', 1)->get()->all();
+    
+            if(!empty($memberpackages_data)){
+                foreach($memberpackages_data as $package){
+                    $expiry_date = $package->expiredate;
+                    $new_exp_date = date('Y-m-d', strtotime($expiry_date.' +'.$diff.' days'));
+                    $package->expiredate = $new_exp_date;
+                    $package->save();
+                }
+            }
+            /************************************************** */
             $loginuser = session()->get('username');
              $actionbyid=Session::get('employeeid');
 
@@ -378,7 +402,7 @@ class FreezemembershipController extends Controller
 
            DB::commit();
            $success = true;
-           return view('admin.freezemembership.freezemembershipsummary')->with(compact('fullname', 'miscellaneouschargesid', 'transactionamount', 'freezedate', 'transactiontype', 'userid', 'invoiceno'));
+           return view('admin.freezemembership.freezemembershipsummary')->with(compact('fullname', 'miscellaneouschargesid', 'transactionamount', 'freezedate', 'transactiontype', 'userid', 'invoiceno','enddate'));
 
 
         }
@@ -538,7 +562,32 @@ class FreezemembershipController extends Controller
 	        	$member_data->status = 2;
 	        	$member_data->save();
 	        }
-
+            
+            /****************for add freeze date diff into current package duration******************** */
+            if($freezemembership_update->freezememberhipenddate){
+                $enddate=$freezemembership_update->freezememberhipenddate;
+                $freezeenddate = new DateTime($enddate);
+                $freezedate_diff = new DateTime($freezedate);
+        
+                if($freezedate_diff > $freezeenddate){
+                    $diff = $freezedate_diff->diff($freezeenddate)->format("%a");
+                }else{
+                    $diff = $freezeenddate->diff($freezedate_diff)->format("%a");
+                }
+            
+                $memberpackages_data = Memberpackages::where('userid', $userid)->where('status', 1)->get()->all();
+        
+                if(!empty($memberpackages_data)){
+                    foreach($memberpackages_data as $package){
+                        $expiry_date = $package->expiredate;
+                        $new_exp_date = date('Y-m-d', strtotime($expiry_date.'+'.$diff.' days'));
+                        $package->expiredate = $new_exp_date;
+                        $package->save();
+                    }
+                }
+            }
+          
+            /************************************************** */
 	        $loginuser = session()->get('username');
               $actionbyid=Session::get('employeeid');
 
@@ -586,7 +635,7 @@ class FreezemembershipController extends Controller
 
        }
 
-	        return view('admin.freezemembership.freezemembershipsummary')->with(compact('fullname', 'miscellaneouschargesid', 'transactionamount', 'freezedate', 'transactiontype', 'userid', 'invoiceno'));
+	        return view('admin.freezemembership.freezemembershipsummary')->with(compact('fullname', 'miscellaneouschargesid', 'transactionamount', 'freezedate', 'transactiontype', 'userid', 'invoiceno','enddate'));
 
 	    }catch(\Exception $e){
 
@@ -614,6 +663,7 @@ class FreezemembershipController extends Controller
     public function viewfreezemembeship(Request $request)
     {
 
+        
 
     $username=$request->get('username');
  
@@ -1023,14 +1073,14 @@ class FreezemembershipController extends Controller
 
         $memberpackages_data = Memberpackages::where('userid', $userid)->where('status', 1)->get()->all();
 
-        if(!empty($memberpackages_data)){
-            foreach($memberpackages_data as $package){
-                $expiry_date = $package->expiredate;
-                $new_exp_date = date('Y-m-d', strtotime($expiry_date.' +'.$diff.' days'));
-                $package->expiredate = $new_exp_date;
-                $package->save();
-            }
-        }
+        // if(!empty($memberpackages_data)){
+        //     foreach($memberpackages_data as $package){
+        //         $expiry_date = $package->expiredate;
+        //         $new_exp_date = date('Y-m-d', strtotime($expiry_date.' +'.$diff.' days'));
+        //         $package->expiredate = $new_exp_date;
+        //         $package->save();
+        //     }
+        // }
 
         $max_exp = Memberpackages::where('userid', $userid)->where('status', 1)->max('expiredate');
         $deviceuser = Deviceusers::where('userid',$userid)->first();

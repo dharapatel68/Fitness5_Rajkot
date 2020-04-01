@@ -49,7 +49,7 @@
                   <div class="row">
                     <input type="hidden" name="tax" id="tax">
                     <input type="hidden" name="joindate_hidden" id="joindate_hidden">
-                    <div class="col-md-6 col-lg-6">
+                    <div class="col-md-6 col-lg-3">
                      <div class="form-group">
                         <label>Member<span style="color: red">*</span></label>
                         <select name="userid" id="memberfrom" class="form-control select2 span8" class="span11" required>
@@ -65,15 +65,24 @@
                         <span id="memberpackageprice_error" style="color: red;display: none;">Please select package</span>
                      </div>
                     </div>
-                    <div class="col-md-6 col-lg-6">
+                    <div class="col-md-6 col-lg-3">
                      <input type="hidden" name="tax" value="{{ $tax }}">
                       <div class="form-group">
                         <label>Start Date<span style="color: red;">*</span></label>
-                        <input type="date" name="startdate" id="startdate" class="form-control" value="<?php echo date('Y-m-d') ?>" min="<?php echo date('Y-m-d') ?>"  class="span11"  />
+                        <input type="date" name="startdate" id="startdate" class="form-control" value="<?php echo date('Y-m-d') ?>"   class="span11"  />
                         <span id="stratdate_error" style="color: red;"></span>
                       </div>
                     
                     </div>
+                    <div class="col-md-6 col-lg-3">
+                      <input type="hidden" name="tax" value="{{ $tax }}">
+                       <div class="form-group">
+                         <label>End Date<span style="color: red;">*</span></label>
+                         <input type="date" name="enddate" id="enddate" class="form-control" value="<?php echo date('Y-m-d') ?>"   class="span11"  />
+                         <span id="stratdate_error" style="color: red;"></span>
+                       </div>
+                     
+                     </div>
                    
                   </div>
 
