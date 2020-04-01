@@ -78,40 +78,46 @@ Mo. : +917048880005
       <tr><th style="border:none;"><font size="3">FreezeMembership Information</font></th></tr>
       <tr style=" border-left: thick solid; border-top: thick solid;border-bottom:bold solid; border:1px; border-color: #CACFD2:">
 
-        <th style="border-color: #CACFD2;border-left:thick solid; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Name</th>
-        <th style="border-color: #CACFD2; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Freeze Date</th>
-        <th  style="border-color: #CACFD2;border-right: thick solid; border-top: thick solid;border-bottom:thick solid; text-align: right;border-color: #CACFD2;" >Amount</th>
+        <th style="border-left:thick solid; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Name</th>
+        <th style=" border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Freeze Start Date</th>
+        <th style=" border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Freeze End Date</th>
+
+        <th  style="border-right: thick solid; border-top: thick solid;border-bottom:thick solid; text-align: right;border-color: #CACFD2;" >Amount</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td style="border-color: #CACFD2;border-left:thick solid;border-color: #CACFD2;">
+        <td style="border-left:thick solid;border-color: #CACFD2;">
           {{ ucfirst($member_data->firstname) }} {{ ucfirst($member_data->lastname) }}
         </td>
-
         <td>{{date('j F, Y', strtotime($freezememberhipstartdate))}}</td>
-        <td  style="border-color: #CACFD2;text-align: right;border-color: #CACFD2; border-right:thick solid;border-color: #CACFD2;"
+
+        <td>{{date('j F, Y', strtotime($freezememberhipenddate))}}</td>
+        <td  style="text-align: right;border-right:thick solid;border-color: #CACFD2;"
         ><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{ $transaction_data->transactionbaseamount }}</td>
       </tr>
                       <tr>
-                        <td colspan="1"style="border-color: #CACFD2;border-left:thick solid;border-color: #CACFD2;">
+                        <td colspan="1"style="border-left:thick solid;border-color: #CACFD2;">
 
                         </td>
+                        <td></td>
                         <td style="text-align: right"><b>GST ( {{ $transaction_data->transactiontax }} %)</b></td>
                         <td  style="text-align: right;border-right:thick solid;border-color: #CACFD2;" border-right:thick solid;><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$transaction_data->transactiontaxamount}}</td>
                       </tr>
                       <tr>
-                        <td colspan="1"style="border-color: #CACFD2;border-left:thick solid;border-color: #CACFD2;">
+                        <td colspan="1"style="border-left:thick solid;border-color: #CACFD2;">
                         </td>
-                        <td  style="border-color: #CACFD2;text-align: right;border-color: #CACFD2"><b>Total</b></td>
-                        <td  style="border-color: #CACFD2;text-align: right;border-right:thick solid;border-color: #CACFD2;"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$transaction_data->transactionamount}}</td>
+                        <td></td>
+                        <td  style="text-align: right;border-color: #CACFD2"><b>Total</b></td>
+                        <td  style="text-align: right;border-right:thick solid;border-color: #CACFD2;"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$transaction_data->transactionamount}}</td>
                       </tr>
                       <tr>
-                        <td colspan="1"style="border-color: #CACFD2;border-left:thick solid;border-bottom:thick solid;border-color: #CACFD2;">
+                        <td colspan="1"style="border-left:thick solid;border-bottom:thick solid;border-color: #CACFD2;">
 
                         </td>
-                        <td  style="border-color: #CACFD2;text-align: right;border-bottom:thick solid;border-color: #CACFD2;"><b>Total In Words</b></td>
-                        <td  style="border-color: #CACFD2;text-align: right;border-right:thick solid; border-bottom:thick solid;border-color: #CACFD2; "> {{$word}} 
+                        <td style="border-bottom:thick solid;border-color: #CACFD2;"></td>
+                        <td  style="text-align: right;border-bottom:thick solid;border-color: #CACFD2;"><b>Total In Words</b></td>
+                        <td  style="text-align: right;border-right:thick solid; border-bottom:thick solid;border-color: #CACFD2; "> {{$word}} 
 
                         </td>
                       </tr>
@@ -123,13 +129,13 @@ Mo. : +917048880005
                   <table style="margin: 5px;  margin-top:60px;" width=100% cellpadding="5px;" cellspacing="0px">
                     <thead>
                      <tr><th style="border:none; width: 160px;"><font size="3">Payment Information</font></th></tr><tr style="border-color: #CACFD2;border-right: thick solid; border-left: thick solid; border-top: thick solid;border-bottom:thick solid; border:1px;border-color: #CACFD2;">
-                      <th style=" border-color: #CACFD2;border-left: thick solid; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Receipt No & Date</th>
+                      <th style=" border-left: thick solid; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Receipt No & Date</th>
                       <th style="border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Payment Type</th>
-                      <th style="border-color: #CACFD2;border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Cheque/
+                      <th style="border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Cheque/
                         <br>Card Info</th>
-                        <th style=" border-color: #CACFD2;border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Collected By</th>
-                        <th style="border-color: #CACFD2; border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2; width: 100px;">Details</th>
-                        <th  style="border-color: #CACFD2;border-right: thick solid; border-top: thick solid;border-bottom:thick solid; text-align: right;border-color: #CACFD2;">Amount</th>
+                        <th style=" border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2;">Collected By</th>
+                        <th style=" border-top: thick solid;border-bottom:thick solid;border-color: #CACFD2; width: 100px;">Details</th>
+                        <th  style="border-right: thick solid; border-top: thick solid;border-bottom:thick solid; text-align: right;border-color: #CACFD2;">Amount</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -137,7 +143,7 @@ Mo. : +917048880005
 
                       <tr>
 
-                        <td style="width: 120px; border-color: #CACFD2;border-left:thick solid;border-color: #CACFD2;"><span style="font-size: 13px;">{{ $payment->receiptno }}</span> <b>#</b> {{date('j F, Y', strtotime($payment->paymentdate))}}</td>
+                        <td style="width: 120px;border-left:thick solid;border-color: #CACFD2;"><span style="font-size: 13px;">{{ $payment->receiptno }}</span> <b>#</b> {{date('j F, Y', strtotime($payment->paymentdate))}}</td>
                         <td>{{$payment->mode}}</td>
                         <td>{{$payment->remarks}}</td>
                         <td>{{ !empty($takenby) ? ucfirst($takenby) : ''}}</td>
@@ -147,9 +153,9 @@ Mo. : +917048880005
                         $amount_added = $payment->amount - $perc;
                         $total_amount_display = $total_amount_display + $amount_added + $perc;
                         @endphp
-                        <td style="border-color: #CACFD2;border-color: #CACFD2; width: 100px;">Amount :<span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>{{$payment->amount - $perc}} <br>
+                        <td style=" border-color: #CACFD2; width: 100px;">Amount :<span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>{{$payment->amount - $perc}} <br>
                           Tax :<span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$perc}} </td>
-                          <td style="border-color: #CACFD2;text-align: right;border-right:thick solid;border-color: #CACFD2;"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$payment->amount}}</td>
+                          <td style="text-align: right;border-right:thick solid;border-color: #CACFD2;"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$payment->amount}}</td>
 
                         </tr>
 
@@ -157,22 +163,22 @@ Mo. : +917048880005
                         @endforeach
                         <tr>
 
-                          <td style="border-color: #CACFD2;border-left:thick solid;border-color: #CACFD2;"></td>
+                          <td style="border-left:thick solid;border-color: #CACFD2;"></td>
                           <td></td>
                           <td><b>Total</b></td>
                           <td></td>
 
                           <td style="width: 100px;"></td>
-                          <td  style="border-color: #CACFD2;text-align: right;border-right:thick solid;border-color: #CACFD2;"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$total_amount_display}}</td>
+                          <td  style="text-align: right;border-right:thick solid;border-color: #CACFD2;"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$total_amount_display}}</td>
                         </tr>
                         @if($totalpay)
                        <tr>
                        
-                        <td style="border-color: #CACFD2;border-left:thick solid; border-bottom: thick solid; border-color: #CACFD2;"></td>
-                       <td style="border-color: #CACFD2;border-bottom: thick solid;border-color: #CACFD2;"></td>
-                           <td style="border-color: #CACFD2;border-bottom: thick solid;border-color: #CACFD2;"><b>Total In Words</b></td>
+                        <td style="border-left:thick solid; border-bottom: thick solid; border-color: #CACFD2;"></td>
+                       <td style="border-bottom: thick solid;border-color: #CACFD2;"></td>
+                           <td style="border-bottom: thick solid;border-color: #CACFD2;"><b>Total In Words</b></td>
                        
-                        <td colspan="3" style="border-color: #CACFD2;text-align: right;border-right:thick solid;border-bottom: thick solid;border-color: #CACFD2;"> {{  $totalpay}}</td>
+                        <td colspan="3" style="text-align: right;border-right:thick solid;border-bottom: thick solid;border-color: #CACFD2;"> {{  $totalpay}}</td>
                      </tr> 
                      @endif 
                       </tbody>

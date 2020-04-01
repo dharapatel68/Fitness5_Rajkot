@@ -409,6 +409,7 @@ Route::group(['middleware' => ['admin']], function() {
    Route::get('upgradepackagepayment', function(){
    return route('packageupgrade');
    })->name('upgradepackagepayment');
+   
    /////////////////////////////////////////// Package upgrade end ////////////////////////////////////////////////////
    Route::get('editregistration/{id}', 'RegistrationController@editregistration')->name('editregistration');
    Route::post('sendotptoadminforpackagedate', 'ProfileController@sendotptoadminforpackagedate')->name('sendotptoadminforpackagedate');

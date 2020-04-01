@@ -458,7 +458,9 @@ textarea.input100 {
   <table class="table">
     <thead>
       <tr><td>Full name</td><td>{{$fullname}}</td></tr>
-    <tr>  <td>Freeze Date</td> <td>{{ date('d-m-Y', strtotime($freezedate)) }}</td> </tr>
+    <tr>  <td>Freeze Start Date</td> <td>{{ date('d-m-Y', strtotime($freezedate)) }}</td> </tr>
+    <tr>  <td>Freeze End Date</td> <td>{{ date('d-m-Y', strtotime($enddate)) }}</td> </tr>
+    
     <tr>  <td>Amount</td>   <td>{{$transactionamount}}</td> </tr>
     <tr>  <td>InvoiceID</td>   <td>O{{$invoiceno}}</td> </tr>
     <tr>  <td>Transaction Type</td><td>{{$transactiontype}}</td></tr>
